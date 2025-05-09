@@ -110,7 +110,7 @@
         <br>
         <b style="font-size: xx-large;">[OPEN BETA]</b>
         <br><br>
-        v. 0.8.4
+        v. 0.8.5
         <br>
         <br>
         THIS SITE IS IDEALLY VIEWED ON DESKTOP / LAPTOP <br> (viewing on other devices may lead to alignment, or other visual issues)
@@ -144,27 +144,32 @@
     Tap if you're on mobile
     </button>
 
-        <script>
+    <script>
         document.getElementById('mobileViewButton').addEventListener('click', function () {
-        document.body.style.fontSize = '14px'; // Adjust font size for mobile
-        document.body.style.padding = '10px'; // Add padding for better spacing
-        const fieldsets = document.querySelectorAll('fieldset');
-        fieldsets.forEach(fieldset => {
-            fieldset.style.width = '100%'; // Make fieldsets take full width
-            fieldset.style.margin = '10px auto'; // Center fieldsets with margin
+            document.body.style.fontSize = '14px'; // Adjust font size for mobile
+            document.body.style.padding = '10px'; // Add padding for better spacing
+            const fieldsets = document.querySelectorAll('fieldset');
+            fieldsets.forEach(fieldset => {
+                fieldset.style.width = '100%'; // Make fieldsets take full width
+                fieldset.style.margin = '10px auto'; // Center fieldsets with margin
+            });
+            const images = document.querySelectorAll('img');
+            images.forEach(img => {
+                img.style.width = '100%'; // Make images responsive
+                img.style.height = 'auto'; // Maintain aspect ratio
+            });
+            const videos = document.querySelectorAll('video');
+            videos.forEach(video => {
+                video.style.width = '100%'; // Make videos responsive
+                video.style.height = 'auto'; // Maintain aspect ratio
+            });
+            const videoFieldsets = document.querySelectorAll('#videos fieldset');
+            videoFieldsets.forEach(videoFieldset => {
+                videoFieldset.style.width = '100%'; // Make video fieldsets responsive
+                videoFieldset.style.margin = '10px auto'; // Center video fieldsets
+            });
         });
-        const images = document.querySelectorAll('img');
-        images.forEach(img => {
-            img.style.width = '100%'; // Make images responsive
-            img.style.height = 'auto'; // Maintain aspect ratio
-        });
-        const videos = document.querySelectorAll('video');
-        videos.forEach(video => {
-            video.style.width = '100%'; // Make videos responsive
-            video.style.height = 'auto'; // Maintain aspect ratio
-        });
-     });
-        </script>
+    </script>
 
         <hr>
 
