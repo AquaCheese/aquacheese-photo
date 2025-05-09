@@ -7,11 +7,12 @@
         <title>AquaCheese Photography - home</title>
         <link rel="icon" href="AquaCheese  Logo.png">
         <style>
-            body{
-                background-color: #333;
-    color: whitesmoke;
-    text-align: center;
-    font-family: Arial, Helvetica, sans-serif;
+    body{
+        background-color: #333;
+        color: whitesmoke;
+        text-align: center;
+        font-family: Arial, Helvetica, sans-serif;
+    }
     
     a {
         color: cornsilk;
@@ -77,11 +78,16 @@
         background-color: gold;
         color: black;
     }
+    .btn_search:hover{
+        transition: 0.3s;
+        background-color: darkgoldenrod;
+        color: black;
 
     }
     html{
         scroll-behavior: smooth;
     }
+        
         </style>
 
     
@@ -93,7 +99,7 @@
         <br>
         <b style="font-size: xx-large;">[OPEN BETA]</b>
         <br><br>
-        v. 0.7.8
+        v. 0.8.0
         <br>
         <br>
         THIS SITE IS IDEALLY VIEWED ON DESKTOP / LAPTOP <br> (viewing on other devices may lead to alignment, or other visual issues)
@@ -102,6 +108,13 @@
         
         <a href="Contact Me Form.html"><button class="btncontact" style="font-size: 16px; text-align: center; border-radius: 12px;">Contact Me</button></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://www.youtube.com/@aquacheese1" target="_blank"><button class="btnYT" style="font-size: 16px; text-align: center; border-radius: 12px;">My YouTube Channel</button></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="About.html"><button class="btnabt" style="font-size: 16px; text-align: center; border-radius: 12px;">About</button></a> &nbsp; &nbsp; &nbsp; <b style="font-size: x-large;">|</b> &nbsp; &nbsp; &nbsp; <a href="#rec ad"><button id="btnrec" class="btnrec" style="font-size: 16px; text-align: center; border-radius: 12px;">Recently Added</button></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="#land"><button class="btnland" style="font-size: 16px; text-align: center; border-radius: 12px;">Landscape Images</button></a>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="#port"><button class="btnport" style="font-size: 16px; text-align: center; border-radius: 12px;">Portrait Images</button></a>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="#All"><button class="btnall" style="font-size: 16px; text-align: center; border-radius: 12px;">All Images</button></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="#videos"><button class="btnvids" style="font-size: 16px; text-align: center; border-radius: 12px;">Videos</button></a>
         
+        <hr>
+        &darr;&nbsp;[BETA FEATURE]&nbsp;&darr;
+        <!-- Search Bar -->
+<div style="margin: 20px;">
+    <input type="text" id="searchBar" placeholder="Search for images..." style="width: 300px; padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc;">
+    <button onclick="searchImages()" style="padding: 10px; font-size: 16px; border-radius: 5px; background-color: goldenrod; color: black; border: none;" class="btn_search">Search</button>
+</div>
         <hr>
         <br>
         <p style="font-size: x-large;">
@@ -133,7 +146,7 @@
             <table style="display: inline;">
                 <td>
                     <fieldset style="width: fit-content; border-color: goldenrod; box-sizing: border-box;">
-                     <legend>A Big Ol' Field</legend>
+                     <legend id="field">A Big Ol' Field</legend>
                     <a href="field.html"><img src="field WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
                     <p style="font-size: larger;">
                         £15
@@ -145,7 +158,7 @@
             
                 <td>
                     <fieldset style="width: fit-content; border-color: goldenrod; box-sizing: border-box;">
-                     <legend>A Smol Patch of Flowers</legend>
+                     <legend id="flowers">A Smol Patch of Flowers</legend>
                     <a href="flowers.html"><img src="flowers WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
                     <p style="font-size: larger;">
                         £15
@@ -157,7 +170,7 @@
 
                 <td>
                     <fieldset style="width: fit-content; border-color: goldenrod; box-sizing: border-box;">
-                     <legend>Plant Pots</legend>
+                     <legend id="pots">Plant Pots</legend>
                     <a href="Plant Pots.html"><img src="Plant Pots WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
                     <p style="font-size: larger;">
                         £15
@@ -190,7 +203,7 @@
         <table style="display: inline;">
             <td>
                 <fieldset style="width: fit-content; border-color: peru;">
-                <legend>Seagull on a car</legend>
+                <legend id="seagull">Seagull on a car</legend>
                 <a href="Seagull car img.html"><img src="Seagull on a Car WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200"></a>
                 <p style="font-size: larger;">
                     £15
@@ -201,7 +214,7 @@
             </td>
 
             <td><fieldset style="width: fit-content; border-color: peru;">
-                <legend>Small River</legend>
+                <legend id="river">Small River</legend>
             <a href="Perran River.html"><img src="Smol River WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
             <p style="font-size: larger;">
                 £15
@@ -213,7 +226,7 @@
 
             <td>
                 <fieldset style="width: fit-content; border-color: peru;">
-                <legend>Close-Up of a Gavel</legend>
+                <legend id="gavel">Close-Up of a Gavel</legend>
                 <a href="Gavel.html"><img src="Gavel WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
                 <p style="font-size: larger;">
                     £15
@@ -227,7 +240,7 @@
             <table>
                 <td>
                     <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;">
-                    <legend>Train Leaving The Station</legend>
+                    <legend id="trainq>Train Leaving The Station</legend>
                     <a href="Train.html"><img src="Train WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                     <p style="font-size: larger;">
                         £15
@@ -238,7 +251,7 @@
                 </td>
                 <td>
                     <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;">
-                    <legend>Rainbow on an Overcast Day</legend>
+                    <legend id="rainbow">Rainbow on an Overcast Day</legend>
                     <a href="OC Rainbow.html"><img src="Overcast Rainbow WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                     <p style="font-size: larger;">
                         £15
@@ -249,7 +262,7 @@
                 </td>
                 <td>
                     <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;">
-                     <legend>Traffic Lights</legend>
+                     <legend id="lights">Traffic Lights</legend>
                     <a href="Traffic lights img.html"><img src="Traffic lights WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                     <p style="font-size: larger;">
                         £15
@@ -263,7 +276,7 @@
                 <table>
                     <td>
                         <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;">
-                         <legend>Dark Tree</legend>
+                         <legend id="darktree">Dark Tree</legend>
                         <a href="Dark tree.html"><img src="Dark Tree WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                         <p style="font-size: larger;">
                             £15
@@ -275,7 +288,7 @@
                    
                     <td>
                         <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;">
-                         <legend>A Big Ol' Field</legend>
+                         <legend id="field">A Big Ol' Field</legend>
                         <a href="field.html"><img src="field WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                         <p style="font-size: larger;">
                             £15
@@ -287,7 +300,7 @@
                     
                     <td>
                         <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;">
-                         <legend>A Smol Patch of Flowers</legend>
+                         <legend id="flowers">A Smol Patch of Flowers</legend>
                         <a href="flowers.html"><img src="flowers WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                         <p style="font-size: larger;">
                             £15
@@ -301,7 +314,7 @@
                    
                     <td>
                         <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;">
-                         <legend>Plant Pots</legend>
+                         <legend id="pots">Plant Pots</legend>
                         <a href="Plant Pots.html"><img src="Plant Pots WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                         <p style="font-size: larger;">
                             £15
@@ -325,7 +338,7 @@
             <table>
             <td>
                 <fieldset style="width: fit-content; border-color: royalblue; box-sizing: border-box;">
-                <legend>Close-up of a Mini Muffin</legend>
+                <legend id="muffin">Close-up of a Mini Muffin</legend>
                 <a href="Muffin.html"><img src="Muffin WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                 <p style="font-size: larger;">
                     £15
@@ -336,7 +349,7 @@
             </td>
             <td>
                 <fieldset style="width: fit-content; border-color: royalblue; box-sizing: border-box;">
-                 <legend>GWR Train</legend>
+                 <legend id="GWRtrain">GWR Train</legend>
                 <a href="GWR Train.html"><img src="GWR Train WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                 <p style="font-size: larger;">
                     £15
@@ -347,7 +360,7 @@
             </td>
             <td>
                 <fieldset style="width: fit-content; border-color: royalblue; box-sizing: border-box;">
-                 <legend>Medium Tree</legend>
+                 <legend id="mediumtree">Medium Tree</legend>
                 <a href="P Tree.html"><img src="Tree Portrait WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                 <p style="font-size: larger;">
                     £15
@@ -369,7 +382,7 @@
             </legend>
             <table style="display: inline;">
                 <td><fieldset style="width: fit-content; border-color: chartreuse;">
-                    <legend>Small River</legend>
+                    <legend id="river">Small River</legend>
                 <a href="Perran River.html"><img src="Smol River WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
                 <p style="font-size: larger;">
                     £15
@@ -380,7 +393,7 @@
             </td>
             <td>
                 <fieldset style="width: fit-content; border-color: chartreuse;">
-                <legend>Seagull on a car</legend>
+                <legend id="seagull">Seagull on a car</legend>
                 <a href="Seagull car img.html"><img src="Seagull on a Car WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
                 <p style="font-size: larger;">
                     £15
@@ -391,7 +404,7 @@
             </td>
             <td>
                 <fieldset style="width: fit-content; border-color: chartreuse;">
-                <legend>Gavel on it's side</legend>
+                <legend id="gavel">Gavel on it's side</legend>
                 <a href="Gavel.html"><img src="Gavel WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
                 <p style="font-size: larger;">
                     £15
@@ -406,7 +419,7 @@
             <table>
             <td>
                 <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;">
-                <legend>Train Leaving The Station</legend>
+                <legend id="train">Train Leaving The Station</legend>
                 <a href="Train.html"><img src="Train WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                 <p style="font-size: larger;">
                     £15
@@ -417,7 +430,7 @@
             </td>
             <td>
                 <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;">
-                <legend>Close-up of a Mini Muffin</legend>
+                <legend id="muffin">Close-up of a Mini Muffin</legend>
                 <a href="Muffin.html"><img src="Muffin WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                 <p style="font-size: larger;">
                     £15
@@ -428,7 +441,7 @@
             </td>
             <td>
                 <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;">
-                <legend>Rainbow on an Overcast Day</legend>
+                <legend id="rainbow">Rainbow on an Overcast Day</legend>
                 <a href="OC Rainbow.html"><img src="Overcast Rainbow WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                 <p style="font-size: larger;">
                     £15
@@ -442,7 +455,7 @@
         
             <td>
                 <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;">
-                 <legend>Traffic Lights</legend>
+                 <legend id="lights">Traffic Lights</legend>
                 <a href="Traffic lights img.html"><img src="Traffic lights WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                 <p style="font-size: larger;">
                     £15
@@ -453,7 +466,7 @@
             </td>
             <td>
                 <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;">
-                 <legend>GWR Train</legend>
+                 <legend id="GWRtrain">GWR Train</legend>
                 <a href="GWR Train.html"><img src="GWR Train WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                 <p style="font-size: larger;">
                     £15
@@ -465,7 +478,7 @@
            
             <td>
                 <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;">
-                 <legend>Dark Tree</legend>
+                 <legend id="darktree">Dark Tree</legend>
                 <a href="Dark tree.html"><img src="Dark Tree WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                 <p style="font-size: larger;">
                     £15
@@ -480,7 +493,7 @@
             <table>
                 <td>
                     <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;">
-                     <legend>A Big Ol' Field</legend>
+                     <legend id="field">A Big Ol' Field</legend>
                     <a href="field.html"><img src="field WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                     <p style="font-size: larger;">
                         £15
@@ -491,7 +504,7 @@
                 </td>
                 <td>
                     <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;">
-                     <legend>A Smol Patch of Flowers</legend>
+                     <legend id="flowers">A Smol Patch of Flowers</legend>
                     <a href="flowers.html"><img src="flowers WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                     <p style="font-size: larger;">
                         £15
@@ -503,7 +516,7 @@
 
                 <td>
                     <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;">
-                     <legend>Plant Pots</legend>
+                     <legend id="pots">Plant Pots</legend>
                     <a href="Plant Pots.html"><img src="Plant Pots WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                     <p style="font-size: larger;">
                         £15
@@ -517,7 +530,7 @@
             <table>
                 <td>
                     <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;">
-                     <legend>Medium Tree</legend>
+                     <legend id="mediumtree">Medium Tree</legend>
                     <a href="P Tree.html"><img src="Tree Portrait WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                     <p style="font-size: larger;">
                         £15
@@ -614,5 +627,21 @@
 
     <a href="testing stuff.html"><button class="btnsec" style="border-radius: 12px; font-size: 20px;">Secret button :)</button></a>
     <br><br><br>
+
+    <script>
+        function searchImages() {
+            const query = document.getElementById('searchBar').value.toLowerCase();
+            const legends = document.querySelectorAll('legend');
+    
+            legends.forEach(legend => {
+                const parentFieldset = legend.closest('fieldset');
+                if (legend.textContent.toLowerCase().includes(query)) {
+                    parentFieldset.style.display = 'block'; // Show matching images
+                } else {
+                    parentFieldset.style.display = 'none'; // Hide non-matching images
+                }
+            });
+        }
+    </script>
     </body>
 </html>
