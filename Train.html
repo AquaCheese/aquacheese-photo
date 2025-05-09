@@ -3,60 +3,128 @@
     <head>
         <meta charset="UTF-8">
         <meta name="author" content="AquaCheese">
-        <title>AquaCheese Photography - img 1</title>
+        <title>AquaCheese Photography - Train 1</title>
         <style>
-            body{
+            body {
                 background-color: #333;
-    color: whitesmoke;
-    text-align: center;
-    font-family: Arial, Helvetica, sans-serif;
-    
-    a {
-        color: cornsilk;
-    }
-    a :visited{
-        color: aqua;
-    }
-    a :hover{
-        color: gray;
-    }
-    a :active{
-        color: white;
-    }
+                color: whitesmoke;
+                text-align: center;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
+            a {
+                color: cornsilk;
+            }
+            a:visited {
+                color: aqua;
+            }
+            a:hover {
+                color: gray;
+            }
+            a:active {
+                color: white;
+            }
+
+            /* Dialog box styles */
+            .dialog-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.8);
+                z-index: 1000;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .dialog-box {
+                position: relative;
+                background-color: #222;
+                padding: 20px;
+                border-radius: 10px;
+                text-align: center;
+            }
+
+            .dialog-box img {
+                max-width: 90%;
+                max-height: 90%;
+                border: 2px solid whitesmoke;
+            }
+
+            .close-btn {
+                position: absolute;
+                top: 100px;
+                right: 10px;
+                background-color: crimson;
+                color: white;
+                border: none;
+                border-radius: 50%;
+                width: 30px;
+                height: 30px;
+                font-size: 18px;
+                cursor: pointer;
+            }
+
+            .close-btn:hover {
+                background-color: darkred;
             }
         </style>
     </head>
 
     <body>
-        <h1>Train Leaving The Station</h1>
+        <h1>Seagull on a Car</h1>
         <a href="index.html"><button type="button" style="position: absolute;">&larr; Back to Home</button></a>
 
-        <a href="Train WM.png" target="_blank"><img src="Train WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200"></a>
+        <!-- Image with click event -->
+        <a href="javascript:void(0);" onclick="openDialog()">
+            <img src="Train WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200">
+        </a>
         <p style="font-size: xx-large;">
             &uarr; click image to expand &uarr;
             <br>
-            (opens a new tab)
-             <br><br>
-          Price: <b>£15</b>
-         </p>
+            (opens a dialog box)
+            <br><br>
+            Price: <b>£15</b>
+        </p>
+
+        <!-- Dialog box -->
+        <div class="dialog-overlay" id="dialogOverlay">
+            <div class="dialog-box">
+                <button class="close-btn" onclick="closeDialog()">X</button>
+                <img src="Train WM.png" alt="Expanded Image">
+            </div>
+        </div>
+
         <fieldset>
-            <legend>
-                Description
-            </legend>
+            <legend>Description</legend>
             <p>
-                this is a picture of a <abbr title="Great Western Railway">GWR</abbr> train leaving Bodmin Station
-               <br><br> (there will be no watermark when the photo is actually purchased)
-               <br><br> Image Resolution: 6000x4000px
-               <br><br> Image Size: 9.41MB
-               <br><br> Year of Shoot: 2025
-               <br><br> If you don't want to pay right now, you can download the watermarked version <a href="Train WM.png" download="Train - AC PHOTO WATERMARK">here</a>
+                This is a picture of a <abbr title="Great Western Railway">GWR</abbr> train leaving a station.
+                <br><br> (there will be no watermark when the photo is actually purchased)
+                <br><br> Image Resolution: 6000x4000px
+                <br><br> Image Size: 12.5MB
+                <br><br> Year of Shoot: 2025
+                <br><br> If you don't want to pay right now, you can download the watermarked version <a href="Train WM.png" download="Seagull on a Car - AC PHOTO WATERMARK">here</a>
             </p>
             location:
-            <a href="https://www.google.com/maps/place/Bodmin+Parkway/@50.44585,-4.662967,17z/data=!3m1!4b1!4m6!3m5!1s0x486b7a5c4740ba4b:0xc374b8a5e8c7d45a!8m2!3d50.44585!4d-4.662967!16zL20vMDgyeHpm?entry=ttu&g_ep=EgoyMDI1MDQyOC4wIKXMDSoASAFQAw%3D%3D" target="_blank"><address>Bodmin Parkway Station, Cornwall, United Kingdom</address></a>
+            <a href="https://www.google.com/maps/place/Bodmin+Parkway/@50.4458534,-4.6655473,17z/data=!3m1!4b1!4m6!3m5!1s0x486b7a5c4740ba4b:0xc374b8a5e8c7d45a!8m2!3d50.44585!4d-4.662967!16zL20vMDgyeHpm?entry=ttu&g_ep=EgoyMDI1MDUwNi4wIKXMDSoASAFQAw%3D%3D" target="_blank"><address>Bodmin Parkway station, United Kingdom</address></a>
         </fieldset>
         <br>
         <button type="button" style="font-size: large;">Add to Cart</button> &nbsp;&nbsp;&nbsp; <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
         <br><br>
         &lt;&lt;&lt;&nbsp; &copy; 2025 AquaCheese &nbsp;&gt;&gt;&gt;
+
+        <script>
+            // Function to open the dialog
+            function openDialog() {
+                document.getElementById('dialogOverlay').style.display = 'flex';
+            }
+
+            // Function to close the dialog
+            function closeDialog() {
+                document.getElementById('dialogOverlay').style.display = 'none';
+            }
+        </script>
     </body>
 </html>
