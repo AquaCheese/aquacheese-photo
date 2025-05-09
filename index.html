@@ -78,12 +78,23 @@
         background-color: gold;
         color: black;
     }
-    .btn_search:hover{
-        transition: 0.3s;
-        background-color: darkgoldenrod;
+    
+    .btn_search {
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 5px;
+        background-color: goldenrod;
         color: black;
-
+        border: none;
+        transition: background-color 0.3s ease; /* Smooth transition for background color */
     }
+
+    .btn_search:hover {
+        background-color: darkgoldenrod; /* Change to darkgoldenrod on hover */
+        color: black; /* Ensure text color remains readable */
+    }
+
+
     html{
         scroll-behavior: smooth;
     }
@@ -99,7 +110,7 @@
         <br>
         <b style="font-size: xx-large;">[OPEN BETA]</b>
         <br><br>
-        v. 0.8.0
+        v. 0.8.1
         <br>
         <br>
         THIS SITE IS IDEALLY VIEWED ON DESKTOP / LAPTOP <br> (viewing on other devices may lead to alignment, or other visual issues)
@@ -113,7 +124,7 @@
         <!-- Search Bar -->
 <div style="margin: 20px;">
     <input type="text" id="searchBar" placeholder="Search for images..." style="width: 300px; padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc;">
-    <button onclick="searchImages()" style="padding: 10px; font-size: 16px; border-radius: 5px; background-color: goldenrod; color: black; border: none;" class="btn_search">Search</button>
+    <button onclick="searchImages()" class="btn_search">Search</button>
 </div>
         <hr>
         <br>
@@ -138,14 +149,14 @@
         
         <section id="rec ad" name="rec ad">
             <br><br><br><br>
-        <fieldset style="margin: auto; display: inline;">
+        <fieldset style="margin: auto; display: inline;" id="rec ad">
             <legend>
                 3 Recently Added Images
             </legend>
             <!-- TO KEEP CONSISTANT ALIGNMENT, EVERY 3 PICs, MAKE A NEW TABLE -->
             <table style="display: inline;">
                 <td>
-                    <fieldset style="width: fit-content; border-color: goldenrod; box-sizing: border-box;" id="big field">
+                    <fieldset style="width: fit-content; border-color: goldenrod; box-sizing: border-box;" class="image-fieldset">
                      <legend id="field">A Big Ol' Field</legend>
                     <a href="field.html"><img src="field WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
                     <p style="font-size: larger;">
@@ -157,7 +168,7 @@
                 </td>
             
                 <td>
-                    <fieldset style="width: fit-content; border-color: goldenrod; box-sizing: border-box;">
+                    <fieldset style="width: fit-content; border-color: goldenrod; box-sizing: border-box;" class="image-fieldset">
                      <legend id="flowers">A Smol Patch of Flowers</legend>
                     <a href="flowers.html"><img src="flowers WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
                     <p style="font-size: larger;">
@@ -169,7 +180,7 @@
                 </td>
 
                 <td>
-                    <fieldset style="width: fit-content; border-color: goldenrod; box-sizing: border-box;">
+                    <fieldset style="width: fit-content; border-color: goldenrod; box-sizing: border-box;" class="image-fieldset">
                      <legend id="pots">Plant Pots</legend>
                     <a href="Plant Pots.html"><img src="Plant Pots WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
                     <p style="font-size: larger;">
@@ -196,13 +207,13 @@
 
     <br><br><br><br>
     <section id="land" name="land">
-    <fieldset style="margin: auto; width: fit-content; display: inline;">
+    <fieldset style="margin: auto; width: fit-content; display: inline;" id="land">
         <legend>
             Landscape Images
         </legend>
         <table style="display: inline;">
             <td>
-                <fieldset style="width: fit-content; border-color: peru;">
+                <fieldset style="width: fit-content; border-color: peru;" class="image-fieldset">
                 <legend id="seagull">Seagull on a car</legend>
                 <a href="Seagull car img.html"><img src="Seagull on a Car WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200"></a>
                 <p style="font-size: larger;">
@@ -213,7 +224,7 @@
             </fieldset>
             </td>
 
-            <td><fieldset style="width: fit-content; border-color: peru;">
+            <td><fieldset style="width: fit-content; border-color: peru;" class="image-fieldset">
                 <legend id="river">Small River</legend>
             <a href="Perran River.html"><img src="Smol River WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
             <p style="font-size: larger;">
@@ -225,7 +236,7 @@
             </td>
 
             <td>
-                <fieldset style="width: fit-content; border-color: peru;">
+                <fieldset style="width: fit-content; border-color: peru;" class="image-fieldset">
                 <legend id="gavel">Close-Up of a Gavel</legend>
                 <a href="Gavel.html"><img src="Gavel WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
                 <p style="font-size: larger;">
@@ -239,7 +250,7 @@
 
             <table>
                 <td>
-                    <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;">
+                    <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;" class="image-fieldset">
                     <legend id="trainq>Train Leaving The Station</legend>
                     <a href="Train.html"><img src="Train WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                     <p style="font-size: larger;">
@@ -250,7 +261,7 @@
                 </fieldset>
                 </td>
                 <td>
-                    <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;">
+                    <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;" class="image-fieldset">
                     <legend id="rainbow">Rainbow on an Overcast Day</legend>
                     <a href="OC Rainbow.html"><img src="Overcast Rainbow WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                     <p style="font-size: larger;">
@@ -261,7 +272,7 @@
                 </fieldset>
                 </td>
                 <td>
-                    <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;">
+                    <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;" class="image-fieldset">
                      <legend id="lights">Traffic Lights</legend>
                     <a href="Traffic lights img.html"><img src="Traffic lights WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                     <p style="font-size: larger;">
@@ -275,7 +286,7 @@
 
                 <table>
                     <td>
-                        <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;">
+                        <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;" class="image-fieldset">
                          <legend id="darktree">Dark Tree</legend>
                         <a href="Dark tree.html"><img src="Dark Tree WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                         <p style="font-size: larger;">
@@ -287,7 +298,7 @@
                     </td>
                    
                     <td>
-                        <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;">
+                        <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;" class="image-fieldset">
                          <legend id="field">A Big Ol' Field</legend>
                         <a href="field.html"><img src="field WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                         <p style="font-size: larger;">
@@ -299,7 +310,7 @@
                     </td>
                     
                     <td>
-                        <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;">
+                        <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;" class="image-fieldset">
                          <legend id="flowers">A Smol Patch of Flowers</legend>
                         <a href="flowers.html"><img src="flowers WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                         <p style="font-size: larger;">
@@ -313,7 +324,7 @@
                 <table>
                    
                     <td>
-                        <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;">
+                        <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;" class="image-fieldset">
                          <legend id="pots">Plant Pots</legend>
                         <a href="Plant Pots.html"><img src="Plant Pots WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                         <p style="font-size: larger;">
@@ -331,13 +342,13 @@
     <br><br><br><br>
     
     <section id="port" name="port">
-        <fieldset style="margin: auto; width: fit-content; display: inline;">
+        <fieldset style="margin: auto; width: fit-content; display: inline;" id="port">
             <legend>
                 Portrait Images
             </legend>
             <table>
             <td>
-                <fieldset style="width: fit-content; border-color: royalblue; box-sizing: border-box;">
+                <fieldset style="width: fit-content; border-color: royalblue; box-sizing: border-box;" class="image-fieldset">
                 <legend id="muffin">Close-up of a Mini Muffin</legend>
                 <a href="Muffin.html"><img src="Muffin WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                 <p style="font-size: larger;">
@@ -348,7 +359,7 @@
             </fieldset>
             </td>
             <td>
-                <fieldset style="width: fit-content; border-color: royalblue; box-sizing: border-box;">
+                <fieldset style="width: fit-content; border-color: royalblue; box-sizing: border-box;" class="image-fieldset">
                  <legend id="GWRtrain">GWR Train</legend>
                 <a href="GWR Train.html"><img src="GWR Train WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                 <p style="font-size: larger;">
@@ -359,7 +370,7 @@
             </fieldset>
             </td>
             <td>
-                <fieldset style="width: fit-content; border-color: royalblue; box-sizing: border-box;">
+                <fieldset style="width: fit-content; border-color: royalblue; box-sizing: border-box;" class="image-fieldset">
                  <legend id="mediumtree">Medium Tree</legend>
                 <a href="P Tree.html"><img src="Tree Portrait WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                 <p style="font-size: larger;">
@@ -376,12 +387,12 @@
         <br><br><br><br>
 
     <section id="All" name="All">
-        <fieldset style="margin: auto; width: fit-content; display: inline;">
+        <fieldset style="margin: auto; width: fit-content; display: inline;" id="All">
             <legend>
                 All Images
             </legend>
             <table style="display: inline;">
-                <td><fieldset style="width: fit-content; border-color: chartreuse;">
+                <td><fieldset style="width: fit-content; border-color: chartreuse;" class="image-fieldset">
                     <legend id="river">Small River</legend>
                 <a href="Perran River.html"><img src="Smol River WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
                 <p style="font-size: larger;">
@@ -392,7 +403,8 @@
                 </fieldset>
             </td>
             <td>
-                <fieldset style="width: fit-content; border-color: chartreuse;">
+                <fieldset style="width: fit-content; border-color: chartreuse;" class="image-fieldset">
+                 <legend id="river">Small River</legend>
                 <legend id="seagull">Seagull on a car</legend>
                 <a href="Seagull car img.html"><img src="Seagull on a Car WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
                 <p style="font-size: larger;">
@@ -403,8 +415,8 @@
             </fieldset>
             </td>
             <td>
-                <fieldset style="width: fit-content; border-color: chartreuse;">
-                <legend id="gavel">Gavel on it's side</legend>
+                <fieldset style="width: fit-content; border-color: chartreuse;" class="image-fieldset">
+                 <legend id="gavel">Gavel on it's side</legend>
                 <a href="Gavel.html"><img src="Gavel WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
                 <p style="font-size: larger;">
                     £15
@@ -418,7 +430,8 @@
             </table>
             <table>
             <td>
-                <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;">
+                <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;" class="image-fieldset">
+                 <legend id="train">Train Leaving The Station</legend>
                 <legend id="train">Train Leaving The Station</legend>
                 <a href="Train.html"><img src="Train WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                 <p style="font-size: larger;">
@@ -429,7 +442,8 @@
             </fieldset>
             </td>
             <td>
-                <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;">
+                <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;" class="image-fieldset">
+                 <legend id="muffin">Close-up of a Mini Muffin</legend>
                 <legend id="muffin">Close-up of a Mini Muffin</legend>
                 <a href="Muffin.html"><img src="Muffin WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                 <p style="font-size: larger;">
@@ -440,7 +454,8 @@
             </fieldset>
             </td>
             <td>
-                <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;">
+                <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;" class="image-fieldset">
+                 <legend id="seagull">Seagull on a car</legend>
                 <legend id="rainbow">Rainbow on an Overcast Day</legend>
                 <a href="OC Rainbow.html"><img src="Overcast Rainbow WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                 <p style="font-size: larger;">
@@ -454,7 +469,7 @@
         <table>
         
             <td>
-                <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;">
+                <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;" class="image-fieldset">
                  <legend id="lights">Traffic Lights</legend>
                 <a href="Traffic lights img.html"><img src="Traffic lights WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                 <p style="font-size: larger;">
@@ -465,7 +480,7 @@
             </fieldset>
             </td>
             <td>
-                <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;">
+                <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;" class="image-fieldset">
                  <legend id="GWRtrain">GWR Train</legend>
                 <a href="GWR Train.html"><img src="GWR Train WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                 <p style="font-size: larger;">
@@ -477,7 +492,7 @@
             </td>
            
             <td>
-                <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;">
+                <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;" class="image-fieldset">
                  <legend id="darktree">Dark Tree</legend>
                 <a href="Dark tree.html"><img src="Dark Tree WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                 <p style="font-size: larger;">
@@ -492,7 +507,7 @@
 
             <table>
                 <td>
-                    <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;">
+                    <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;" class="image-fieldset">
                      <legend id="field">A Big Ol' Field</legend>
                     <a href="field.html"><img src="field WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                     <p style="font-size: larger;">
@@ -503,7 +518,7 @@
                 </fieldset>
                 </td>
                 <td>
-                    <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;">
+                    <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;" class="image-fieldset">
                      <legend id="flowers">A Smol Patch of Flowers</legend>
                     <a href="flowers.html"><img src="flowers WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                     <p style="font-size: larger;">
@@ -515,7 +530,7 @@
                 </td>
 
                 <td>
-                    <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;">
+                    <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;" class="image-fieldset">
                      <legend id="pots">Plant Pots</legend>
                     <a href="Plant Pots.html"><img src="Plant Pots WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                     <p style="font-size: larger;">
@@ -529,15 +544,15 @@
             </table>
             <table>
                 <td>
-                    <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;">
-                     <legend id="mediumtree">Medium Tree</legend>
-                    <a href="P Tree.html"><img src="Tree Portrait WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
-                    <p style="font-size: larger;">
-                        £15
-                    </p>
-                    <a href="P Tree.html"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                </fieldset>
+                    <fieldset class="image-fieldset" style="width: fit-content; border-color: chartreuse; box-sizing: border-box;">
+                        <legend id="mediumtree">Medium Tree</legend>
+                        <a href="P Tree.html"><img src="Tree Portrait WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
+                        <p style="font-size: larger;">
+                            £15
+                        </p>
+                        <a href="P Tree.html"><button type="button" style="font-size: large;">See Details</button></a>
+                        <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                    </fieldset>
                 </td>
 
                 
@@ -563,7 +578,7 @@
     <br><br><br><br>
 
     <section id="videos" name="videos">
-        <fieldset style="margin: auto; width: fit-content;">
+        <fieldset style="margin: auto; width: fit-content;" id="videos">
             <legend>
                 Videos
             </legend>
@@ -630,17 +645,31 @@
 
     <script>
         function searchImages() {
-            const query = document.getElementById('searchBar').value.toLowerCase();
-            const legends = document.querySelectorAll('legend');
+            const query = document.getElementById('searchBar').value.trim().toLowerCase(); // Normalize the query
+            const fieldsets = document.querySelectorAll('.image-fieldset'); // Target only image fieldsets
+            let visibleCount = 0;
     
-            legends.forEach(legend => {
-                const parentFieldset = legend.closest('fieldset');
-                if (legend.textContent.toLowerCase().includes(query)) {
-                    parentFieldset.style.display = 'block'; // Show matching images
+            fieldsets.forEach(fieldset => {
+                const legend = fieldset.querySelector('legend');
+                if (legend && legend.textContent.trim().toLowerCase().includes(query)) {
+                    fieldset.style.display = 'block'; // Show matching fieldsets
+                    visibleCount++;
                 } else {
-                    parentFieldset.style.display = 'none'; // Hide non-matching images
+                    fieldset.style.display = 'none'; // Hide non-matching fieldsets
                 }
             });
+    
+            // If no matches are found and the query is not empty, keep all hidden
+            if (visibleCount === 0 && query !== '') {
+                fieldsets.forEach(fieldset => {
+                    fieldset.style.display = 'none';
+                });
+            } else if (query === '') {
+                // Show all if the query is empty
+                fieldsets.forEach(fieldset => {
+                    fieldset.style.display = 'block';
+                });
+            }
         }
     </script>
     </body>
