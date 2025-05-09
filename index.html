@@ -140,6 +140,34 @@
         <br><br>
         <hr>
 
+    <button id="mobileViewButton" style="font-size: large; margin: 20px; padding: 10px; border-radius: 5px; background-color: lightblue; border: none; cursor: pointer;">
+    Tap if you're on mobile
+    </button>
+
+        <script>
+        document.getElementById('mobileViewButton').addEventListener('click', function () {
+        document.body.style.fontSize = '14px'; // Adjust font size for mobile
+        document.body.style.padding = '10px'; // Add padding for better spacing
+        const fieldsets = document.querySelectorAll('fieldset');
+        fieldsets.forEach(fieldset => {
+            fieldset.style.width = '100%'; // Make fieldsets take full width
+            fieldset.style.margin = '10px auto'; // Center fieldsets with margin
+        });
+        const images = document.querySelectorAll('img');
+        images.forEach(img => {
+            img.style.width = '100%'; // Make images responsive
+            img.style.height = 'auto'; // Maintain aspect ratio
+        });
+        const videos = document.querySelectorAll('video');
+        videos.forEach(video => {
+            video.style.width = '100%'; // Make videos responsive
+            video.style.height = 'auto'; // Maintain aspect ratio
+        });
+     });
+        </script>
+
+        <hr>
+
         <br>
         <div style="margin: 20px;">
             <input type="text" id="searchBar" placeholder="Search for images..." style="width: 300px; padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc;">
@@ -579,7 +607,10 @@
             </legend>
             <table>
                 <td>
-                    <fieldset style="width: fit-content; border-color: cadetblue; margin: auto">
+                    <fieldset style="width: fit-content; border-color: cadetblue; margin: auto" class="image-fieldset">
+                        <legend>
+
+                        </legend>
                     <a href="[VIDEO HTML FILE]"><video src="[VIDEO PATH]" alt="ERROR 404: VIDEO NOT FOUND" loading="lazy"></video></a>
 
                     <p style="font-size: larger;">
@@ -592,7 +623,10 @@
                     </fieldset>
                 </td>
                 <td>
-                    <fieldset style="width: fit-content; border-color: cadetblue; margin: auto">
+                    <fieldset style="width: fit-content; border-color: cadetblue; margin: auto" class="image-fieldset">
+                        <legend>
+
+                        </legend>
                     <a href="[VIDEO HTML FILE]"><video src="[VIDEO PATH]" alt="ERROR 404: VIDEO NOT FOUND" loading="lazy"></video></a>
 
                     <p style="font-size: larger;">
@@ -605,7 +639,10 @@
                     </fieldset>
                 </td>
                 <td>
-                    <fieldset style="width: fit-content; border-color: cadetblue; margin: auto">
+                    <fieldset style="width: fit-content; border-color: cadetblue; margin: auto" class="image-fieldset">
+                        <legend>
+
+                        </legend>
                     <a href="[VIDEO HTML FILE]"><video src="[VIDEO PATH]" alt="ERROR 404: VIDEO NOT FOUND" loading="lazy"></video></a>
 
                     <p style="font-size: larger;">
