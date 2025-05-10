@@ -70,6 +70,24 @@
             .close-btn:hover {
                 background-color: darkred;
             }
+
+            #cartButton {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: gold;
+        color: black;
+        border: none;
+        border-radius: 12px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        z-index: 1000;
+    }
+
+    #cartButton:hover {
+        background-color: goldenrod;
+    }
         </style>
     </head>
 
@@ -79,7 +97,7 @@
 
         <!-- Image with click event -->
         <a href="javascript:void(0);" onclick="openDialog()">
-            <img src="Tree Portrait WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200">
+            <img src="Tree Portrait WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" name="portrait tree">
         </a>
         <p style="font-size: xx-large;">
             &uarr; click image to expand &uarr;
@@ -112,7 +130,7 @@
             <address>[NO LOCATION]</address>
         </fieldset>
         <br>
-        <button type="button" style="font-size: large;">Add to Cart</button> &nbsp;&nbsp;&nbsp; <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+        <button type="button" style="font-size: large;" onclick="addToCart('Portrait Shot of a Tree', 'Tree Portrait WM.png')">Add to Cart</button> &nbsp;&nbsp;&nbsp; <a href="Purchase.html"><button style="font-size: large;">Buy Now</button></a>
         <br><br>
         &lt;&lt;&lt;&nbsp; &copy; 2025 AquaCheese &nbsp;&gt;&gt;&gt;
 
@@ -127,5 +145,182 @@
                 document.getElementById('dialogOverlay').style.display = 'none';
             }
         </script>
+
+        <!-- Cart button -->
+<button id="cartButton">Cart</button>
+
+<!-- Cart panel -->
+<div id="cartPanel">
+    <button id="closeCart">&times;</button>
+    <h2>Your Cart</h2>
+    <ul id="cartList">
+        <!-- Items will be dynamically added here -->
+    </ul>
+</div>
+
+<style>
+    /* Cart button styles */
+    #cartButton {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: gold;
+        color: black;
+        border: none;
+        border-radius: 12px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        z-index: 1000;
+    }
+
+    #cartButton:hover {
+        background-color: goldenrod;
+    }
+
+    /* Cart panel styles */
+    #cartPanel {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 300px;
+        height: 100%;
+        background-color: #333;
+        color: whitesmoke;
+        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+        overflow-y: auto;
+        transition: right 0.3s ease;
+        z-index: 999;
+        padding: 20px;
+    }
+
+    #cartPanel h2 {
+        text-align: center;
+    }
+
+    #cartPanel ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    #cartPanel ul li {
+        margin: 10px 0;
+        border-bottom: 1px solid whitesmoke;
+        padding-bottom: 10px;
+    }
+
+    #closeCart {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: red;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    #closeCart:hover {
+        background-color: darkred;
+    }
+</style>
+
+<script>
+    // Cart functionality
+    let cart = JSON.parse(localStorage.getItem('cart')) || []; // Load cart from localStorage or initialize as empty
+    const cartButton = document.getElementById('cartButton');
+    const cartPanel = document.getElementById('cartPanel');
+    const cartList = document.getElementById('cartList');
+    const closeCart = document.getElementById('closeCart');
+
+    // Open the cart panel
+    cartButton.addEventListener('click', () => {
+        cartPanel.style.right = '0';
+        cartButton.style.display = 'none'; // Hide the cart button
+    });
+
+    // Close the cart panel
+    closeCart.addEventListener('click', () => {
+        cartPanel.style.right = '-100%';
+        cartButton.style.display = 'block'; // Show the cart button
+    });
+
+    // Add to cart function
+    function addToCart(itemName, itemImage) {
+        if (!itemName) {
+            alert("Error: Item name is missing.");
+            return;
+        }
+
+        // Add the item details to the cart array
+        cart.push({ name: itemName, image: itemImage });
+        saveCart(); // Save the cart to localStorage
+        updateCart();
+        alert(`${itemName} has been added to your cart.`);
+    }
+
+    // Update the cart list and cart button text
+    function updateCart() {
+        cartList.innerHTML = ''; // Clear the current cart list
+        cart.forEach((item, index) => {
+            const listItem = document.createElement('li');
+            listItem.style.display = 'flex';
+            listItem.style.alignItems = 'center';
+            listItem.style.marginBottom = '10px';
+
+            // Add the image to the cart item (if available)
+            if (item.image) {
+                const itemImage = document.createElement('img');
+                itemImage.src = item.image;
+                itemImage.alt = item.name;
+                itemImage.style.width = '50px';
+                itemImage.style.height = '50px';
+                itemImage.style.marginRight = '10px';
+                itemImage.style.border = '1px solid whitesmoke';
+                listItem.appendChild(itemImage);
+            }
+
+            // Add the name of the item
+            const itemName = document.createElement('span');
+            itemName.textContent = item.name;
+            listItem.appendChild(itemName);
+
+            // Add a remove button for each item
+            const removeButton = document.createElement('button');
+            removeButton.textContent = 'Remove';
+            removeButton.style.marginLeft = '10px';
+            removeButton.style.backgroundColor = 'red';
+            removeButton.style.color = 'white';
+            removeButton.style.border = 'none';
+            removeButton.style.borderRadius = '5px';
+            removeButton.style.cursor = 'pointer';
+
+            // Remove item from the cart when the button is clicked
+            removeButton.addEventListener('click', () => {
+                cart.splice(index, 1); // Remove the item from the cart array
+                saveCart(); // Save the updated cart to localStorage
+                updateCart(); // Update the cart display
+            });
+
+            listItem.appendChild(removeButton);
+            cartList.appendChild(listItem);
+        });
+
+        // Update the cart button text with the number of items
+        const itemCount = cart.length;
+        cartButton.textContent = itemCount > 0 ? `Cart (${itemCount})` : 'Cart';
+    }
+
+    // Save the cart to localStorage
+    function saveCart() {
+        localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    // Load the cart when the page loads
+    document.addEventListener('DOMContentLoaded', updateCart);
+</script>
     </body>
 </html>
