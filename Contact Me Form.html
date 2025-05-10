@@ -67,9 +67,7 @@
                 <img src="Flag_of_the_United_Kingdom.png" alt="ERROR 404: UNION JACK NOT FOUND" style="max-height: 50px; max-width: 50px;">
             </p>
             <form onsubmit="sendEmail(event)">
-                <label for="fname">First name: <input type="text" name="fname" id="fname" placeholder="(not required)" autocomplete="on"></label>
-                <br><br>
-                <label for="lname">Last name: <input type="text" name="lname" id="lname" placeholder="(not required)" autocomplete="on"></label>
+                <label for="lname">Full Name: <input type="text" name="lname" id="lname" placeholder="(not required)" autocomplete="on"></label>
                 <br><br>
                 <label for="email">*Email: <input type="email" name="email" id="email" required placeholder="example@email.com" autocomplete="on"></label>
                 <br><br>
@@ -78,7 +76,22 @@
                 <br><br>
                 <button type="submit" style="font-size: x-large; border-radius: 12px;">Submit</button>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <button type="reset" style="font-size: x-large; border-radius: 12px; background-color: red;"><b>Reset</b></button>
+                <button type="reset" style="font-size: x-large; border-radius: 12px; background-color: red;" onclick="confirmReset(event)"><b>Reset</b></button>
+
+<script>
+    function confirmReset(event) {
+        event.preventDefault(); // Prevent the default reset behavior
+
+        // Create a confirmation dialog
+        const confirmation = confirm("Are you sure you want to reset the whole form?");
+        if (confirmation) {
+            // If the user confirms, reset the form
+            const form = event.target.closest("form");
+            form.reset();
+        }
+        // If the user cancels, do nothing
+    }
+</script>
             </form>
         </fieldset>
         <br>
