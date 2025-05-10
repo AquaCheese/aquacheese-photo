@@ -121,6 +121,14 @@
                 padding-bottom: 10px;
             }
 
+            #cartSubtotal {
+                margin-top: 20px;
+                font-size: 18px;
+                text-align: center;
+                border-top: 1px solid whitesmoke;
+                padding-top: 10px;
+            }
+
             #closeCart {
                 position: absolute;
                 top: 10px;
@@ -138,11 +146,27 @@
             #closeCart:hover {
                 background-color: darkred;
             }
+
+            #buyNowButton {
+                margin-top: 20px;
+                width: 100%;
+                padding: 10px;
+                background-color: green;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                font-size: 16px;
+                cursor: pointer;
+            }
+
+            #buyNowButton:hover {
+                background-color: darkgreen;
+            }
         </style>
     </head>
 
     <body>
-        <h1>Close-up of a gavel on its side</h1>
+        <h1>Close-up of a Gavel on its Side</h1>
         <a href="index.html"><button type="button" style="position: absolute;">&larr; Back to Home</button></a>
 
         <!-- Image with click event -->
@@ -168,7 +192,7 @@
         <fieldset>
             <legend>Description</legend>
             <p>
-                this is a picture of a gavel on its side  <strong>"ORDER!"</strong> - a judge somewhere, sometime
+                This is a picture of a gavel on its side. <strong>"ORDER!"</strong> - a judge somewhere, sometime.
                 <br><br> (there will be no watermark when the photo is actually purchased)
                 <br><br> Image Resolution: 6000x4000px
                 <br><br> Image Size: 20.23MB
@@ -179,7 +203,7 @@
             <address>[NO LOCATION]</address>
         </fieldset>
         <br>
-        <button type="button" style="font-size: large;" onclick="addToCart('Close-up of a Gavel', 'Gavel WM.png')">Add to Cart</button> &nbsp;&nbsp;&nbsp; <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+        <button type="button" style="font-size: large;" onclick="addToCart('Close-up of a Gavel', 'Gavel WM.png')">Add to Cart</button> &nbsp;&nbsp;&nbsp; <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
         <br><br>
         &lt;&lt;&lt;&nbsp; &copy; 2025 AquaCheese &nbsp;&gt;&gt;&gt;
 
@@ -193,101 +217,144 @@
             <ul id="cartList">
                 <!-- Items will be dynamically added here -->
             </ul>
+            <div id="cartSubtotal">
+                Subtotal: £0
+            </div>
+            <button id="buyNowButton">Buy Now</button>
         </div>
 
         <script>
-    // Cart functionality
-    let cart = JSON.parse(localStorage.getItem('cart')) || []; // Load cart from localStorage or initialize as empty
-    const cartButton = document.getElementById('cartButton');
-    const cartPanel = document.getElementById('cartPanel');
-    const cartList = document.getElementById('cartList');
-    const closeCart = document.getElementById('closeCart');
-
-    // Open the cart panel
-    cartButton.addEventListener('click', () => {
-        cartPanel.style.right = '0';
-        cartButton.style.display = 'none'; // Hide the cart button
-    });
-
-    // Close the cart panel
-    closeCart.addEventListener('click', () => {
-        cartPanel.style.right = '-100%';
-        cartButton.style.display = 'block'; // Show the cart button
-    });
-
-    // Add to cart function
-    function addToCart(itemName, itemImage) {
-        if (!itemName) {
-            alert("Error: Item name is missing.");
-            return;
-        }
-
-        // Add the item details to the cart array
-        cart.push({ name: itemName, image: itemImage });
-        saveCart(); // Save the cart to localStorage
-        updateCart();
-        alert(`${itemName} has been added to your cart.`);
+            document.getElementById('buyNowButton').addEventListener('click', () => {
+    if (cart.length > 0) {
+        localStorage.removeItem('singleItem'); // Clear single item data
+        localStorage.setItem('cartPurchase', true); // Indicate that the cart is being purchased
+        window.location.href = 'Purchase.html'; // Redirect to the purchase page
+    } else {
+        alert('Your cart is empty. Add items to proceed.');
     }
-
-    // Update the cart list and cart button text
-    function updateCart() {
-        cartList.innerHTML = ''; // Clear the current cart list
-        cart.forEach((item, index) => {
-            const listItem = document.createElement('li');
-            listItem.style.display = 'flex';
-            listItem.style.alignItems = 'center';
-            listItem.style.marginBottom = '10px';
-
-            // Add the image to the cart item (if available)
-            if (item.image) {
-                const itemImage = document.createElement('img');
-                itemImage.src = item.image;
-                itemImage.alt = item.name;
-                itemImage.style.width = '50px';
-                itemImage.style.height = '50px';
-                itemImage.style.marginRight = '10px';
-                itemImage.style.border = '1px solid whitesmoke';
-                listItem.appendChild(itemImage);
-            }
-
-            // Add the name of the item
-            const itemName = document.createElement('span');
-            itemName.textContent = item.name;
-            listItem.appendChild(itemName);
-
-            // Add a remove button for each item
-            const removeButton = document.createElement('button');
-            removeButton.textContent = 'Remove';
-            removeButton.style.marginLeft = '10px';
-            removeButton.style.backgroundColor = 'red';
-            removeButton.style.color = 'white';
-            removeButton.style.border = 'none';
-            removeButton.style.borderRadius = '5px';
-            removeButton.style.cursor = 'pointer';
-
-            // Remove item from the cart when the button is clicked
-            removeButton.addEventListener('click', () => {
-                cart.splice(index, 1); // Remove the item from the cart array
-                saveCart(); // Save the updated cart to localStorage
-                updateCart(); // Update the cart display
+});
+            document.getElementById('buyNowButton').addEventListener('click', () => {
+                alert('Proceeding to checkout...');
+                // Add your checkout logic here
             });
 
-            listItem.appendChild(removeButton);
-            cartList.appendChild(listItem);
-        });
+            // Function to open the dialog
+            function openDialog() {
+                document.getElementById('dialogOverlay').style.display = 'flex';
+            }
 
-        // Update the cart button text with the number of items
-        const itemCount = cart.length;
-        cartButton.textContent = itemCount > 0 ? `Cart (${itemCount})` : 'Cart';
-    }
+            // Function to close the dialog
+            function closeDialog() {
+                document.getElementById('dialogOverlay').style.display = 'none';
+            }
 
-    // Save the cart to localStorage
-    function saveCart() {
-        localStorage.setItem('cart', JSON.stringify(cart));
-    }
+            // Cart functionality
+            let cart = JSON.parse(localStorage.getItem('cart')) || []; // Load cart from localStorage or initialize as empty
+            const cartButton = document.getElementById('cartButton');
+            const cartPanel = document.getElementById('cartPanel');
+            const cartList = document.getElementById('cartList');
+            const cartSubtotal = document.getElementById('cartSubtotal');
+            const closeCart = document.getElementById('closeCart');
 
-    // Load the cart when the page loads
-    document.addEventListener('DOMContentLoaded', updateCart);
-</script>
+            // Open the cart panel
+            cartButton.addEventListener('click', () => {
+                cartPanel.style.right = '0';
+                cartButton.style.display = 'none'; // Hide the cart button
+            });
+
+            // Close the cart panel
+            closeCart.addEventListener('click', () => {
+                cartPanel.style.right = '-100%';
+                cartButton.style.display = 'block'; // Show the cart button
+            });
+
+            // Add to cart function
+            function addToCart(itemName, itemImage) {
+                if (!itemName) {
+                    alert("Error: Item name is missing.");
+                    return;
+                }
+
+                // Add the item details to the cart array
+                cart.push({ name: itemName, image: itemImage, price: 15 }); // Assume each image costs £15
+                saveCart(); // Save the cart to localStorage
+                updateCart();
+                alert(`${itemName} has been added to your cart.`);
+            }
+
+            // Update the cart list and cart button text
+            function updateCart() {
+                cartList.innerHTML = ''; // Clear the current cart list
+                let subtotal = 0; // Initialize subtotal
+
+                cart.forEach((item, index) => {
+                    const listItem = document.createElement('li');
+                    listItem.style.display = 'flex';
+                    listItem.style.alignItems = 'center';
+                    listItem.style.marginBottom = '10px';
+
+                    // Add the image to the cart item (if available)
+                    if (item.image) {
+                        const itemImage = document.createElement('img');
+                        itemImage.src = item.image;
+                        itemImage.alt = item.name;
+                        itemImage.style.width = '50px';
+                        itemImage.style.height = '50px';
+                        itemImage.style.marginRight = '10px';
+                        itemImage.style.border = '1px solid whitesmoke';
+                        listItem.appendChild(itemImage);
+                    }
+
+                    // Add the name of the item
+                    const itemName = document.createElement('span');
+                    itemName.textContent = item.name;
+                    listItem.appendChild(itemName);
+
+                    // Add the price of the item
+                    const itemPrice = document.createElement('span');
+                    itemPrice.textContent = ` - £${item.price}`;
+                    itemPrice.style.marginLeft = 'auto';
+                    listItem.appendChild(itemPrice);
+
+                    // Add a remove button for each item
+                    const removeButton = document.createElement('button');
+                    removeButton.textContent = 'Remove';
+                    removeButton.style.marginLeft = '10px';
+                    removeButton.style.backgroundColor = 'red';
+                    removeButton.style.color = 'white';
+                    removeButton.style.border = 'none';
+                    removeButton.style.borderRadius = '5px';
+                    removeButton.style.cursor = 'pointer';
+
+                    // Remove item from the cart when the button is clicked
+                    removeButton.addEventListener('click', () => {
+                        cart.splice(index, 1); // Remove the item from the cart array
+                        saveCart(); // Save the updated cart to localStorage
+                        updateCart(); // Update the cart display
+                    });
+
+                    listItem.appendChild(removeButton);
+                    cartList.appendChild(listItem);
+
+                    // Add the item's price to the subtotal
+                    subtotal += item.price;
+                });
+
+                // Update the subtotal display
+                cartSubtotal.textContent = `Subtotal: £${subtotal}`;
+
+                // Update the cart button text with the number of items
+                const itemCount = cart.length;
+                cartButton.textContent = itemCount > 0 ? `Cart (${itemCount})` : 'Cart';
+            }
+
+            // Save the cart to localStorage
+            function saveCart() {
+                localStorage.setItem('cart', JSON.stringify(cart));
+            }
+
+            // Load the cart when the page loads
+            document.addEventListener('DOMContentLoaded', updateCart);
+        </script>
     </body>
 </html>

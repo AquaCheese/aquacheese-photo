@@ -182,11 +182,21 @@
 
 <!-- Cart panel -->
 <div id="cartPanel">
-    <button id="closeCart">&times;</button>
+  <button id="closeCart">&times;</button>
     <h2>Your Cart</h2>
     <ul id="cartList">
         <!-- Items will be dynamically added here -->
     </ul>
+
+    <div id="cartSubtotal" style="margin-top: 20px; font-size: 18px; text-align: center; border-top: 1px solid whitesmoke; padding-top: 10px;">
+        Subtotal: £0
+    </div>
+
+    <!-- Buy Now button -->
+    <button id="buyNowButton" style="margin-top: 20px; width: 100%; padding: 10px; background-color: green; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
+        Buy Now
+    </button>
+</div>
 </div>
 
 <style>
@@ -260,11 +270,39 @@
 </style>
 
 <script>
+document.getElementById('buyNowButton').addEventListener('click', () => {
+    if (cart.length > 0) {
+        localStorage.removeItem('singleItem'); // Clear single item data
+        localStorage.setItem('cartPurchase', true); // Indicate that the cart is being purchased
+        window.location.href = 'Purchase.html'; // Redirect to the purchase page
+    } else {
+        alert('Your cart is empty. Add items to proceed.');
+    }
+});
+    function buyNowForImage() {
+    localStorage.setItem('singleItem', JSON.stringify({ type: 'image', price: 15 }));
+    window.location.href = 'Purchase.html';
+}
+
+function buyNowForVideo() {
+    localStorage.setItem('singleItem', JSON.stringify({ type: 'video', price: 20 }));
+    window.location.href = 'Purchase.html';
+}
+    // Add functionality for the Buy Now button
+    document.getElementById('buyNowButton').addEventListener('click', () => {
+        if (cart.length === 0) {
+            alert('Your cart is empty. Add items to proceed.');
+        } else {
+            alert('Proceeding to checkout...');
+            // Add your checkout logic here
+        }
+    });
     // Cart functionality
     let cart = JSON.parse(localStorage.getItem('cart')) || []; // Load cart from localStorage or initialize as empty
     const cartButton = document.getElementById('cartButton');
     const cartPanel = document.getElementById('cartPanel');
     const cartList = document.getElementById('cartList');
+    const cartSubtotal = document.getElementById('cartSubtotal');
     const closeCart = document.getElementById('closeCart');
 
     // Open the cart panel
@@ -287,7 +325,7 @@
         }
 
         // Add the item details to the cart array
-        cart.push({ name: itemName, image: itemImage });
+        cart.push({ name: itemName, image: itemImage, price: 15 }); // Assume each image costs £15
         saveCart(); // Save the cart to localStorage
         updateCart();
         alert(`${itemName} has been added to your cart.`);
@@ -296,6 +334,8 @@
     // Update the cart list and cart button text
     function updateCart() {
         cartList.innerHTML = ''; // Clear the current cart list
+        let subtotal = 0; // Initialize subtotal
+
         cart.forEach((item, index) => {
             const listItem = document.createElement('li');
             listItem.style.display = 'flex';
@@ -319,6 +359,12 @@
             itemName.textContent = item.name;
             listItem.appendChild(itemName);
 
+            // Add the price of the item
+            const itemPrice = document.createElement('span');
+            itemPrice.textContent = ` - £${item.price}`;
+            itemPrice.style.marginLeft = 'auto';
+            listItem.appendChild(itemPrice);
+
             // Add a remove button for each item
             const removeButton = document.createElement('button');
             removeButton.textContent = 'Remove';
@@ -338,7 +384,13 @@
 
             listItem.appendChild(removeButton);
             cartList.appendChild(listItem);
+
+            // Add the item's price to the subtotal
+            subtotal += item.price;
         });
+
+        // Update the subtotal display
+        cartSubtotal.textContent = `Subtotal: £${subtotal}`;
 
         // Update the cart button text with the number of items
         const itemCount = cart.length;
@@ -352,9 +404,6 @@
 
     // Load the cart when the page loads
     document.addEventListener('DOMContentLoaded', updateCart);
-</script>
-
-    
 </script>
         
         <section id="rec ad" name="rec ad">
@@ -373,7 +422,7 @@
                         £15
                     </p>
                     <a href="field.html"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                    <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
                 </fieldset>
                 </td>
             
@@ -385,7 +434,7 @@
                         £15
                     </p>
                     <a href="flowers.html"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                    <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
                 </fieldset>
                 </td>
 
@@ -397,7 +446,7 @@
                         £15
                     </p>
                     <a href="Plant Pots.html"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                    <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
                 </fieldset>
                 </td>
         </table>
@@ -430,7 +479,7 @@
                     £15
                 </p>
                 <a href="Seagull car img.html"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
             </fieldset>
             </td>
 
@@ -441,7 +490,7 @@
                 £15
             </p>
             <a href="Perran River.html"><button type="button" style="font-size: large;">See Details</button></a>
-            <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+            <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
             </fieldset>
             </td>
 
@@ -453,7 +502,7 @@
                     £15
                 </p>
                 <a href="Gavel WM.png"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
             </fieldset>
             </td>
             </table>
@@ -467,7 +516,7 @@
                         £15
                     </p>
                     <a href="Train.html"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                    <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
                     </fieldset>
                 </td>
                 <td>
@@ -478,7 +527,7 @@
                         £15
                     </p>
                     <a href="OC Rainbow.html"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                    <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
                 </fieldset>
                 </td>
                 <td>
@@ -489,7 +538,7 @@
                         £15
                     </p>
                     <a href="Traffic lights img.html"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                    <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
                 </fieldset>
                 </td>
                 </table>
@@ -503,7 +552,7 @@
                             £15
                         </p>
                         <a href="Dark tree.html"><button type="button" style="font-size: large;">See Details</button></a>
-                        <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                        <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
                     </fieldset>
                     </td>
                    
@@ -515,7 +564,7 @@
                             £15
                         </p>
                         <a href="field.html"><button type="button" style="font-size: large;">See Details</button></a>
-                        <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                        <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
                     </fieldset>
                     </td>
                     
@@ -527,7 +576,7 @@
                             £15
                         </p>
                         <a href="flowers.html"><button type="button" style="font-size: large;">See Details</button></a>
-                        <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                        <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
                     </fieldset>
                     </td>
                 </table>
@@ -541,7 +590,7 @@
                             £15
                         </p>
                         <a href="Plant Pots.html"><button type="button" style="font-size: large;">See Details</button></a>
-                        <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                        <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
                     </fieldset>
                     </td>
 
@@ -565,7 +614,7 @@
                     £15
                 </p>
                 <a href="Muffin.html"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
             </fieldset>
             </td>
             <td>
@@ -576,7 +625,7 @@
                     £15
                 </p>
                 <a href="GWR Train.html"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
             </fieldset>
             </td>
             <td>
@@ -587,7 +636,7 @@
                     £15
                 </p>
                 <a href="P Tree.html"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
             </fieldset>
             </td>
         </table>
@@ -609,7 +658,7 @@
                     £15
                 </p>
                 <a href="Perran River.html"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
                 </fieldset>
             </td>
             <td>
@@ -620,7 +669,7 @@
                     £15
                 </p>
                 <a href="Seagull car img.html"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
             </fieldset>
             </td>
             <td>
@@ -631,7 +680,7 @@
                     £15
                 </p>
                 <a href="Gavel WM.png"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
             </fieldset>
             </td>
 
@@ -646,7 +695,7 @@
                     £15
                 </p>
                 <a href="Train.html"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
             </fieldset>
             </td>
             <td>
@@ -657,7 +706,7 @@
                     £15
                 </p>
                 <a href="Muffin.html"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
             </fieldset>
             </td>
             <td>
@@ -668,7 +717,7 @@
                     £15
                 </p>
                 <a href="OC Rainbow.html"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
             </fieldset>
             </td>
         </table>
@@ -682,7 +731,7 @@
                     £15
                 </p>
                 <a href="Traffic lights img.html"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
             </fieldset>
             </td>
             <td>
@@ -693,7 +742,7 @@
                     £15
                 </p>
                 <a href="GWR Train.html"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
             </fieldset>
             </td>
            
@@ -705,7 +754,7 @@
                     £15
                 </p>
                 <a href="Dark tree.html"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
             </fieldset>
             </td>
         </table>
@@ -720,7 +769,7 @@
                         £15
                     </p>
                     <a href="field.html"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                    <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
                 </fieldset>
                 </td>
                 <td>
@@ -731,7 +780,7 @@
                         £15
                     </p>
                     <a href="flowers.html"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                    <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
                 </fieldset>
                 </td>
 
@@ -743,7 +792,7 @@
                         £15
                     </p>
                     <a href="Plant Pots.html"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                    <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
                 </fieldset>
                 </td>
 
@@ -757,7 +806,7 @@
                             £15
                         </p>
                         <a href="P Tree.html"><button type="button" style="font-size: large;">See Details</button></a>
-                        <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                        <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
                     </fieldset>
                 </td>
 
@@ -802,7 +851,7 @@
                         <strong>[EXPERIMENTAL VIDEO FEATURE]</strong>
                     </p>
                     <a href="[VIDEO HTML FILE]"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                    <a href="Purchase vid.html"><button type="button" style="font-size: large;">Buy Now</button></a>
                     </fieldset>
                 </td>
                 <td>
@@ -818,7 +867,7 @@
                         <strong>[EXPERIMENTAL VIDEO FEATURE]</strong>
                     </p>
                     <a href="[VIDEO HTML FILE]"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                    <a href="Purchase vid.html"><button type="button" style="font-size: large;">Buy Now</button></a>
                     </fieldset>
                 </td>
                 <td>
@@ -834,7 +883,7 @@
                         <strong>[EXPERIMENTAL VIDEO FEATURE]</strong>
                     </p>
                     <a href="[VIDEO HTML FILE]"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                    <a href="Purchase vid.html"><button type="button" style="font-size: large;">Buy Now</button></a>
                     </fieldset>
                 </td>
                 </table>
