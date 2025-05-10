@@ -73,7 +73,7 @@
             <input type="email" id="email" name="email" placeholder="Enter your email address" required>
 
             <label for="amount">Amount Due (£)</label>
-            <input type="text" id="amount" name="amount" readonly>
+            <input type="text" id="amount" name="amount" value="15.00" readonly>
 
             <label for="paymentMethod">Payment Method</label>
             <select id="paymentMethod" name="paymentMethod" required>
@@ -90,51 +90,25 @@
         &lt;&lt;&lt;&nbsp; &copy; 2025 AquaCheese &nbsp;&gt;&gt;&gt;
 
         <script>
-    // Retrieve the amount due from localStorage
-    const amountInput = document.getElementById('amount');
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const singleItem = JSON.parse(localStorage.getItem('singleItem')) || null;
+            // Handle form submission
+            document.getElementById('paymentForm').addEventListener('submit', function (e) {
+                e.preventDefault();
 
-    if (singleItem) {
-        // If a single item was selected for purchase
-        amountInput.value = singleItem.price.toFixed(2);
-    } else if (cart.length > 0) {
-        // If the entire cart is being purchased
-        const total = cart.reduce((sum, item) => sum + item.price, 0);
-        amountInput.value = total.toFixed(2);
-    } else {
-        // Default to 0 if no items are selected
-        amountInput.value = '0.00';
-    }
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const amount = 15.00; // Fixed price for images
+                const paymentMethod = document.getElementById('paymentMethod').value;
 
-    // Handle form submission
-    document.getElementById('paymentForm').addEventListener('submit', function (e) {
-        e.preventDefault();
+                alert(`Processing payment of £${amount.toFixed(2)} for ${name} (${email}) using ${paymentMethod}.`);
 
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const amount = parseFloat(amountInput.value);
-        const paymentMethod = document.getElementById('paymentMethod').value;
+                // Placeholder for payment processing logic
+                // You can integrate Stripe, PayPal, or another payment gateway here
+                console.log('Payment details:', { name, email, amount, paymentMethod });
 
-        if (amount <= 0) {
-            alert('No items selected for purchase.');
-            return;
-        }
-
-        alert(`Processing payment of £${amount.toFixed(2)} for ${name} (${email}) using ${paymentMethod}.`);
-
-        // Placeholder for payment processing logic
-        // You can integrate Stripe, PayPal, or another payment gateway here
-        console.log('Payment details:', { name, email, amount, paymentMethod });
-
-        // Clear localStorage after successful payment
-        localStorage.removeItem('cart');
-        localStorage.removeItem('singleItem');
-
-        // Redirect to a success page or display a success message
-        alert('Payment successful! Thank you for your purchase.');
-        window.location.href = 'index.html';
-    });
-</script>
+                // Redirect to a success page or display a success message
+                alert('Payment successful! Thank you for your purchase.');
+                window.location.href = 'index.html';
+            });
+        </script>
     </body>
 </html>
