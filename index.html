@@ -234,11 +234,13 @@ document.getElementById('googleLoginButton').addEventListener('click', () => {
     signInWithPopup(auth, googleProvider)
         .then((result) => {
             const user = result.user;
+            alert(`Welcome, ${user.displayName}!`);
             setProfilePicture(user.photoURL); // Set profile picture
             document.getElementById('loginModal').style.display = 'none'; // Close modal
         })
         .catch((error) => {
             console.error('Google Login Error:', error.message);
+            alert('Google Login Failed: ' + error.message);
         });
 });
 
@@ -278,26 +280,28 @@ document.getElementById('emailLoginButton').addEventListener('click', () => {
 
     // Set profile picture and replace the login button
     function setProfilePicture(profilePicUrl) {
-        loginButton.style.display = 'none'; // Hide the login button
-        const profilePic = document.createElement('img');
-        profilePic.src = profilePicUrl;
-        profilePic.alt = 'Profile Picture';
-        profilePic.style.position = 'fixed';
-        profilePic.style.top = '20px';
-        profilePic.style.right = '100px';
-        profilePic.style.width = '40px';
-        profilePic.style.height = '40px';
-        profilePic.style.borderRadius = '50%';
-        profilePic.style.cursor = 'pointer';
-        profilePic.style.zIndex = '1000';
-        profilePic.id = 'profilePic';
-        document.body.appendChild(profilePic);
+    const loginButton = document.getElementById('loginButton');
+    loginButton.style.display = 'none'; // Hide the login button
 
-        // Show profile menu on click
-        profilePic.addEventListener('click', () => {
-            profileMenu.style.display = profileMenu.style.display === 'none' ? 'block' : 'none';
-        });
-    }
+    const profilePic = document.createElement('img');
+    profilePic.src = profilePicUrl || 'default-profile.png'; // Use a default image if no profile picture is available
+    profilePic.alt = 'Profile Picture';
+    profilePic.style.position = 'fixed';
+    profilePic.style.top = '20px';
+    profilePic.style.right = '100px';
+    profilePic.style.width = '40px';
+    profilePic.style.height = '40px';
+    profilePic.style.borderRadius = '50%';
+    profilePic.style.cursor = 'pointer';
+    profilePic.style.zIndex = '1000';
+    profilePic.id = 'profilePic';
+    document.body.appendChild(profilePic);
+
+    // Add a click event to show a profile menu
+    profilePic.addEventListener('click', () => {
+        alert('Profile menu coming soon!');
+    });
+}
 
     // Log out functionality
     logoutButton.addEventListener('click', () => {
@@ -1049,30 +1053,67 @@ function buyNowForVideo() {
         }
     </script>
 
-    <script>
-            // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+    <script type="module">
+    // Import Firebase modules
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyC_Lb0dPLoqbPzW2fRsEIXlZIWBWCGfiQo",
-  authDomain: "aquacheese-photo-website.firebaseapp.com",
-  projectId: "aquacheese-photo-website",
-  storageBucket: "aquacheese-photo-website.firebasestorage.app",
-  messagingSenderId: "637266954240",
-  appId: "1:637266954240:web:6e55076f10c27ad4c230e5",
-  measurementId: "G-WY1K2FRF4G"
-};
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyC_Lb0dPLoqbPzW2fRsEIXlZIWBWCGfiQo",
+        authDomain: "aquacheese-photo-website.firebaseapp.com",
+        projectId: "aquacheese-photo-website",
+        storageBucket: "aquacheese-photo-website.appspot.com",
+        messagingSenderId: "637266954240",
+        appId: "1:637266954240:web:6e55076f10c27ad4c230e5",
+        measurementId: "G-WY1K2FRF4G"
+    };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-        
-    </script>
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const googleProvider = new GoogleAuthProvider();
+
+    // Google Login
+    document.getElementById('googleLoginButton').addEventListener('click', () => {
+        signInWithPopup(auth, googleProvider)
+            .then((result) => {
+                const user = result.user;
+                alert(`Welcome, ${user.displayName}!`);
+                setProfilePicture(user.photoURL); // Set profile picture
+                document.getElementById('loginModal').style.display = 'none'; // Close modal
+            })
+            .catch((error) => {
+                console.error('Google Login Error:', error.message);
+                alert('Google Login Failed: ' + error.message);
+            });
+    });
+
+    // Set profile picture and replace the login button
+    function setProfilePicture(profilePicUrl) {
+        const loginButton = document.getElementById('loginButton');
+        loginButton.style.display = 'none'; // Hide the login button
+
+        const profilePic = document.createElement('img');
+        profilePic.src = profilePicUrl || 'default-profile.png'; // Use a default image if no profile picture is available
+        profilePic.alt = 'Profile Picture';
+        profilePic.style.position = 'fixed';
+        profilePic.style.top = '20px';
+        profilePic.style.right = '100px';
+        profilePic.style.width = '40px';
+        profilePic.style.height = '40px';
+        profilePic.style.borderRadius = '50%';
+        profilePic.style.cursor = 'pointer';
+        profilePic.style.zIndex = '1000';
+        profilePic.id = 'profilePic';
+        document.body.appendChild(profilePic);
+
+        // Add a click event to show a profile menu
+        profilePic.addEventListener('click', () => {
+            alert('Profile menu coming soon!');
+        });
+    }
+</script>
 
         </script>
 
