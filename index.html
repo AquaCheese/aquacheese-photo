@@ -1056,7 +1056,7 @@ function buyNowForVideo() {
     <script type="module">
     // Import Firebase modules
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-    import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
     // Your web app's Firebase configuration
     const firebaseConfig = {
@@ -1087,6 +1087,30 @@ function buyNowForVideo() {
                 console.error('Google Login Error:', error.message);
                 alert('Google Login Failed: ' + error.message);
             });
+    });
+
+    // Log out functionality
+    document.getElementById('logoutButton')?.addEventListener('click', () => {
+        signOut(auth)
+            .then(() => {
+                alert('Logged out!');
+                document.getElementById('profilePic')?.remove(); // Remove profile picture
+                document.getElementById('loginButton').style.display = 'block'; // Show the login button
+            })
+            .catch((error) => {
+                console.error('Logout Error:', error.message);
+            });
+    });
+
+    // Persist user session
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            // User is logged in
+            setProfilePicture(user.photoURL); // Set profile picture
+        } else {
+            // User is logged out
+            document.getElementById('loginButton').style.display = 'block'; // Show the login button
+        }
     });
 
     // Set profile picture and replace the login button
