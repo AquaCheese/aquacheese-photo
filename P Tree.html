@@ -5,164 +5,244 @@
         <meta name="author" content="AquaCheese">
         <title>AquaCheese Photography - Portrait Shot of a Tree</title>
         <style>
-            body {
-                background-color: #333;
-                color: whitesmoke;
-                text-align: center;
-                font-family: Arial, Helvetica, sans-serif;
-            }
+    body {
+        background-color: #2c2c2c;
+        color: whitesmoke;
+        font-family: Arial, Helvetica, sans-serif;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+    }
 
-            a {
-                color: cornsilk;
-            }
-            a:visited {
-                color: aqua;
-            }
-            a:hover {
-                color: gray;
-            }
-            a:active {
-                color: white;
-            }
+    h1 {
+        font-size: 2.5rem;
+        margin-top: 20px;
+        color: #ffcc00;
+    }
 
-            /* Dialog box styles */
-            .dialog-overlay {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.8);
-                z-index: 1000;
-                justify-content: center;
-                align-items: center;
-            }
+    a {
+        color: #ffcc00;
+        text-decoration: none;
+    }
 
-            .dialog-box {
-                position: relative;
-                background-color: #222;
-                padding: 20px;
-                border-radius: 10px;
-                text-align: center;
-            }
+    a:visited {
+        color: #ffa500;
+    }
 
-            .dialog-box img {
-                max-width: 90%;
-                max-height: 90%;
-                border: 2px solid whitesmoke;
-            }
+    a:hover {
+        color: #ffffff;
+    }
 
-            .close-btn {
-                position: absolute;
-                top: 200px;
-                right: 10px;
-                background-color: crimson;
-                color: white;
-                border: none;
-                border-radius: 50%;
-                width: 30px;
-                height: 30px;
-                font-size: 18px;
-                cursor: pointer;
-            }
+    a:active {
+        color: #ffcc00;
+    }
 
-            .close-btn:hover {
-                background-color: darkred;
-            }
+    button {
+        font-size: 1rem;
+        padding: 10px 20px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
 
-            /* Cart button styles */
-            #cartButton {
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background-color: gold;
-                color: black;
-                border: none;
-                border-radius: 12px;
-                padding: 10px 20px;
-                font-size: 16px;
-                cursor: pointer;
-                z-index: 1000;
-            }
+    button:hover {
+        transform: scale(1.05);
+    }
 
-            #cartButton:hover {
-                background-color: goldenrod;
-            }
+    .dialog-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+    }
 
-            /* Cart panel styles */
-            #cartPanel {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 300px;
-                height: 100%;
-                background-color: #333;
-                color: whitesmoke;
-                box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
-                overflow-y: auto;
-                transition: right 0.3s ease;
-                z-index: 999;
-                padding: 20px;
-            }
+    .dialog-box {
+    position: relative;
+    background-color: #444;
+    padding: 10px; /* Reduced padding */
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    width: 600px; /* Set a fixed width */
+    max-width: 90%; /* Ensure it remains responsive */
+    height: auto; /* Adjust height based on content */
+    max-height: 80%; /* Prevent it from being too tall */
+    overflow: hidden; /* Prevent content overflow */
+}
 
-            #cartPanel h2 {
-                text-align: center;
-            }
+    .dialog-box img {
+        max-width: 90%;
+        max-height: 90%;
+        border: 2px solid whitesmoke;
+        border-radius: 8px;
+    }
 
-            #cartPanel ul {
-                list-style-type: none;
-                padding: 0;
-            }
+    .close-btn {
+    position: absolute;
+    top: 10px; /* Adjusted to move it slightly down */
+    right: 10px; /* Adjusted to move it slightly to the right */
+    background-color: crimson;
+    color: white;
+    border: none;
+    border-radius: 50%; /* Ensures the button is a perfect circle */
+    width: 30px; /* Equal width and height for a circular shape */
+    height: 30px; /* Equal width and height for a circular shape */
+    font-size: 16px; /* Adjusted font size */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1001;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Add a subtle shadow */
+}
 
-            #cartPanel ul li {
-                margin: 10px 0;
-                border-bottom: 1px solid whitesmoke;
-                padding-bottom: 10px;
-            }
+.close-btn:hover {
+    background-color: darkred;
+}
+    fieldset {
+        background-color: #444;
+        border: 1px solid #555;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 20px auto;
+        max-width: 600px;
+        color: whitesmoke;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
 
-            #cartSubtotal {
-                margin-top: 20px;
-                font-size: 18px;
-                text-align: center;
-                border-top: 1px solid whitesmoke;
-                padding-top: 10px;
-            }
+    fieldset legend {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #ffcc00;
+    }
 
-            #closeCart {
-                position: absolute;
-                top: 10px;
-                right: 10px;
-                background-color: red;
-                color: white;
-                border: none;
-                border-radius: 50%;
-                width: 30px;
-                height: 30px;
-                font-size: 16px;
-                cursor: pointer;
-            }
+    #cartButton {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: gold;
+        color: black;
+        border: none;
+        border-radius: 12px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        z-index: 1000;
+        transition: background-color 0.3s ease;
+    }
 
-            #closeCart:hover {
-                background-color: darkred;
-            }
+    #cartButton:hover {
+        background-color: goldenrod;
+    }
 
-            #buyNowButton {
-                margin-top: 20px;
-                width: 100%;
-                padding: 10px;
-                background-color: green;
-                color: white;
-                border: none;
-                border-radius: 5px;
-                font-size: 16px;
-                cursor: pointer;
-            }
+    #cartPanel {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 300px;
+        height: 100%;
+        background-color: #333;
+        color: whitesmoke;
+        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+        overflow-y: auto;
+        transition: right 0.3s ease;
+        z-index: 999;
+        padding: 20px;
+    }
 
-            #buyNowButton:hover {
-                background-color: darkgreen;
-            }
-        </style>
+    #cartPanel h2 {
+        text-align: center;
+        color: #ffcc00;
+    }
+
+    #cartPanel ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    #cartPanel ul li {
+        margin: 10px 0;
+        border-bottom: 1px solid whitesmoke;
+        padding-bottom: 10px;
+        display: flex;
+        align-items: center;
+    }
+
+    #cartPanel ul li img {
+        width: 50px;
+        height: 50px;
+        margin-right: 10px;
+        border: 1px solid whitesmoke;
+        border-radius: 5px;
+    }
+
+    #cartPanel ul li button {
+        margin-left: auto;
+        background-color: crimson;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+
+    #cartPanel ul li button:hover {
+        background-color: darkred;
+    }
+
+    #cartSubtotal {
+        margin-top: 20px;
+        font-size: 18px;
+        text-align: center;
+        border-top: 1px solid whitesmoke;
+        padding-top: 10px;
+    }
+
+    #buyNowButton {
+        margin-top: 20px;
+        width: 100%;
+        padding: 10px;
+        background-color: green;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    #buyNowButton:hover {
+        background-color: darkgreen;
+    }
+
+    #closeCart {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 50%; /* Makes it circular */
+    width: 40px; /* Adjust width */
+    height: 40px; /* Adjust height */
+    font-size: 24px; /* Adjust font size */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centers the "×" inside the circle */
+    z-index: 1001;
+}
+
+#closeCart:hover {
+    background-color: darkred;
+}
+</style>
     </head>
 
     <body>
