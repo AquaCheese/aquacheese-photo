@@ -155,48 +155,75 @@
                 <strong>CONTRACT PHOTOGRAPHER IN THE UK ONLY!</strong>
                 <img src="Flag_of_the_United_Kingdom.png" alt="ERROR 404: UNION JACK NOT FOUND" style="max-height: 50px; max-width: 50px;">
             </p>
-            <form onsubmit="sendEmail(event)">
-                <label for="lname">Full Name: <input type="text" name="lname" id="lname" placeholder="(not required but useful)" autocomplete="on"></label>
-                <br><br>
-                <label for="email">*Email: <input type="email" name="email" id="email" required placeholder="example@email.com" autocomplete="on"></label>
-                <br><br>
-                <label for="message">*</label>
-                <textarea name="message" id="message" cols="30" rows="10" required placeholder="Hello..."></textarea>
-                <br><br>
-                <button type="submit" style="font-size: x-large; border-radius: 12px;">Submit</button>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <button type="reset" style="font-size: x-large; border-radius: 12px; background-color: red;" onclick="confirmReset(event)"><b>Reset</b></button>
+           <form id="contactForm" onsubmit="sendEmail(event)">
+    <label for="lname">Full Name: <input type="text" name="lname" id="lname" placeholder="(not required but useful)" autocomplete="on"></label>
+    <br><br>
+    <label for="email">*Email: <input type="email" name="email" id="email" required placeholder="example@email.com" autocomplete="on"></label>
+    <br><br>
+    <label for="message">*</label>
+    <textarea name="message" id="message" cols="30" rows="10" required placeholder="Hello..."></textarea>
+    <br><br>
+
+    <fieldset>
+        <legend>Upload Image (Optional)</legend>
+        <p>You can upload 1 image (optional, max size: 50KB). <br> If the form doesn't submit, the image might be too large.</p>
+        <input type="file" id="imageUpload" name="images" accept="image/*">
+        <p style="font-size: small; color: #aaa;">Accepted formats: JPG, PNG, GIF. Max size: 50KB.</p>
+    </fieldset>
+
+    <br><br>
+    <button type="submit" style="font-size: x-large; border-radius: 12px;">Submit</button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button type="reset" style="font-size: x-large; border-radius: 12px; background-color: red;" onclick="confirmReset(event)"><b>Reset</b></button>
+</form>
 
 <script>
+    function sendEmail(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        const form = document.getElementById("contactForm"); // Get the form element
+        const imageUpload = document.getElementById("imageUpload"); // Get the file input
+
+        // Validate the uploaded file
+        if (imageUpload.files.length > 1) {
+            alert("You can only upload 1 image.");
+            return;
+        }
+
+        if (imageUpload.files.length === 1) {
+            const file = imageUpload.files[0];
+            const maxSize = 50 * 1024; // 50KB in bytes
+
+            if (file.size > maxSize) {
+                // Show an error message if the file size exceeds the limit
+                alert("The uploaded image exceeds the 50KB size limit. Please upload a smaller file.");
+                return;
+            }
+        }
+
+        // Proceed with sending the form if validation passes
+        emailjs
+            .sendForm("service_56w0kwp", "template_qh3octg", form) // Pass the form element
+            .then(
+                () => {
+                    alert("Your message has been sent successfully!");
+                },
+                (error) => {
+                    alert("Failed to send message. Please try again later.");
+                    console.error("EmailJS error:", error);
+                }
+            );
+    }
+
     function confirmReset(event) {
         event.preventDefault(); // Prevent the default reset behavior
 
-        // Create a confirmation dialog
         const confirmation = confirm("Are you sure you want to reset the whole form?");
         if (confirmation) {
-            // If the user confirms, reset the form
             const form = event.target.closest("form");
             form.reset();
         }
-        // If the user cancels, do nothing
     }
-</script>
-            </form>
-        </fieldset>
-        <br>
-        <a href="index.html">Back to Main Page</a>
-        <br><br><br>
-        &lt;&lt;&lt;&nbsp; &copy; 2025 AquaCheese &nbsp;&gt;&gt;&gt;
-
-        <script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
-</script>
-<script type="text/javascript">
-   (function(){
-      emailjs.init({
-        publicKey: "mcTEemkbc71z1OyRS",
-      });
-   })();
 </script>
     </body>
 </html>

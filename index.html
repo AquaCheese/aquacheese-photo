@@ -242,7 +242,7 @@
         <br>
         <b style="font-size: xx-large;">[OPEN BETA]</b>
         <br><br>
-        v. 0.9.0
+        v. 0.9.1
         <br>
         <br>
         THIS SITE IS IDEALLY VIEWED ON DESKTOP / LAPTOP <br> (viewing on other devices may lead to alignment, or other visual issues)
@@ -407,10 +407,22 @@ document.getElementById('emailLoginButton').addEventListener('click', () => {
 
     // Simulate Email login
     function loginWithEmail() {
-        alert('Logged in with Email!');
-        setProfilePicture('https://via.placeholder.com/50'); // Placeholder profile picture
-    }
+    // Prompt the user for email and password
+    const email = prompt("Enter your email:");
+    const password = prompt("Enter your password:");
 
+    if (email && password) {
+        // Simulate email login (replace this with actual authentication logic)
+        if (email === "test@example.com" && password === "password123") {
+            alert("Logged in successfully!");
+            setProfilePicture("https://via.placeholder.com/50"); // Placeholder profile picture
+        } else {
+            alert("Invalid email or password. Please try again.");
+        }
+    } else {
+        alert("Email and password are required.");
+    }
+}
     // Set profile picture and replace the login button
     function setProfilePicture(profilePicUrl) {
     const loginButton = document.getElementById('loginButton');
@@ -492,7 +504,7 @@ document.getElementById('emailLoginButton').addEventListener('click', () => {
         list-style-type: none;
         padding: 0;
     }
-
+ 
     #cartPanel ul li {
         margin: 10px 0;
         border-bottom: 1px solid whitesmoke;
@@ -500,22 +512,25 @@ document.getElementById('emailLoginButton').addEventListener('click', () => {
     }
 
     #closeCart {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        background-color: red;
-        color: white;
-        border: none;
-        border-radius: 50%;
-        width: 30px;
-        height: 30px;
-        font-size: 16px;
-        cursor: pointer;
-    }
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 50%; /* Makes it circular */
+    width: 40px; /* Adjust width */
+    height: 40px; /* Adjust height */
+    font-size: 36px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centers the "×" inside the circle */
+}
 
-    #closeCart:hover {
-        background-color: darkred;
-    }
+#closeCart:hover {
+    background-color: darkred;
+}
 </style>
 
 <script>
