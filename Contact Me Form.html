@@ -4,26 +4,115 @@
         <meta charset="UTF-8">
         <meta name="author" content="AquaCheese">
         <title>AquaCheese Photography - Contact Me</title>
+        
         <style>
-            body {
-                background-color: #333;
-                color: whitesmoke;
-                text-align: center;
-                font-family: Arial, Helvetica, sans-serif;
-            }
-            a {
-                color: cornsilk;
-            }
-            a:visited {
-                color: aqua;
-            }
-            a:hover {
-                color: gray;
-            }
-            a:active {
-                color: white;
-            }
-        </style>
+    body {
+    background-color: #2c2c2c;
+    color: #f5f5f5;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    }
+
+    a {
+    color: #ffcc00;
+    text-decoration: none;
+    }
+
+    a:visited {
+    color: #ffa500;
+    }
+
+    a:hover {
+    color: #ffffff;
+    }
+
+    a:active {
+    color: #ffcc00;
+    }
+
+    /* Button Styles */
+    button {
+    font-size: 16px;
+    border-radius: 8px;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+    transform: scale(1.05);
+    }
+
+    .btncontact {
+    background-color: #007bff;
+    color: white;
+    }
+
+    .btncontact:hover {
+    background-color: #0056b3;
+    }
+
+    .btnreset {
+    background-color: red;
+    color: white;
+    }
+
+    .btnreset:hover {
+    background-color: darkred;
+    }
+
+    fieldset {
+    border: 1px solid #444;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px auto;
+    background-color: #3a3a3a;
+    color: #f5f5f5;
+    max-width: 90%;
+    }
+
+    legend {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ffcc00;
+    }
+
+    textarea {
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #555;
+    background-color: #444;
+    color: #f5f5f5;
+    width: 90%;
+    }
+
+    textarea:focus {
+    outline: none;
+    border-color: #ffcc00;
+    }
+
+    input[type="text"],
+    input[type="email"] {
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #555;
+    background-color: #444;
+    color: #f5f5f5;
+    width: 90%;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus {
+    outline: none;
+    border-color: #ffcc00;
+    }
+</style>
+
         <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
         <script>
             (function () {
@@ -67,7 +156,7 @@
                 <img src="Flag_of_the_United_Kingdom.png" alt="ERROR 404: UNION JACK NOT FOUND" style="max-height: 50px; max-width: 50px;">
             </p>
             <form onsubmit="sendEmail(event)">
-                <label for="lname">Full Name: <input type="text" name="lname" id="lname" placeholder="(not required)" autocomplete="on"></label>
+                <label for="lname">Full Name: <input type="text" name="lname" id="lname" placeholder="(not required but useful)" autocomplete="on"></label>
                 <br><br>
                 <label for="email">*Email: <input type="email" name="email" id="email" required placeholder="example@email.com" autocomplete="on"></label>
                 <br><br>
