@@ -1284,6 +1284,14 @@ function buyNowForVideo() {
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const googleProvider = new GoogleAuthProvider();
+    
+    // Check login state on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+        if (loggedInUser) {
+            setProfilePicture(loggedInUser.profilePicUrl, loggedInUser.displayName);
+        }
+    });
 
     // Google Login
     document.getElementById('googleLoginButton').addEventListener('click', () => {
@@ -1291,7 +1299,17 @@ function buyNowForVideo() {
             .then((result) => {
                 const user = result.user;
                 alert(`Welcome, ${user.displayName}!`);
-                setProfilePicture(user.photoURL); // Set profile picture
+
+                // Save user info to localStorage
+                localStorage.setItem(
+                    'loggedInUser',
+                    JSON.stringify({
+                        displayName: user.displayName,
+                        profilePicUrl: user.photoURL,
+                    })
+                );
+
+                setProfilePicture(user.photoURL, user.displayName); // Set profile picture
                 document.getElementById('loginModal').style.display = 'none'; // Close modal
             })
             .catch((error) => {
@@ -1301,32 +1319,41 @@ function buyNowForVideo() {
     });
 
     // Set profile picture and replace the login button
-function setProfilePicture(profilePicUrl) {
-    const loginButton = document.getElementById('loginButton');
-    loginButton.style.display = 'none'; // Hide the login button
+    function setProfilePicture(profilePicUrl, displayName) {
+        const loginButton = document.getElementById('loginButton');
+        loginButton.style.display = 'none'; // Hide the login button
 
-    const profilePic = document.createElement('img');
-    profilePic.src = profilePicUrl || 'default-profile.png'; // Use a default image if no profile picture is available
-    profilePic.alt = 'Profile Picture';
-    profilePic.style.position = 'fixed';
-    profilePic.style.top = '20px'; // Same top position as the login button
-    profilePic.style.left = '20px'; // Same left position as the login button
-    profilePic.style.width = '40px';
-    profilePic.style.height = '40px';
-    profilePic.style.borderRadius = '50%';
-    profilePic.style.cursor = 'pointer';
-    profilePic.style.zIndex = '1000';
-    profilePic.id = 'profilePic';
-    document.body.appendChild(profilePic);
+        const profilePic = document.createElement('img');
+        profilePic.src = profilePicUrl || 'default-profile.png'; // Use a default image if no profile picture is available
+        profilePic.alt = 'Profile Picture';
+        profilePic.style.position = 'fixed';
+        profilePic.style.top = '20px';
+        profilePic.style.left = '20px';
+        profilePic.style.width = '40px';
+        profilePic.style.height = '40px';
+        profilePic.style.borderRadius = '50%';
+        profilePic.style.cursor = 'pointer';
+        profilePic.style.zIndex = '1000';
+        profilePic.id = 'profilePic';
+        document.body.appendChild(profilePic);
 
-    // Add a click event to show a profile menu
-    profilePic.addEventListener('click', () => {
-        alert('Profile menu coming soon!');
-    });
-}
+        // Add a click event to show a profile menu
+        profilePic.addEventListener('click', () => {
+            const logout = confirm(`Logged in as ${displayName}. Do you want to log out?`);
+            if (logout) {
+                logOut();
+            }
+        });
+    }
+
+    // Log out functionality
+    function logOut() {
+        localStorage.removeItem('loggedInUser'); // Remove user info from localStorage
+        alert('You have been logged out.');
+
+        // Reload the page to reset the UI
+        location.reload();
+    }
 </script>
-
-        </script>
-
     </body>
 </html>
