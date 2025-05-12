@@ -1230,29 +1230,29 @@ function buyNowForVideo() {
     });
 
     // Set profile picture and replace the login button
-    function setProfilePicture(profilePicUrl) {
-        const loginButton = document.getElementById('loginButton');
-        loginButton.style.display = 'none'; // Hide the login button
+function setProfilePicture(profilePicUrl) {
+    const loginButton = document.getElementById('loginButton');
+    loginButton.style.display = 'none'; // Hide the login button
 
-        const profilePic = document.createElement('img');
-        profilePic.src = profilePicUrl || 'default-profile.png'; // Use a default image if no profile picture is available
-        profilePic.alt = 'Profile Picture';
-        profilePic.style.position = 'fixed';
-        profilePic.style.top = '20px';
-        profilePic.style.right = '100px';
-        profilePic.style.width = '40px';
-        profilePic.style.height = '40px';
-        profilePic.style.borderRadius = '50%';
-        profilePic.style.cursor = 'pointer';
-        profilePic.style.zIndex = '1000';
-        profilePic.id = 'profilePic';
-        document.body.appendChild(profilePic);
+    const profilePic = document.createElement('img');
+    profilePic.src = profilePicUrl || 'default-profile.png'; // Use a default image if no profile picture is available
+    profilePic.alt = 'Profile Picture';
+    profilePic.style.position = 'fixed';
+    profilePic.style.top = '20px'; // Same top position as the login button
+    profilePic.style.left = '20px'; // Same left position as the login button
+    profilePic.style.width = '40px';
+    profilePic.style.height = '40px';
+    profilePic.style.borderRadius = '50%';
+    profilePic.style.cursor = 'pointer';
+    profilePic.style.zIndex = '1000';
+    profilePic.id = 'profilePic';
+    document.body.appendChild(profilePic);
 
-        // Add a click event to show a profile menu
-        profilePic.addEventListener('click', () => {
-            alert('Profile menu coming soon!');
-        });
-    }
+    // Add a click event to show a profile menu
+    profilePic.addEventListener('click', () => {
+        alert('Profile menu coming soon!');
+    });
+}
 </script>
 
         </script>
