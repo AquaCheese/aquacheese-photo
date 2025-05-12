@@ -1,0 +1,21 @@
+{
+  "name": "aquacheesephoto.github.io",
+  "version": "1.0.0",
+  "description": "This is an early version of my photography and videography website. it's being updated every few mins every day I'm up, you can watch it be built in (almost) real time :)",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AquaCheese/aquacheese-photo.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AquaCheese/aquacheese-photo.github.io/issues"
+  },
+  "homepage": "https://github.com/AquaCheese/aquacheese-photo.github.io#readme"
+}
