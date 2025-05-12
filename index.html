@@ -513,14 +513,6 @@ function setProfilePicture(profilePicUrl, displayName) {
     });
 }
 
-    // Log out functionality
-    logoutButton.addEventListener('click', () => {
-        alert('Logged out!');
-        document.getElementById('profilePic').remove(); // Remove profile picture
-        loginButton.style.display = 'block'; // Show the login button
-        profileMenu.style.display = 'none'; // Hide the profile menu
-    });
-
     // Show login options when the login button is clicked
     loginButton.addEventListener('click', showLoginOptions);
 </script>
