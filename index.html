@@ -480,16 +480,22 @@ document.getElementById('emailLoginButton').addEventListener('click', () => {
     }
 }
     // Set profile picture and replace the login button
-    function setProfilePicture(profilePicUrl) {
+function setProfilePicture(profilePicUrl, displayName) {
     const loginButton = document.getElementById('loginButton');
     loginButton.style.display = 'none'; // Hide the login button
+
+    // Check if a profile picture already exists
+    const existingProfilePic = document.getElementById('profilePic');
+    if (existingProfilePic) {
+        existingProfilePic.remove(); // Remove the existing profile picture
+    }
 
     const profilePic = document.createElement('img');
     profilePic.src = profilePicUrl || 'default-profile.png'; // Use a default image if no profile picture is available
     profilePic.alt = 'Profile Picture';
     profilePic.style.position = 'fixed';
     profilePic.style.top = '20px';
-    profilePic.style.right = '100px';
+    profilePic.style.left = '20px';
     profilePic.style.width = '40px';
     profilePic.style.height = '40px';
     profilePic.style.borderRadius = '50%';
@@ -500,7 +506,10 @@ document.getElementById('emailLoginButton').addEventListener('click', () => {
 
     // Add a click event to show a profile menu
     profilePic.addEventListener('click', () => {
-        alert('Profile menu coming soon!');
+        const logout = confirm(`Logged in as ${displayName}. Do you want to log out?`);
+        if (logout) {
+            logOut();
+        }
     });
 }
 
@@ -1284,7 +1293,7 @@ function buyNowForVideo() {
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const googleProvider = new GoogleAuthProvider();
-    
+
     // Check login state on page load
     document.addEventListener('DOMContentLoaded', () => {
         const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
