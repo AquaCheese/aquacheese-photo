@@ -338,7 +338,15 @@
     Log In
 </button>
 
-<!-- Profile menu (hidden by default) -->
+<!-- Profile Dev Dialog (hidden by default) -->
+<div id="devDialog" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:2000; align-items:center; justify-content:center;">
+  <div style="position:relative; background:#333; color:#fff; border-radius:10px; padding:30px 20px 20px 20px; min-width:260px; min-height:120px; text-align:center;">
+    <button id="closeDevDialog" style="position:absolute; top:10px; right:10px; background:red; color:white; border:none; border-radius:50%; width:30px; height:30px; font-size:18px; cursor:pointer;">&times;</button>
+    <h3>Developer Options</h3>
+    <button id="devPasswordMenuButtonDialog" style="background-color: #28a745; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Dev Password</button>
+  </div>
+</div>
+
 <!-- Login Modal -->
 <div id="loginModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;">
     <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #333; color: whitesmoke; padding: 20px; border-radius: 8px; width: 300px; text-align: center;">
@@ -347,9 +355,18 @@
         <br>
         <button id="emailLoginButton" style="background-color: #555; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In with Email</button>
         <br>
+        <button id="devPasswordMenuButton" style="background-color: #28a745; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Dev Password</button>
+        <br>
         <button id="closeLoginModal" style="background-color: red; color: white; border: none; border-radius: 5px; padding: 5px 10px; font-size: 14px; cursor: pointer; margin-top: 10px;">Close</button>
     </div>
 </div>
+
+<!-- Upload button section, hidden by default -->
+<section id="upload-button-section" style="display: none; text-align: center; margin-top: 20px;">
+  <button id="upload-page-button" style="font-size: large; padding: 10px 20px; border-radius: 5px; background-color: lightblue; border: none; cursor: pointer;">
+    Go to Upload Page
+  </button>
+</section>
 
 <script>
  // Show the login modal
@@ -416,10 +433,7 @@ document.getElementById('closeLoginModal').addEventListener('click', () => {
 
         // Add a click event to show a profile menu
         profilePic.addEventListener('click', () => {
-            const logout = confirm(`Logged in as ${displayName}. Do you want to log out?`);
-            if (logout) {
-                logOut();
-            }
+            showDevDialog();
         });
     }
 
@@ -432,6 +446,39 @@ document.getElementById('closeLoginModal').addEventListener('click', () => {
         location.reload();
     }
 
+// Dev Password logic (shared for both modal and dialog)
+const DEV_PASSWORD = "ACPWP"; // Set your dev password here
+const uploadButtonSection = document.getElementById('upload-button-section');
+
+function handleDevPassword() {
+    const entered = prompt('Enter developer password:');
+    if (entered === DEV_PASSWORD) {
+        uploadButtonSection.style.display = 'block';
+    } else if (entered !== null) {
+        alert('Incorrect password.');
+    }
+}
+
+document.getElementById('devPasswordMenuButton').addEventListener('click', function(e) {
+    e.preventDefault();
+    handleDevPassword();
+});
+document.getElementById('devPasswordMenuButtonDialog').addEventListener('click', function(e) {
+    e.preventDefault();
+    handleDevPassword();
+});
+
+// Profile picture click: show dev dialog
+const devDialog = document.getElementById('devDialog');
+const closeDevDialog = document.getElementById('closeDevDialog');
+
+function showDevDialog() {
+    devDialog.style.display = 'flex';
+}
+function hideDevDialog() {
+    devDialog.style.display = 'none';
+}
+if (closeDevDialog) closeDevDialog.onclick = hideDevDialog;
 
 // Email Login
 document.getElementById('emailLoginButton').addEventListener('click', () => {
@@ -506,15 +553,20 @@ function setProfilePicture(profilePicUrl, displayName) {
 
     // Add a click event to show a profile menu
     profilePic.addEventListener('click', () => {
-        const logout = confirm(`Logged in as ${displayName}. Do you want to log out?`);
-        if (logout) {
-            logOut();
-        }
+        showDevDialog();
     });
 }
 
     // Show login options when the login button is clicked
     loginButton.addEventListener('click', showLoginOptions);
+
+    // Upload page button logic
+    const uploadPageButton = document.getElementById('upload-page-button');
+    if (uploadPageButton) {
+        uploadPageButton.addEventListener('click', function() {
+            window.location.href = 'upload.html';
+        });
+    }
 </script>
 
 <style>
@@ -1340,10 +1392,7 @@ function buyNowForVideo() {
 
         // Add a click event to show a profile menu
         profilePic.addEventListener('click', () => {
-            const logout = confirm(`Logged in as ${displayName}. Do you want to log out?`);
-            if (logout) {
-                logOut();
-            }
+            showDevDialog();
         });
     }
 
