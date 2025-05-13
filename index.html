@@ -1283,8 +1283,8 @@ function buyNowForVideo() {
 
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
-    // Removed duplicate declaration of firebaseAuth
-    const googleProvider = new GoogleAuthProvider();
+    const auth = getAuth(app); // Initialize Firebase Authentication
+    const googleProvider = new GoogleAuthProvider(); // Ensure provider is initialized
 
     // Check login state on page load
     document.addEventListener('DOMContentLoaded', () => {
@@ -1296,7 +1296,7 @@ function buyNowForVideo() {
 
     // Google Login
     document.getElementById('googleLoginButton').addEventListener('click', () => {
-        signInWithPopup(firebaseAuth, googleProvider)
+        signInWithPopup(auth, googleProvider)
             .then((result) => {
                 const user = result.user;
                 alert(`Welcome, ${user.displayName}!`);
