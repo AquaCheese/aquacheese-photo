@@ -232,6 +232,120 @@
     html{
         scroll-behavior: smooth;
     }
+
+    /* Add to your <style> section */
+/* Custom Animated Dropdown Styles */
+.dropdown-animated-container {
+  display: inline-block;
+}
+
+.dropdown-label {
+  color: #ffcc00;
+  font-weight: bold;
+  margin-right: 8px;
+  font-size: 1.1em;
+  letter-spacing: 1px;
+}
+
+.dropdown-animated-wrapper {
+  display: inline-block;
+  position: relative;
+}
+
+.dropdown-animated-select {
+  padding: 10px 40px 10px 16px;
+  border-radius: 10px;
+  border: 2px solid #ffcc00;
+  background: #232323;
+  color: #ffcc00;
+  font-size: 1.1em;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+  outline: none;
+  transition: 
+    border-color 0.3s,
+    box-shadow 0.3s,
+    background 0.3s,
+    color 0.3s,
+    transform 0.25s cubic-bezier(.4,2,.6,1);
+  appearance: none;
+  cursor: pointer;
+  min-width: 210px;
+  text-align: left;
+  position: relative;
+}
+
+.dropdown-animated-select:focus,
+.dropdown-animated-select:hover {
+  border-color: #ffd700;
+  box-shadow: 0 0 8px 2px #ffcc00aa;
+  background: #2c2c2c;
+  color: #fffbe6;
+  transform: scale(1.04);
+}
+
+.dropdown-arrow {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 7px solid #ffcc00;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* Dropdown List Animation */
+.dropdown-list {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 110%;
+  background: #232323;
+  border: 2px solid #ffcc00;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-10px) scaleY(0.95);
+  transition: opacity 0.25s, transform 0.25s cubic-bezier(.4,2,.6,1), max-height 0.3s;
+  z-index: 100;
+  max-height: 0;
+  overflow: hidden;
+}
+
+.dropdown-list.open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scaleY(1);
+  max-height: 400px;
+}
+
+.dropdown-list li {
+  padding: 12px 18px;
+  color: #ffcc00;
+  cursor: pointer;
+  font-size: 1.05em;
+  transition: background 0.2s, color 0.2s;
+}
+
+.dropdown-list li:hover,
+.dropdown-list li:focus {
+  background: #2c2c2c;
+  color: #fffbe6;
+  outline: none;
+}
+
+/* Stack modal buttons vertically and center them */
+#loginModal button {
+  display: block;
+  width: 90%;
+  margin: 10px auto;
+}
 </style>
 
 
@@ -242,39 +356,110 @@
         <br>
         <b style="font-size: xx-large;">[OPEN BETA]</b>
         <br><br>
-        v. 0.9.4
+        v. 0.9.5
         <br>
         <br>
         THIS SITE IS IDEALLY VIEWED ON DESKTOP / LAPTOP <br> (viewing on other devices may lead to alignment, or other visual issues)
         <br><br>
         <hr>
         
-        <a href="Contact Me Form.html"><button class="btncontact" style="font-size: 16px; text-align: center; border-radius: 12px;">Contact Me</button></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://www.youtube.com/@aquacheese1" target="_blank"><button class="btnYT" style="font-size: 16px; text-align: center; border-radius: 12px;">My YouTube Channel</button></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="About.html"><button class="btnabt" style="font-size: 16px; text-align: center; border-radius: 12px;">About</button></a>
+        <a href="Contact Me Form.html"><button class="btncontact" style="font-size: 16px; text-align: center; border-radius: 12px;">Contact Me</button></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://www.youtube.com/@aquacheese1" target="_blank" style="vertical-align: middle;">
+  <img src="2-21145_youtube-logo-transparent-png-pictures-transparent-background-youtube.png" alt="YouTube" style="height:48px; width:auto; border-radius:12px; vertical-align:middle; box-shadow:0 2px 8px rgba(0,0,0,0.2);">
+</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="About.html"><button class="btnabt" style="font-size: 16px; text-align: center; border-radius: 12px;">About</button></a>
 <br><br><br><br>
         <!-- Sections Dropdown Menu -->
-        <div style="display: inline-block; margin-bottom: 10px;">
-          <label for="sectionsDropdown" style="color: #ffcc00; font-weight: bold; margin-right: 8px;">catagories:</label>
-          <select id="sectionsDropdown" style="padding: 8px; border-radius: 8px; font-size: 16px;">
-            <option value="">Go to catagory...</option>
-            <option value="rec ad">Recently Added</option>
-            <option value="land">Landscape Images</option>
-            <option value="port">Portrait Images</option>
-            <option value="All">All Images</option>
-            <option value="videos">Videos</option>
-          </select>
-        </div>
-
+        <div class="dropdown-animated-container" style="margin-bottom: 30px;">
+  <label for="customDropdown" class="dropdown-label">catagories:</label>
+  <div class="dropdown-animated-wrapper">
+    <button id="customDropdown" class="dropdown-animated-select" aria-haspopup="listbox" aria-expanded="false" type="button">
+      Go to catagory...
+      <span class="dropdown-arrow"></span>
+    </button>
+    <ul id="dropdownList" class="dropdown-list" tabindex="-1" role="listbox" aria-labelledby="customDropdown">
+      <li role="option" data-value="rec ad">Recently Added</li>
+      <li role="option" data-value="land">Landscape Images</li>
+      <li role="option" data-value="port">Portrait Images</li>
+      <li role="option" data-value="All">All Images</li>
+      <li role="option" data-value="videos">Videos</li>
+    </ul>
+  </div>
+</div>
         <script>
-        document.getElementById('sectionsDropdown').addEventListener('change', function() {
-          const val = this.value;
-          if (val) {
-            const section = document.getElementById(val) || document.getElementsByName(val)[0];
-            if (section) {
-              section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-            this.selectedIndex = 0; // Reset dropdown
-          }
-        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+  const dropdownBtn = document.getElementById('customDropdown');
+  const dropdownList = document.getElementById('dropdownList');
+  let isOpen = false;
+
+  function openDropdown() {
+    dropdownList.classList.add('open');
+    dropdownBtn.setAttribute('aria-expanded', 'true');
+    isOpen = true;
+    // Focus first item for accessibility
+    setTimeout(() => {
+      dropdownList.querySelector('li').focus();
+    }, 100);
+  }
+
+  function closeDropdown() {
+    dropdownList.classList.remove('open');
+    dropdownBtn.setAttribute('aria-expanded', 'false');
+    isOpen = false;
+  }
+
+  dropdownBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    isOpen ? closeDropdown() : openDropdown();
+  });
+
+  dropdownBtn.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      openDropdown();
+    }
+  });
+
+  dropdownList.addEventListener('click', (e) => {
+    if (e.target.matches('li')) {
+      dropdownBtn.innerHTML = e.target.textContent + '<span class="dropdown-arrow"></span>';
+      closeDropdown();
+      // Scroll to section
+      const val = e.target.getAttribute('data-value');
+      if (val) {
+        const section = document.getElementById(val) || document.getElementsByName(val)[0];
+        if (section) {
+          section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    }
+  });
+
+  // Keyboard navigation for dropdown list
+  dropdownList.addEventListener('keydown', (e) => {
+    const items = Array.from(dropdownList.querySelectorAll('li'));
+    let idx = items.indexOf(document.activeElement);
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      items[(idx + 1) % items.length].focus();
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      items[(idx - 1 + items.length) % items.length].focus();
+    } else if (e.key === 'Escape') {
+      closeDropdown();
+      dropdownBtn.focus();
+    } else if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      document.activeElement.click();
+    }
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!dropdownBtn.contains(e.target) && !dropdownList.contains(e.target)) {
+      closeDropdown();
+    }
+  });
+});
         </script>
 
         <hr>
@@ -359,213 +544,195 @@
 </div>
 </div>
 
-<!-- Updated Log In button -->
-<div style="position: fixed; top: 20px; left: 20px; z-index: 1000; display: flex; align-items: center; gap: 10px;">
+<div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
   <button id="loginButton" style="background-color: lightblue; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer;">
-      Log In
+    Log In
   </button>
   <section id="upload-button-section" style="display: none;">
     <button id="upload-page-button" style="font-size: large; padding: 10px 20px; border-radius: 5px; background-color: lightblue; border: none; cursor: pointer;">
-        Upload Media
+      Upload Media
     </button>
   </section>
 </div>
 
-<!-- Profile Dev Dialog (hidden by default) -->
-<div id="devDialog" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:2000; align-items:center; justify-content:center;">
-  <div style="position:relative; background:#333; color:#fff; border-radius:10px; padding:30px 20px 20px 20px; min-width:260px; min-height:120px; text-align:center;">
-    <button id="closeDevDialog" style="position:absolute; top:10px; right:10px; background:red; color:white; border:none; border-radius:50%; width:30px; height:30px; font-size:18px; cursor:pointer;">&times;</button>
-    <h3>Developer Options</h3>
-    <button id="devPasswordMenuButtonDialog" style="background-color: #28a745; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Dev Password</button>
+<div id="loginModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;">
+  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #333; color: whitesmoke; padding: 20px; border-radius: 8px; width: 300px; text-align: center;">
+    <h2>Log In</h2>
+    <button id="googleLoginButton" style="background-color: #4285F4; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In with Google</button>
+    <button id="showEmailLoginForm" style="background-color: #555; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In with Email</button>
+    <button id="showRegisterForm" style="background-color: #ffc107; color: black; border: none; border-radius: 5px; padding: 8px 16px; font-size: 15px; cursor: pointer; margin: 10px;">Register</button>
+    <form id="emailLoginForm" style="display:none; margin-top:10px;">
+      <input id="emailInput" type="email" placeholder="Email" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
+      <input id="passwordInput" type="password" placeholder="Password" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
+      <button type="submit" style="background-color: #555; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In</button>
+      <button type="button" id="cancelEmailLogin" style="background-color: #dc3545; color: white; border: none; border-radius: 5px; padding: 8px 16px; font-size: 15px; cursor: pointer; margin: 10px;">Cancel</button>
+    </form>
+    <form id="registerForm" style="display:none; margin-top:10px;">
+      <input id="registerEmail" type="email" placeholder="Email" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
+      <input id="registerPassword" type="password" placeholder="Password" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
+      <button type="submit" style="background-color: #28a745; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Register</button>
+      <button type="button" id="cancelRegister" style="background-color: #dc3545; color: white; border: none; border-radius: 5px; padding: 8px 16px; font-size: 15px; cursor: pointer; margin: 10px;">Cancel</button>
+    </form>
+    <div id="emailLoginError" style="color:#ff6666; margin-top:8px; min-height:20px;"></div>
+    <button id="devPasswordMenuButton" style="background-color: #28a745; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Dev Password</button>
+    <br>
+    <button id="closeLoginModal" style="background-color: red; color: white; border: none; border-radius: 5px; padding: 5px 10px; font-size: 14px; cursor: pointer; margin-top: 10px;">Close</button>
   </div>
 </div>
 
-<!-- Login Modal -->
-<div id="loginModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;">
-    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #333; color: whitesmoke; padding: 20px; border-radius: 8px; width: 300px; text-align: center;">
-        <h2>Log In</h2>
-        <button id="googleLoginButton" style="background-color: #4285F4; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In with Google</button>
-        <br>
-        <button id="emailLoginButton" style="background-color: #555; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In with Email</button>
-        <br>
-        <button id="devPasswordMenuButton" style="background-color: #28a745; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Dev Password</button>
-        <br>
-        <button id="closeLoginModal" style="background-color: red; color: white; border: none; border-radius: 5px; padding: 5px 10px; font-size: 14px; cursor: pointer; margin-top: 10px;">Close</button>
-    </div>
-</div>
+<script type="module">
+// Firebase imports
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
-<script>
- // Show the login modal
-document.getElementById('loginButton').addEventListener('click', () => {
-    document.getElementById('loginModal').style.display = 'block';
-});
+// Firebase config
+const firebaseConfig = {
+    apiKey: "AIzaSyDKe84a_3xgi3xv3DRkRTk6cXyNbCtX-Wo",
+    authDomain: "aquacheese-photography-site.firebaseapp.com",
+    projectId: "aquacheese-photography-site",
+    storageBucket: "aquacheese-photography-site.firebasestorage.app",
+    messagingSenderId: "671895809880",
+    appId: "1:671895809880:web:4ee9031d2041f83ae57f2d",
+    measurementId: "G-EJKMML5E3K"
+};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
 
-// Close the login modal
-document.getElementById('closeLoginModal').addEventListener('click', () => {
-    document.getElementById('loginModal').style.display = 'none';
-});
-
-    // Check login state on page load
-    document.addEventListener('DOMContentLoaded', () => {
-        const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
-        if (loggedInUser) {
-            setProfilePicture(loggedInUser.profilePicUrl, loggedInUser.displayName);
-        }
-    });
-
-    // Google Login
-    document.getElementById('googleLoginButton').addEventListener('click', () => {
-        signInWithPopup(auth, googleProvider)
-            .then((result) => {
-                const user = result.user;
-                alert(`Welcome, ${user.displayName}!`);
-
-                // Save user info to localStorage
-                localStorage.setItem(
-                    'loggedInUser',
-                    JSON.stringify({
-                        displayName: user.displayName,
-                        profilePicUrl: user.photoURL,
-                    })
-                );
-
-                setProfilePicture(user.photoURL, user.displayName); // Set profile picture
-                document.getElementById('loginModal').style.display = 'none'; // Close modal
-            })
-            .catch((error) => {
-                console.error('Google Login Error:', error.message);
-                alert('Google Login Failed: ' + error.message);
-            });
-    });
-
-    // Set profile picture and replace the login button
-    function setProfilePicture(profilePicUrl, displayName) {
-        const loginButton = document.getElementById('loginButton');
-        loginButton.style.display = 'none'; // Hide the login button
-
-        const profilePic = document.createElement('img');
-        profilePic.src = profilePicUrl || 'default-profile.png'; // Use a default image if no profile picture is available
-        profilePic.alt = 'Profile Picture';
-        profilePic.style.position = 'fixed';
-        profilePic.style.top = '20px';
-        profilePic.style.left = '20px';
-        profilePic.style.width = '40px';
-        profilePic.style.height = '40px';
-        profilePic.style.borderRadius = '50%';
-        profilePic.style.cursor = 'pointer';
-        profilePic.style.zIndex = '1000';
-        profilePic.id = 'profilePic';
-        document.body.appendChild(profilePic);
-
-        // Add a click event to show a profile menu
-        profilePic.addEventListener('click', () => {
-            showDevDialog();
-        });
-    }
-
-    // Log out functionality
-    function logOut() {
-        localStorage.removeItem('loggedInUser'); // Remove user info from localStorage
-        alert('You have been logged out.');
-
-        // Reload the page to reset the UI
-        location.reload();
-    }
-
-// Dev Password logic (shared for both modal and dialog)
-const DEV_PASSWORD = "ACPWP"; // Set your dev password here
+// Elements
+const loginButton = document.getElementById('loginButton');
+const loginModal = document.getElementById('loginModal');
+const closeLoginModal = document.getElementById('closeLoginModal');
+const googleLoginButton = document.getElementById('googleLoginButton');
+const showEmailLoginFormBtn = document.getElementById('showEmailLoginForm');
+const showRegisterFormBtn = document.getElementById('showRegisterForm');
+const emailLoginForm = document.getElementById('emailLoginForm');
+const registerForm = document.getElementById('registerForm');
+const cancelEmailLoginBtn = document.getElementById('cancelEmailLogin');
+const cancelRegisterBtn = document.getElementById('cancelRegister');
+const emailInput = document.getElementById('emailInput');
+const passwordInput = document.getElementById('passwordInput');
+const emailLoginError = document.getElementById('emailLoginError');
 const uploadButtonSection = document.getElementById('upload-button-section');
 
-function handleDevPassword() {
-    const entered = prompt('Enter developer password:');
-    if (entered === DEV_PASSWORD) {
-        uploadButtonSection.style.display = 'block';
-    } else if (entered !== null) {
-        alert('Incorrect password.');
-    }
-}
-
-document.getElementById('devPasswordMenuButton').addEventListener('click', function(e) {
-    e.preventDefault();
-    handleDevPassword();
+// Modal open/close
+loginButton.addEventListener('click', () => {
+    loginModal.style.display = 'block';
 });
-document.getElementById('devPasswordMenuButtonDialog').addEventListener('click', function(e) {
-    e.preventDefault();
-    handleDevPassword();
+closeLoginModal.addEventListener('click', () => {
+    loginModal.style.display = 'none';
 });
 
-// Profile picture click: show dev dialog
-const devDialog = document.getElementById('devDialog');
-const closeDevDialog = document.getElementById('closeDevDialog');
+// Show/hide forms in modal
+showEmailLoginFormBtn.addEventListener('click', () => {
+    showEmailLoginFormBtn.style.display = 'none';
+    showRegisterFormBtn.style.display = 'none';
+    emailLoginForm.style.display = 'block';
+    registerForm.style.display = 'none';
+    emailLoginError.textContent = '';
+});
+cancelEmailLoginBtn.addEventListener('click', () => {
+    emailLoginForm.style.display = 'none';
+    showEmailLoginFormBtn.style.display = 'inline-block';
+    showRegisterFormBtn.style.display = 'inline-block';
+    emailLoginError.textContent = '';
+});
+showRegisterFormBtn.addEventListener('click', () => {
+    showEmailLoginFormBtn.style.display = 'none';
+    showRegisterFormBtn.style.display = 'none';
+    emailLoginForm.style.display = 'none';
+    registerForm.style.display = 'block';
+    emailLoginError.textContent = '';
+});
+cancelRegisterBtn.addEventListener('click', () => {
+    registerForm.style.display = 'none';
+    showEmailLoginFormBtn.style.display = 'inline-block';
+    showRegisterFormBtn.style.display = 'inline-block';
+    emailLoginError.textContent = '';
+});
 
-function showDevDialog() {
-    devDialog.style.display = 'flex';
-}
-function hideDevDialog() {
-    devDialog.style.display = 'none';
-}
-if (closeDevDialog) closeDevDialog.onclick = hideDevDialog;
+// Google Login
+googleLoginButton.addEventListener('click', () => {
+    signInWithPopup(auth, googleProvider)
+        .then((result) => {
+            const user = result.user;
+            localStorage.setItem('loggedInUser', JSON.stringify({
+                displayName: user.displayName || user.email,
+                profilePicUrl: user.photoURL,
+                email: user.email
+            }));
+            setProfilePicture(user.photoURL, user.displayName || user.email);
+            loginModal.style.display = 'none';
+            showUploadButtonIfAllowed(user.email);
+        })
+        .catch((error) => {
+            emailLoginError.textContent = 'Google Login Failed: ' + error.message;
+        });
+});
 
 // Email Login
-document.getElementById('emailLoginButton').addEventListener('click', () => {
-    window.location.href = 'email-login.html'; // Redirect to email login page
+emailLoginForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    emailLoginError.textContent = '';
+    const email = emailInput.value.trim();
+    const password = passwordInput.value;
+
+    signInWithEmailAndPassword(auth, email, password)
+        .then((result) => {
+            const user = result.user;
+            localStorage.setItem('loggedInUser', JSON.stringify({
+                displayName: user.displayName || user.email,
+                profilePicUrl: user.photoURL,
+                email: user.email
+            }));
+            setProfilePicture(user.photoURL, user.displayName || user.email);
+            loginModal.style.display = 'none';
+            showUploadButtonIfAllowed(user.email);
+        })
+        .catch((error) => {
+            emailLoginError.textContent = error.message.replace('Firebase: ', '');
+        });
 });
 
-    const loginButton = document.getElementById('loginButton');
-    const profileMenu = document.getElementById('profileMenu');
-    const logoutButton = document.getElementById('logoutButton');
+// Registration logic
+registerForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    emailLoginError.textContent = '';
+    const email = document.getElementById('registerEmail').value.trim();
+    const password = document.getElementById('registerPassword').value;
 
-    // Simulate login options
-    function showLoginOptions() {
-        const loginOptions = `
-            <div style="text-align: center; background-color: #333; color: whitesmoke; padding: 20px; border-radius: 8px;">
-                <h2>Log In</h2>
-                <button onclick="loginWithGoogle()" style="background-color: #4285F4; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In with Google</button>
-                <br>
-                <button onclick="loginWithEmail()" style="background-color: #555; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In with Email</button>
-            </div>
-        `;
-        document.body.insertAdjacentHTML('beforeend', loginOptions);
-    }
+    createUserWithEmailAndPassword(auth, email, password)
+        .then((result) => {
+            const user = result.user;
+            localStorage.setItem('loggedInUser', JSON.stringify({
+                displayName: user.displayName || user.email,
+                profilePicUrl: user.photoURL,
+                email: user.email
+            }));
+            setProfilePicture(user.photoURL, user.displayName || user.email);
+            loginModal.style.display = 'none';
+            registerForm.reset();
+            registerForm.style.display = 'none';
+            showEmailLoginFormBtn.style.display = 'inline-block';
+            showRegisterFormBtn.style.display = 'inline-block';
+            showUploadButtonIfAllowed(user.email);
+        })
+        .catch((error) => {
+            emailLoginError.textContent = error.message.replace('Firebase: ', '');
+        });
+});
 
-    // Simulate Google login
-    function loginWithGoogle() {
-        alert('Logged in with Google!');
-        setProfilePicture('https://via.placeholder.com/50'); // Placeholder profile picture
-    }
-
-    // Simulate Email login
-    function loginWithEmail() {
-    // Prompt the user for email and password
-    const email = prompt("Enter your email:");
-    const password = prompt("Enter your password:");
-
-    if (email && password) {
-        // Simulate email login (replace this with actual authentication logic)
-        if (email === "test@example.com" && password === "password123") {
-            alert("Logged in successfully!");
-            setProfilePicture("https://via.placeholder.com/50"); // Placeholder profile picture
-        } else {
-            alert("Invalid email or password. Please try again.");
-        }
-    } else {
-        alert("Email and password are required.");
-    }
-}
-    // Set profile picture and replace the login button
+// Set profile picture and replace the login button
 function setProfilePicture(profilePicUrl, displayName) {
-    const loginButton = document.getElementById('loginButton');
-    loginButton.style.display = 'none'; // Hide the login button
+    loginButton.style.display = 'none';
 
-    // Check if a profile picture already exists
+    // Remove existing profile pic if present
     const existingProfilePic = document.getElementById('profilePic');
-    if (existingProfilePic) {
-        existingProfilePic.remove(); // Remove the existing profile picture
-    }
+    if (existingProfilePic) existingProfilePic.remove();
 
     const profilePic = document.createElement('img');
-    profilePic.src = profilePicUrl || 'default-profile.png'; // Use a default image if no profile picture is available
-    profilePic.alt = 'Profile Picture';
+    profilePic.src = profilePicUrl || 'default-profile.png';
+    profilePic.alt = displayName || 'Profile Picture';
     profilePic.style.position = 'fixed';
     profilePic.style.top = '20px';
     profilePic.style.left = '20px';
@@ -577,22 +744,46 @@ function setProfilePicture(profilePicUrl, displayName) {
     profilePic.id = 'profilePic';
     document.body.appendChild(profilePic);
 
-    // Add a click event to show a profile menu
-    profilePic.addEventListener('click', () => {
-        showDevDialog();
+    // Show/hide profile menu on click
+    profilePic.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const menu = document.getElementById('profileMenu');
+        menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+    });
+
+    // Hide menu if clicking outside
+    document.addEventListener('click', (e) => {
+        const menu = document.getElementById('profileMenu');
+        if (menu && !menu.contains(e.target) && e.target.id !== 'profilePic') {
+            menu.style.display = 'none';
+        }
     });
 }
 
-    // Show login options when the login button is clicked
-    loginButton.addEventListener('click', showLoginOptions);
+// Logout button logic
+document.getElementById('logoutButton').addEventListener('click', () => {
+    localStorage.removeItem('loggedInUser');
+    location.reload();
+});
 
-    // Upload page button logic
-    const uploadPageButton = document.getElementById('upload-page-button');
-    if (uploadPageButton) {
-        uploadPageButton.addEventListener('click', function() {
-            window.location.href = 'upload.html';
-        });
+// Show upload button only for allowed email
+function showUploadButtonIfAllowed(email) {
+    const allowedEmail = "aquacheese.yt@gmail.com";
+    if (email === allowedEmail) {
+        uploadButtonSection.style.display = 'block';
+    } else {
+        uploadButtonSection.style.display = 'none';
     }
+}
+
+// On page load, show profile if logged in
+document.addEventListener('DOMContentLoaded', () => {
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    if (loggedInUser) {
+        setProfilePicture(loggedInUser.profilePicUrl, loggedInUser.displayName);
+        showUploadButtonIfAllowed(loggedInUser.email);
+    }
+});
 </script>
 
 <style>
@@ -1367,100 +1558,6 @@ function buyNowForVideo() {
     }
 </script>
 
-    <script type="module">
-    // Import Firebase modules
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-    import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-
-    // Your web app's Firebase configuration
-    const firebaseConfig = {
-        apiKey: "AIzaSyDKe84a_3xgi3xv3DRkRTk6cXyNbCtX-Wo",
-  authDomain: "aquacheese-photography-site.firebaseapp.com",
-  projectId: "aquacheese-photography-site",
-  storageBucket: "aquacheese-photography-site.firebasestorage.app",
-  messagingSenderId: "671895809880",
-  appId: "1:671895809880:web:4ee9031d2041f83ae57f2d",
-  measurementId: "G-EJKMML5E3K"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app); // Initialize Firebase Authentication
-    const googleProvider = new GoogleAuthProvider(); // Ensure provider is initialized
-
-    // Check login state on page load
-    document.addEventListener('DOMContentLoaded', () => {
-        const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
-        if (loggedInUser) {
-            setProfilePicture(loggedInUser.profilePicUrl, loggedInUser.displayName);
-        }
-    });
-
-    // Google Login
-    document.getElementById('googleLoginButton').addEventListener('click', () => {
-        signInWithPopup(auth, googleProvider)
-            .then((result) => {
-                const user = result.user;
-                alert(`Welcome, ${user.displayName}!`);
-
-                // Save user info to localStorage
-                localStorage.setItem(
-                    'loggedInUser',
-                    JSON.stringify({
-                        displayName: user.displayName,
-                        profilePicUrl: user.photoURL,
-                    })
-                );
-
-                setProfilePicture(user.photoURL, user.displayName); // Set profile picture
-                document.getElementById('loginModal').style.display = 'none'; // Close modal
-            })
-            .catch((error) => {
-                console.error('Google Login Error:', error.message);
-                alert('Google Login Failed: ' + error.message);
-            });
-    });
-
-    // Set profile picture and replace the login button
-    function setProfilePicture(profilePicUrl, displayName) {
-        const loginButton = document.getElementById('loginButton');
-        loginButton.style.display = 'none'; // Hide the login button
-
-        const profilePic = document.createElement('img');
-        profilePic.src = profilePicUrl || 'default-profile.png'; // Use a default image if no profile picture is available
-        profilePic.alt = 'Profile Picture';
-        profilePic.style.position = 'fixed';
-        profilePic.style.top = '20px';
-        profilePic.style.left = '20px';
-        profilePic.style.width = '40px';
-        profilePic.style.height = '40px';
-        profilePic.style.borderRadius = '50%';
-        profilePic.style.cursor = 'pointer';
-        profilePic.style.zIndex = '1000';
-        profilePic.id = 'profilePic';
-        document.body.appendChild(profilePic);
-
-        // Add a click event to show a profile menu
-        profilePic.addEventListener('click', () => {
-            showDevDialog();
-        });
-    }
-
-    // Log out functionality
-    function logOut() {
-        localStorage.removeItem('loggedInUser'); // Remove user info from localStorage
-        alert('You have been logged out.');
-
-        // Reload the page to reset the UI
-        location.reload();
-    }
-</script>
-
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
-<script src="firebase-config.js"></script>
-
 <script>
   const allowedEmail = "aquacheese.yt@gmail.com";
   const firebaseAuth = getAuth(app);
@@ -1475,5 +1572,10 @@ function buyNowForVideo() {
     }
   });
 </script>
+
+<div id="profileMenu" style="display:none; position:fixed; top:70px; left:20px; background:#444; color:#fff; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.3); z-index:2000; min-width:140px; padding:16px 12px;">
+  <button id="logoutButton" style="background:#dc3545; color:white; border:none; border-radius:6px; padding:10px 20px; width:100%; font-size:16px; cursor:pointer;">Log Out</button>
+</div>
+
     </body>
 </html>
