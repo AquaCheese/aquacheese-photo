@@ -1283,7 +1283,7 @@ function buyNowForVideo() {
 
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+    // Removed duplicate declaration of firebaseAuth
     const googleProvider = new GoogleAuthProvider();
 
     // Check login state on page load
@@ -1296,7 +1296,7 @@ function buyNowForVideo() {
 
     // Google Login
     document.getElementById('googleLoginButton').addEventListener('click', () => {
-        signInWithPopup(auth, googleProvider)
+        signInWithPopup(firebaseAuth, googleProvider)
             .then((result) => {
                 const user = result.user;
                 alert(`Welcome, ${user.displayName}!`);
@@ -1355,6 +1355,52 @@ function buyNowForVideo() {
         // Reload the page to reset the UI
         location.reload();
     }
+</script>
+
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
+<script src="firebase-config.js"></script>
+
+<section id="upload-section" style="display: none;">
+  <h2>Upload Image</h2>
+  <form id="upload-form">
+    <input type="file" id="image-upload" accept="image/*" required />
+    <input type="text" id="image-title" placeholder="Image Title" required />
+    <button type="submit">Upload</button>
+  </form>
+</section>
+
+<script>
+  const allowedEmail = "aquacheese.yt@gmail.com"; // Replace with the allowed Google account email
+
+  // Firebase Authentication and Storage
+  const firebaseAuth = getAuth(app); // Use the existing declaration
+  const storage = firebase.storage();
+
+  // Sign in with Google
+  firebaseAuth.onAuthStateChanged(user => {
+    if (user && user.email === allowedEmail) {
+      document.getElementById('upload-section').style.display = 'block';
+    } else {
+      document.getElementById('upload-section').style.display = 'none';
+    }
+  });
+
+  firebaseAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+
+  // Handle Image Upload
+  document.getElementById('upload-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const file = document.getElementById('image-upload').files[0];
+    const title = document.getElementById('image-title').value;
+
+    if (file) {
+      const storageRef = storage.ref(`images/${title}`);
+      await storageRef.put(file);
+      alert('Image uploaded successfully!');
+    }
+  });
 </script>
     </body>
 </html>
