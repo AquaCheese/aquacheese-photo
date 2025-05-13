@@ -1,11 +1,12 @@
 // Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyD-7v1x4X2g5k3J6Q8q0Z9G4z5Y1F3a2cE",
-  authDomain: "aquacheese-photo-website.firebaseapp.com",
-  projectId: "aquacheese-photo-website",
-  storageBucket: "aquacheese-photo-website.appspot.com",
-  messagingSenderId: "637266954240",
-  appId: "1:637266954240:web:6e55076f10c27ad4c230e5"
+  apiKey: "AIzaSyDKe84a_3xgi3xv3DRkRTk6cXyNbCtX-Wo",
+  authDomain: "aquacheese-photography-site.firebaseapp.com",
+  projectId: "aquacheese-photography-site",
+  storageBucket: "aquacheese-photography-site.firebasestorage.app",
+  messagingSenderId: "671895809880",
+  appId: "1:671895809880:web:4ee9031d2041f83ae57f2d",
+  measurementId: "G-EJKMML5E3K"
 };
 
 // Initialize Firebase
