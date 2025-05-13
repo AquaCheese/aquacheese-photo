@@ -1363,10 +1363,13 @@ function buyNowForVideo() {
 <script src="firebase-config.js"></script>
 
 <section id="upload-section" style="display: none;">
-  <h2>Upload Image</h2>
+  <h2>Upload Image/Video</h2>
   <form id="upload-form">
-    <input type="file" id="image-upload" accept="image/*" required />
-    <input type="text" id="image-title" placeholder="Image Title" required />
+    <input type="file" id="file-upload" accept="image/*,video/*" required />
+    <input type="text" id="file-title" placeholder="Title" required />
+    <textarea id="file-description" placeholder="Description" required></textarea>
+    <input type="number" id="file-price" placeholder="Price (£)" required />
+    <input type="text" id="file-location" placeholder="Location" required />
     <button type="submit">Upload</button>
   </form>
 </section>
@@ -1377,6 +1380,7 @@ function buyNowForVideo() {
   // Firebase Authentication and Storage
   const firebaseAuth = getAuth(app); // Use the existing declaration
   const storage = firebase.storage();
+  const db = firebase.firestore(); // Initialize Firestore
 
   // Sign in with Google
   firebaseAuth.onAuthStateChanged(user => {
@@ -1387,18 +1391,32 @@ function buyNowForVideo() {
     }
   });
 
-  firebaseAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
-
-  // Handle Image Upload
+  // Handle File Upload
   document.getElementById('upload-form').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const file = document.getElementById('image-upload').files[0];
-    const title = document.getElementById('image-title').value;
+    const file = document.getElementById('file-upload').files[0];
+    const title = document.getElementById('file-title').value;
+    const description = document.getElementById('file-description').value;
+    const price = document.getElementById('file-price').value;
+    const location = document.getElementById('file-location').value;
 
     if (file) {
-      const storageRef = storage.ref(`images/${title}`);
+      const storageRef = storage.ref(`uploads/${file.name}`);
       await storageRef.put(file);
-      alert('Image uploaded successfully!');
+      const fileURL = await storageRef.getDownloadURL();
+
+      // Save metadata to Firestore
+      await db.collection('uploads').add({
+        title,
+        description,
+        price: parseFloat(price),
+        location,
+        fileURL,
+        type: file.type.includes('image') ? 'image' : 'video',
+        uploadedAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+
+      alert('File uploaded successfully!');
     }
   });
 </script>
