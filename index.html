@@ -1362,61 +1362,23 @@ function buyNowForVideo() {
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
 <script src="firebase-config.js"></script>
 
-<section id="upload-section" style="display: none;">
-  <h2>Upload Image/Video</h2>
-  <form id="upload-form">
-    <input type="file" id="file-upload" accept="image/*,video/*" required />
-    <input type="text" id="file-title" placeholder="Title" required />
-    <textarea id="file-description" placeholder="Description" required></textarea>
-    <input type="number" id="file-price" placeholder="Price (£)" required />
-    <input type="text" id="file-location" placeholder="Location" required />
-    <button type="submit">Upload</button>
-  </form>
+<section id="upload-button-section" style="display: none; text-align: center; margin-top: 20px;">
+  <button id="upload-page-button" style="font-size: large; padding: 10px 20px; border-radius: 5px; background-color: lightblue; border: none; cursor: pointer;">
+    Go to Upload Page
+  </button>
 </section>
 
 <script>
-  const allowedEmail = "aquacheese.yt@gmail.com"; // Replace with the allowed Google account email
+  const allowedEmail = "aquacheese.yt@gmail.com";
+  const firebaseAuth = getAuth(app);
 
-  // Firebase Authentication and Storage
-  const firebaseAuth = getAuth(app); // Use the existing declaration
-  const storage = firebase.storage();
-  const db = firebase.firestore(); // Initialize Firestore
-
-  // Sign in with Google
+  // Show the upload button only for the allowed email
   firebaseAuth.onAuthStateChanged(user => {
     if (user && user.email === allowedEmail) {
-      document.getElementById('upload-section').style.display = 'block';
-    } else {
-      document.getElementById('upload-section').style.display = 'none';
-    }
-  });
-
-  // Handle File Upload
-  document.getElementById('upload-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const file = document.getElementById('file-upload').files[0];
-    const title = document.getElementById('file-title').value;
-    const description = document.getElementById('file-description').value;
-    const price = document.getElementById('file-price').value;
-    const location = document.getElementById('file-location').value;
-
-    if (file) {
-      const storageRef = storage.ref(`uploads/${file.name}`);
-      await storageRef.put(file);
-      const fileURL = await storageRef.getDownloadURL();
-
-      // Save metadata to Firestore
-      await db.collection('uploads').add({
-        title,
-        description,
-        price: parseFloat(price),
-        location,
-        fileURL,
-        type: file.type.includes('image') ? 'image' : 'video',
-        uploadedAt: firebase.firestore.FieldValue.serverTimestamp()
+      document.getElementById('upload-button-section').style.display = 'block';
+      document.getElementById('upload-page-button').addEventListener('click', () => {
+        window.location.href = 'upload.html';
       });
-
-      alert('File uploaded successfully!');
     }
   });
 </script>
