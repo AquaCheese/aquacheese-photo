@@ -242,15 +242,41 @@
         <br>
         <b style="font-size: xx-large;">[OPEN BETA]</b>
         <br><br>
-        v. 0.9.2
+        v. 0.9.4
         <br>
         <br>
         THIS SITE IS IDEALLY VIEWED ON DESKTOP / LAPTOP <br> (viewing on other devices may lead to alignment, or other visual issues)
         <br><br>
         <hr>
         
-        <a href="Contact Me Form.html"><button class="btncontact" style="font-size: 16px; text-align: center; border-radius: 12px;">Contact Me</button></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://www.youtube.com/@aquacheese1" target="_blank"><button class="btnYT" style="font-size: 16px; text-align: center; border-radius: 12px;">My YouTube Channel</button></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="About.html"><button class="btnabt" style="font-size: 16px; text-align: center; border-radius: 12px;">About</button></a><br><br> <a href="#rec ad"><button id="btnrec" class="btnrec" style="font-size: 16px; text-align: center; border-radius: 12px;">Recently Added</button></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="#land"><button class="btnland" style="font-size: 16px; text-align: center; border-radius: 12px;">Landscape Images</button></a>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="#port"><button class="btnport" style="font-size: 16px; text-align: center; border-radius: 12px;">Portrait Images</button></a>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="#All"><button class="btnall" style="font-size: 16px; text-align: center; border-radius: 12px;">All Images</button></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="#videos"><button class="btnvids" style="font-size: 16px; text-align: center; border-radius: 12px;">Videos</button></a>
-        
+        <a href="Contact Me Form.html"><button class="btncontact" style="font-size: 16px; text-align: center; border-radius: 12px;">Contact Me</button></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://www.youtube.com/@aquacheese1" target="_blank"><button class="btnYT" style="font-size: 16px; text-align: center; border-radius: 12px;">My YouTube Channel</button></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="About.html"><button class="btnabt" style="font-size: 16px; text-align: center; border-radius: 12px;">About</button></a>
+<br><br><br><br>
+        <!-- Sections Dropdown Menu -->
+        <div style="display: inline-block; margin-bottom: 10px;">
+          <label for="sectionsDropdown" style="color: #ffcc00; font-weight: bold; margin-right: 8px;">catagories:</label>
+          <select id="sectionsDropdown" style="padding: 8px; border-radius: 8px; font-size: 16px;">
+            <option value="">Go to catagory...</option>
+            <option value="rec ad">Recently Added</option>
+            <option value="land">Landscape Images</option>
+            <option value="port">Portrait Images</option>
+            <option value="All">All Images</option>
+            <option value="videos">Videos</option>
+          </select>
+        </div>
+
+        <script>
+        document.getElementById('sectionsDropdown').addEventListener('change', function() {
+          const val = this.value;
+          if (val) {
+            const section = document.getElementById(val) || document.getElementsByName(val)[0];
+            if (section) {
+              section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            this.selectedIndex = 0; // Reset dropdown
+          }
+        });
+        </script>
+
         <hr>
         <br>
         <p style="font-size: x-large;">
@@ -334,9 +360,16 @@
 </div>
 
 <!-- Updated Log In button -->
-<button id="loginButton" style="position: fixed; top: 20px; left: 20px; background-color: lightblue; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer; z-index: 1000;">
-    Log In
-</button>
+<div style="position: fixed; top: 20px; left: 20px; z-index: 1000; display: flex; align-items: center; gap: 10px;">
+  <button id="loginButton" style="background-color: lightblue; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer;">
+      Log In
+  </button>
+  <section id="upload-button-section" style="display: none;">
+    <button id="upload-page-button" style="font-size: large; padding: 10px 20px; border-radius: 5px; background-color: lightblue; border: none; cursor: pointer;">
+        Upload Media
+    </button>
+  </section>
+</div>
 
 <!-- Profile Dev Dialog (hidden by default) -->
 <div id="devDialog" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:2000; align-items:center; justify-content:center;">
@@ -360,13 +393,6 @@
         <button id="closeLoginModal" style="background-color: red; color: white; border: none; border-radius: 5px; padding: 5px 10px; font-size: 14px; cursor: pointer; margin-top: 10px;">Close</button>
     </div>
 </div>
-
-<!-- Upload button section, hidden by default -->
-<section id="upload-button-section" style="display: none; text-align: center; margin-top: 20px;">
-  <button id="upload-page-button" style="font-size: large; padding: 10px 20px; border-radius: 5px; background-color: lightblue; border: none; cursor: pointer;">
-    Go to Upload Page
-  </button>
-</section>
 
 <script>
  // Show the login modal
@@ -787,6 +813,19 @@ function buyNowForVideo() {
             </legend>
             <!-- TO KEEP CONSISTANT ALIGNMENT, EVERY 3 PICs, MAKE A NEW TABLE -->
             <table style="display: inline;">
+
+                <td>
+                    <fieldset style="width: fit-content; border-color: goldenrod; box-sizing: border-box;" class="image-fieldset">
+                     <legend id="pots">Train arriving</legend>
+                    <a href="Train Arrive.html"><img src="train arrive WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
+                    <p style="font-size: larger;">
+                        £15
+                    </p>
+                    <a href="Train Arrive.html"><button type="button" style="font-size: large;">See Details</button></a>
+                    <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                </fieldset>
+                </td>
+
                 <td>
                     <fieldset style="width: fit-content; border-color: goldenrod; box-sizing: border-box;" class="image-fieldset">
                      <legend id="field">A Big Ol' Field</legend>
@@ -811,17 +850,6 @@ function buyNowForVideo() {
                 </fieldset>
                 </td>
 
-                <td>
-                    <fieldset style="width: fit-content; border-color: goldenrod; box-sizing: border-box;" class="image-fieldset">
-                     <legend id="pots">Plant Pots</legend>
-                    <a href="Plant Pots.html"><img src="Plant Pots WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
-                    <p style="font-size: larger;">
-                        £15
-                    </p>
-                    <a href="Plant Pots.html"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                </fieldset>
-                </td>
         </table>
         </fieldset>
     </section>
@@ -966,6 +994,18 @@ function buyNowForVideo() {
                         <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
                     </fieldset>
                     </td>
+
+                    <td>
+                    <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;" class="image-fieldset">
+                     <legend id="pots">Train arriving</legend>
+                    <a href="Train Arrive.html"><img src="train arrive WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
+                    <p style="font-size: larger;">
+                        £15
+                    </p>
+                    <a href="Train Arrive.html"><button type="button" style="font-size: large;">See Details</button></a>
+                    <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                </fieldset>
+                </td>
 
                 </table>
     </fieldset>
@@ -1183,7 +1223,17 @@ function buyNowForVideo() {
                     </fieldset>
                 </td>
 
-                
+                <td>
+                    <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;" class="image-fieldset">
+                     <legend id="pots">Train arriving</legend>
+                    <a href="Train Arrive.html"><img src="train arrive WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
+                    <p style="font-size: larger;">
+                        £15
+                    </p>
+                    <a href="Train Arrive.html"><button type="button" style="font-size: large;">See Details</button></a>
+                    <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                </fieldset>
+                </td>
 
 
 
@@ -1410,12 +1460,6 @@ function buyNowForVideo() {
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
 <script src="firebase-config.js"></script>
-
-<section id="upload-button-section" style="display: none; text-align: center; margin-top: 20px;">
-  <button id="upload-page-button" style="font-size: large; padding: 10px 20px; border-radius: 5px; background-color: lightblue; border: none; cursor: pointer;">
-    Go to Upload Page
-  </button>
-</section>
 
 <script>
   const allowedEmail = "aquacheese.yt@gmail.com";
