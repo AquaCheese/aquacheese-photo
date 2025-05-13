@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Image/Video</title>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+    <script src="firebase-config.js"></script>
+</head>
+<body>
+    <h1>Upload Image/Video</h1>
+    <form id="upload-form">
+        <input type="file" id="file-upload" accept="image/*,video/*" required />
+        <input type="text" id="file-title" placeholder="Title" required />
+        <textarea id="file-description" placeholder="Description" required></textarea>
+        <input type="number" id="file-price" placeholder="Price (£)" required />
+        <input type="text" id="file-location" placeholder="Location" required />
+        <select id="file-category" required>
+            <option value="">Select Category</option>
+            <option value="video">Video</option>
+            <option value="landscape">Landscape</option>
+            <option value="portrait">Portrait</option>
+        </select>
+        <button type="submit">Upload</button>
+    </form>
+
+    <script>
+        const firebaseAuth = getAuth(app);
+        const storage = getStorage(app);
+        const db = getFirestore(app);
+
+        document.getElementById('upload-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const file = document.getElementById('file-upload').files[0];
+            const title = document.getElementById('file-title').value;
+            const description = document.getElementById('file-description').value;
+            const price = document.getElementById('file-price').value;
+            const location = document.getElementById('file-location').value;
+            const category = document.getElementById('file-category').value;
+
+            if (file) {
+                const storageRef = ref(storage, `uploads/${file.name}`);
+                await uploadBytes(storageRef, file);
+                const fileURL = await getDownloadURL(storageRef);
+
+                // Save metadata to Firestore
+                const docRef = await addDoc(collection(db, 'uploads'), {
+                    title,
+                    description,
+                    price: parseFloat(price),
+                    location,
+                    category,
+                    fileURL,
+                    type: file.type.includes('image') ? 'image' : 'video',
+                    uploadedAt: serverTimestamp()
+                });
+
+                alert('File uploaded successfully!');
+
+                // Update "Recently Added" and "All Images" sections
+                updateRecentlyAdded(fileURL, title, category);
+                updateAllImages(fileURL, title, category);
+
+                // Create a new HTML file for the uploaded item
+                createItemPage(fileURL, title, description, price, location, category);
+            }
+        });
+
+        async function updateRecentlyAdded(fileURL, title, category) {
+            const recentlyAddedSection = document.getElementById('rec ad');
+            const items = recentlyAddedSection.querySelectorAll('fieldset');
+
+            // Remove the oldest item if there are already 3 items
+            if (items.length >= 3) {
+                recentlyAddedSection.removeChild(items[items.length - 1]);
+            }
+
+            // Add the new item to the top
+            const newItem = document.createElement('fieldset');
+            newItem.innerHTML = `
+                <legend>${title}</legend>
+                <a href="${fileURL}"><img src="${fileURL}" alt="${title}" height="200"></a>
+                <p>${category}</p>
+            `;
+            recentlyAddedSection.insertBefore(newItem, recentlyAddedSection.firstChild);
+        }
+
+        async function updateAllImages(fileURL, title, category) {
+            const allImagesSection = document.getElementById('All');
+            const rows = allImagesSection.querySelectorAll('table');
+
+            // Ensure the section remains 3 items wide
+            let lastRow = rows[rows.length - 1];
+            if (!lastRow || lastRow.querySelectorAll('td').length >= 3) {
+                lastRow = document.createElement('table');
+                allImagesSection.appendChild(lastRow);
+            }
+
+            const newCell = document.createElement('td');
+            newCell.innerHTML = `
+                <fieldset>
+                    <legend>${title}</legend>
+                    <a href="${fileURL}"><img src="${fileURL}" alt="${title}" height="200"></a>
+                    <p>${category}</p>
+                </fieldset>
+            `;
+            lastRow.appendChild(newCell);
+        }
+
+        async function createItemPage(fileURL, title, description, price, location, category) {
+            const pageContent = `<!DOCTYPE html>
+<html>
+<head>
+    <title>${title}</title>
+</head>
+<body>
+    <h1>${title}</h1>
+    <img src="${fileURL}" alt="${title}" style="max-width: 100%; height: auto;">
+    <p>${description}</p>
+    <p>Price: £${price}</p>
+    <p>Location: ${location}</p>
+    <p>Category: ${category}</p>
+</body>
+</html>`;
+
+            const response = await fetch('/create-file', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    fileName: `${title.replace(/\s+/g, '_')}.html`,
+                    content: pageContent
+                })
+            });
+
+            if (!response.ok) {
+                console.error('Failed to create item page');
+            }
+        }
+    </script>
+</body>
+</html>
