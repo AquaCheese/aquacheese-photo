@@ -29,6 +29,263 @@
         </style>
 </head>
 <body>
+    <!-- Login Button and Modal (from index.html, upload feature removed) -->
+    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+      <button id="loginButton" style="background-color: lightblue; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer;">
+        Log In
+      </button>
+    </div>
+    <div id="loginModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;">
+      <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #333; color: whitesmoke; padding: 20px; border-radius: 8px; width: 300px; text-align: center;">
+        <h2>Log In</h2>
+        <button id="googleLoginButton" style="background-color: #4285F4; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In with Google</button>
+        <button id="showEmailLoginForm" style="background-color: #555; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In with Email</button>
+        <form id="emailLoginForm" style="display:none; margin-top:10px;">
+          <input id="emailInput" type="email" placeholder="Email" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
+          <input id="passwordInput" type="password" placeholder="Password" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
+          <button type="submit" style="background-color: #555; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In</button>
+          <button type="button" id="cancelEmailLogin" style="background-color: #dc3545; color: white; border: none; border-radius: 5px; padding: 8px 16px; font-size: 15px; cursor: pointer; margin: 10px;">Cancel</button>
+        </form>
+        <form id="registerForm" style="display:none; margin-top:10px;">
+          <input id="registerEmail" type="email" placeholder="Email" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
+          <input id="registerPassword" type="password" placeholder="Password" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
+          <button type="submit" style="background-color: #28a745; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Register</button>
+          <button type="button" id="cancelRegister" style="background-color: #dc3545; color: white; border: none; border-radius: 5px; padding: 8px 16px; font-size: 15px; cursor: pointer; margin: 10px;">Cancel</button>
+        </form>
+        <div id="emailLoginError" style="color:#ff6666; margin-top:8px; min-height:20px;"></div>
+        <br>
+        <hr style="border: 0; border-top: 1px solid #888; margin: 16px 0 8px 0;">
+        <button id="showRegisterForm" style="background-color: #ffc107; color: black; border: none; border-radius: 5px; padding: 8px 16px; font-size: 15px; cursor: pointer; margin: 10px; display: inline-block;">Register</button>
+        <button id="closeLoginModal" style="background-color: red; color: white; border: none; border-radius: 5px; padding: 5px 10px; font-size: 14px; cursor: pointer; margin-top: 10px;">Close</button>
+      </div>
+    </div>
+    <script type="module">
+    import { initializeApp, getApps } from "firebase/app";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+    import { firebaseConfig } from './firebase-config.js';
+
+    if (!window.firebaseApp) {
+      window.firebaseApp = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
+    }
+    if (!window.firebaseAuth) {
+      window.firebaseAuth = getAuth(window.firebaseApp);
+    }
+    if (!window.googleProvider) {
+      window.googleProvider = new GoogleAuthProvider();
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+        const loginButton = document.getElementById('loginButton');
+        const loginModal = document.getElementById('loginModal');
+        const closeLoginModal = document.getElementById('closeLoginModal');
+        const googleLoginButton = document.getElementById('googleLoginButton');
+        const showEmailLoginFormBtn = document.getElementById('showEmailLoginForm');
+        const showRegisterFormBtn = document.getElementById('showRegisterForm');
+        const emailLoginForm = document.getElementById('emailLoginForm');
+        const registerForm = document.getElementById('registerForm');
+        const cancelEmailLoginBtn = document.getElementById('cancelEmailLogin');
+        const cancelRegisterBtn = document.getElementById('cancelRegister');
+        const emailInput = document.getElementById('emailInput');
+        const passwordInput = document.getElementById('passwordInput');
+        const emailLoginError = document.getElementById('emailLoginError');
+
+        loginButton.addEventListener('click', () => {
+            loginModal.style.display = 'block';
+        });
+        closeLoginModal.addEventListener('click', () => {
+            loginModal.style.display = 'none';
+        });
+        showEmailLoginFormBtn.addEventListener('click', () => {
+            showEmailLoginFormBtn.style.display = 'none';
+            showRegisterFormBtn.style.display = 'none';
+            emailLoginForm.style.display = 'block';
+            registerForm.style.display = 'none';
+            emailLoginError.textContent = '';
+        });
+        cancelEmailLoginBtn.addEventListener('click', () => {
+            emailLoginForm.style.display = 'none';
+            showEmailLoginFormBtn.style.display = 'inline-block';
+            showRegisterFormBtn.style.display = 'inline-block';
+            emailLoginError.textContent = '';
+        });
+        showRegisterFormBtn.addEventListener('click', () => {
+            showEmailLoginFormBtn.style.display = 'none';
+            showRegisterFormBtn.style.display = 'none';
+            emailLoginForm.style.display = 'none';
+            registerForm.style.display = 'block';
+            emailLoginError.textContent = '';
+        });
+        cancelRegisterBtn.addEventListener('click', () => {
+            registerForm.style.display = 'none';
+            showEmailLoginFormBtn.style.display = 'inline-block';
+            showRegisterFormBtn.style.display = 'inline-block';
+            emailLoginError.textContent = '';
+        });
+        googleLoginButton.addEventListener('click', () => {
+            signInWithPopup(window.firebaseAuth, window.googleProvider)
+                .then((result) => {
+                    const user = result.user;
+                    localStorage.setItem('loggedInUser', JSON.stringify({
+                        email: user.email
+                    }));
+                    setProfilePicture(user.photoURL, user.displayName || user.email);
+                    loginModal.style.display = 'none';
+                })
+                .catch((error) => {
+                    emailLoginError.textContent = 'Google Login Failed: ' + error.message;
+                });
+        });
+        emailLoginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            emailLoginError.textContent = '';
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
+            signInWithEmailAndPassword(window.firebaseAuth, email, password)
+                .then((result) => {
+                    setProfilePicture(null, email);
+                    loginModal.style.display = 'none';
+                })
+                .catch((error) => {
+                    emailLoginError.textContent = error.message.replace('Firebase: ', '');
+                });
+        });
+        registerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            emailLoginError.textContent = '';
+            const email = document.getElementById('registerEmail').value.trim();
+            const password = document.getElementById('registerPassword').value;
+            createUserWithEmailAndPassword(window.firebaseAuth, email, password)
+                .then((result) => {
+                    setProfilePicture(null, email);
+                    loginModal.style.display = 'none';
+                });
+        });
+        function setProfilePicture(profilePicUrl, displayName) {
+            loginButton.style.display = 'none';
+            const existingProfilePic = document.getElementById('profilePic');
+            if (existingProfilePic) existingProfilePic.remove();
+            const profilePic = document.createElement('img');
+            profilePic.src = profilePicUrl || 'default-profile.png';
+            profilePic.alt = displayName || 'Profile Picture';
+            profilePic.style.position = 'fixed';
+            profilePic.style.top = '20px';
+            profilePic.style.left = '20px';
+            profilePic.id = 'profilePic';
+            document.body.appendChild(profilePic);
+            // Add logout button
+            let logoutBtn = document.getElementById('logoutButton');
+            if (!logoutBtn) {
+                logoutBtn = document.createElement('button');
+                logoutBtn.id = 'logoutButton';
+                logoutBtn.textContent = 'Log Out';
+                logoutBtn.style.position = 'fixed';
+                logoutBtn.style.top = '70px';
+                logoutBtn.style.left = '20px';
+                logoutBtn.style.backgroundColor = 'red';
+                logoutBtn.style.color = 'white';
+                logoutBtn.style.border = 'none';
+                logoutBtn.style.borderRadius = '8px';
+                logoutBtn.style.padding = '8px 16px';
+                logoutBtn.style.fontSize = '15px';
+                logoutBtn.style.cursor = 'pointer';
+                document.body.appendChild(logoutBtn);
+                logoutBtn.addEventListener('click', () => {
+                    localStorage.removeItem('loggedInUser');
+                    location.reload();
+                });
+            }
+        }
+        // On page load, show profile if logged in
+        const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser') || 'null');
+        if (loggedInUser && loggedInUser.email) {
+            setProfilePicture(null, loggedInUser.email);
+        }
+    });
+    </script>
+    <!-- End Login Button and Modal -->
+    <!-- Cart button -->
+    <button id="cartButton">Cart</button>
+    <!-- Cart panel -->
+    <div id="cartPanel" style="display:none;">
+      <button id="closeCart">&times;</button>
+      <h2>Your Cart</h2>
+      <ul id="cartList"></ul>
+      <div id="cartSubtotal" style="margin-top: 20px; font-size: 18px; text-align: center; border-top: 1px solid whitesmoke; padding-top: 10px;"></div>
+      <button id="buyNowButton" style="margin-top: 20px; width: 100%; padding: 10px; background-color: green; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">Buy Now</button>
+    </div>
+    <script>
+    // Cart logic (avoid redeclaration)
+    window.acp_cartKey = window.acp_cartKey || 'acp_cart';
+    function getCart() {
+        return JSON.parse(localStorage.getItem(window.acp_cartKey) || '[]');
+    }
+    function saveCart(cart) {
+        localStorage.setItem(window.acp_cartKey, JSON.stringify(cart));
+    }
+    function updateCartUI() {
+        const cart = getCart();
+        const cartList = document.getElementById('cartList');
+        const cartSubtotal = document.getElementById('cartSubtotal');
+        cartList.innerHTML = '';
+        let subtotal = 0;
+        cart.forEach((item, idx) => {
+            subtotal += item.price * item.qty;
+            const li = document.createElement('li');
+            li.style.marginBottom = '10px';
+            li.innerHTML = `
+                <span style="font-weight:bold;">${item.title}</span> x${item.qty} - $${(item.price*item.qty).toFixed(2)}
+                <button class="remove-cart-item" data-idx="${idx}" style="margin-left:10px;background:#e74c3c;color:white;border:none;border-radius:5px;padding:2px 8px;cursor:pointer;">Remove</button>
+            `;
+            cartList.appendChild(li);
+        });
+        cartSubtotal.textContent = `Subtotal: $${subtotal.toFixed(2)}`;
+        document.getElementById('buyNowButton').disabled = cart.length === 0;
+    }
+    function addToCart(item) {
+        let cart = getCart();
+        const idx = cart.findIndex(i => i.title === item.title);
+        if (idx > -1) {
+            cart[idx].qty += 1;
+        } else {
+            cart.push({...item, qty: 1});
+        }
+        saveCart(cart);
+        updateCartUI();
+    }
+    function removeFromCart(idx) {
+        let cart = getCart();
+        cart.splice(idx, 1);
+        saveCart(cart);
+        updateCartUI();
+    }
+    document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const itemDiv = btn.closest('.gallery-item');
+            const item = {
+                title: itemDiv.getAttribute('data-title'),
+                price: parseFloat(itemDiv.getAttribute('data-price')),
+                img: itemDiv.getAttribute('data-img')
+            };
+            addToCart(item);
+        });
+    });
+    document.getElementById('cartButton').addEventListener('click', () => {
+        document.getElementById('cartPanel').style.display = 'block';
+        updateCartUI();
+    });
+    document.getElementById('closeCart').addEventListener('click', () => {
+        document.getElementById('cartPanel').style.display = 'none';
+    });
+    document.getElementById('cartList').addEventListener('click', function(e) {
+        if (e.target.classList.contains('remove-cart-item')) {
+            removeFromCart(Number(e.target.getAttribute('data-idx')));
+        }
+    });
+    document.getElementById('buyNowButton').addEventListener('click', function() {
+        alert('Checkout is not implemented in this demo.');
+    });
+    window.addEventListener('DOMContentLoaded', updateCartUI);
+    </script>
+    <!-- End Cart feature -->
     <h1>ABOUT</h1>
     <br><br>
     <p>

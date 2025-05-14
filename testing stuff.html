@@ -79,6 +79,24 @@
 
     <body>
 
+    <!-- Login/Logout Modal -->
+    <div id="loginModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background-color:white; padding:20px; border-radius:10px; box-shadow:0px 0px 10px rgba(0,0,0,0.5);">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <input type="email" id="email" placeholder="Email" required><br><br>
+            <input type="password" id="password" placeholder="Password" required><br><br>
+            <button type="submit">Login</button>
+        </form>
+        <button onclick="closeLoginModal()">Close</button>
+    </div>
+
+    <!-- Cart Panel -->
+    <div id="cartPanel" style="display:none; position:fixed; top:10px; right:10px; background-color:white; padding:20px; border-radius:10px; box-shadow:0px 0px 10px rgba(0,0,0,0.5);">
+        <h2>Cart</h2>
+        <ul id="cartItems"></ul>
+        <button onclick="closeCartPanel()">Close</button>
+    </div>
+
     <h1>IF YOU FOUND THE SECRET BUTTON, READ THIS: </h1>
     <p>any features that you find below are purely experimental. <br> You can use the feature unless stated otherwise for helping me test. <br> This page is just for me to experiment with features and refine my HTML, CSS, and JS skills. <br> thanks for reading :)</p>        
 
@@ -89,4 +107,40 @@
 
     <br><br><br>
     &lt;&lt;&lt;&nbsp; &copy; 2025 AquaCheese &nbsp;&gt;&gt;&gt;
+
+    <script>
+        // Login Modal Logic
+        function openLoginModal() {
+            document.getElementById('loginModal').style.display = 'block';
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            console.log('Login attempt:', email, password);
+            closeLoginModal();
+        });
+
+        // Cart Panel Logic
+        function openCartPanel() {
+            document.getElementById('cartPanel').style.display = 'block';
+        }
+
+        function closeCartPanel() {
+            document.getElementById('cartPanel').style.display = 'none';
+        }
+
+        function addToCart(item) {
+            const cartItems = document.getElementById('cartItems');
+            const listItem = document.createElement('li');
+            listItem.textContent = item;
+            cartItems.appendChild(listItem);
+        }
+    </script>
     </body>
+</html>

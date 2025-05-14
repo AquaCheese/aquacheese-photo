@@ -246,6 +246,46 @@
     </head>
 
     <body>
+        <!-- Login/Logout Modal -->
+        <div id="loginModal" class="dialog-overlay">
+            <div class="dialog-box">
+                <button class="close-btn" onclick="closeLoginModal()">X</button>
+                <h2>Login</h2>
+                <form id="loginForm">
+                    <input type="email" id="email" placeholder="Email" required>
+                    <input type="password" id="password" placeholder="Password" required>
+                    <button type="submit">Login</button>
+                </form>
+                <button onclick="googleLogin()">Login with Google</button>
+                <p>Don't have an account? <a href="#" onclick="showRegistration()">Register</a></p>
+            </div>
+        </div>
+
+        <!-- Registration Modal -->
+        <div id="registrationModal" class="dialog-overlay">
+            <div class="dialog-box">
+                <button class="close-btn" onclick="closeRegistrationModal()">X</button>
+                <h2>Register</h2>
+                <form id="registrationForm">
+                    <input type="email" id="regEmail" placeholder="Email" required>
+                    <input type="password" id="regPassword" placeholder="Password" required>
+                    <button type="submit">Register</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Cart Button -->
+        <button id="cartButton" onclick="toggleCart()">Cart</button>
+
+        <!-- Cart Panel -->
+        <div id="cartPanel">
+            <button id="closeCart" onclick="toggleCart()">×</button>
+            <h2>Your Cart</h2>
+            <ul id="cartItems"></ul>
+            <div id="cartSubtotal">Subtotal: £0</div>
+            <button id="buyNowButton" onclick="buyNow()">Buy Now</button>
+        </div>
+
         <h1>Close-up of a mini muffin</h1>
         <a href="index.html"><button type="button" style="position: absolute;">&larr; Back to Home</button></a>
 
@@ -297,6 +337,47 @@
             // Function to close the dialog
             function closeDialog() {
                 document.getElementById('dialogOverlay').style.display = 'none';
+            }
+
+            // Function to toggle the cart panel
+            function toggleCart() {
+                const cartPanel = document.getElementById('cartPanel');
+                if (cartPanel.style.right === '0px') {
+                    cartPanel.style.right = '-100%';
+                } else {
+                    cartPanel.style.right = '0px';
+                }
+            }
+
+            // Function to buy now
+            function buyNow() {
+                alert('Proceeding to checkout...');
+            }
+
+            // Function to open login modal
+            function openLoginModal() {
+                document.getElementById('loginModal').style.display = 'flex';
+            }
+
+            // Function to close login modal
+            function closeLoginModal() {
+                document.getElementById('loginModal').style.display = 'none';
+            }
+
+            // Function to open registration modal
+            function showRegistration() {
+                closeLoginModal();
+                document.getElementById('registrationModal').style.display = 'flex';
+            }
+
+            // Function to close registration modal
+            function closeRegistrationModal() {
+                document.getElementById('registrationModal').style.display = 'none';
+            }
+
+            // Function for Google login
+            function googleLogin() {
+                alert('Google login not implemented yet.');
             }
         </script>
     </body>

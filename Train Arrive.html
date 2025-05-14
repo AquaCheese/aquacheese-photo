@@ -246,6 +246,30 @@
     </head>
 
     <body>
+        <!-- Login/Logout Modal -->
+        <div id="loginModal" class="dialog-overlay">
+            <div class="dialog-box">
+                <button class="close-btn" onclick="closeLoginModal()">X</button>
+                <h2>Login</h2>
+                <button onclick="googleLogin()">Login with Google</button>
+                <button onclick="emailLogin()">Login with Email</button>
+                <button onclick="register()">Register</button>
+                <button onclick="logout()">Logout</button>
+            </div>
+        </div>
+
+        <!-- Cart Button -->
+        <button id="cartButton" onclick="toggleCart()">Cart</button>
+
+        <!-- Cart Panel -->
+        <div id="cartPanel">
+            <button id="closeCart" onclick="toggleCart()">×</button>
+            <h2>Your Cart</h2>
+            <ul id="cartItems"></ul>
+            <div id="cartSubtotal">Subtotal: £0</div>
+            <button id="buyNowButton" onclick="buyNow()">Buy Now</button>
+        </div>
+
         <h1>Train Arriving</h1>
         <a href="index.html"><button type="button" style="position: absolute;">&larr; Back to Home</button></a>
 
@@ -296,6 +320,48 @@
             // Function to close the dialog
             function closeDialog() {
                 document.getElementById('dialogOverlay').style.display = 'none';
+            }
+
+            // Function to toggle the cart panel
+            function toggleCart() {
+                const cartPanel = document.getElementById('cartPanel');
+                if (cartPanel.style.right === '0px') {
+                    cartPanel.style.right = '-100%';
+                } else {
+                    cartPanel.style.right = '0px';
+                }
+            }
+
+            // Function to open the login modal
+            function openLoginModal() {
+                document.getElementById('loginModal').style.display = 'flex';
+            }
+
+            // Function to close the login modal
+            function closeLoginModal() {
+                document.getElementById('loginModal').style.display = 'none';
+            }
+
+            // Placeholder functions for login/logout actions
+            function googleLogin() {
+                alert('Google login functionality not implemented yet.');
+            }
+
+            function emailLogin() {
+                alert('Email login functionality not implemented yet.');
+            }
+
+            function register() {
+                alert('Registration functionality not implemented yet.');
+            }
+
+            function logout() {
+                alert('Logout functionality not implemented yet.');
+            }
+
+            // Function to handle "Buy Now" action
+            function buyNow() {
+                alert('Buy Now functionality not implemented yet.');
             }
         </script>
     </body>

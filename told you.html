@@ -27,6 +27,30 @@
         </style>
     </head>
     <body>
+        <!-- Login/Logout Modal -->
+        <div id="loginModal" style="display:none;">
+            <form id="loginForm">
+                <h2>Login</h2>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <br>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <br>
+                <button type="submit">Login</button>
+                <button type="button" onclick="closeLoginModal()">Cancel</button>
+            </form>
+        </div>
+        <button onclick="openLoginModal()">Login</button>
+        <button onclick="logout()">Logout</button>
+
+        <!-- Cart Button/Panel -->
+        <button onclick="toggleCart()">Cart</button>
+        <div id="cartPanel" style="display:none;">
+            <h2>Your Cart</h2>
+            <p>Cart is empty.</p>
+        </div>
+
         <h1>WHAT DID I JUST TELL YOU?</h1>
         <p>THERE IS NO LOCATION!</p>
         <p style="font-size: x-small;">that you know of...</p>
