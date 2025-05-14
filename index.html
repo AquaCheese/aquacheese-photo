@@ -209,6 +209,27 @@
         background-color: #a71d2a;
     }
 
+    #loginModal form {
+        border: none !important;
+        background: none !important;
+        box-shadow: none !important;
+        margin: 0 auto !important;
+        padding: 0 !important;
+        width: 90% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+
+    /* Hide the horizontal rule in the login modal */
+    #loginModal hr {
+      display: none !important;
+    }
+
+    #loginModal form[style*="display:none"] {
+        display: none !important;
+    }
+
     /* Responsive Design */
     @media (max-width: 768px) {
         body {
@@ -356,7 +377,7 @@
         <br>
         <b style="font-size: xx-large;">[OPEN BETA]</b>
         <br><br>
-        v. 0.9.5
+        v. 0.9.6
         <br>
         <br>
         THIS SITE IS IDEALLY VIEWED ON DESKTOP / LAPTOP <br> (viewing on other devices may lead to alignment, or other visual issues)
@@ -376,7 +397,6 @@
       <span class="dropdown-arrow"></span>
     </button>
     <ul id="dropdownList" class="dropdown-list" tabindex="-1" role="listbox" aria-labelledby="customDropdown">
-      <li role="option" data-value="rec ad">Recently Added</li>
       <li role="option" data-value="land">Landscape Images</li>
       <li role="option" data-value="port">Portrait Images</li>
       <li role="option" data-value="All">All Images</li>
@@ -423,12 +443,26 @@
     if (e.target.matches('li')) {
       dropdownBtn.innerHTML = e.target.textContent + '<span class="dropdown-arrow"></span>';
       closeDropdown();
-      // Scroll to section
+      // Redirect to section page instead of scrolling
       const val = e.target.getAttribute('data-value');
       if (val) {
-        const section = document.getElementById(val) || document.getElementsByName(val)[0];
-        if (section) {
-          section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        let page = '';
+        switch(val) {
+          case 'land':
+            page = 'landscape.html';
+            break;
+          case 'port':
+            page = 'portrait.html';
+            break;
+          case 'All':
+            page = 'all imgs.html';
+            break;
+          case 'videos':
+            page = 'videos.html';
+            break;
+        }
+        if (page) {
+          window.location.href = page;
         }
       }
     }
@@ -560,7 +594,6 @@
     <h2>Log In</h2>
     <button id="googleLoginButton" style="background-color: #4285F4; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In with Google</button>
     <button id="showEmailLoginForm" style="background-color: #555; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In with Email</button>
-    <button id="showRegisterForm" style="background-color: #ffc107; color: black; border: none; border-radius: 5px; padding: 8px 16px; font-size: 15px; cursor: pointer; margin: 10px;">Register</button>
     <form id="emailLoginForm" style="display:none; margin-top:10px;">
       <input id="emailInput" type="email" placeholder="Email" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
       <input id="passwordInput" type="password" placeholder="Password" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
@@ -575,6 +608,8 @@
     </form>
     <div id="emailLoginError" style="color:#ff6666; margin-top:8px; min-height:20px;"></div>
     <br>
+    <hr style="border: 0; border-top: 1px solid #888; margin: 16px 0 8px 0;">
+    <button id="showRegisterForm" style="background-color: #ffc107; color: black; border: none; border-radius: 5px; padding: 8px 16px; font-size: 15px; cursor: pointer; margin: 10px; display: inline-block;">Register</button>
     <button id="closeLoginModal" style="background-color: red; color: white; border: none; border-radius: 5px; padding: 5px 10px; font-size: 14px; cursor: pointer; margin-top: 10px;">Close</button>
   </div>
 </div>
@@ -994,520 +1029,119 @@ function buyNowForVideo() {
     document.addEventListener('DOMContentLoaded', updateCart);
 </script>
         
-        <section id="rec ad" name="rec ad">
-            <br><br><br><br>
-        <fieldset style="margin: auto; display: inline;" id="rec ad">
-            <legend>
-                3 Recently Added Images
-            </legend>
-            <!-- TO KEEP CONSISTANT ALIGNMENT, EVERY 3 PICs, MAKE A NEW TABLE -->
-            <table style="display: inline;">
-
-                <td>
-                    <fieldset style="width: fit-content; border-color: goldenrod; box-sizing: border-box;" class="image-fieldset">
-                     <legend id="pots">Train arriving</legend>
-                    <a href="Train Arrive.html"><img src="train arrive WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
-                    <p style="font-size: larger;">
-                        £15
-                    </p>
-                    <a href="Train Arrive.html"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                </fieldset>
-                </td>
-
-                <td>
-                    <fieldset style="width: fit-content; border-color: goldenrod; box-sizing: border-box;" class="image-fieldset">
-                     <legend id="field">A Big Ol' Field</legend>
-                    <a href="field.html"><img src="field WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
-                    <p style="font-size: larger;">
-                        £15
-                    </p>
-                    <a href="field.html"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                </fieldset>
-                </td>
-            
-                <td>
-                    <fieldset style="width: fit-content; border-color: goldenrod; box-sizing: border-box;" class="image-fieldset">
-                     <legend id="flowers">A Smol Patch of Flowers</legend>
-                    <a href="flowers.html"><img src="flowers WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
-                    <p style="font-size: larger;">
-                        £15
-                    </p>
-                    <a href="flowers.html"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                </fieldset>
-                </td>
-
-        </table>
-        </fieldset>
-    </section>
-
+    <br><br><br><br>
+    <!-- All image sections, fieldsets, and related buttons have been removed as requested. -->
+    <br><br><br><br>
+    <!-- You can add a new modern featured section or leave this area blank for now. -->
     <br><br><br><br>
 
-    <section id="AD" name="AD"> 
-        <fieldset style="width: fit-content; margin: auto; display: inline;">
-            <legend>
-                ADVERTISEMENT
-            </legend>
-            <a href="700x100.png"><img src="700x100.png" alt="ERROR 404: NO AD FOUND"></a>
-        </fieldset>
-    </section>
-
-    <br><br><br><br>
-    <section id="land" name="land">
-    <fieldset style="margin: auto; width: fit-content; display: inline;" id="land">
+    <fieldset width="fit-content" style="width: fit-content;">
         <legend>
-            Landscape Images
+            FEATURED IMAGES
         </legend>
-        <table style="display: inline;">
-            <td>
-                <fieldset style="width: fit-content; border-color: peru;" class="image-fieldset">
-                <legend id="seagull">Seagull on a car</legend>
-                <a href="Seagull car img.html"><img src="Seagull on a Car WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200"></a>
-                <p style="font-size: larger;">
-                    £15
-                </p>
-                <a href="Seagull car img.html"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-            </fieldset>
-            </td>
-
-            <td><fieldset style="width: fit-content; border-color: peru;" class="image-fieldset">
-                <legend id="river">Small River</legend>
-            <a href="Perran River.html"><img src="Smol River WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
-            <p style="font-size: larger;">
-                £15
-            </p>
-            <a href="Perran River.html"><button type="button" style="font-size: large;">See Details</button></a>
-            <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-            </fieldset>
-            </td>
-
-            <td>
-                <fieldset style="width: fit-content; border-color: peru;" class="image-fieldset">
-                <legend id="gavel">Close-Up of a Gavel</legend>
-                <a href="Gavel.html"><img src="Gavel WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
-                <p style="font-size: larger;">
-                    £15
-                </p>
-                <a href="Gavel WM.png"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-            </fieldset>
-            </td>
-            </table>
-
-            <table>
-                <td>
-                    <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;" class="image-fieldset">
-                    <legend id="train">Train leaving the station</legend>
-                    <a href="Train.html"><img src="Train WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
-                    <p style="font-size: larger;">
-                        £15
-                    </p>
-                    <a href="Train.html"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                    </fieldset>
-                </td>
-                <td>
-                    <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;" class="image-fieldset">
-                    <legend id="rainbow">Rainbow on an Overcast Day</legend>
-                    <a href="OC Rainbow.html"><img src="Overcast Rainbow WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
-                    <p style="font-size: larger;">
-                        £15
-                    </p>
-                    <a href="OC Rainbow.html"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                </fieldset>
-                </td>
-                <td>
-                    <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;" class="image-fieldset">
-                     <legend id="lights">Traffic Lights</legend>
-                    <a href="Traffic lights img.html"><img src="Traffic lights WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
-                    <p style="font-size: larger;">
-                        £15
-                    </p>
-                    <a href="Traffic lights img.html"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                </fieldset>
-                </td>
-                </table>
-
-                <table>
-                    <td>
-                        <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;" class="image-fieldset">
-                         <legend id="darktree">Dark Tree</legend>
-                        <a href="Dark tree.html"><img src="Dark Tree WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
-                        <p style="font-size: larger;">
-                            £15
-                        </p>
-                        <a href="Dark tree.html"><button type="button" style="font-size: large;">See Details</button></a>
-                        <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                    </fieldset>
-                    </td>
-                   
-                    <td>
-                        <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;" class="image-fieldset">
-                         <legend id="field">A Big Ol' Field</legend>
-                        <a href="field.html"><img src="field WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
-                        <p style="font-size: larger;">
-                            £15
-                        </p>
-                        <a href="field.html"><button type="button" style="font-size: large;">See Details</button></a>
-                        <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                    </fieldset>
-                    </td>
-                    
-                    <td>
-                        <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;" class="image-fieldset">
-                         <legend id="flowers">A Smol Patch of Flowers</legend>
-                        <a href="flowers.html"><img src="flowers WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
-                        <p style="font-size: larger;">
-                            £15
-                        </p>
-                        <a href="flowers.html"><button type="button" style="font-size: large;">See Details</button></a>
-                        <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                    </fieldset>
-                    </td>
-                </table>
-                <table>
-                   
-                    <td>
-                        <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;" class="image-fieldset">
-                         <legend id="pots">Plant Pots</legend>
-                        <a href="Plant Pots.html"><img src="Plant Pots WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
-                        <p style="font-size: larger;">
-                            £15
-                        </p>
-                        <a href="Plant Pots.html"><button type="button" style="font-size: large;">See Details</button></a>
-                        <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                    </fieldset>
-                    </td>
-
-                    <td>
-                    <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;" class="image-fieldset">
-                     <legend id="pots">Train arriving</legend>
-                    <a href="Train Arrive.html"><img src="train arrive WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
-                    <p style="font-size: larger;">
-                        £15
-                    </p>
-                    <a href="Train Arrive.html"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                </fieldset>
-                </td>
-
-                </table>
-    </fieldset>
-    </section>
-
-    <br><br><br><br>
-    
-    <section id="port" name="port">
-        <fieldset style="margin: auto; width: fit-content; display: inline;" id="port">
-            <legend>
-                Portrait Images
-            </legend>
-            <table>
-            <td>
-                <fieldset style="width: fit-content; border-color: royalblue; box-sizing: border-box;" class="image-fieldset">
-                <legend id="muffin">Close-up of a Mini Muffin</legend>
-                <a href="Muffin.html"><img src="Muffin WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
-                <p style="font-size: larger;">
-                    £15
-                </p>
-                <a href="Muffin.html"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-            </fieldset>
-            </td>
-            <td>
-                <fieldset style="width: fit-content; border-color: royalblue; box-sizing: border-box;" class="image-fieldset">
-                 <legend id="GWRtrain">GWR Train</legend>
-                <a href="GWR Train.html"><img src="GWR Train WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
-                <p style="font-size: larger;">
-                    £15
-                </p>
-                <a href="GWR Train.html"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-            </fieldset>
-            </td>
-            <td>
-                <fieldset style="width: fit-content; border-color: royalblue; box-sizing: border-box;" class="image-fieldset">
-                 <legend id="mediumtree">Medium Tree</legend>
-                <a href="P Tree.html"><img src="Tree Portrait WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
-                <p style="font-size: larger;">
-                    £15
-                </p>
-                <a href="P Tree.html"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-            </fieldset>
-            </td>
-        </table>
-        </fieldset>
-        </section>
-   
-        <br><br><br><br>
-
-    <section id="All" name="All">
-        <fieldset style="margin: auto; width: fit-content; display: inline;" id="All">
-            <legend>
-                All Images
-            </legend>
-            <table style="display: inline;">
-                <td><fieldset style="width: fit-content; border-color: chartreuse;" class="image-fieldset">
-                    <legend id="river">Small River</legend>
-                <a href="Perran River.html"><img src="Smol River WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
-                <p style="font-size: larger;">
-                    £15
-                </p>
-                <a href="Perran River.html"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                </fieldset>
-            </td>
-            <td>
-                <fieldset style="width: fit-content; border-color: chartreuse;" class="image-fieldset">
-                <legend id="seagull">Seagull on a car</legend>
-                <a href="Seagull car img.html"><img src="Seagull on a Car WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
-                <p style="font-size: larger;">
-                    £15
-                </p>
-                <a href="Seagull car img.html"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-            </fieldset>
-            </td>
-            <td>
-                <fieldset style="width: fit-content; border-color: chartreuse;" class="image-fieldset">
-                 <legend id="gavel">Gavel on it's side</legend>
-                <a href="Gavel.html"><img src="Gavel WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
-                <p style="font-size: larger;">
-                    £15
-                </p>
-                <a href="Gavel WM.png"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-            </fieldset>
-            </td>
-
-
-            </table>
-            <table>
-            <td>
-                <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;" class="image-fieldset">
-                <legend id="train">Train Leaving The Station</legend>
-                <a href="Train.html"><img src="Train WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
-                <p style="font-size: larger;">
-                    £15
-                </p>
-                <a href="Train.html"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-            </fieldset>
-            </td>
-            <td>
-                <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;" class="image-fieldset">
-                <legend id="muffin">Close-up of a Mini Muffin</legend>
-                <a href="Muffin.html"><img src="Muffin WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
-                <p style="font-size: larger;">
-                    £15
-                </p>
-                <a href="Muffin.html"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-            </fieldset>
-            </td>
-            <td>
-                <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;" class="image-fieldset">
-                <legend id="rainbow">Rainbow on an Overcast Day</legend>
-                <a href="OC Rainbow.html"><img src="Overcast Rainbow WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
-                <p style="font-size: larger;">
-                    £15
-                </p>
-                <a href="OC Rainbow.html"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-            </fieldset>
-            </td>
-        </table>
         <table>
-        
-            <td>
-                <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;" class="image-fieldset">
-                 <legend id="lights">Traffic Lights</legend>
-                <a href="Traffic lights img.html"><img src="Traffic lights WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
-                <p style="font-size: larger;">
-                    £15
-                </p>
-                <a href="Traffic lights img.html"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-            </fieldset>
-            </td>
-            <td>
-                <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;" class="image-fieldset">
-                 <legend id="GWRtrain">GWR Train</legend>
-                <a href="GWR Train.html"><img src="GWR Train WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
-                <p style="font-size: larger;">
-                    £15
-                </p>
-                <a href="GWR Train.html"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-            </fieldset>
-            </td>
-           
-            <td>
-                <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;" class="image-fieldset">
-                 <legend id="darktree">Dark Tree</legend>
-                <a href="Dark tree.html"><img src="Dark Tree WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
-                <p style="font-size: larger;">
-                    £15
-                </p>
-                <a href="Dark tree.html"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-            </fieldset>
-            </td>
+            <tr>
+                <td>
+                    <fieldset width="100%" style="align-items: center; align-content: center; margin: auto; align-self: center;">
+                        <legend>
+                            seagull on a car
+                        </legend>
+                        <table>
+                            <tr>
+                                <td>
+                                    <fieldset style="width: fit-content;">
+                                        <legend>
+                                            Description
+                                        </legend>
+                                        this is a picture of a seagull atop a car... that's kinda it
+                                    </fieldset>
+                                </td>
+                                <td>
+                                    <a href="Seagull car img.html"><img src="Seagull on a Car WM.png" alt="ERROR 404: IMAGE NOT FOUND" style="width: 500px; height: auto;"></a>
+                                </td>
+                            </tr>
+                        </table>
+                        <div style="text-align: center; margin-top: 20px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                            <a href="Purchase%20img.html">
+                                <button style="background-color: green; color: white; border: none; border-radius: 8px; padding: 12px 32px; font-size: 20px; font-family: Arial, Helvetica, sans-serif; box-shadow: 0 4px 8px rgba(0,0,0,0.2); cursor: pointer; transition: background 0.2s;">
+                                    Buy Now
+                                </button>
+                            </a>
+                            <button id="addSeagullToCart" style="background-color: #ffc107; color: #232323; border: none; border-radius: 8px; padding: 12px 32px; font-size: 20px; font-family: Arial, Helvetica, sans-serif; box-shadow: 0 4px 8px rgba(0,0,0,0.2); cursor: pointer; transition: background 0.2s;">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </fieldset>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <fieldset width="100%" style="align-items: center; align-content: center; margin: auto; align-self: center;">
+                        <legend>
+                            Gavel
+                        </legend>
+                        <table>
+                            <tr>
+                                <td>
+                                    <fieldset style="width: fit-content;">
+                                        <legend>
+                                            Description
+                                        </legend>
+                                        this is a picture of a gavel <b>"ORDER!"</b> - a judge somewhere, sometime
+                                    </fieldset>
+                                </td>
+                                <td>
+                                    <a href="Gavel.html"><img src="Gavel WM.png" alt="ERROR 404: IMAGE NOT FOUND" style="width: 500px; height: auto;"></a>
+                                </td>
+                            </tr>
+                        </table>
+                        <div style="text-align: center; margin-top: 20px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                            <a href="Purchase%20img.html">
+                                <button style="background-color: green; color: white; border: none; border-radius: 8px; padding: 12px 32px; font-size: 20px; font-family: Arial, Helvetica, sans-serif; box-shadow: 0 4px 8px rgba(0,0,0,0.2); cursor: pointer; transition: background 0.2s;">
+                                    Buy Now
+                                </button>
+                            </a>
+                            <button id="addGavelToCart" style="background-color: #ffc107; color: #232323; border: none; border-radius: 8px; padding: 12px 32px; font-size: 20px; font-family: Arial, Helvetica, sans-serif; box-shadow: 0 4px 8px rgba(0,0,0,0.2); cursor: pointer; transition: background 0.2s;">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </fieldset>
+            <tr>
+                <td>
+                    <fieldset width="100%" style="align-items: center; align-content: center; margin: auto; align-self: center;">
+                        <legend>
+                            Mini Muffin
+                        </legend>
+                        <table>
+                            <tr>
+                                <td>
+                                    <fieldset style="width: fit-content;">
+                                        <legend>
+                                            Description
+                                        </legend>
+                                        this is a picture of a mini chocolate chip muffin "it was good" - me
+                                    </fieldset>
+                                </td>
+                                <td>
+                                    <a href="Muffin.html"><img src="Muffin WM.png" alt="ERROR 404: IMAGE NOT FOUND" style="width: 500px; height: auto;"></a>
+                                </td>
+                            </tr>
+                        </table>
+                        <div style="text-align: center; margin-top: 20px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                            <a href="Purchase%20img.html">
+                                <button style="background-color: green; color: white; border: none; border-radius: 8px; padding: 12px 32px; font-size: 20px; font-family: Arial, Helvetica, sans-serif; box-shadow: 0 4px 8px rgba(0,0,0,0.2); cursor: pointer; transition: background 0.2s;">
+                                    Buy Now
+                                </button>
+                            </a>
+                            <button id="addMuffinToCart" style="background-color: #ffc107; color: #232323; border: none; border-radius: 8px; padding: 12px 32px; font-size: 20px; font-family: Arial, Helvetica, sans-serif; box-shadow: 0 4px 8px rgba(0,0,0,0.2); cursor: pointer; transition: background 0.2s;">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </fieldset>
+                </td>
+            </tr>
         </table>
-    </table>
-
-            <table>
-                <td>
-                    <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;" class="image-fieldset">
-                     <legend id="field">A Big Ol' Field</legend>
-                    <a href="field.html"><img src="field WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
-                    <p style="font-size: larger;">
-                        £15
-                    </p>
-                    <a href="field.html"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                </fieldset>
-                </td>
-                <td>
-                    <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;" class="image-fieldset">
-                     <legend id="flowers">A Smol Patch of Flowers</legend>
-                    <a href="flowers.html"><img src="flowers WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
-                    <p style="font-size: larger;">
-                        £15
-                    </p>
-                    <a href="flowers.html"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                </fieldset>
-                </td>
-
-                <td>
-                    <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;" class="image-fieldset">
-                     <legend id="pots">Plant Pots</legend>
-                    <a href="Plant Pots.html"><img src="Plant Pots WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
-                    <p style="font-size: larger;">
-                        £15
-                    </p>
-                    <a href="Plant Pots.html"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                </fieldset>
-                </td>
-
-            </table>
-            <table>
-                <td>
-                    <fieldset class="image-fieldset" style="width: fit-content; border-color: chartreuse; box-sizing: border-box;">
-                        <legend id="mediumtree">Medium Tree</legend>
-                        <a href="P Tree.html"><img src="Tree Portrait WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
-                        <p style="font-size: larger;">
-                            £15
-                        </p>
-                        <a href="P Tree.html"><button type="button" style="font-size: large;">See Details</button></a>
-                        <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                    </fieldset>
-                </td>
-
-                <td>
-                    <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;" class="image-fieldset">
-                     <legend id="pots">Train arriving</legend>
-                    <a href="Train Arrive.html"><img src="train arrive WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
-                    <p style="font-size: larger;">
-                        £15
-                    </p>
-                    <a href="Train Arrive.html"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                </fieldset>
-                </td>
-
-
-
-            </table>
-        </fieldset>
-
-        <br><br><br><br>
-
-        
-
-    <section id="AD" name="AD"> 
-        <fieldset style="width: fit-content; margin: auto; display: inline;">
-            <legend>
-                ADVERTISEMENT
-            </legend>
-            <a href="700x100.png"><img src="700x100.png" alt="ERROR 404: NO AD FOUND"></a>
-        </fieldset>
-    </section>
-
-    <br><br><br><br>
-
-    <section id="videos" name="videos">
-        <fieldset style="margin: auto; width: fit-content;" id="videos">
-            <legend>
-                Videos
-            </legend>
-            <table>
-                <td>
-                    <fieldset style="width: fit-content; border-color: cadetblue; margin: auto" class="image-fieldset">
-                        <legend>
-
-                        </legend>
-                    <a href="[VIDEO HTML FILE]"><video src="[VIDEO PATH]" alt="ERROR 404: VIDEO NOT FOUND" loading="lazy"></video></a>
-
-                    <p style="font-size: larger;">
-                        £20
-                        <br><br>
-                        <strong>[EXPERIMENTAL VIDEO FEATURE]</strong>
-                    </p>
-                    <a href="[VIDEO HTML FILE]"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase vid.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                    </fieldset>
-                </td>
-                <td>
-                    <fieldset style="width: fit-content; border-color: cadetblue; margin: auto" class="image-fieldset">
-                        <legend>
-
-                        </legend>
-                    <a href="[VIDEO HTML FILE]"><video src="[VIDEO PATH]" alt="ERROR 404: VIDEO NOT FOUND" loading="lazy"></video></a>
-
-                    <p style="font-size: larger;">
-                        £20
-                        <br><br>
-                        <strong>[EXPERIMENTAL VIDEO FEATURE]</strong>
-                    </p>
-                    <a href="[VIDEO HTML FILE]"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase vid.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                    </fieldset>
-                </td>
-                <td>
-                    <fieldset style="width: fit-content; border-color: cadetblue; margin: auto" class="image-fieldset">
-                        <legend>
-
-                        </legend>
-                    <a href="[VIDEO HTML FILE]"><video src="[VIDEO PATH]" alt="ERROR 404: VIDEO NOT FOUND" loading="lazy"></video></a>
-
-                    <p style="font-size: larger;">
-                        £20
-                        <br><br>
-                        <strong>[EXPERIMENTAL VIDEO FEATURE]</strong>
-                    </p>
-                    <a href="[VIDEO HTML FILE]"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase vid.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                    </fieldset>
-                </td>
-                </table>
-                <table>
-                    <td>
-
-                    </td>
-                </table>
-        </fieldset>
-    </section>
-
-    </section>
+    </fieldset>
 
     <br><br>
     <a href="#"><button class="btnback" style="border-radius: 12px; font-size: 20px;">&uarr; Back to Top &uarr;</button></a>
@@ -1574,6 +1208,18 @@ function buyNowForVideo() {
 <div id="profileMenu" style="display:none; position:fixed; top:70px; left:20px; background:#444; color:#fff; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.3); z-index:2000; min-width:140px; padding:16px 12px;">
   <button id="logoutButton" style="background:#dc3545; color:white; border:none; border-radius:6px; padding:10px 20px; width:100%; font-size:16px; cursor:pointer;">Log Out</button>
 </div>
+
+<script>
+document.getElementById('addSeagullToCart').addEventListener('click', function() {
+    addToCart('Seagull on a Car', 'Seagull on a Car WM.png');
+});
+document.getElementById('addGavelToCart').addEventListener('click', function() {
+    addToCart('Gavel', 'Gavel WM.png');
+});
+document.getElementById('addMuffinToCart').addEventListener('click', function() {
+    addToCart('Mini Muffin', 'Muffin WM.png');
+});
+</script>
 
     </body>
 </html>
