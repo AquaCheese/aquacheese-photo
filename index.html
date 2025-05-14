@@ -351,7 +351,7 @@
   color: #ffcc00;
   cursor: pointer;
   font-size: 1.05em;
-  transition: background 0.2s, color 0.2s;
+  transition: background-color 0.2s;
 }
 
 .dropdown-list li:hover,
@@ -377,7 +377,7 @@
         <br>
         <b style="font-size: xx-large;">[OPEN BETA]</b>
         <br><br>
-        v. 0.9.6
+        v. 0.9.7
         <br>
         <br>
         THIS SITE IS IDEALLY VIEWED ON DESKTOP / LAPTOP <br> (viewing on other devices may lead to alignment, or other visual issues)
@@ -550,12 +550,6 @@
 
         <hr>
 
-        <br>
-        <div style="margin: 20px;">
-            <input type="text" id="searchBar" placeholder="Search for images..." style="width: 300px; padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc;">
-            <button onclick="searchImages()" class="btn_search">Search</button>
-        </div>
-
    <!-- Cart button -->
 <button id="cartButton">Cart</button>
 
@@ -617,17 +611,8 @@
 // Firebase imports
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { firebaseConfig } from './firebase-config.js';
 
-// Firebase config
-const firebaseConfig = {
-    apiKey: "AIzaSyDKe84a_3xgi3xv3DRkRTk6cXyNbCtX-Wo",
-    authDomain: "aquacheese-photography-site.firebaseapp.com",
-    projectId: "aquacheese-photography-site",
-    storageBucket: "aquacheese-photography-site.firebasestorage.app",
-    messagingSenderId: "671895809880",
-    appId: "1:671895809880:web:4ee9031d2041f83ae57f2d",
-    measurementId: "G-EJKMML5E3K"
-};
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
@@ -1154,43 +1139,6 @@ function buyNowForVideo() {
 
     <a href="testing stuff.html"><button class="btnsec" style="border-radius: 12px; font-size: 20px;">Secret button :)</button></a>
     <br><br><br>
-
-    <script>
-    // Trigger search on pressing Enter
-    document.getElementById('searchBar').addEventListener('keydown', function (event) {
-        if (event.key === 'Enter') {
-            searchImages(); // Call the search function
-        }
-    });
-
-    function searchImages() {
-        const query = document.getElementById('searchBar').value.trim().toLowerCase(); // Normalize the query
-        const fieldsets = document.querySelectorAll('.image-fieldset'); // Target only image fieldsets
-        let visibleCount = 0;
-
-        fieldsets.forEach(fieldset => {
-            const legend = fieldset.querySelector('legend');
-            if (legend && legend.textContent.trim().toLowerCase().includes(query)) {
-                fieldset.style.display = 'block'; // Show matching fieldsets
-                visibleCount++;
-            } else {
-                fieldset.style.display = 'none'; // Hide non-matching fieldsets
-            }
-        });
-
-        // If no matches are found and the query is not empty, keep all hidden
-        if (visibleCount === 0 && query !== '') {
-            fieldsets.forEach(fieldset => {
-                fieldset.style.display = 'none';
-            });
-        } else if (query === '') {
-            // Show all if the query is empty
-            fieldsets.forEach(fieldset => {
-                fieldset.style.display = 'block';
-            });
-        }
-    }
-</script>
 
 <script>
   const allowedEmail = "aquacheese.yt@gmail.com";
