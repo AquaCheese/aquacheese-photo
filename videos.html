@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Videos Gallery - AquaCheese Photography</title>
+  <link rel="icon" href="AquaCheese  Logo.png">
+  <link rel="stylesheet" href="Style.css">
+  <style>
+    body { background: #232323; color: #f5f5f5; font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 0; text-align: center; }
+    .gallery-container { max-width: 1200px; margin: 40px auto; padding: 20px; background: #2c2c2c; border-radius: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.4); }
+    h1 { color: #ffcc00; margin-bottom: 24px; }
+    .video-grid { display: flex; flex-wrap: wrap; gap: 32px; justify-content: center; }
+    .video-card { background: #333; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); padding: 24px 16px; width: 340px; min-height: 320px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .video-card h2 { color: #ffcc00; font-size: 1.2em; margin-bottom: 12px; }
+    .video-card .video-placeholder { width: 300px; height: 170px; background: #444; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #aaa; font-size: 1.1em; margin-bottom: 16px; border: 2px dashed #555; }
+    .video-card p { color: #ccc; font-size: 1em; margin-bottom: 16px; }
+    @media (max-width: 900px) { .video-grid { flex-direction: column; align-items: center; } .video-card { width: 95%; min-width: 0; } }
+    /* Button Styles */
+    button {
+        font-size: 16px;
+        border-radius: 8px;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    button:hover {
+        transform: scale(1.05);
+    }
+    .btnback {
+        background-color: #343a40;
+        color: white;
+    }
+    .btnback:hover {
+        background-color: #23272b;
+    }
+    .btn_search {
+        background-color: #ffc107;
+        color: black;
+        border: none;
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 8px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    .btn_search:hover {
+        background-color: #e0a800;
+        transform: scale(1.05);
+    }
+    button:disabled {
+        background: #888;
+        color: #222;
+        border-radius: 8px;
+        padding: 10px 24px;
+        font-size: 1em;
+        cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+    <button id="loginButton" style="background-color: lightblue; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer;">
+      Log In
+    </button>
+    <section id="upload-button-section" style="display: none;">
+      <button id="upload-page-button" style="font-size: large; padding: 10px 20px; border-radius: 5px; background-color: lightblue; border: none; cursor: pointer;">
+        Upload
+      </button>
+    </section>
+  </div>
+  <button id="cartButton">Cart</button>
+  <div id="cartPanel" style="display:none;">
+    <button id="closeCart">&times;</button>
+    <h2>Your Cart</h2>
+    <ul id="cartList"></ul>
+    <div id="cartSubtotal" style="margin-top: 20px; font-size: 18px; text-align: center; border-top: 1px solid whitesmoke; padding-top: 10px;"></div>
+    <button id="buyNowButton" style="margin-top: 20px; width: 100%; padding: 10px; background-color: green; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">Buy Now</button>
+  </div>
+  <div id="loginModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;">
+    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #333; color: whitesmoke; padding: 20px; border-radius: 8px; width: 300px; text-align: center;">
+      <!-- Login modal content will be injected by JS -->
+    </div>
+  </div>
+  <div id="profileMenu" style="display:none; position:fixed; top:70px; left:20px; background:#444; color:#fff; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.3); z-index:2000; min-width:140px; padding:16px 12px;"></div>
+  <div class="gallery-container">
+    <h1>Videos Gallery</h1>
+    <div style="margin: 20px;">
+        <input type="text" id="searchBar" placeholder="Search for videos..." style="width: 300px; padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc;">
+        <button onclick="searchVideos()" class="btn_search">Search</button>
+    </div>
+    <div class="video-grid">
+      <div class="gallery-item" data-title="Video 1" data-price="19.99" data-img="video1.png">
+        <a href="video1.html"><img src="video1.png" alt="Video 1"></a>
+        <div class="gallery-item-title">Video 1</div>
+        <button class="add-to-cart-btn" style="background-color:#ffc107;color:black;margin-top:8px;">Add to Cart</button>
+      </div>
+      <div class="gallery-item" data-title="Video 2" data-price="17.99" data-img="video2.png">
+        <a href="video2.html"><img src="video2.png" alt="Video 2"></a>
+        <div class="gallery-item-title">Video 2</div>
+        <button class="add-to-cart-btn" style="background-color:#ffc107;color:black;margin-top:8px;">Add to Cart</button>
+      </div>
+      <div class="gallery-item" data-title="Video 3" data-price="21.99" data-img="video3.png">
+        <a href="video3.html"><img src="video3.png" alt="Video 3"></a>
+        <div class="gallery-item-title">Video 3</div>
+        <button class="add-to-cart-btn" style="background-color:#ffc107;color:black;margin-top:8px;">Add to Cart</button>
+      </div>
+    </div>
+    <br>
+    <a href="index.html"><button class="btnback" style="border-radius: 12px; font-size: 20px;">&larr; Back to Home</button></a>
+  </div>
+  <script>
+    // Trigger search on pressing Enter
+    document.getElementById('searchBar').addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            searchVideos();
+        }
+    });
+    function searchVideos() {
+        const query = document.getElementById('searchBar').value.trim().toLowerCase();
+        const cards = document.querySelectorAll('.gallery-item');
+        let visibleCount = 0;
+        cards.forEach(card => {
+            const title = card.querySelector('.gallery-item-title');
+            if (title && title.textContent.trim().toLowerCase().includes(query)) {
+                card.style.display = 'block';
+                visibleCount++;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+        if (visibleCount === 0 && query !== '') {
+            cards.forEach(card => { card.style.display = 'none'; });
+        } else if (query === '') {
+            cards.forEach(card => { card.style.display = 'block'; });
+        }
+    }
+    // Cart logic
+    const cartKey = 'acp_cart';
+    function getCart() {
+        return JSON.parse(localStorage.getItem(cartKey) || '[]');
+    }
+    function saveCart(cart) {
+        localStorage.setItem(cartKey, JSON.stringify(cart));
+    }
+    function updateCartUI() {
+        const cart = getCart();
+        const cartList = document.getElementById('cartList');
+        const cartSubtotal = document.getElementById('cartSubtotal');
+        cartList.innerHTML = '';
+        let subtotal = 0;
+        cart.forEach((item, idx) => {
+            subtotal += item.price * item.qty;
+            const li = document.createElement('li');
+            li.style.marginBottom = '10px';
+            li.innerHTML = `
+                <span style="font-weight:bold;">${item.title}</span> x${item.qty} - $${(item.price*item.qty).toFixed(2)}
+                <button class="remove-cart-item" data-idx="${idx}" style="margin-left:10px;background:#e74c3c;color:white;border:none;border-radius:5px;padding:2px 8px;cursor:pointer;">Remove</button>
+            `;
+            cartList.appendChild(li);
+        });
+        cartSubtotal.textContent = `Subtotal: $${subtotal.toFixed(2)}`;
+        document.getElementById('buyNowButton').disabled = cart.length === 0;
+    }
+    function addToCart(item) {
+        let cart = getCart();
+        const idx = cart.findIndex(i => i.title === item.title);
+        if (idx > -1) {
+            cart[idx].qty += 1;
+        } else {
+            cart.push({...item, qty: 1});
+        }
+        saveCart(cart);
+        updateCartUI();
+    }
+    function removeFromCart(idx) {
+        let cart = getCart();
+        cart.splice(idx, 1);
+        saveCart(cart);
+        updateCartUI();
+    }
+    document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const itemDiv = btn.closest('.gallery-item');
+            const item = {
+                title: itemDiv.getAttribute('data-title'),
+                price: parseFloat(itemDiv.getAttribute('data-price')),
+                img: itemDiv.getAttribute('data-img')
+            };
+            addToCart(item);
+        });
+    });
+    document.getElementById('cartButton').addEventListener('click', () => {
+        document.getElementById('cartPanel').style.display = 'block';
+        updateCartUI();
+    });
+    document.getElementById('closeCart').addEventListener('click', () => {
+        document.getElementById('cartPanel').style.display = 'none';
+    });
+    document.getElementById('cartList').addEventListener('click', function(e) {
+        if (e.target.classList.contains('remove-cart-item')) {
+            removeFromCart(Number(e.target.getAttribute('data-idx')));
+        }
+    });
+    document.getElementById('buyNowButton').addEventListener('click', function() {
+        alert('Checkout is not implemented in this demo.');
+    });
+    window.addEventListener('DOMContentLoaded', updateCartUI);
+  </script>
+  <script type="module">
+    import { initializeApp } from "firebase/app";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+    import { firebaseConfig } from './firebase-config.js';
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const googleProvider = new GoogleAuthProvider();
+    // ...all login/profile modal logic, cart logic, and event listeners from index.html...
+  </script>
+</body>
+</html>

@@ -8,460 +8,33 @@
         <link rel="icon" href="AquaCheese  Logo.png">
         
         <style>
-    body {
-        background-color: #2c2c2c;
-        color: #f5f5f5;
-        font-family: Arial, Helvetica, sans-serif;
-        margin: 0;
-        padding: 0;
-        text-align: center;
-    }
-
+            body{
+                background-color: #333;
+    color: whitesmoke;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    
     a {
-        color: #ffcc00;
-        text-decoration: none;
+        color: cornsilk;
     }
-
-    a:visited {
-        color: #ffa500;
+    a :visited{
+        color: aqua;
     }
-
-    a:hover {
-        color: #ffffff;
+    a :hover{
+        color: gray;
     }
-
-    a:active {
-        color: #ffcc00;
-    }
-
-    /* Button Styles */
-    button {
-        font-size: 16px;
-        border-radius: 8px;
-        padding: 10px 20px;
-        border: none;
-        cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.2s ease;
-    }
-
-    button:hover {
-        transform: scale(1.05);
-    }
-
-    .btncontact {
-        background-color: #007bff;
+    a :active{
         color: white;
     }
-
-    .btncontact:hover {
-        background-color: #0056b3;
-    }
-
-    .btnYT {
-        background-color: #dc3545;
-        color: white;
-    }
-
-    .btnYT:hover {
-        background-color: #a71d2a;
-    }
-
-    .btnabt {
-        background-color: #28a745;
-        color: white;
-    }
-
-    .btnabt:hover {
-        background-color: #1e7e34;
-    }
-
-    .btnrec {
-        background-color: #ffc107;
-        color: black;
-    }
-
-    .btnrec:hover {
-        background-color: #e0a800;
-    }
-
-    .btnall {
-        background-color: #17a2b8;
-        color: white;
-    }
-
-    .btnall:hover {
-        background-color: #117a8b;
-    }
-
-    .btnvids {
-        background-color: #6f42c1;
-        color: white;
-    }
-
-    .btnvids:hover {
-        background-color: #563d7c;
-    }
-
-    .btnback {
-        background-color: #343a40;
-        color: white;
-    }
-
-    .btnback:hover {
-        background-color: #23272b;
-    }
-
-    .btn_search {
-        background-color: #ffc107;
-        color: black;
-        border: none;
-        padding: 10px;
-        font-size: 16px;
-        border-radius: 8px;
-        transition: background-color 0.3s ease, transform 0.2s ease;
-    }
-
-    .btn_search:hover {
-        background-color: #e0a800;
-        transform: scale(1.05);
-    }
-
-    /* Fieldset and Image Styles */
-    fieldset {
-        border: 1px solid #444;
-        border-radius: 8px;
-        padding: 20px;
-        margin: 20px auto;
-        background-color: #3a3a3a;
-        color: #f5f5f5;
-        max-width: 90%;
-    }
-
-    legend {
-        font-size: 1.2rem;
-        font-weight: bold;
-        color: #ffcc00;
-    }
-
-    img {
-        border-radius: 8px;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    img:hover {
-        transform: scale(1.05);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-    }
-
-    /* Cart Panel */
-    #cartPanel {
-        background-color: #444;
-        color: #f5f5f5;
-        border-left: 2px solid #ffcc00;
-    }
-
-    #cartPanel h2 {
-        color: #ffcc00;
-    }
-
-    #cartPanel ul li {
-        border-bottom: 1px solid #555;
-    }
-
-    #closeCart {
-        background-color: #dc3545;
-    }
-
-    #closeCart:hover {
-        background-color: #a71d2a;
-    }
-
-    /* Login Modal */
-    #loginModal {
-        background-color: rgba(0, 0, 0, 0.8);
-    }
-
-    #loginModal div {
-        background-color: #444;
-    }
-
-    #googleLoginButton {
-        background-color: #4285F4;
-    }
-
-    #googleLoginButton:hover {
-        background-color: #357ae8;
-    }
-
-    #emailLoginButton {
-        background-color: #555;
-    }
-
-    #emailLoginButton:hover {
-        background-color: #333;
-    }
-
-    #closeLoginModal {
-        background-color: #dc3545;
-    }
-
-    #closeLoginModal:hover {
-        background-color: #a71d2a;
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-        body {
-            font-size: 14px;
-        }
-
-        fieldset {
-            padding: 10px;
-        }
-
-        img {
-            width: 100%;
-            height: auto;
-        }
-
-        button {
-            font-size: 14px;
-            padding: 8px 16px;
-        }
-    }
-    html{
-        scroll-behavior: smooth;
-    }
-
-    /* Add to your <style> section */
-/* Custom Animated Dropdown Styles */
-.dropdown-animated-container {
-  display: inline-block;
-}
-
-.dropdown-label {
-  color: #ffcc00;
-  font-weight: bold;
-  margin-right: 8px;
-  font-size: 1.1em;
-  letter-spacing: 1px;
-}
-
-.dropdown-animated-wrapper {
-  display: inline-block;
-  position: relative;
-}
-
-.dropdown-animated-select {
-  padding: 10px 40px 10px 16px;
-  border-radius: 10px;
-  border: 2px solid #ffcc00;
-  background: #232323;
-  color: #ffcc00;
-  font-size: 1.1em;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.25);
-  outline: none;
-  transition: 
-    border-color 0.3s,
-    box-shadow 0.3s,
-    background 0.3s,
-    color 0.3s,
-    transform 0.25s cubic-bezier(.4,2,.6,1);
-  appearance: none;
-  cursor: pointer;
-  min-width: 210px;
-  text-align: left;
-  position: relative;
-}
-
-.dropdown-animated-select:focus,
-.dropdown-animated-select:hover {
-  border-color: #ffd700;
-  box-shadow: 0 0 8px 2px #ffcc00aa;
-  background: #2c2c2c;
-  color: #fffbe6;
-  transform: scale(1.04);
-}
-
-.dropdown-arrow {
-  position: absolute;
-  right: 18px;
-  top: 50%;
-  width: 0;
-  height: 0;
-  border-left: 7px solid transparent;
-  border-right: 7px solid transparent;
-  border-top: 7px solid #ffcc00;
-  transform: translateY(-50%);
-  pointer-events: none;
-}
-
-/* Dropdown List Animation */
-.dropdown-list {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 110%;
-  background: #232323;
-  border: 2px solid #ffcc00;
-  border-radius: 10px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(-10px) scaleY(0.95);
-  transition: opacity 0.25s, transform 0.25s cubic-bezier(.4,2,.6,1), max-height 0.3s;
-  z-index: 100;
-  max-height: 0;
-  overflow: hidden;
-}
-
-.dropdown-list.open {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0) scaleY(1);
-  max-height: 400px;
-}
-
-.dropdown-list li {
-  padding: 12px 18px;
-  color: #ffcc00;
-  cursor: pointer;
-  font-size: 1.05em;
-  transition: background 0.2s, color 0.2s;
-}
-
-.dropdown-list li:hover,
-.dropdown-list li:focus {
-  background: #2c2c2c;
-  color: #fffbe6;
-  outline: none;
-}
-
-/* Stack modal buttons vertically and center them */
-#loginModal button {
-  display: block;
-  width: 90%;
-  margin: 10px auto;
-}
-</style>
-
-
-
+            }
+        </style>
     </head>
     <body>
-        <b><h1 style="font-size: xxx-large;">Photography & Videography</h1></b>
-        <br>
-        <b style="font-size: xx-large;">[OPEN BETA]</b>
-        <br><br>
-        v. 0.9.5
-        <br>
-        <br>
-        THIS SITE IS IDEALLY VIEWED ON DESKTOP / LAPTOP <br> (viewing on other devices may lead to alignment, or other visual issues)
+        <b><h1 style="font-size: xxx-large;">AquaCheese Photography</h1></b>
+        THIS SITE IS IDEALY VIEWED ON DESKTOP / LAPTOP <br> (viewing on other devices may lead to alignment, or other visual issues)
         <br><br>
         <hr>
-        
-        <a href="Contact Me Form.html"><button class="btncontact" style="font-size: 16px; text-align: center; border-radius: 12px;">Contact Me</button></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://www.youtube.com/@aquacheese1" target="_blank" style="vertical-align: middle;">
-  <img src="2-21145_youtube-logo-transparent-png-pictures-transparent-background-youtube.png" alt="YouTube" style="height:48px; width:auto; border-radius:12px; vertical-align:middle; box-shadow:0 2px 8px rgba(0,0,0,0.2);">
-</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="About.html"><button class="btnabt" style="font-size: 16px; text-align: center; border-radius: 12px;">About</button></a>
-<br><br><br><br>
-        <!-- Sections Dropdown Menu -->
-        <div class="dropdown-animated-container" style="margin-bottom: 30px;">
-  <label for="customDropdown" class="dropdown-label">catagories:</label>
-  <div class="dropdown-animated-wrapper">
-    <button id="customDropdown" class="dropdown-animated-select" aria-haspopup="listbox" aria-expanded="false" type="button">
-      Go to catagory...
-      <span class="dropdown-arrow"></span>
-    </button>
-    <ul id="dropdownList" class="dropdown-list" tabindex="-1" role="listbox" aria-labelledby="customDropdown">
-      <li role="option" data-value="rec ad">Recently Added</li>
-      <li role="option" data-value="land">Landscape Images</li>
-      <li role="option" data-value="port">Portrait Images</li>
-      <li role="option" data-value="All">All Images</li>
-      <li role="option" data-value="videos">Videos</li>
-    </ul>
-  </div>
-</div>
-        <script>
-
-        document.addEventListener('DOMContentLoaded', () => {
-  const dropdownBtn = document.getElementById('customDropdown');
-  const dropdownList = document.getElementById('dropdownList');
-  let isOpen = false;
-
-  function openDropdown() {
-    dropdownList.classList.add('open');
-    dropdownBtn.setAttribute('aria-expanded', 'true');
-    isOpen = true;
-    // Focus first item for accessibility
-    setTimeout(() => {
-      dropdownList.querySelector('li').focus();
-    }, 100);
-  }
-
-  function closeDropdown() {
-    dropdownList.classList.remove('open');
-    dropdownBtn.setAttribute('aria-expanded', 'false');
-    isOpen = false;
-  }
-
-  dropdownBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    isOpen ? closeDropdown() : openDropdown();
-  });
-
-  dropdownBtn.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      openDropdown();
-    }
-  });
-
-  dropdownList.addEventListener('click', (e) => {
-    if (e.target.matches('li')) {
-      dropdownBtn.innerHTML = e.target.textContent + '<span class="dropdown-arrow"></span>';
-      closeDropdown();
-      // Scroll to section
-      const val = e.target.getAttribute('data-value');
-      if (val) {
-        const section = document.getElementById(val) || document.getElementsByName(val)[0];
-        if (section) {
-          section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      }
-    }
-  });
-
-  // Keyboard navigation for dropdown list
-  dropdownList.addEventListener('keydown', (e) => {
-    const items = Array.from(dropdownList.querySelectorAll('li'));
-    let idx = items.indexOf(document.activeElement);
-    if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      items[(idx + 1) % items.length].focus();
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      items[(idx - 1 + items.length) % items.length].focus();
-    } else if (e.key === 'Escape') {
-      closeDropdown();
-      dropdownBtn.focus();
-    } else if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      document.activeElement.click();
-    }
-  });
-
-  // Close dropdown when clicking outside
-  document.addEventListener('click', (e) => {
-    if (!dropdownBtn.contains(e.target) && !dropdownList.contains(e.target)) {
-      closeDropdown();
-    }
-  });
-});
-        </script>
-
+        <a href="Contact Me Form.html">Contact Me</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://www.youtube.com/@aquacheese1" target="_blank">My YouTube Channel</a> &nbsp; &nbsp; &nbsp; <b style="font-size: x-large;">|</b>  &nbsp; &nbsp; &nbsp;<a href="#All">All Images</a>
         <hr>
         <br>
         <p style="font-size: x-large;">
@@ -482,1098 +55,170 @@
         (almost) ALL images on or associated with this site were taken / created by AquaCheese
         <br><br>
         <hr>
-
-    <button id="mobileViewButton" style="font-size: large; margin: 20px; padding: 10px; border-radius: 5px; background-color: lightblue; border: none; cursor: pointer;">
-    Tap if you're on mobile
-    </button>
-
-    <script>
-        document.getElementById('mobileViewButton').addEventListener('click', function () {
-            document.body.style.fontSize = '14px'; // Adjust font size for mobile
-            document.body.style.padding = '10px'; // Add padding for better spacing
-            const fieldsets = document.querySelectorAll('fieldset');
-            fieldsets.forEach(fieldset => {
-                fieldset.style.width = '100%'; // Make fieldsets take full width
-                fieldset.style.margin = '10px auto'; // Center fieldsets with margin
-            });
-            const images = document.querySelectorAll('img');
-            images.forEach(img => {
-                img.style.width = '100%'; // Make images responsive
-                img.style.height = 'auto'; // Maintain aspect ratio
-            });
-            const videos = document.querySelectorAll('video');
-            videos.forEach(video => {
-                video.style.width = '100%'; // Make videos responsive
-                video.style.height = 'auto'; // Maintain aspect ratio
-            });
-            const videoFieldsets = document.querySelectorAll('#videos fieldset');
-            videoFieldsets.forEach(videoFieldset => {
-                videoFieldset.style.width = '100%'; // Make video fieldsets responsive
-                videoFieldset.style.margin = '10px auto'; // Center video fieldsets
-            });
-        });
-    </script>
-
-        <hr>
-
-        <br>
-        <div style="margin: 20px;">
-            <input type="text" id="searchBar" placeholder="Search for images..." style="width: 300px; padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc;">
-            <button onclick="searchImages()" class="btn_search">Search</button>
-        </div>
-
-   <!-- Cart button -->
-<button id="cartButton">Cart</button>
-
-<!-- Cart panel -->
-<div id="cartPanel">
-  <button id="closeCart">&times;</button>
-    <h2>Your Cart</h2>
-    <ul id="cartList">
-        <!-- Items will be dynamically added here -->
-    </ul>
-
-    <div id="cartSubtotal" style="margin-top: 20px; font-size: 18px; text-align: center; border-top: 1px solid whitesmoke; padding-top: 10px;">
-        Subtotal: £0
-    </div>
-
-    <!-- Buy Now button -->
-    <button id="buyNowButton" style="margin-top: 20px; width: 100%; padding: 10px; background-color: green; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
-        Buy Now
-    </button>
-</div>
-</div>
-
-<div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-  <button id="loginButton" style="background-color: lightblue; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer;">
-    Log In
-  </button>
-  <section id="upload-button-section" style="display: none;">
-    <button id="upload-page-button" style="font-size: large; padding: 10px 20px; border-radius: 5px; background-color: lightblue; border: none; cursor: pointer;">
-      Upload Media
-    </button>
-  </section>
-</div>
-
-<div id="loginModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;">
-  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #333; color: whitesmoke; padding: 20px; border-radius: 8px; width: 300px; text-align: center;">
-    <h2>Log In</h2>
-    <button id="googleLoginButton" style="background-color: #4285F4; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In with Google</button>
-    <button id="showEmailLoginForm" style="background-color: #555; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In with Email</button>
-    <button id="showRegisterForm" style="background-color: #ffc107; color: black; border: none; border-radius: 5px; padding: 8px 16px; font-size: 15px; cursor: pointer; margin: 10px;">Register</button>
-    <form id="emailLoginForm" style="display:none; margin-top:10px;">
-      <input id="emailInput" type="email" placeholder="Email" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
-      <input id="passwordInput" type="password" placeholder="Password" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
-      <button type="submit" style="background-color: #555; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In</button>
-      <button type="button" id="cancelEmailLogin" style="background-color: #dc3545; color: white; border: none; border-radius: 5px; padding: 8px 16px; font-size: 15px; cursor: pointer; margin: 10px;">Cancel</button>
-    </form>
-    <form id="registerForm" style="display:none; margin-top:10px;">
-      <input id="registerEmail" type="email" placeholder="Email" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
-      <input id="registerPassword" type="password" placeholder="Password" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
-      <button type="submit" style="background-color: #28a745; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Register</button>
-      <button type="button" id="cancelRegister" style="background-color: #dc3545; color: white; border: none; border-radius: 5px; padding: 8px 16px; font-size: 15px; cursor: pointer; margin: 10px;">Cancel</button>
-    </form>
-    <div id="emailLoginError" style="color:#ff6666; margin-top:8px; min-height:20px;"></div>
-    <br>
-    <button id="closeLoginModal" style="background-color: red; color: white; border: none; border-radius: 5px; padding: 5px 10px; font-size: 14px; cursor: pointer; margin-top: 10px;">Close</button>
-  </div>
-</div>
-<script type="module">
-// Firebase imports
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-
-// Firebase config
-const firebaseConfig = {
-    apiKey: "AIzaSyDKe84a_3xgi3xv3DRkRTk6cXyNbCtX-Wo",
-    authDomain: "aquacheese-photography-site.firebaseapp.com",
-    projectId: "aquacheese-photography-site",
-    storageBucket: "aquacheese-photography-site.firebasestorage.app",
-    messagingSenderId: "671895809880",
-    appId: "1:671895809880:web:4ee9031d2041f83ae57f2d",
-    measurementId: "G-EJKMML5E3K"
-};
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const googleProvider = new GoogleAuthProvider();
-
-// Elements
-const loginButton = document.getElementById('loginButton');
-const loginModal = document.getElementById('loginModal');
-const closeLoginModal = document.getElementById('closeLoginModal');
-const googleLoginButton = document.getElementById('googleLoginButton');
-const showEmailLoginFormBtn = document.getElementById('showEmailLoginForm');
-const showRegisterFormBtn = document.getElementById('showRegisterForm');
-const emailLoginForm = document.getElementById('emailLoginForm');
-const registerForm = document.getElementById('registerForm');
-const cancelEmailLoginBtn = document.getElementById('cancelEmailLogin');
-const cancelRegisterBtn = document.getElementById('cancelRegister');
-const emailInput = document.getElementById('emailInput');
-const passwordInput = document.getElementById('passwordInput');
-const emailLoginError = document.getElementById('emailLoginError');
-const uploadButtonSection = document.getElementById('upload-button-section');
-
-// Modal open/close
-loginButton.addEventListener('click', () => {
-    loginModal.style.display = 'block';
-});
-closeLoginModal.addEventListener('click', () => {
-    loginModal.style.display = 'none';
-});
-
-// Show/hide forms in modal
-showEmailLoginFormBtn.addEventListener('click', () => {
-    showEmailLoginFormBtn.style.display = 'none';
-    showRegisterFormBtn.style.display = 'none';
-    emailLoginForm.style.display = 'block';
-    registerForm.style.display = 'none';
-    emailLoginError.textContent = '';
-});
-cancelEmailLoginBtn.addEventListener('click', () => {
-    emailLoginForm.style.display = 'none';
-    showEmailLoginFormBtn.style.display = 'inline-block';
-    showRegisterFormBtn.style.display = 'inline-block';
-    emailLoginError.textContent = '';
-});
-showRegisterFormBtn.addEventListener('click', () => {
-    showEmailLoginFormBtn.style.display = 'none';
-    showRegisterFormBtn.style.display = 'none';
-    emailLoginForm.style.display = 'none';
-    registerForm.style.display = 'block';
-    emailLoginError.textContent = '';
-});
-cancelRegisterBtn.addEventListener('click', () => {
-    registerForm.style.display = 'none';
-    showEmailLoginFormBtn.style.display = 'inline-block';
-    showRegisterFormBtn.style.display = 'inline-block';
-    emailLoginError.textContent = '';
-});
-
-// Google Login
-googleLoginButton.addEventListener('click', () => {
-    signInWithPopup(auth, googleProvider)
-        .then((result) => {
-            const user = result.user;
-            localStorage.setItem('loggedInUser', JSON.stringify({
-                displayName: user.displayName || user.email,
-                profilePicUrl: user.photoURL,
-                email: user.email
-            }));
-            setProfilePicture(user.photoURL, user.displayName || user.email);
-            loginModal.style.display = 'none';
-            showUploadButtonIfAllowed(user.email);
-        })
-        .catch((error) => {
-            emailLoginError.textContent = 'Google Login Failed: ' + error.message;
-        });
-});
-
-// Email Login
-emailLoginForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    emailLoginError.textContent = '';
-    const email = emailInput.value.trim();
-    const password = passwordInput.value;
-
-    signInWithEmailAndPassword(auth, email, password)
-        .then((result) => {
-            const user = result.user;
-            localStorage.setItem('loggedInUser', JSON.stringify({
-                displayName: user.displayName || user.email,
-                profilePicUrl: user.photoURL,
-                email: user.email
-            }));
-            setProfilePicture(user.photoURL, user.displayName || user.email);
-            loginModal.style.display = 'none';
-            showUploadButtonIfAllowed(user.email);
-        })
-        .catch((error) => {
-            emailLoginError.textContent = error.message.replace('Firebase: ', '');
-        });
-});
-
-// Registration logic
-registerForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    emailLoginError.textContent = '';
-    const email = document.getElementById('registerEmail').value.trim();
-    const password = document.getElementById('registerPassword').value;
-
-    createUserWithEmailAndPassword(auth, email, password)
-        .then((result) => {
-            const user = result.user;
-            localStorage.setItem('loggedInUser', JSON.stringify({
-                displayName: user.displayName || user.email,
-                profilePicUrl: user.photoURL,
-                email: user.email
-            }));
-            setProfilePicture(user.photoURL, user.displayName || user.email);
-            loginModal.style.display = 'none';
-            registerForm.reset();
-            registerForm.style.display = 'none';
-            showEmailLoginFormBtn.style.display = 'inline-block';
-            showRegisterFormBtn.style.display = 'inline-block';
-            showUploadButtonIfAllowed(user.email);
-        })
-        .catch((error) => {
-            emailLoginError.textContent = error.message.replace('Firebase: ', '');
-        });
-});
-
-// Set profile picture and replace the login button
-function setProfilePicture(profilePicUrl, displayName) {
-    loginButton.style.display = 'none';
-
-    // Remove existing profile pic if present
-    const existingProfilePic = document.getElementById('profilePic');
-    if (existingProfilePic) existingProfilePic.remove();
-
-    const profilePic = document.createElement('img');
-    profilePic.src = profilePicUrl || 'default-profile.png';
-    profilePic.alt = displayName || 'Profile Picture';
-    profilePic.style.position = 'fixed';
-    profilePic.style.top = '20px';
-    profilePic.style.left = '20px';
-    profilePic.style.width = '40px';
-    profilePic.style.height = '40px';
-    profilePic.style.borderRadius = '50%';
-    profilePic.style.cursor = 'pointer';
-    profilePic.style.zIndex = '1000';
-    profilePic.id = 'profilePic';
-    document.body.appendChild(profilePic);
-
-    // Show/hide profile menu on click
-    profilePic.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const menu = document.getElementById('profileMenu');
-        menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
-    });
-
-    // Hide menu if clicking outside
-    document.addEventListener('click', (e) => {
-        const menu = document.getElementById('profileMenu');
-        if (menu && !menu.contains(e.target) && e.target.id !== 'profilePic') {
-            menu.style.display = 'none';
-        }
-    });
-}
-
-// Logout button logic
-document.getElementById('logoutButton').addEventListener('click', () => {
-    localStorage.removeItem('loggedInUser');
-    location.reload();
-});
-
-// Show upload button only for allowed email
-function showUploadButtonIfAllowed(email) {
-    const allowedEmail = "aquacheese.yt@gmail.com";
-    if (email === allowedEmail) {
-        uploadButtonSection.style.display = 'block';
-    } else {
-        uploadButtonSection.style.display = 'none';
-    }
-}
-
-// On page load, show profile if logged in
-document.addEventListener('DOMContentLoaded', () => {
-    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
-    if (loggedInUser) {
-        setProfilePicture(loggedInUser.profilePicUrl, loggedInUser.displayName);
-        showUploadButtonIfAllowed(loggedInUser.email);
-    }
-});
-</script>
-
-<style>
-    /* Cart button styles */
-    #cartButton {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background-color: gold;
-        color: black;
-        border: none;
-        border-radius: 12px;
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-        z-index: 1000;
-    }
-
-    #cartButton:hover {
-        background-color: goldenrod;
-    }
-
-    /* Cart panel styles */
-    #cartPanel {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: 300px;
-        height: 100%;
-        background-color: #333;
-        color: whitesmoke;
-        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
-        overflow-y: auto;
-        transition: right 0.3s ease;
-        z-index: 999;
-        padding: 20px;
-    }
-
-    #cartPanel h2 {
-        text-align: center;
-    }
-
-    #cartPanel ul {
-        list-style-type: none;
-        padding: 0;
-    }
- 
-    #cartPanel ul li {
-        margin: 10px 0;
-        border-bottom: 1px solid whitesmoke;
-        padding-bottom: 10px;
-    }
-
-    #closeCart {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: red;
-    color: white;
-    border: none;
-    border-radius: 50%; /* Makes it circular */
-    width: 40px; /* Adjust width */
-    height: 40px; /* Adjust height */
-    font-size: 36px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center; /* Centers the "×" inside the circle */
-}
-
-#closeCart:hover {
-    background-color: darkred;
-}
-</style>
-
-<script>
-document.getElementById('buyNowButton').addEventListener('click', () => {
-    if (cart.length > 0) {
-        localStorage.removeItem('singleItem'); // Clear single item data
-        localStorage.setItem('cartPurchase', true); // Indicate that the cart is being purchased
-        window.location.href = 'Purchase.html'; // Redirect to the purchase page
-    } else {
-        alert('Your cart is empty. Add items to proceed.');
-    }
-});
-    function buyNowForImage() {
-    localStorage.setItem('singleItem', JSON.stringify({ type: 'image', price: 15 }));
-    window.location.href = 'Purchase.html';
-}
-
-function buyNowForVideo() {
-    localStorage.setItem('singleItem', JSON.stringify({ type: 'video', price: 20 }));
-    window.location.href = 'Purchase.html';
-}
-    // Add functionality for the Buy Now button
-    document.getElementById('buyNowButton').addEventListener('click', () => {
-        if (cart.length === 0) {
-            alert('Your cart is empty. Add items to proceed.');
-        } else {
-            alert('Proceeding to checkout...');
-            // Add your checkout logic here
-        }
-    });
-    // Cart functionality
-    let cart = JSON.parse(localStorage.getItem('cart')) || []; // Load cart from localStorage or initialize as empty
-    const cartButton = document.getElementById('cartButton');
-    const cartPanel = document.getElementById('cartPanel');
-    const cartList = document.getElementById('cartList');
-    const cartSubtotal = document.getElementById('cartSubtotal');
-    const closeCart = document.getElementById('closeCart');
-
-    // Open the cart panel
-    cartButton.addEventListener('click', () => {
-        cartPanel.style.right = '0';
-        cartButton.style.display = 'none'; // Hide the cart button
-    });
-
-    // Close the cart panel
-    closeCart.addEventListener('click', () => {
-        cartPanel.style.right = '-100%';
-        cartButton.style.display = 'block'; // Show the cart button
-    });
-
-    // Add to cart function
-    function addToCart(itemName, itemImage) {
-        if (!itemName) {
-            alert("Error: Item name is missing.");
-            return;
-        }
-
-        // Add the item details to the cart array
-        cart.push({ name: itemName, image: itemImage, price: 15 }); // Assume each image costs £15
-        saveCart(); // Save the cart to localStorage
-        updateCart();
-        alert(`${itemName} has been added to your cart.`);
-    }
-
-    // Update the cart list and cart button text
-    function updateCart() {
-        cartList.innerHTML = ''; // Clear the current cart list
-        let subtotal = 0; // Initialize subtotal
-
-        cart.forEach((item, index) => {
-            const listItem = document.createElement('li');
-            listItem.style.display = 'flex';
-            listItem.style.alignItems = 'center';
-            listItem.style.marginBottom = '10px';
-
-            // Add the image to the cart item (if available)
-            if (item.image) {
-                const itemImage = document.createElement('img');
-                itemImage.src = item.image;
-                itemImage.alt = item.name;
-                itemImage.style.width = '50px';
-                itemImage.style.height = '50px';
-                itemImage.style.marginRight = '10px';
-                itemImage.style.border = '1px solid whitesmoke';
-                listItem.appendChild(itemImage);
-            }
-
-            // Add the name of the item
-            const itemName = document.createElement('span');
-            itemName.textContent = item.name;
-            listItem.appendChild(itemName);
-
-            // Add the price of the item
-            const itemPrice = document.createElement('span');
-            itemPrice.textContent = ` - £${item.price}`;
-            itemPrice.style.marginLeft = 'auto';
-            listItem.appendChild(itemPrice);
-
-            // Add a remove button for each item
-            const removeButton = document.createElement('button');
-            removeButton.textContent = 'Remove';
-            removeButton.style.marginLeft = '10px';
-            removeButton.style.backgroundColor = 'red';
-            removeButton.style.color = 'white';
-            removeButton.style.border = 'none';
-            removeButton.style.borderRadius = '5px';
-            removeButton.style.cursor = 'pointer';
-
-            // Remove item from the cart when the button is clicked
-            removeButton.addEventListener('click', () => {
-                cart.splice(index, 1); // Remove the item from the cart array
-                saveCart(); // Save the updated cart to localStorage
-                updateCart(); // Update the cart display
-            });
-
-            listItem.appendChild(removeButton);
-            cartList.appendChild(listItem);
-
-            // Add the item's price to the subtotal
-            subtotal += item.price;
-        });
-
-        // Update the subtotal display
-        cartSubtotal.textContent = `Subtotal: £${subtotal}`;
-
-        // Update the cart button text with the number of items
-        const itemCount = cart.length;
-        cartButton.textContent = itemCount > 0 ? `Cart (${itemCount})` : 'Cart';
-    }
-
-    // Save the cart to localStorage
-    function saveCart() {
-        localStorage.setItem('cart', JSON.stringify(cart));
-    }
-
-    // Load the cart when the page loads
-    document.addEventListener('DOMContentLoaded', updateCart);
-</script>
-        
         <section id="rec ad" name="rec ad">
             <br><br><br><br>
-        <fieldset style="margin: auto; display: inline;" id="rec ad">
+        <fieldset style="margin: auto; display: inline;">
             <legend>
                 3 Recently Added Images
             </legend>
             <!-- TO KEEP CONSISTANT ALIGNMENT, EVERY 3 PICs, MAKE A NEW TABLE -->
             <table style="display: inline;">
-
-                <td>
-                    <fieldset style="width: fit-content; border-color: goldenrod; box-sizing: border-box;" class="image-fieldset">
-                     <legend id="pots">Train arriving</legend>
-                    <a href="Train Arrive.html"><img src="train arrive WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
-                    <p style="font-size: larger;">
-                        £15
-                    </p>
-                    <a href="Train Arrive.html"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                </fieldset>
-                </td>
-
-                <td>
-                    <fieldset style="width: fit-content; border-color: goldenrod; box-sizing: border-box;" class="image-fieldset">
-                     <legend id="field">A Big Ol' Field</legend>
-                    <a href="field.html"><img src="field WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
-                    <p style="font-size: larger;">
-                        £15
-                    </p>
-                    <a href="field.html"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                </fieldset>
-                </td>
-            
-                <td>
-                    <fieldset style="width: fit-content; border-color: goldenrod; box-sizing: border-box;" class="image-fieldset">
-                     <legend id="flowers">A Smol Patch of Flowers</legend>
-                    <a href="flowers.html"><img src="flowers WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
-                    <p style="font-size: larger;">
-                        £15
-                    </p>
-                    <a href="flowers.html"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                </fieldset>
-                </td>
-
-        </table>
-        </fieldset>
-    </section>
-
-    <br><br><br><br>
-
-    <section id="AD" name="AD"> 
-        <fieldset style="width: fit-content; margin: auto; display: inline;">
-            <legend>
-                ADVERTISEMENT
-            </legend>
-            <a href="700x100.png"><img src="700x100.png" alt="ERROR 404: NO AD FOUND"></a>
-        </fieldset>
-    </section>
-
-    <br><br><br><br>
-    <section id="land" name="land">
-    <fieldset style="margin: auto; width: fit-content; display: inline;" id="land">
-        <legend>
-            Landscape Images
-        </legend>
-        <table style="display: inline;">
             <td>
-                <fieldset style="width: fit-content; border-color: peru;" class="image-fieldset">
-                <legend id="seagull">Seagull on a car</legend>
+                <fieldset style="width: fit-content; border-color: darkgoldenrod;">
+                <legend>Seagull on a car</legend>
                 <a href="Seagull car img.html"><img src="Seagull on a Car WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200"></a>
                 <p style="font-size: larger;">
                     £15
                 </p>
                 <a href="Seagull car img.html"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
             </fieldset>
             </td>
-
-            <td><fieldset style="width: fit-content; border-color: peru;" class="image-fieldset">
-                <legend id="river">Small River</legend>
-            <a href="Perran River.html"><img src="Smol River WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
-            <p style="font-size: larger;">
-                £15
-            </p>
-            <a href="Perran River.html"><button type="button" style="font-size: large;">See Details</button></a>
-            <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-            </fieldset>
-            </td>
-
+            
             <td>
-                <fieldset style="width: fit-content; border-color: peru;" class="image-fieldset">
-                <legend id="gavel">Close-Up of a Gavel</legend>
-                <a href="Gavel.html"><img src="Gavel WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
+                <fieldset style="width: fit-content; border-color: darkgoldenrod; box-sizing: border-box;">
+                <legend>Close-up of a Wooden Box</legend>
+                <a href="Wood Box img.html"><img src="Wood Box WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200"></a>
                 <p style="font-size: larger;">
                     £15
                 </p>
-                <a href="Gavel WM.png"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                <a href="Wood Box img.html"><button type="button" style="font-size: large;">See Details</button></a>
+                <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
             </fieldset>
             </td>
-            </table>
-
-            <table>
-                <td>
-                    <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;" class="image-fieldset">
-                    <legend id="train">Train leaving the station</legend>
-                    <a href="Train.html"><img src="Train WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
-                    <p style="font-size: larger;">
-                        £15
-                    </p>
-                    <a href="Train.html"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                    </fieldset>
-                </td>
-                <td>
-                    <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;" class="image-fieldset">
-                    <legend id="rainbow">Rainbow on an Overcast Day</legend>
-                    <a href="OC Rainbow.html"><img src="Overcast Rainbow WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
-                    <p style="font-size: larger;">
-                        £15
-                    </p>
-                    <a href="OC Rainbow.html"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                </fieldset>
-                </td>
-                <td>
-                    <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;" class="image-fieldset">
-                     <legend id="lights">Traffic Lights</legend>
-                    <a href="Traffic lights img.html"><img src="Traffic lights WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
-                    <p style="font-size: larger;">
-                        £15
-                    </p>
-                    <a href="Traffic lights img.html"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                </fieldset>
-                </td>
-                </table>
-
-                <table>
-                    <td>
-                        <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;" class="image-fieldset">
-                         <legend id="darktree">Dark Tree</legend>
-                        <a href="Dark tree.html"><img src="Dark Tree WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
-                        <p style="font-size: larger;">
-                            £15
-                        </p>
-                        <a href="Dark tree.html"><button type="button" style="font-size: large;">See Details</button></a>
-                        <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                    </fieldset>
-                    </td>
-                   
-                    <td>
-                        <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;" class="image-fieldset">
-                         <legend id="field">A Big Ol' Field</legend>
-                        <a href="field.html"><img src="field WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
-                        <p style="font-size: larger;">
-                            £15
-                        </p>
-                        <a href="field.html"><button type="button" style="font-size: large;">See Details</button></a>
-                        <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                    </fieldset>
-                    </td>
-                    
-                    <td>
-                        <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;" class="image-fieldset">
-                         <legend id="flowers">A Smol Patch of Flowers</legend>
-                        <a href="flowers.html"><img src="flowers WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
-                        <p style="font-size: larger;">
-                            £15
-                        </p>
-                        <a href="flowers.html"><button type="button" style="font-size: large;">See Details</button></a>
-                        <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                    </fieldset>
-                    </td>
-                </table>
-                <table>
-                   
-                    <td>
-                        <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;" class="image-fieldset">
-                         <legend id="pots">Plant Pots</legend>
-                        <a href="Plant Pots.html"><img src="Plant Pots WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
-                        <p style="font-size: larger;">
-                            £15
-                        </p>
-                        <a href="Plant Pots.html"><button type="button" style="font-size: large;">See Details</button></a>
-                        <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                    </fieldset>
-                    </td>
-
-                    <td>
-                    <fieldset style="width: fit-content; border-color: peru; box-sizing: border-box;" class="image-fieldset">
-                     <legend id="pots">Train arriving</legend>
-                    <a href="Train Arrive.html"><img src="train arrive WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
-                    <p style="font-size: larger;">
-                        £15
-                    </p>
-                    <a href="Train Arrive.html"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                </fieldset>
-                </td>
-
-                </table>
-    </fieldset>
-    </section>
-
-    <br><br><br><br>
-    
-    <section id="port" name="port">
-        <fieldset style="margin: auto; width: fit-content; display: inline;" id="port">
-            <legend>
-                Portrait Images
-            </legend>
-            <table>
             <td>
-                <fieldset style="width: fit-content; border-color: royalblue; box-sizing: border-box;" class="image-fieldset">
-                <legend id="muffin">Close-up of a Mini Muffin</legend>
-                <a href="Muffin.html"><img src="Muffin WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
+                <fieldset style="width: fit-content; border-color: darkgoldenrod; box-sizing: border-box;">
+                <legend>Close-up of a Mini Muffin</legend>
+                <a href="Muffin.html"><img src="Muffin WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200"></a>
                 <p style="font-size: larger;">
                     £15
                 </p>
                 <a href="Muffin.html"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-            </fieldset>
-            </td>
-            <td>
-                <fieldset style="width: fit-content; border-color: royalblue; box-sizing: border-box;" class="image-fieldset">
-                 <legend id="GWRtrain">GWR Train</legend>
-                <a href="GWR Train.html"><img src="GWR Train WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
-                <p style="font-size: larger;">
-                    £15
-                </p>
-                <a href="GWR Train.html"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-            </fieldset>
-            </td>
-            <td>
-                <fieldset style="width: fit-content; border-color: royalblue; box-sizing: border-box;" class="image-fieldset">
-                 <legend id="mediumtree">Medium Tree</legend>
-                <a href="P Tree.html"><img src="Tree Portrait WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
-                <p style="font-size: larger;">
-                    £15
-                </p>
-                <a href="P Tree.html"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
             </fieldset>
             </td>
         </table>
         </fieldset>
-        </section>
-   
-        <br><br><br><br>
+    </section>
+
+    <br><br><br><br>
+
+    <section id="AD" name="AD"> 
+        <fieldset>
+            <legend>
+                ADVERTISEMENT
+            </legend>
+            <a href=""><img src="" alt="ERROR 404: NO AD FOUND"></a>
+        </fieldset>
+    </section>
+
+    <br><br><br><br>
 
     <section id="All" name="All">
-        <fieldset style="margin: auto; width: fit-content; display: inline;" id="All">
+        <fieldset style="margin: auto; width: fit-content; display: inline;">
             <legend>
                 All Images
             </legend>
             <table style="display: inline;">
-                <td><fieldset style="width: fit-content; border-color: chartreuse;" class="image-fieldset">
-                    <legend id="river">Small River</legend>
-                <a href="Perran River.html"><img src="Smol River WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
+                <td><fieldset style="width: fit-content; border-color: chartreuse;">
+                    <legend>Small River</legend>
+                <a href="Perran River.html"><img src="Smol River WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                 <p style="font-size: larger;">
                     £15
                 </p>
                 <a href="Perran River.html"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
                 </fieldset>
             </td>
             <td>
-                <fieldset style="width: fit-content; border-color: chartreuse;" class="image-fieldset">
-                <legend id="seagull">Seagull on a car</legend>
-                <a href="Seagull car img.html"><img src="Seagull on a Car WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
+                <fieldset style="width: fit-content; border-color: chartreuse;">
+                <legend>Seagull on a car</legend>
+                <a href="Seagull car img.html"><img src="Seagull on a Car WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                 <p style="font-size: larger;">
                     £15
                 </p>
                 <a href="Seagull car img.html"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
             </fieldset>
             </td>
+            
             <td>
-                <fieldset style="width: fit-content; border-color: chartreuse;" class="image-fieldset">
-                 <legend id="gavel">Gavel on it's side</legend>
-                <a href="Gavel.html"><img src="Gavel WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
+                <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;">
+                <legend>Close-up of a Wooden Box</legend>
+                <a href="Wood Box img.html"><img src="Wood Box WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                 <p style="font-size: larger;">
                     £15
                 </p>
-                <a href="Gavel WM.png"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                <a href="Wood Box img.html"><button type="button" style="font-size: large;">See Details</button></a>
+                <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
             </fieldset>
             </td>
-
-
-            </table>
             <table>
             <td>
-                <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;" class="image-fieldset">
-                <legend id="train">Train Leaving The Station</legend>
+                <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;">
+                <legend>Train Leaving The Station</legend>
                 <a href="Train.html"><img src="Train WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                 <p style="font-size: larger;">
                     £15
                 </p>
                 <a href="Train.html"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
             </fieldset>
             </td>
             <td>
-                <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;" class="image-fieldset">
-                <legend id="muffin">Close-up of a Mini Muffin</legend>
+                <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;">
+                <legend>Close-up of a Mini Muffin</legend>
                 <a href="Muffin.html"><img src="Muffin WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                 <p style="font-size: larger;">
                     £15
                 </p>
                 <a href="Muffin.html"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
             </fieldset>
             </td>
             <td>
-                <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;" class="image-fieldset">
-                <legend id="rainbow">Rainbow on an Overcast Day</legend>
+                <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;">
+                <legend>Rainbow on an Overcast Day</legend>
                 <a href="OC Rainbow.html"><img src="Overcast Rainbow WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                 <p style="font-size: larger;">
                     £15
                 </p>
                 <a href="OC Rainbow.html"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
             </fieldset>
             </td>
         </table>
         <table>
-        
             <td>
-                <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;" class="image-fieldset">
-                 <legend id="lights">Traffic Lights</legend>
+                <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;">
+                <legend>Gavel on it's side</legend>
+                <a href="Gavel.html"><img src="Gavel WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
+                <p style="font-size: larger;">
+                    £15
+                </p>
+                <a href="Gavel.html"><button type="button" style="font-size: large;">See Details</button></a>
+                <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+            </fieldset>
+            </td>
+            <td>
+                <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;">
+                 <legend>Traffic Lights</legend>
                 <a href="Traffic lights img.html"><img src="Traffic lights WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
                 <p style="font-size: larger;">
                     £15
                 </p>
                 <a href="Traffic lights img.html"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-            </fieldset>
-            </td>
-            <td>
-                <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;" class="image-fieldset">
-                 <legend id="GWRtrain">GWR Train</legend>
-                <a href="GWR Train.html"><img src="GWR Train WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
-                <p style="font-size: larger;">
-                    £15
-                </p>
-                <a href="GWR Train.html"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-            </fieldset>
-            </td>
-           
-            <td>
-                <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;" class="image-fieldset">
-                 <legend id="darktree">Dark Tree</legend>
-                <a href="Dark tree.html"><img src="Dark Tree WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
-                <p style="font-size: larger;">
-                    £15
-                </p>
-                <a href="Dark tree.html"><button type="button" style="font-size: large;">See Details</button></a>
-                <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+                <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
             </fieldset>
             </td>
         </table>
-    </table>
-
-            <table>
-                <td>
-                    <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;" class="image-fieldset">
-                     <legend id="field">A Big Ol' Field</legend>
-                    <a href="field.html"><img src="field WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
-                    <p style="font-size: larger;">
-                        £15
-                    </p>
-                    <a href="field.html"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                </fieldset>
-                </td>
-                <td>
-                    <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;" class="image-fieldset">
-                     <legend id="flowers">A Smol Patch of Flowers</legend>
-                    <a href="flowers.html"><img src="flowers WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
-                    <p style="font-size: larger;">
-                        £15
-                    </p>
-                    <a href="flowers.html"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                </fieldset>
-                </td>
-
-                <td>
-                    <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;" class="image-fieldset">
-                     <legend id="pots">Plant Pots</legend>
-                    <a href="Plant Pots.html"><img src="Plant Pots WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
-                    <p style="font-size: larger;">
-                        £15
-                    </p>
-                    <a href="Plant Pots.html"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                </fieldset>
-                </td>
-
-            </table>
-            <table>
-                <td>
-                    <fieldset class="image-fieldset" style="width: fit-content; border-color: chartreuse; box-sizing: border-box;">
-                        <legend id="mediumtree">Medium Tree</legend>
-                        <a href="P Tree.html"><img src="Tree Portrait WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="lazy"></a>
-                        <p style="font-size: larger;">
-                            £15
-                        </p>
-                        <a href="P Tree.html"><button type="button" style="font-size: large;">See Details</button></a>
-                        <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                    </fieldset>
-                </td>
-
-                <td>
-                    <fieldset style="width: fit-content; border-color: chartreuse; box-sizing: border-box;" class="image-fieldset">
-                     <legend id="pots">Train arriving</legend>
-                    <a href="Train Arrive.html"><img src="train arrive WM.png" alt="ERROR 404: IMAGE NOT FOUND" height="200" loading="eager"></a>
-                    <p style="font-size: larger;">
-                        £15
-                    </p>
-                    <a href="Train Arrive.html"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                </fieldset>
-                </td>
-
-
 
             </table>
         </fieldset>
-
-        <br><br><br><br>
-
-        
-
-    <section id="AD" name="AD"> 
-        <fieldset style="width: fit-content; margin: auto; display: inline;">
-            <legend>
-                ADVERTISEMENT
-            </legend>
-            <a href="700x100.png"><img src="700x100.png" alt="ERROR 404: NO AD FOUND"></a>
-        </fieldset>
     </section>
-
-    <br><br><br><br>
-
-    <section id="videos" name="videos">
-        <fieldset style="margin: auto; width: fit-content;" id="videos">
-            <legend>
-                Videos
-            </legend>
-            <table>
-                <td>
-                    <fieldset style="width: fit-content; border-color: cadetblue; margin: auto" class="image-fieldset">
-                        <legend>
-
-                        </legend>
-                    <a href="[VIDEO HTML FILE]"><video src="[VIDEO PATH]" alt="ERROR 404: VIDEO NOT FOUND" loading="lazy"></video></a>
-
-                    <p style="font-size: larger;">
-                        £20
-                        <br><br>
-                        <strong>[EXPERIMENTAL VIDEO FEATURE]</strong>
-                    </p>
-                    <a href="[VIDEO HTML FILE]"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase vid.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                    </fieldset>
-                </td>
-                <td>
-                    <fieldset style="width: fit-content; border-color: cadetblue; margin: auto" class="image-fieldset">
-                        <legend>
-
-                        </legend>
-                    <a href="[VIDEO HTML FILE]"><video src="[VIDEO PATH]" alt="ERROR 404: VIDEO NOT FOUND" loading="lazy"></video></a>
-
-                    <p style="font-size: larger;">
-                        £20
-                        <br><br>
-                        <strong>[EXPERIMENTAL VIDEO FEATURE]</strong>
-                    </p>
-                    <a href="[VIDEO HTML FILE]"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase vid.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                    </fieldset>
-                </td>
-                <td>
-                    <fieldset style="width: fit-content; border-color: cadetblue; margin: auto" class="image-fieldset">
-                        <legend>
-
-                        </legend>
-                    <a href="[VIDEO HTML FILE]"><video src="[VIDEO PATH]" alt="ERROR 404: VIDEO NOT FOUND" loading="lazy"></video></a>
-
-                    <p style="font-size: larger;">
-                        £20
-                        <br><br>
-                        <strong>[EXPERIMENTAL VIDEO FEATURE]</strong>
-                    </p>
-                    <a href="[VIDEO HTML FILE]"><button type="button" style="font-size: large;">See Details</button></a>
-                    <a href="Purchase vid.html"><button type="button" style="font-size: large;">Buy Now</button></a>
-                    </fieldset>
-                </td>
-                </table>
-                <table>
-                    <td>
-
-                    </td>
-                </table>
-        </fieldset>
-    </section>
-
-    </section>
-
     <br><br>
-    <a href="#"><button class="btnback" style="border-radius: 12px; font-size: 20px;">&uarr; Back to Top &uarr;</button></a>
+    <a href="#">^ Back To Top ^</a>
     <br><br><br>
     &lt;&lt;&lt;&nbsp; &copy; 2025 AquaCheese &nbsp;&gt;&gt;&gt;
-
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-
-    <a href="testing stuff.html"><button class="btnsec" style="border-radius: 12px; font-size: 20px;">Secret button :)</button></a>
-    <br><br><br>
-
-    <script>
-    // Trigger search on pressing Enter
-    document.getElementById('searchBar').addEventListener('keydown', function (event) {
-        if (event.key === 'Enter') {
-            searchImages(); // Call the search function
-        }
-    });
-
-    function searchImages() {
-        const query = document.getElementById('searchBar').value.trim().toLowerCase(); // Normalize the query
-        const fieldsets = document.querySelectorAll('.image-fieldset'); // Target only image fieldsets
-        let visibleCount = 0;
-
-        fieldsets.forEach(fieldset => {
-            const legend = fieldset.querySelector('legend');
-            if (legend && legend.textContent.trim().toLowerCase().includes(query)) {
-                fieldset.style.display = 'block'; // Show matching fieldsets
-                visibleCount++;
-            } else {
-                fieldset.style.display = 'none'; // Hide non-matching fieldsets
-            }
-        });
-
-        // If no matches are found and the query is not empty, keep all hidden
-        if (visibleCount === 0 && query !== '') {
-            fieldsets.forEach(fieldset => {
-                fieldset.style.display = 'none';
-            });
-        } else if (query === '') {
-            // Show all if the query is empty
-            fieldsets.forEach(fieldset => {
-                fieldset.style.display = 'block';
-            });
-        }
-    }
-</script>
-
-<script>
-  const allowedEmail = "aquacheese.yt@gmail.com";
-  const firebaseAuth = getAuth(app);
-
-  // Show the upload button only for the allowed email
-  firebaseAuth.onAuthStateChanged(user => {
-    if (user && user.email === allowedEmail) {
-      document.getElementById('upload-button-section').style.display = 'block';
-      document.getElementById('upload-page-button').addEventListener('click', () => {
-        window.location.href = 'upload.html';
-      });
-    }
-  });
-</script>
-
-<div id="profileMenu" style="display:none; position:fixed; top:70px; left:20px; background:#444; color:#fff; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.3); z-index:2000; min-width:140px; padding:16px 12px;">
-  <button id="logoutButton" style="background:#dc3545; color:white; border:none; border-radius:6px; padding:10px 20px; width:100%; font-size:16px; cursor:pointer;">Log Out</button>
-</div>
-
     </body>
 </html>
