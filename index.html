@@ -608,7 +608,6 @@
   </div>
 </div>
 <script type="module">
-// Firebase imports
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 import { firebaseConfig } from './firebase-config.js';
@@ -617,185 +616,185 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
-// Elements
-const loginButton = document.getElementById('loginButton');
-const loginModal = document.getElementById('loginModal');
-const closeLoginModal = document.getElementById('closeLoginModal');
-const googleLoginButton = document.getElementById('googleLoginButton');
-const showEmailLoginFormBtn = document.getElementById('showEmailLoginForm');
-const showRegisterFormBtn = document.getElementById('showRegisterForm');
-const emailLoginForm = document.getElementById('emailLoginForm');
-const registerForm = document.getElementById('registerForm');
-const cancelEmailLoginBtn = document.getElementById('cancelEmailLogin');
-const cancelRegisterBtn = document.getElementById('cancelRegister');
-const emailInput = document.getElementById('emailInput');
-const passwordInput = document.getElementById('passwordInput');
-const emailLoginError = document.getElementById('emailLoginError');
-const uploadButtonSection = document.getElementById('upload-button-section');
-
-// Modal open/close
-loginButton.addEventListener('click', () => {
-    loginModal.style.display = 'block';
-});
-closeLoginModal.addEventListener('click', () => {
-    loginModal.style.display = 'none';
-});
-
-// Show/hide forms in modal
-showEmailLoginFormBtn.addEventListener('click', () => {
-    showEmailLoginFormBtn.style.display = 'none';
-    showRegisterFormBtn.style.display = 'none';
-    emailLoginForm.style.display = 'block';
-    registerForm.style.display = 'none';
-    emailLoginError.textContent = '';
-});
-cancelEmailLoginBtn.addEventListener('click', () => {
-    emailLoginForm.style.display = 'none';
-    showEmailLoginFormBtn.style.display = 'inline-block';
-    showRegisterFormBtn.style.display = 'inline-block';
-    emailLoginError.textContent = '';
-});
-showRegisterFormBtn.addEventListener('click', () => {
-    showEmailLoginFormBtn.style.display = 'none';
-    showRegisterFormBtn.style.display = 'none';
-    emailLoginForm.style.display = 'none';
-    registerForm.style.display = 'block';
-    emailLoginError.textContent = '';
-});
-cancelRegisterBtn.addEventListener('click', () => {
-    registerForm.style.display = 'none';
-    showEmailLoginFormBtn.style.display = 'inline-block';
-    showRegisterFormBtn.style.display = 'inline-block';
-    emailLoginError.textContent = '';
-});
-
-// Google Login
-googleLoginButton.addEventListener('click', () => {
-    signInWithPopup(auth, googleProvider)
-        .then((result) => {
-            const user = result.user;
-            localStorage.setItem('loggedInUser', JSON.stringify({
-                displayName: user.displayName || user.email,
-                profilePicUrl: user.photoURL,
-                email: user.email
-            }));
-            setProfilePicture(user.photoURL, user.displayName || user.email);
-            loginModal.style.display = 'none';
-            showUploadButtonIfAllowed(user.email);
-        })
-        .catch((error) => {
-            emailLoginError.textContent = 'Google Login Failed: ' + error.message;
-        });
-});
-
-// Email Login
-emailLoginForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    emailLoginError.textContent = '';
-    const email = emailInput.value.trim();
-    const password = passwordInput.value;
-
-    signInWithEmailAndPassword(auth, email, password)
-        .then((result) => {
-            const user = result.user;
-            localStorage.setItem('loggedInUser', JSON.stringify({
-                displayName: user.displayName || user.email,
-                profilePicUrl: user.photoURL,
-                email: user.email
-            }));
-            setProfilePicture(user.photoURL, user.displayName || user.email);
-            loginModal.style.display = 'none';
-            showUploadButtonIfAllowed(user.email);
-        })
-        .catch((error) => {
-            emailLoginError.textContent = error.message.replace('Firebase: ', '');
-        });
-});
-
-// Registration logic
-registerForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    emailLoginError.textContent = '';
-    const email = document.getElementById('registerEmail').value.trim();
-    const password = document.getElementById('registerPassword').value;
-
-    createUserWithEmailAndPassword(auth, email, password)
-        .then((result) => {
-            const user = result.user;
-            localStorage.setItem('loggedInUser', JSON.stringify({
-                displayName: user.displayName || user.email,
-                profilePicUrl: user.photoURL,
-                email: user.email
-            }));
-            setProfilePicture(user.photoURL, user.displayName || user.email);
-            loginModal.style.display = 'none';
-            registerForm.reset();
-            registerForm.style.display = 'none';
-            showEmailLoginFormBtn.style.display = 'inline-block';
-            showRegisterFormBtn.style.display = 'inline-block';
-            showUploadButtonIfAllowed(user.email);
-        })
-        .catch((error) => {
-            emailLoginError.textContent = error.message.replace('Firebase: ', '');
-        });
-});
-
-// Set profile picture and replace the login button
-function setProfilePicture(profilePicUrl, displayName) {
-    loginButton.style.display = 'none';
-
-    // Remove existing profile pic if present
-    const existingProfilePic = document.getElementById('profilePic');
-    if (existingProfilePic) existingProfilePic.remove();
-
-    const profilePic = document.createElement('img');
-    profilePic.src = profilePicUrl || 'default-profile.png';
-    profilePic.alt = displayName || 'Profile Picture';
-    profilePic.style.position = 'fixed';
-    profilePic.style.top = '20px';
-    profilePic.style.left = '20px';
-    profilePic.style.width = '40px';
-    profilePic.style.height = '40px';
-    profilePic.style.borderRadius = '50%';
-    profilePic.style.cursor = 'pointer';
-    profilePic.style.zIndex = '1000';
-    profilePic.id = 'profilePic';
-    document.body.appendChild(profilePic);
-
-    // Show/hide profile menu on click
-    profilePic.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const menu = document.getElementById('profileMenu');
-        menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
-    });
-
-    // Hide menu if clicking outside
-    document.addEventListener('click', (e) => {
-        const menu = document.getElementById('profileMenu');
-        if (menu && !menu.contains(e.target) && e.target.id !== 'profilePic') {
-            menu.style.display = 'none';
-        }
-    });
-}
-
-// Logout button logic
-document.getElementById('logoutButton').addEventListener('click', () => {
-    localStorage.removeItem('loggedInUser');
-    location.reload();
-});
-
-// Show upload button only for allowed email
-function showUploadButtonIfAllowed(email) {
-    const allowedEmail = "aquacheese.yt@gmail.com";
-    if (email === allowedEmail) {
-        uploadButtonSection.style.display = 'block';
-    } else {
-        uploadButtonSection.style.display = 'none';
-    }
-}
-
-// On page load, show profile if logged in
 document.addEventListener('DOMContentLoaded', () => {
+    // Elements
+    const loginButton = document.getElementById('loginButton');
+    const loginModal = document.getElementById('loginModal');
+    const closeLoginModal = document.getElementById('closeLoginModal');
+    const googleLoginButton = document.getElementById('googleLoginButton');
+    const showEmailLoginFormBtn = document.getElementById('showEmailLoginForm');
+    const showRegisterFormBtn = document.getElementById('showRegisterForm');
+    const emailLoginForm = document.getElementById('emailLoginForm');
+    const registerForm = document.getElementById('registerForm');
+    const cancelEmailLoginBtn = document.getElementById('cancelEmailLogin');
+    const cancelRegisterBtn = document.getElementById('cancelRegister');
+    const emailInput = document.getElementById('emailInput');
+    const passwordInput = document.getElementById('passwordInput');
+    const emailLoginError = document.getElementById('emailLoginError');
+    const uploadButtonSection = document.getElementById('upload-button-section');
+
+    // Modal open/close
+    loginButton.addEventListener('click', () => {
+        loginModal.style.display = 'block';
+    });
+    closeLoginModal.addEventListener('click', () => {
+        loginModal.style.display = 'none';
+    });
+
+    // Show/hide forms in modal
+    showEmailLoginFormBtn.addEventListener('click', () => {
+        showEmailLoginFormBtn.style.display = 'none';
+        showRegisterFormBtn.style.display = 'none';
+        emailLoginForm.style.display = 'block';
+        registerForm.style.display = 'none';
+        emailLoginError.textContent = '';
+    });
+    cancelEmailLoginBtn.addEventListener('click', () => {
+        emailLoginForm.style.display = 'none';
+        showEmailLoginFormBtn.style.display = 'inline-block';
+        showRegisterFormBtn.style.display = 'inline-block';
+        emailLoginError.textContent = '';
+    });
+    showRegisterFormBtn.addEventListener('click', () => {
+        showEmailLoginFormBtn.style.display = 'none';
+        showRegisterFormBtn.style.display = 'none';
+        emailLoginForm.style.display = 'none';
+        registerForm.style.display = 'block';
+        emailLoginError.textContent = '';
+    });
+    cancelRegisterBtn.addEventListener('click', () => {
+        registerForm.style.display = 'none';
+        showEmailLoginFormBtn.style.display = 'inline-block';
+        showRegisterFormBtn.style.display = 'inline-block';
+        emailLoginError.textContent = '';
+    });
+
+    // Google Login
+    googleLoginButton.addEventListener('click', () => {
+        signInWithPopup(auth, googleProvider)
+            .then((result) => {
+                const user = result.user;
+                localStorage.setItem('loggedInUser', JSON.stringify({
+                    displayName: user.displayName || user.email,
+                    profilePicUrl: user.photoURL,
+                    email: user.email
+                }));
+                setProfilePicture(user.photoURL, user.displayName || user.email);
+                loginModal.style.display = 'none';
+                showUploadButtonIfAllowed(user.email);
+            })
+            .catch((error) => {
+                emailLoginError.textContent = 'Google Login Failed: ' + error.message;
+            });
+    });
+
+    // Email Login
+    emailLoginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        emailLoginError.textContent = '';
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+
+        signInWithEmailAndPassword(auth, email, password)
+            .then((result) => {
+                const user = result.user;
+                localStorage.setItem('loggedInUser', JSON.stringify({
+                    displayName: user.displayName || user.email,
+                    profilePicUrl: user.photoURL,
+                    email: user.email
+                }));
+                setProfilePicture(user.photoURL, user.displayName || user.email);
+                loginModal.style.display = 'none';
+                showUploadButtonIfAllowed(user.email);
+            })
+            .catch((error) => {
+                emailLoginError.textContent = error.message.replace('Firebase: ', '');
+            });
+    });
+
+    // Registration logic
+    registerForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        emailLoginError.textContent = '';
+        const email = document.getElementById('registerEmail').value.trim();
+        const password = document.getElementById('registerPassword').value;
+
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((result) => {
+                const user = result.user;
+                localStorage.setItem('loggedInUser', JSON.stringify({
+                    displayName: user.displayName || user.email,
+                    profilePicUrl: user.photoURL,
+                    email: user.email
+                }));
+                setProfilePicture(user.photoURL, user.displayName || user.email);
+                loginModal.style.display = 'none';
+                registerForm.reset();
+                registerForm.style.display = 'none';
+                showEmailLoginFormBtn.style.display = 'inline-block';
+                showRegisterFormBtn.style.display = 'inline-block';
+                showUploadButtonIfAllowed(user.email);
+            })
+            .catch((error) => {
+                emailLoginError.textContent = error.message.replace('Firebase: ', '');
+            });
+    });
+
+    // Set profile picture and replace the login button
+    function setProfilePicture(profilePicUrl, displayName) {
+        loginButton.style.display = 'none';
+
+        // Remove existing profile pic if present
+        const existingProfilePic = document.getElementById('profilePic');
+        if (existingProfilePic) existingProfilePic.remove();
+
+        const profilePic = document.createElement('img');
+        profilePic.src = profilePicUrl || 'default-profile.png';
+        profilePic.alt = displayName || 'Profile Picture';
+        profilePic.style.position = 'fixed';
+        profilePic.style.top = '20px';
+        profilePic.style.left = '20px';
+        profilePic.style.width = '40px';
+        profilePic.style.height = '40px';
+        profilePic.style.borderRadius = '50%';
+        profilePic.style.cursor = 'pointer';
+        profilePic.style.zIndex = '1000';
+        profilePic.id = 'profilePic';
+        document.body.appendChild(profilePic);
+
+        // Show/hide profile menu on click
+        profilePic.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const menu = document.getElementById('profileMenu');
+            menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+        });
+
+        // Hide menu if clicking outside
+        document.addEventListener('click', (e) => {
+            const menu = document.getElementById('profileMenu');
+            if (menu && !menu.contains(e.target) && e.target.id !== 'profilePic') {
+                menu.style.display = 'none';
+            }
+        });
+    }
+
+    // Logout button logic
+    document.getElementById('logoutButton').addEventListener('click', () => {
+        localStorage.removeItem('loggedInUser');
+        location.reload();
+    });
+
+    // Show upload button only for allowed email
+    function showUploadButtonIfAllowed(email) {
+        const allowedEmail = "aquacheese.yt@gmail.com";
+        if (email === allowedEmail) {
+            uploadButtonSection.style.display = 'block';
+        } else {
+            uploadButtonSection.style.display = 'none';
+        }
+    }
+
+    // On page load, show profile if logged in
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
     if (loggedInUser) {
         setProfilePicture(loggedInUser.profilePicUrl, loggedInUser.displayName);
