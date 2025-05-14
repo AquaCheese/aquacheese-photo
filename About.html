@@ -31,9 +31,8 @@
 <body>
     <!-- Login Button and Modal (from index.html, upload feature removed) -->
     <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-      <button id="loginButton" style="background-color: lightblue; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer;">
-        Log In
-      </button>
+      <button id="loginButton" style="background-color: lightblue; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer;">Log In</button>
+      <button id="registerButton" style="background-color: #ffc107; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin-left: 8px;">Register</button>
     </div>
     <div id="loginModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;">
       <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #333; color: whitesmoke; padding: 20px; border-radius: 8px; width: 300px; text-align: center;">
@@ -75,6 +74,7 @@
     }
     document.addEventListener('DOMContentLoaded', () => {
         const loginButton = document.getElementById('loginButton');
+        const registerButton = document.getElementById('registerButton');
         const loginModal = document.getElementById('loginModal');
         const closeLoginModal = document.getElementById('closeLoginModal');
         const googleLoginButton = document.getElementById('googleLoginButton');
@@ -90,6 +90,14 @@
 
         loginButton.addEventListener('click', () => {
             loginModal.style.display = 'block';
+        });
+        registerButton.addEventListener('click', () => {
+            loginModal.style.display = 'block';
+            showEmailLoginFormBtn.style.display = 'none';
+            showRegisterFormBtn.style.display = 'none';
+            emailLoginForm.style.display = 'none';
+            registerForm.style.display = 'block';
+            emailLoginError.textContent = '';
         });
         closeLoginModal.addEventListener('click', () => {
             loginModal.style.display = 'none';
@@ -161,6 +169,7 @@
         });
         function setProfilePicture(profilePicUrl, displayName) {
             loginButton.style.display = 'none';
+            registerButton.style.display = 'none';
             const existingProfilePic = document.getElementById('profilePic');
             if (existingProfilePic) existingProfilePic.remove();
             const profilePic = document.createElement('img');
@@ -203,12 +212,12 @@
     </script>
     <!-- End Login Button and Modal -->
     <!-- Cart button -->
-    <button id="cartButton">Cart</button>
+    <button id="cartButton" style="position:fixed;top:20px;right:20px;z-index:1000;background:#ffc107;color:black;border:none;border-radius:12px;padding:10px 20px;font-size:16px;cursor:pointer;">Cart</button>
     <!-- Cart panel -->
-    <div id="cartPanel" style="display:none;">
-      <button id="closeCart">&times;</button>
-      <h2>Your Cart</h2>
-      <ul id="cartList"></ul>
+    <div id="cartPanel" style="display:none;position:fixed;top:70px;right:20px;width:340px;max-width:90vw;background:#222;color:#fff;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,0.4);z-index:2000;padding:24px 18px 18px 18px;">
+      <button id="closeCart" style="position:absolute;top:8px;right:12px;background:none;color:#fff;border:none;font-size:22px;cursor:pointer;">&times;</button>
+      <h2 style="margin-top:0;font-size:22px;">Your Cart</h2>
+      <ul id="cartList" style="list-style:none;padding:0;margin:0 0 10px 0;"></ul>
       <div id="cartSubtotal" style="margin-top: 20px; font-size: 18px; text-align: center; border-top: 1px solid whitesmoke; padding-top: 10px;"></div>
       <button id="buyNowButton" style="margin-top: 20px; width: 100%; padding: 10px; background-color: green; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">Buy Now</button>
     </div>

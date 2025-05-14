@@ -246,20 +246,36 @@
     </head>
 
     <body>
-        <!-- Login/Logout Modal -->
-        <div id="loginModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); z-index: 1000; justify-content: center; align-items: center;">
-            <div style="background-color: #444; padding: 20px; border-radius: 10px; text-align: center; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); width: 300px; max-width: 90%;">
-                <h2 style="color: #ffcc00;">Login</h2>
-                <button onclick="loginWithGoogle()" style="background-color: #4285F4; color: white; border: none; border-radius: 5px; padding: 10px 20px; cursor: pointer;">Login with Google</button>
-                <br><br>
-                <button onclick="loginWithEmail()" style="background-color: #555; color: white; border: none; border-radius: 5px; padding: 10px 20px; cursor: pointer;">Login with Email</button>
-                <br><br>
-                <button onclick="closeLoginModal()" style="background-color: crimson; color: white; border: none; border-radius: 5px; padding: 10px 20px; cursor: pointer;">Close</button>
+        <!-- Login Button and Modal -->
+        <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+            <button id="loginButton" style="background-color: lightblue; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer;">Log In</button>
+            <button id="registerButton" style="background-color: #ffc107; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin-left: 8px;">Register</button>
+        </div>
+        <div id="loginModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;">
+            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #333; color: whitesmoke; padding: 20px; border-radius: 8px; width: 300px; text-align: center;">
+                <h2>Log In</h2>
+                <button id="googleLoginButton" style="background-color: #4285F4; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In with Google</button>
+                <button id="showEmailLoginForm" style="background-color: #555; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In with Email</button>
+                <form id="emailLoginForm" style="display:none; margin-top:10px;">
+                    <input id="emailInput" type="email" placeholder="Email" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
+                    <input id="passwordInput" type="password" placeholder="Password" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
+                    <button type="submit" style="background-color: #555; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In</button>
+                    <button type="button" id="cancelEmailLogin" style="background-color: #dc3545; color: white; border: none; border-radius: 5px; padding: 8px 16px; font-size: 15px; cursor: pointer; margin: 10px;">Cancel</button>
+                </form>
+                <form id="registerForm" style="display:none; margin-top:10px;">
+                    <input id="registerEmail" type="email" placeholder="Email" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
+                    <input id="registerPassword" type="password" placeholder="Password" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
+                    <button type="submit" style="background-color: #28a745; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Register</button>
+                    <button type="button" id="cancelRegister" style="background-color: #dc3545; color: white; border: none; border-radius: 5px; padding: 8px 16px; font-size: 15px; cursor: pointer; margin: 10px;">Cancel</button>
+                </form>
+                <div id="emailLoginError" style="color:#ff6666; margin-top:8px; min-height:20px;"></div>
+                <br>
+                <hr style="border: 0; border-top: 1px solid #888; margin: 16px 0 8px 0;">
+                <button id="showRegisterForm" style="background-color: #ffc107; color: black; border: none; border-radius: 5px; padding: 8px 16px; font-size: 15px; cursor: pointer; margin: 10px; display: inline-block;">Register</button>
+                <button id="closeLoginModal" style="background-color: red; color: white; border: none; border-radius: 5px; padding: 5px 10px; font-size: 14px; cursor: pointer; margin-top: 10px;">Close</button>
             </div>
         </div>
-
-        <button id="loginButton" style="position: fixed; top: 20px; left: 20px; background-color: gold; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer; z-index: 1000;">Login</button>
-        <button id="logoutButton" style="position: fixed; top: 20px; left: 20px; background-color: crimson; color: white; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer; z-index: 1000; display: none;">Logout</button>
+        <!-- End Login Button and Modal -->
 
         <h1>Small River - Perranporth</h1>
         <a href="index.html"><button type="button" style="position: absolute;">&larr; Back to Home</button></a>
@@ -303,191 +319,163 @@
         &lt;&lt;&lt;&nbsp; &copy; 2025 AquaCheese &nbsp;&gt;&gt;&gt;
 
         <!-- Cart button -->
-        <button id="cartButton">Cart</button>
+        <button id="cartButton" style="position:fixed;top:20px;right:20px;z-index:1000;background:#ffc107;color:black;border:none;border-radius:12px;padding:10px 20px;font-size:16px;cursor:pointer;">Cart</button>
 
         <!-- Cart panel -->
-        <div id="cartPanel">
-            <button id="closeCart">&times;</button>
-            <h2>Your Cart</h2>
-            <ul id="cartList">
-                <!-- Items will be dynamically added here -->
-            </ul>
-            <div id="cartSubtotal">
-                Subtotal: £0
-            </div>
-            <button id="buyNowButton">Buy Now</button>
+        <div id="cartPanel" style="display:none;position:fixed;top:70px;right:20px;width:340px;max-width:90vw;background:#222;color:#fff;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,0.4);z-index:2000;padding:24px 18px 18px 18px;">
+            <button id="closeCart" style="position:absolute;top:8px;right:12px;background:none;color:#fff;border:none;font-size:22px;cursor:pointer;">&times;</button>
+            <h2 style="margin-top:0;font-size:22px;">Your Cart</h2>
+            <ul id="cartList" style="list-style:none;padding:0;margin:0 0 10px 0;"></ul>
+            <div id="cartSubtotal" style="margin-top: 20px; font-size: 18px; text-align: center; border-top: 1px solid whitesmoke; padding-top: 10px;"></div>
+            <button id="buyNowButton" style="margin-top: 20px; width: 100%; padding: 10px; background-color: green; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">Buy Now</button>
         </div>
 
         <script>
-            document.getElementById('buyNowButton').addEventListener('click', () => {
-    if (cart.length > 0) {
-        localStorage.removeItem('singleItem'); // Clear single item data
-        localStorage.setItem('cartPurchase', true); // Indicate that the cart is being purchased
-        window.location.href = 'Purchase.html'; // Redirect to the purchase page
-    } else {
-        alert('Your cart is empty. Add items to proceed.');
-    }
-});
-            document.getElementById('buyNowButton').addEventListener('click', () => {
-                alert('Proceeding to checkout...');
-                // Add your checkout logic here
-            });
-
-            // Function to open the dialog
-            function openDialog() {
-                document.getElementById('dialogOverlay').style.display = 'flex';
+            // Cart logic (avoid redeclaration)
+            window.acp_cartKey = window.acp_cartKey || 'acp_cart';
+            function getCart() {
+                return JSON.parse(localStorage.getItem(window.acp_cartKey) || '[]');
             }
-
-            // Function to close the dialog
-            function closeDialog() {
-                document.getElementById('dialogOverlay').style.display = 'none';
+            function saveCart(cart) {
+                localStorage.setItem(window.acp_cartKey, JSON.stringify(cart));
             }
-
-            // Cart functionality
-            let cart = JSON.parse(localStorage.getItem('cart')) || []; // Load cart from localStorage or initialize as empty
-            const cartButton = document.getElementById('cartButton');
-            const cartPanel = document.getElementById('cartPanel');
-            const cartList = document.getElementById('cartList');
-            const cartSubtotal = document.getElementById('cartSubtotal');
-            const closeCart = document.getElementById('closeCart');
-
-            // Open the cart panel
-            cartButton.addEventListener('click', () => {
-                cartPanel.style.right = '0';
-                cartButton.style.display = 'none'; // Hide the cart button
-            });
-
-            // Close the cart panel
-            closeCart.addEventListener('click', () => {
-                cartPanel.style.right = '-100%';
-                cartButton.style.display = 'block'; // Show the cart button
-            });
-
-            // Add to cart function
-            function addToCart(itemName, itemImage) {
-                if (!itemName) {
-                    alert("Error: Item name is missing.");
-                    return;
-                }
-
-                // Add the item details to the cart array
-                cart.push({ name: itemName, image: itemImage, price: 15 }); // Assume each image costs £15
-                saveCart(); // Save the cart to localStorage
-                updateCart();
-                alert(`${itemName} has been added to your cart.`);
-            }
-
-            // Update the cart list and cart button text
-            function updateCart() {
-                cartList.innerHTML = ''; // Clear the current cart list
-                let subtotal = 0; // Initialize subtotal
-
-                cart.forEach((item, index) => {
-                    const listItem = document.createElement('li');
-                    listItem.style.display = 'flex';
-                    listItem.style.alignItems = 'center';
-                    listItem.style.marginBottom = '10px';
-
-                    // Add the image to the cart item (if available)
-                    if (item.image) {
-                        const itemImage = document.createElement('img');
-                        itemImage.src = item.image;
-                        itemImage.alt = item.name;
-                        itemImage.style.width = '50px';
-                        itemImage.style.height = '50px';
-                        itemImage.style.marginRight = '10px';
-                        itemImage.style.border = '1px solid whitesmoke';
-                        listItem.appendChild(itemImage);
-                    }
-
-                    // Add the name of the item
-                    const itemName = document.createElement('span');
-                    itemName.textContent = item.name;
-                    listItem.appendChild(itemName);
-
-                    // Add the price of the item
-                    const itemPrice = document.createElement('span');
-                    itemPrice.textContent = ` - £${item.price}`;
-                    itemPrice.style.marginLeft = 'auto';
-                    listItem.appendChild(itemPrice);
-
-                    // Add a remove button for each item
-                    const removeButton = document.createElement('button');
-                    removeButton.textContent = 'Remove';
-                    removeButton.style.marginLeft = '10px';
-                    removeButton.style.backgroundColor = 'red';
-                    removeButton.style.color = 'white';
-                    removeButton.style.border = 'none';
-                    removeButton.style.borderRadius = '5px';
-                    removeButton.style.cursor = 'pointer';
-
-                    // Remove item from the cart when the button is clicked
-                    removeButton.addEventListener('click', () => {
-                        cart.splice(index, 1); // Remove the item from the cart array
-                        saveCart(); // Save the updated cart to localStorage
-                        updateCart(); // Update the cart display
-                    });
-
-                    listItem.appendChild(removeButton);
-                    cartList.appendChild(listItem);
-
-                    // Add the item's price to the subtotal
-                    subtotal += item.price;
+            function updateCartUI() {
+                const cart = getCart();
+                const cartList = document.getElementById('cartList');
+                const cartSubtotal = document.getElementById('cartSubtotal');
+                cartList.innerHTML = '';
+                let subtotal = 0;
+                cart.forEach((item, idx) => {
+                    subtotal += item.price * item.qty;
+                    const li = document.createElement('li');
+                    li.style.marginBottom = '10px';
+                    li.innerHTML = `
+                        <span style="font-weight:bold;">${item.title}</span> x${item.qty} - $${(item.price*item.qty).toFixed(2)}
+                        <button class="remove-cart-item" data-idx="${idx}" style="margin-left:10px;background:#e74c3c;color:white;border:none;border-radius:5px;padding:2px 8px;cursor:pointer;">Remove</button>
+                    `;
+                    cartList.appendChild(li);
                 });
-
-                // Update the subtotal display
-                cartSubtotal.textContent = `Subtotal: £${subtotal}`;
-
-                // Update the cart button text with the number of items
-                const itemCount = cart.length;
-                cartButton.textContent = itemCount > 0 ? `Cart (${itemCount})` : 'Cart';
+                cartSubtotal.textContent = `Subtotal: $${subtotal.toFixed(2)}`;
+                document.getElementById('buyNowButton').disabled = cart.length === 0;
             }
-
-            // Save the cart to localStorage
-            function saveCart() {
-                localStorage.setItem('cart', JSON.stringify(cart));
+            function addToCart(item) {
+                let cart = getCart();
+                const idx = cart.findIndex(i => i.title === item.title);
+                if (idx > -1) {
+                    cart[idx].qty += 1;
+                } else {
+                    cart.push({...item, qty: 1});
+                }
+                saveCart(cart);
+                updateCartUI();
             }
-
-            // Load the cart when the page loads
-            document.addEventListener('DOMContentLoaded', updateCart);
+            function removeFromCart(idx) {
+                let cart = getCart();
+                cart.splice(idx, 1);
+                saveCart(cart);
+                updateCartUI();
+            }
+            document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const itemDiv = btn.closest('.gallery-item');
+                    const item = {
+                        title: itemDiv.getAttribute('data-title'),
+                        price: parseFloat(itemDiv.getAttribute('data-price')),
+                        img: itemDiv.getAttribute('data-img')
+                    };
+                    addToCart(item);
+                });
+            });
+            document.getElementById('cartButton').addEventListener('click', () => {
+                document.getElementById('cartPanel').style.display = 'block';
+                updateCartUI();
+            });
+            document.getElementById('closeCart').addEventListener('click', () => {
+                document.getElementById('cartPanel').style.display = 'none';
+            });
+            document.getElementById('cartList').addEventListener('click', function(e) {
+                if (e.target.classList.contains('remove-cart-item')) {
+                    removeFromCart(Number(e.target.getAttribute('data-idx')));
+                }
+            });
+            document.getElementById('buyNowButton').addEventListener('click', function() {
+                alert('Checkout is not implemented in this demo.');
+            });
+            window.addEventListener('DOMContentLoaded', updateCartUI);
 
             // Login/Logout functionality
             const loginButton = document.getElementById('loginButton');
-            const logoutButton = document.getElementById('logoutButton');
+            const registerButton = document.getElementById('registerButton');
             const loginModal = document.getElementById('loginModal');
-
-            function loginWithGoogle() {
-                alert('Google login functionality not implemented yet.');
-            }
-
-            function loginWithEmail() {
-                alert('Email login functionality not implemented yet.');
-            }
-
-            function closeLoginModal() {
-                loginModal.style.display = 'none';
-            }
+            const emailLoginForm = document.getElementById('emailLoginForm');
+            const registerForm = document.getElementById('registerForm');
+            const emailLoginError = document.getElementById('emailLoginError');
+            const showEmailLoginForm = document.getElementById('showEmailLoginForm');
+            const showRegisterForm = document.getElementById('showRegisterForm');
+            const closeLoginModal = document.getElementById('closeLoginModal');
+            const cancelEmailLogin = document.getElementById('cancelEmailLogin');
+            const cancelRegister = document.getElementById('cancelRegister');
 
             loginButton.addEventListener('click', () => {
-                loginModal.style.display = 'flex';
+                loginModal.style.display = 'block';
+                emailLoginForm.style.display = 'none';
+                registerForm.style.display = 'none';
+                emailLoginError.textContent = '';
             });
 
-            logoutButton.addEventListener('click', () => {
-                alert('Logged out successfully.');
-                loginButton.style.display = 'block';
-                logoutButton.style.display = 'none';
+            registerButton.addEventListener('click', () => {
+                loginModal.style.display = 'block';
+                emailLoginForm.style.display = 'none';
+                registerForm.style.display = 'block';
+                emailLoginError.textContent = '';
             });
 
-            // Simulate login state
-            const isLoggedIn = false; // Change this to true to simulate logged-in state
+            showEmailLoginForm.addEventListener('click', () => {
+                emailLoginForm.style.display = 'block';
+                registerForm.style.display = 'none';
+                emailLoginError.textContent = '';
+            });
 
-            if (isLoggedIn) {
-                loginButton.style.display = 'none';
-                logoutButton.style.display = 'block';
-            } else {
-                loginButton.style.display = 'block';
-                logoutButton.style.display = 'none';
-            }
+            showRegisterForm.addEventListener('click', () => {
+                emailLoginForm.style.display = 'none';
+                registerForm.style.display = 'block';
+                emailLoginError.textContent = '';
+            });
+
+            closeLoginModal.addEventListener('click', () => {
+                loginModal.style.display = 'none';
+            });
+
+            cancelEmailLogin.addEventListener('click', () => {
+                emailLoginForm.style.display = 'none';
+                emailLoginError.textContent = '';
+            });
+
+            cancelRegister.addEventListener('click', () => {
+                registerForm.style.display = 'none';
+                emailLoginError.textContent = '';
+            });
+
+            emailLoginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('emailInput').value;
+                const password = document.getElementById('passwordInput').value;
+                if (email === 'test@example.com' && password === 'password') {
+                    alert('Logged in successfully!');
+                    loginModal.style.display = 'none';
+                } else {
+                    emailLoginError.textContent = 'Invalid email or password.';
+                }
+            });
+
+            registerForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('registerEmail').value;
+                const password = document.getElementById('registerPassword').value;
+                alert(`Registered successfully with email: ${email}`);
+                registerForm.style.display = 'none';
+                emailLoginForm.style.display = 'block';
+            });
         </script>
     </body>
 </html>

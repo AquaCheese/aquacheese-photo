@@ -59,30 +59,46 @@
   </style>
 </head>
 <body>
+  <!-- Login Button and Modal -->
   <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-    <button id="loginButton" style="background-color: lightblue; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer;">
-      Log In
-    </button>
-    <section id="upload-button-section" style="display: none;">
-      <button id="upload-page-button" style="font-size: large; padding: 10px 20px; border-radius: 5px; background-color: lightblue; border: none; cursor: pointer;">
-        Upload
-      </button>
-    </section>
-  </div>
-  <button id="cartButton">Cart</button>
-  <div id="cartPanel" style="display:none;">
-    <button id="closeCart">&times;</button>
-    <h2>Your Cart</h2>
-    <ul id="cartList"></ul>
-    <div id="cartSubtotal" style="margin-top: 20px; font-size: 18px; text-align: center; border-top: 1px solid whitesmoke; padding-top: 10px;"></div>
-    <button id="buyNowButton" style="margin-top: 20px; width: 100%; padding: 10px; background-color: green; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">Buy Now</button>
+    <button id="loginButton" style="background-color: lightblue; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer;">Log In</button>
+    <button id="registerButton" style="background-color: #ffc107; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin-left: 8px;">Register</button>
   </div>
   <div id="loginModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;">
     <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #333; color: whitesmoke; padding: 20px; border-radius: 8px; width: 300px; text-align: center;">
-      <!-- Login modal content will be injected by JS -->
+      <h2>Log In</h2>
+      <button id="googleLoginButton" style="background-color: #4285F4; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In with Google</button>
+      <button id="showEmailLoginForm" style="background-color: #555; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In with Email</button>
+      <form id="emailLoginForm" style="display:none; margin-top:10px;">
+        <input id="emailInput" type="email" placeholder="Email" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
+        <input id="passwordInput" type="password" placeholder="Password" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
+        <button type="submit" style="background-color: #555; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In</button>
+        <button type="button" id="cancelEmailLogin" style="background-color: #dc3545; color: white; border: none; border-radius: 5px; padding: 8px 16px; font-size: 15px; cursor: pointer; margin: 10px;">Cancel</button>
+      </form>
+      <form id="registerForm" style="display:none; margin-top:10px;">
+        <input id="registerEmail" type="email" placeholder="Email" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
+        <input id="registerPassword" type="password" placeholder="Password" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
+        <button type="submit" style="background-color: #28a745; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Register</button>
+        <button type="button" id="cancelRegister" style="background-color: #dc3545; color: white; border: none; border-radius: 5px; padding: 8px 16px; font-size: 15px; cursor: pointer; margin: 10px;">Cancel</button>
+      </form>
+      <div id="emailLoginError" style="color:#ff6666; margin-top:8px; min-height:20px;"></div>
+      <br>
+      <hr style="border: 0; border-top: 1px solid #888; margin: 16px 0 8px 0;">
+      <button id="showRegisterForm" style="background-color: #ffc107; color: black; border: none; border-radius: 5px; padding: 8px 16px; font-size: 15px; cursor: pointer; margin: 10px; display: inline-block;">Register</button>
+      <button id="closeLoginModal" style="background-color: red; color: white; border: none; border-radius: 5px; padding: 5px 10px; font-size: 14px; cursor: pointer; margin-top: 10px;">Close</button>
     </div>
   </div>
-  <div id="profileMenu" style="display:none; position:fixed; top:70px; left:20px; background:#444; color:#fff; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.3); z-index:2000; min-width:140px; padding:16px 12px;"></div>
+  <!-- End Login Button and Modal -->
+  <!-- Cart button -->
+  <button id="cartButton" style="position:fixed;top:20px;right:20px;z-index:1000;background:#ffc107;color:black;border:none;border-radius:12px;padding:10px 20px;font-size:16px;cursor:pointer;">Cart</button>
+  <!-- Cart panel -->
+  <div id="cartPanel" style="display:none;position:fixed;top:70px;right:20px;width:340px;max-width:90vw;background:#222;color:#fff;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,0.4);z-index:2000;padding:24px 18px 18px 18px;">
+    <button id="closeCart" style="position:absolute;top:8px;right:12px;background:none;color:#fff;border:none;font-size:22px;cursor:pointer;">&times;</button>
+    <h2 style="margin-top:0;font-size:22px;">Your Cart</h2>
+    <ul id="cartList" style="list-style:none;padding:0;margin:0 0 10px 0;"></ul>
+    <div id="cartSubtotal" style="margin-top: 20px; font-size: 18px; text-align: center; border-top: 1px solid whitesmoke; padding-top: 10px;"></div>
+    <button id="buyNowButton" style="margin-top: 20px; width: 100%; padding: 10px; background-color: green; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">Buy Now</button>
+  </div>
   <div class="gallery-container">
     <h1>Videos Gallery</h1>
     <div style="margin: 20px;">
@@ -136,12 +152,12 @@
         }
     }
     // Cart logic
-    const cartKey = 'acp_cart';
+    window.acp_cartKey = window.acp_cartKey || 'acp_cart';
     function getCart() {
-        return JSON.parse(localStorage.getItem(cartKey) || '[]');
+        return JSON.parse(localStorage.getItem(window.acp_cartKey) || '[]');
     }
     function saveCart(cart) {
-        localStorage.setItem(cartKey, JSON.stringify(cart));
+        localStorage.setItem(window.acp_cartKey, JSON.stringify(cart));
     }
     function updateCartUI() {
         const cart = getCart();
