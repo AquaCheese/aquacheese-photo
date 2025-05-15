@@ -242,7 +242,7 @@
 #closeCart:hover {
     background-color: darkred;
 }
-</style>
+    </style>
     </head>
 
     <body>
@@ -303,139 +303,270 @@
             <button id="buyNowButton">Buy Now</button>
         </div>
 
-        <script>
-document.getElementById('buyNowButton').addEventListener('click', () => {
-    if (cart.length > 0) {
-        localStorage.removeItem('singleItem'); // Clear single item data
-        localStorage.setItem('cartPurchase', true); // Indicate that the cart is being purchased
-        window.location.href = 'Purchase.html'; // Redirect to the purchase page
-    } else {
-        alert('Your cart is empty. Add items to proceed.');
-    }
+        <!-- Login/Profile Modal -->
+        <div id="loginModal" class="modal">
+            <div class="modal-content">
+                <span class="close" id="closeLoginModal">&times;</span>
+                <h2>Login</h2>
+                <form id="loginForm">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                    <br>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                    <br>
+                    <button type="submit">Login</button>
+                </form>
+                <p>Don't have an account? <a href="javascript:void(0);" id="showRegister">Register here</a></p>
+            </div>
+        </div>
+
+        <!-- Register Modal -->
+        <div id="registerModal" class="modal">
+            <div class="modal-content">
+                <span class="close" id="closeRegisterModal">&times;</span>
+                <h2>Register</h2>
+                <form id="registerForm">
+                    <label for="newEmail">Email:</label>
+                    <input type="email" id="newEmail" name="email" required>
+                    <br>
+                    <label for="newPassword">Password:</label>
+                    <input type="password" id="newPassword" name="password" required>
+                    <br>
+                    <button type="submit">Register</button>
+                </form>
+                <p>Already have an account? <a href="javascript:void(0);" id="showLogin">Login here</a></p>
+            </div>
+        </div>
+
+        <script type="module">
+// Import Firebase modules
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js';
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js';
+import { getDatabase, ref, set, get, child, update, remove } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-database.js';
+
+// TODO: Replace with your app's Firebase project configuration
+const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    databaseURL: "YOUR_DATABASE_URL",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+const db = getDatabase();
+
+// Handle login form submission
+document.getElementById('loginForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            alert('Login successful!');
+            // Close the modal
+            document.getElementById('closeLoginModal').click();
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            alert('Error: ' + errorMessage);
+        });
 });
 
-            document.getElementById('buyNowButton').addEventListener('click', () => {
-                alert('Proceeding to checkout...');
-                // Add your checkout logic here
-            });
+// Handle register form submission
+document.getElementById('registerForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const email = document.getElementById('newEmail').value;
+    const password = document.getElementById('newPassword').value;
+    createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Registered 
+            const user = userCredential.user;
+            alert('Registration successful!');
+            // Close the modal
+            document.getElementById('closeRegisterModal').click();
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            alert('Error: ' + errorMessage);
+        });
+});
 
-            // Function to open the dialog
-            function openDialog() {
-                document.getElementById('dialogOverlay').style.display = 'flex';
-            }
+// Function to open the dialog
+function openDialog() {
+    document.getElementById('dialogOverlay').style.display = 'flex';
+}
 
-            // Function to close the dialog
-            function closeDialog() {
-                document.getElementById('dialogOverlay').style.display = 'none';
-            }
+// Function to close the dialog
+function closeDialog() {
+    document.getElementById('dialogOverlay').style.display = 'none';
+}
 
-            // Cart functionality
-            let cart = JSON.parse(localStorage.getItem('cart')) || []; // Load cart from localStorage or initialize as empty
-            const cartButton = document.getElementById('cartButton');
-            const cartPanel = document.getElementById('cartPanel');
-            const cartList = document.getElementById('cartList');
-            const cartSubtotal = document.getElementById('cartSubtotal');
-            const closeCart = document.getElementById('closeCart');
+// Cart functionality
+let cart = JSON.parse(localStorage.getItem('cart')) || []; // Load cart from localStorage or initialize as empty
+const cartButton = document.getElementById('cartButton');
+const cartPanel = document.getElementById('cartPanel');
+const cartList = document.getElementById('cartList');
+const cartSubtotal = document.getElementById('cartSubtotal');
+const closeCart = document.getElementById('closeCart');
 
-            // Open the cart panel
-            cartButton.addEventListener('click', () => {
-                cartPanel.style.right = '0';
-                cartButton.style.display = 'none'; // Hide the cart button
-            });
+// Open the cart panel
+cartButton.addEventListener('click', () => {
+    cartPanel.style.right = '0';
+    cartButton.style.display = 'none'; // Hide the cart button
+});
 
-            // Close the cart panel
-            closeCart.addEventListener('click', () => {
-                cartPanel.style.right = '-100%';
-                cartButton.style.display = 'block'; // Show the cart button
-            });
+// Close the cart panel
+closeCart.addEventListener('click', () => {
+    cartPanel.style.right = '-100%';
+    cartButton.style.display = 'block'; // Show the cart button
+});
 
-            // Add to cart function
-            function addToCart(itemName, itemImage) {
-                if (!itemName) {
-                    alert("Error: Item name is missing.");
-                    return;
-                }
+// Add to cart function
+function addToCart(itemName, itemImage) {
+    if (!itemName) {
+        alert("Error: Item name is missing.");
+        return;
+    }
 
-                // Add the item details to the cart array
-                cart.push({ name: itemName, image: itemImage, price: 15 }); // Assume each image costs £15
-                saveCart(); // Save the cart to localStorage
-                updateCart();
-                alert(`${itemName} has been added to your cart.`);
-            }
+    // Add the item details to the cart array
+    cart.push({ name: itemName, image: itemImage, price: 15 }); // Assume each image costs £15
+    saveCart(); // Save the cart to localStorage
+    updateCart();
+    alert(`${itemName} has been added to your cart.`);
+}
 
-            // Update the cart list and cart button text
-            function updateCart() {
-                cartList.innerHTML = ''; // Clear the current cart list
-                let subtotal = 0; // Initialize subtotal
+// Update the cart list and cart button text
+function updateCart() {
+    cartList.innerHTML = ''; // Clear the current cart list
+    let subtotal = 0; // Initialize subtotal
 
-                cart.forEach((item, index) => {
-                    const listItem = document.createElement('li');
-                    listItem.style.display = 'flex';
-                    listItem.style.alignItems = 'center';
-                    listItem.style.marginBottom = '10px';
+    cart.forEach((item, index) => {
+        const listItem = document.createElement('li');
+        listItem.style.display = 'flex';
+        listItem.style.alignItems = 'center';
+        listItem.style.marginBottom = '10px';
 
-                    // Add the image to the cart item (if available)
-                    if (item.image) {
-                        const itemImage = document.createElement('img');
-                        itemImage.src = item.image;
-                        itemImage.alt = item.name;
-                        itemImage.style.width = '50px';
-                        itemImage.style.height = '50px';
-                        itemImage.style.marginRight = '10px';
-                        itemImage.style.border = '1px solid whitesmoke';
-                        listItem.appendChild(itemImage);
-                    }
+        // Add the image to the cart item (if available)
+        if (item.image) {
+            const itemImage = document.createElement('img');
+            itemImage.src = item.image;
+            itemImage.alt = item.name;
+            itemImage.style.width = '50px';
+            itemImage.style.height = '50px';
+            itemImage.style.marginRight = '10px';
+            itemImage.style.border = '1px solid whitesmoke';
+            listItem.appendChild(itemImage);
+        }
 
-                    // Add the name of the item
-                    const itemName = document.createElement('span');
-                    itemName.textContent = item.name;
-                    listItem.appendChild(itemName);
+        // Add the name of the item
+        const itemName = document.createElement('span');
+        itemName.textContent = item.name;
+        listItem.appendChild(itemName);
 
-                    // Add the price of the item
-                    const itemPrice = document.createElement('span');
-                    itemPrice.textContent = ` - £${item.price}`;
-                    itemPrice.style.marginLeft = 'auto';
-                    listItem.appendChild(itemPrice);
+        // Add the price of the item
+        const itemPrice = document.createElement('span');
+        itemPrice.textContent = ` - £${item.price}`;
+        itemPrice.style.marginLeft = 'auto';
+        listItem.appendChild(itemPrice);
 
-                    // Add a remove button for each item
-                    const removeButton = document.createElement('button');
-                    removeButton.textContent = 'Remove';
-                    removeButton.style.marginLeft = '10px';
-                    removeButton.style.backgroundColor = 'red';
-                    removeButton.style.color = 'white';
-                    removeButton.style.border = 'none';
-                    removeButton.style.borderRadius = '5px';
-                    removeButton.style.cursor = 'pointer';
+        // Add a remove button for each item
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'Remove';
+        removeButton.style.marginLeft = '10px';
+        removeButton.style.backgroundColor = 'red';
+        removeButton.style.color = 'white';
+        removeButton.style.border = 'none';
+        removeButton.style.borderRadius = '5px';
+        removeButton.style.cursor = 'pointer';
 
-                    // Remove item from the cart when the button is clicked
-                    removeButton.addEventListener('click', () => {
-                        cart.splice(index, 1); // Remove the item from the cart array
-                        saveCart(); // Save the updated cart to localStorage
-                        updateCart(); // Update the cart display
-                    });
+        // Remove item from the cart when the button is clicked
+        removeButton.addEventListener('click', () => {
+            cart.splice(index, 1); // Remove the item from the cart array
+            saveCart(); // Save the updated cart to localStorage
+            updateCart(); // Update the cart display
+        });
 
-                    listItem.appendChild(removeButton);
-                    cartList.appendChild(listItem);
+        listItem.appendChild(removeButton);
+        cartList.appendChild(listItem);
 
-                    // Add the item's price to the subtotal
-                    subtotal += item.price;
-                });
+        // Add the item's price to the subtotal
+        subtotal += item.price;
+    });
 
-                // Update the subtotal display
-                cartSubtotal.textContent = `Subtotal: £${subtotal}`;
+    // Update the subtotal display
+    cartSubtotal.textContent = `Subtotal: £${subtotal}`;
 
-                // Update the cart button text with the number of items
-                const itemCount = cart.length;
-                cartButton.textContent = itemCount > 0 ? `Cart (${itemCount})` : 'Cart';
-            }
+    // Update the cart button text with the number of items
+    const itemCount = cart.length;
+    cartButton.textContent = itemCount > 0 ? `Cart (${itemCount})` : 'Cart';
+}
 
-            // Save the cart to localStorage
-            function saveCart() {
-                localStorage.setItem('cart', JSON.stringify(cart));
-            }
+// Save the cart to localStorage
+function saveCart() {
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
 
-            // Load the cart when the page loads
-            document.addEventListener('DOMContentLoaded', updateCart);
+// Load the cart when the page loads
+document.addEventListener('DOMContentLoaded', updateCart);
+
+// Modal functionality
+const modal = document.getElementById('loginModal');
+const closeModal = document.getElementById('closeLoginModal');
+const showRegister = document.getElementById('showRegister');
+const registerModal = document.getElementById('registerModal');
+const closeRegisterModal = document.getElementById('closeRegisterModal');
+const showLogin = document.getElementById('showLogin');
+
+// Open login modal
+document.getElementById('loginButton').addEventListener('click', () => {
+    modal.style.display = 'block';
+});
+
+// Close login modal
+closeModal.addEventListener('click', () => {
+    modal.style.display = 'none';
+});
+
+// Show register form
+showRegister.addEventListener('click', () => {
+    modal.style.display = 'none';
+    registerModal.style.display = 'block';
+});
+
+// Open register modal
+document.getElementById('registerButton').addEventListener('click', () => {
+    registerModal.style.display = 'block';
+});
+
+// Close register modal
+closeRegisterModal.addEventListener('click', () => {
+    registerModal.style.display = 'none';
+});
+
+// Show login form
+showLogin.addEventListener('click', () => {
+    registerModal.style.display = 'none';
+    modal.style.display = 'block';
+});
+
+// Close modals when clicking outside of them
+window.addEventListener('click', (event) => {
+    if (event.target === modal) {
+        modal.style.display = 'none';
+    } else if (event.target === registerModal) {
+        registerModal.style.display = 'none';
+    }
+});
         </script>
     </body>
 </html>

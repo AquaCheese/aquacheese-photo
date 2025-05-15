@@ -242,7 +242,95 @@
 #closeCart:hover {
     background-color: darkred;
 }
-</style>
+
+/* Unified modal styles from index.html */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1002;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.close-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-title {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.modal-body {
+    margin-top: 10px;
+    color: #666;
+    font-size: 1rem;
+}
+
+.modal-footer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+        </style>
     </head>
 
     <body>
@@ -303,20 +391,69 @@
             <button id="buyNowButton">Buy Now</button>
         </div>
 
-        <script>
-            document.getElementById('buyNowButton').addEventListener('click', () => {
-    if (cart.length > 0) {
-        localStorage.removeItem('singleItem'); // Clear single item data
-        localStorage.setItem('cartPurchase', true); // Indicate that the cart is being purchased
-        window.location.href = 'Purchase.html'; // Redirect to the purchase page
-    } else {
-        alert('Your cart is empty. Add items to proceed.');
-    }
-});
-            document.getElementById('buyNowButton').addEventListener('click', () => {
-                alert('Proceeding to checkout...');
-                // Add your checkout logic here
-            });
+        <!-- Unified login/profile modal -->
+        <div id="loginModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" id="closeLoginModal">&times;</span>
+                <div class="modal-header">
+                    <h2 class="modal-title">Login / Register</h2>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div>
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div>
+                            <label for="password">Password:</label>
+                            <input type="password" id="password" name="password" required>
+                        </div>
+                        <div>
+                            <button type="submit" class="btn">Login</button>
+                        </div>
+                    </form>
+                    <div style="margin-top: 10px;">
+                        <button id="showRegisterForm" class="btn btn-secondary">Register</button>
+                    </div>
+                    <div id="registerForm" style="display:none; margin-top:10px;">
+                        <form id="registerNewUser">
+                            <div>
+                                <label for="newEmail">Email:</label>
+                                <input type="email" id="newEmail" name="newEmail" required>
+                            </div>
+                            <div>
+                                <label for="newPassword">Password:</label>
+                                <input type="password" id="newPassword" name="newPassword" required>
+                            </div>
+                            <div>
+                                <button type="submit" class="btn">Register</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="module">
+            import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js';
+            import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js';
+            import { getDatabase, ref, set, get, child, update } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-database.js';
+
+            // Your web app's Firebase configuration
+            const firebaseConfig = {
+                apiKey: "AIzaSyD-EXAMPLEKEY",
+                authDomain: "your-project-id.firebaseapp.com",
+                databaseURL: "https://your-project-id.firebaseio.com",
+                projectId: "your-project-id",
+                storageBucket: "your-project-id.appspot.com",
+                messagingSenderId: "123456789",
+                appId: "1:123456789:web:abcdef123456"
+            };
+
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth();
+            const db = getDatabase(app);
 
             // Function to open the dialog
             function openDialog() {
@@ -435,6 +572,78 @@
 
             // Load the cart when the page loads
             document.addEventListener('DOMContentLoaded', updateCart);
+
+            // Login and registration logic
+            const loginModal = document.getElementById('loginModal');
+            const closeLoginModal = document.getElementById('closeLoginModal');
+            const showRegisterForm = document.getElementById('showRegisterForm');
+            const registerForm = document.getElementById('registerForm');
+            const loginForm = document.getElementById('loginForm');
+
+            // Open login modal (unified with profile logic)
+            function openLoginModal() {
+                loginModal.style.display = 'block';
+            }
+
+            // Close login modal
+            closeLoginModal.addEventListener('click', () => {
+                loginModal.style.display = 'none';
+            });
+
+            // Show registration form
+            showRegisterForm.addEventListener('click', () => {
+                registerForm.style.display = 'block';
+                loginForm.style.display = 'none';
+            });
+
+            // Handle login form submission
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = loginForm.email.value;
+                const password = loginForm.password.value;
+
+                signInWithEmailAndPassword(auth, email, password)
+                    .then((userCredential) => {
+                        // Signed in 
+                        const user = userCredential.user;
+                        alert('Login successful!');
+                        loginModal.style.display = 'none';
+                        // Additional logic after successful login (e.g., update UI, fetch user data)
+                    })
+                    .catch((error) => {
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                        alert(`Error: ${errorMessage}`);
+                    });
+            });
+
+            // Handle registration form submission
+            registerNewUser.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = registerNewUser.newEmail.value;
+                const password = registerNewUser.newPassword.value;
+
+                createUserWithEmailAndPassword(auth, email, password)
+                    .then((userCredential) => {
+                        // Registered successfully
+                        const user = userCredential.user;
+                        alert('Registration successful! You can now log in.');
+                        registerForm.style.display = 'none';
+                        loginForm.style.display = 'block';
+                    })
+                    .catch((error) => {
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                        alert(`Error: ${errorMessage}`);
+                    });
+            });
+
+            // Close the login modal when clicking outside of it
+            window.addEventListener('click', (event) => {
+                if (event.target === loginModal) {
+                    loginModal.style.display = "none";
+                }
+            });
         </script>
     </body>
 </html>

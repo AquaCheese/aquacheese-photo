@@ -242,6 +242,105 @@
 #closeCart:hover {
     background-color: darkred;
 }
+
+/* Unified modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1002;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #444;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.close-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-title {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #ffcc00;
+}
+
+.modal-body {
+    margin-top: 10px;
+    color: whitesmoke;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.modal-footer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.btn {
+    background-color: #ffcc00;
+    color: #2c2c2c;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #ffa500;
+}
+
+/* Profile modal specific styles */
+#profileModal .modal-title {
+    color: #4CAF50;
+}
+
+#profileModal .modal-body {
+    color: #333;
+}
+
+#profileModal .btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#profileModal .btn:hover {
+    background-color: #45a049;
+}
 </style>
     </head>
 
@@ -303,138 +402,183 @@
             <button id="buyNowButton">Buy Now</button>
         </div>
 
-        <script>
-            document.getElementById('buyNowButton').addEventListener('click', () => {
-    if (cart.length > 0) {
-        localStorage.removeItem('singleItem'); // Clear single item data
-        localStorage.setItem('cartPurchase', true); // Indicate that the cart is being purchased
-        window.location.href = 'Purchase.html'; // Redirect to the purchase page
+        <!-- Profile modal -->
+        <div id="profileModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeProfileModal()">&times;</span>
+                <div class="modal-header">
+                    <h2 class="modal-title">Profile</h2>
+                </div>
+                <div class="modal-body">
+                    <p>Welcome to your profile!</p>
+                    <!-- Profile content goes here -->
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" onclick="closeProfileModal()">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <script type="module">
+            import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js';
+import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js';
+import { getFirestore, collection, addDoc, getDocs, query, where, updateDoc, doc } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-storage.js';
+
+// TODO: Replace with your project's customized code snippet
+const firebaseConfig = {
+    apiKey: "AIzaSyD-EXAMPLEKEY",
+    authDomain: "your-project-id.firebaseapp.com",
+    projectId: "your-project-id",
+    storageBucket: "your-project-id.appspot.com",
+    messagingSenderId: "123456789",
+    appId: "1:123456789:web:abcdef123456"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const storage = getStorage(app);
+
+// Cart functionality
+let cart = JSON.parse(localStorage.getItem('cart')) || []; // Load cart from localStorage or initialize as empty
+const cartButton = document.getElementById('cartButton');
+const cartPanel = document.getElementById('cartPanel');
+const cartList = document.getElementById('cartList');
+const cartSubtotal = document.getElementById('cartSubtotal');
+const closeCart = document.getElementById('closeCart');
+
+// Open the cart panel
+cartButton.addEventListener('click', () => {
+    cartPanel.style.right = '0';
+    cartButton.style.display = 'none'; // Hide the cart button
+});
+
+// Close the cart panel
+closeCart.addEventListener('click', () => {
+    cartPanel.style.right = '-100%';
+    cartButton.style.display = 'block'; // Show the cart button
+});
+
+// Add to cart function
+function addToCart(itemName, itemImage) {
+    if (!itemName) {
+        alert("Error: Item name is missing.");
+        return;
+    }
+
+    // Add the item details to the cart array
+    cart.push({ name: itemName, image: itemImage, price: 15 }); // Assume each image costs £15
+    saveCart(); // Save the cart to localStorage
+    updateCart();
+    alert(`${itemName} has been added to your cart.`);
+}
+
+// Update the cart list and cart button text
+function updateCart() {
+    cartList.innerHTML = ''; // Clear the current cart list
+    let subtotal = 0; // Initialize subtotal
+
+    cart.forEach((item, index) => {
+        const listItem = document.createElement('li');
+        listItem.style.display = 'flex';
+        listItem.style.alignItems = 'center';
+        listItem.style.marginBottom = '10px';
+
+        // Add the image to the cart item (if available)
+        if (item.image) {
+            const itemImage = document.createElement('img');
+            itemImage.src = item.image;
+            itemImage.alt = item.name;
+            itemImage.style.width = '50px';
+            itemImage.style.height = '50px';
+            itemImage.style.marginRight = '10px';
+            itemImage.style.border = '1px solid whitesmoke';
+            listItem.appendChild(itemImage);
+        }
+
+        // Add the name of the item
+        const itemName = document.createElement('span');
+        itemName.textContent = item.name;
+        listItem.appendChild(itemName);
+
+        // Add the price of the item
+        const itemPrice = document.createElement('span');
+        itemPrice.textContent = ` - £${item.price}`;
+        itemPrice.style.marginLeft = 'auto';
+        listItem.appendChild(itemPrice);
+
+        // Add a remove button for each item
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'Remove';
+        removeButton.style.marginLeft = '10px';
+        removeButton.style.backgroundColor = 'red';
+        removeButton.style.color = 'white';
+        removeButton.style.border = 'none';
+        removeButton.style.borderRadius = '5px';
+        removeButton.style.cursor = 'pointer';
+
+        // Remove item from the cart when the button is clicked
+        removeButton.addEventListener('click', () => {
+            cart.splice(index, 1); // Remove the item from the cart array
+            saveCart(); // Save the updated cart to localStorage
+            updateCart(); // Update the cart display
+        });
+
+        listItem.appendChild(removeButton);
+        cartList.appendChild(listItem);
+
+        // Add the item's price to the subtotal
+        subtotal += item.price;
+    });
+
+    // Update the subtotal display
+    cartSubtotal.textContent = `Subtotal: £${subtotal}`;
+
+    // Update the cart button text with the number of items
+    const itemCount = cart.length;
+    cartButton.textContent = itemCount > 0 ? `Cart (${itemCount})` : 'Cart';
+}
+
+// Save the cart to localStorage
+function saveCart() {
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+// Load the cart when the page loads
+document.addEventListener('DOMContentLoaded', updateCart);
+
+// Function to open the dialog
+function openDialog() {
+    document.getElementById('dialogOverlay').style.display = 'flex';
+}
+
+// Function to close the dialog
+function closeDialog() {
+    document.getElementById('dialogOverlay').style.display = 'none';
+}
+
+// Profile modal functionality
+function openProfileModal() {
+    document.getElementById('profileModal').style.display = 'block';
+}
+
+function closeProfileModal() {
+    document.getElementById('profileModal').style.display = 'none';
+}
+
+// Auth state listener
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        // User is signed in.
+        console.log('User is signed in:', user);
+        // You can also fetch and display user profile data from Firestore here
     } else {
-        alert('Your cart is empty. Add items to proceed.');
+        // No user is signed in.
+        console.log('No user is signed in.');
     }
 });
-            document.getElementById('buyNowButton').addEventListener('click', () => {
-                alert('Proceeding to checkout...');
-                // Add your checkout logic here
-            });
-
-            // Function to open the dialog
-            function openDialog() {
-                document.getElementById('dialogOverlay').style.display = 'flex';
-            }
-
-            // Function to close the dialog
-            function closeDialog() {
-                document.getElementById('dialogOverlay').style.display = 'none';
-            }
-
-            // Cart functionality
-            let cart = JSON.parse(localStorage.getItem('cart')) || []; // Load cart from localStorage or initialize as empty
-            const cartButton = document.getElementById('cartButton');
-            const cartPanel = document.getElementById('cartPanel');
-            const cartList = document.getElementById('cartList');
-            const cartSubtotal = document.getElementById('cartSubtotal');
-            const closeCart = document.getElementById('closeCart');
-
-            // Open the cart panel
-            cartButton.addEventListener('click', () => {
-                cartPanel.style.right = '0';
-                cartButton.style.display = 'none'; // Hide the cart button
-            });
-
-            // Close the cart panel
-            closeCart.addEventListener('click', () => {
-                cartPanel.style.right = '-100%';
-                cartButton.style.display = 'block'; // Show the cart button
-            });
-
-            // Add to cart function
-            function addToCart(itemName, itemImage) {
-                if (!itemName) {
-                    alert("Error: Item name is missing.");
-                    return;
-                }
-
-                // Add the item details to the cart array
-                cart.push({ name: itemName, image: itemImage, price: 15 }); // Assume each image costs £15
-                saveCart(); // Save the cart to localStorage
-                updateCart();
-                alert(`${itemName} has been added to your cart.`);
-            }
-
-            // Update the cart list and cart button text
-            function updateCart() {
-                cartList.innerHTML = ''; // Clear the current cart list
-                let subtotal = 0; // Initialize subtotal
-
-                cart.forEach((item, index) => {
-                    const listItem = document.createElement('li');
-                    listItem.style.display = 'flex';
-                    listItem.style.alignItems = 'center';
-                    listItem.style.marginBottom = '10px';
-
-                    // Add the image to the cart item (if available)
-                    if (item.image) {
-                        const itemImage = document.createElement('img');
-                        itemImage.src = item.image;
-                        itemImage.alt = item.name;
-                        itemImage.style.width = '50px';
-                        itemImage.style.height = '50px';
-                        itemImage.style.marginRight = '10px';
-                        itemImage.style.border = '1px solid whitesmoke';
-                        listItem.appendChild(itemImage);
-                    }
-
-                    // Add the name of the item
-                    const itemName = document.createElement('span');
-                    itemName.textContent = item.name;
-                    listItem.appendChild(itemName);
-
-                    // Add the price of the item
-                    const itemPrice = document.createElement('span');
-                    itemPrice.textContent = ` - £${item.price}`;
-                    itemPrice.style.marginLeft = 'auto';
-                    listItem.appendChild(itemPrice);
-
-                    // Add a remove button for each item
-                    const removeButton = document.createElement('button');
-                    removeButton.textContent = 'Remove';
-                    removeButton.style.marginLeft = '10px';
-                    removeButton.style.backgroundColor = 'red';
-                    removeButton.style.color = 'white';
-                    removeButton.style.border = 'none';
-                    removeButton.style.borderRadius = '5px';
-                    removeButton.style.cursor = 'pointer';
-
-                    // Remove item from the cart when the button is clicked
-                    removeButton.addEventListener('click', () => {
-                        cart.splice(index, 1); // Remove the item from the cart array
-                        saveCart(); // Save the updated cart to localStorage
-                        updateCart(); // Update the cart display
-                    });
-
-                    listItem.appendChild(removeButton);
-                    cartList.appendChild(listItem);
-
-                    // Add the item's price to the subtotal
-                    subtotal += item.price;
-                });
-
-                // Update the subtotal display
-                cartSubtotal.textContent = `Subtotal: £${subtotal}`;
-
-                // Update the cart button text with the number of items
-                const itemCount = cart.length;
-                cartButton.textContent = itemCount > 0 ? `Cart (${itemCount})` : 'Cart';
-            }
-
-            // Save the cart to localStorage
-            function saveCart() {
-                localStorage.setItem('cart', JSON.stringify(cart));
-            }
-
-            // Load the cart when the page loads
-            document.addEventListener('DOMContentLoaded', updateCart);
         </script>
     </body>
 </html>

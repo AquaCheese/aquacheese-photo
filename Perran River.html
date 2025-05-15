@@ -242,6 +242,236 @@
 #closeCart:hover {
     background-color: darkred;
 }
+
+/* Unified modal and cart styles from index.html */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-box {
+    position: relative;
+    background-color: #444;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    width: 400px;
+    max-width: 90%;
+    height: auto;
+    max-height: 80%;
+    overflow: hidden;
+}
+
+.modal-box img {
+    max-width: 100%;
+    max-height: 300px;
+    border: 2px solid whitesmoke;
+    border-radius: 8px;
+}
+
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: crimson;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1001;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.close-modal:hover {
+    background-color: darkred;
+}
+
+/* Profile and login modal styles */
+#profileModal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #444;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    z-index: 1001;
+    width: 300px;
+    max-width: 80%;
+}
+
+#profileModal h2 {
+    margin-top: 0;
+    color: #ffcc00;
+}
+
+#profileModal label {
+    display: block;
+    margin: 10px 0 5px;
+    text-align: left;
+}
+
+#profileModal input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background-color: #333;
+    color: whitesmoke;
+}
+
+#profileModal button {
+    width: 100%;
+    padding: 10px;
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#profileModal button:hover {
+    background-color: darkgreen;
+}
+
+/* Cart button and panel styles */
+#cartButton {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: gold;
+    color: black;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    z-index: 1000;
+    transition: background-color 0.3s ease;
+}
+
+#cartButton:hover {
+    background-color: goldenrod;
+}
+
+#cartPanel {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 300px;
+    height: 100%;
+    background-color: #333;
+    color: whitesmoke;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
+    transition: right 0.3s ease;
+    z-index: 999;
+    padding: 20px;
+}
+
+#cartPanel h2 {
+    text-align: center;
+    color: #ffcc00;
+}
+
+#cartPanel ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#cartPanel ul li {
+    margin: 10px 0;
+    border-bottom: 1px solid whitesmoke;
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+#cartPanel ul li img {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    border: 1px solid whitesmoke;
+    border-radius: 5px;
+}
+
+#cartPanel ul li button {
+    margin-left: auto;
+    background-color: crimson;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+#cartPanel ul li button:hover {
+    background-color: darkred;
+}
+
+#cartSubtotal {
+    margin-top: 20px;
+    font-size: 18px;
+    text-align: center;
+    border-top: 1px solid whitesmoke;
+    padding-top: 10px;
+}
+
+#buyNowButton {
+    margin-top: 20px;
+    width: 100%;
+    padding: 10px;
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#buyNowButton:hover {
+    background-color: darkgreen;
+}
+
+#closeCart {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 50%; /* Makes it circular */
+    width: 40px; /* Adjust width */
+    height: 40px; /* Adjust height */
+    font-size: 24px; /* Adjust font size */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centers the "×" inside the circle */
+    z-index: 1001;
+}
+
+#closeCart:hover {
+    background-color: darkred;
+}
 </style>
     </head>
 
@@ -301,6 +531,17 @@
                 Subtotal: £0
             </div>
             <button id="buyNowButton">Buy Now</button>
+        </div>
+
+        <!-- Profile and login modal -->
+        <div id="profileModal">
+            <h2>Login / Profile</h2>
+            <label for="username">Username:</label>
+            <input type="text" id="username" placeholder="Enter your username">
+            <label for="password">Password:</label>
+            <input type="password" id="password" placeholder="Enter your password">
+            <button id="loginButton">Login</button>
+            <button id="logoutButton" style="display:none;">Logout</button>
         </div>
 
         <script>
@@ -435,6 +676,50 @@
 
             // Load the cart when the page loads
             document.addEventListener('DOMContentLoaded', updateCart);
+
+            // Profile and login functionality
+            const profileModal = document.getElementById('profileModal');
+            const loginButton = document.getElementById('loginButton');
+            const logoutButton = document.getElementById('logoutButton');
+
+            // Open the profile modal (for demo purposes, we directly show it)
+            // In a real application, you might want to trigger this on a button click
+            profileModal.style.display = 'flex';
+
+            // Login button click event
+            loginButton.addEventListener('click', () => {
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+
+                // For demo, we just check if fields are not empty
+                if (username && password) {
+                    alert(`Logged in as ${username}`);
+                    profileModal.style.display = 'none';
+                    logoutButton.style.display = 'block';
+                    loginButton.style.display = 'none';
+                } else {
+                    alert('Please enter both username and password');
+                }
+            });
+
+            // Logout button click event
+            logoutButton.addEventListener('click', () => {
+                alert('Logged out');
+                logoutButton.style.display = 'none';
+                loginButton.style.display = 'block';
+            });
+
+            // Close profile modal if open
+            function closeProfileModal() {
+                profileModal.style.display = 'none';
+            }
+
+            // Close the modal when clicking outside of it
+            window.addEventListener('click', (event) => {
+                if (event.target === profileModal) {
+                    closeProfileModal();
+                }
+            });
         </script>
     </body>
 </html>

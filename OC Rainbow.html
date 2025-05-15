@@ -242,7 +242,64 @@
 #closeCart:hover {
     background-color: darkred;
 }
-</style>
+
+/* Unified modal styles from index.html */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1002;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 10px;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-header {
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.modal-body {
+    padding: 10px 0;
+}
+
+.modal-footer {
+    padding: 10px 0;
+    border-top: 1px solid #ddd;
+    text-align: right;
+}
+
+    </style>
     </head>
 
     <body>
@@ -303,20 +360,57 @@
             <button id="buyNowButton">Buy Now</button>
         </div>
 
-        <script>
-            document.getElementById('buyNowButton').addEventListener('click', () => {
-    if (cart.length > 0) {
-        localStorage.removeItem('singleItem'); // Clear single item data
-        localStorage.setItem('cartPurchase', true); // Indicate that the cart is being purchased
-        window.location.href = 'Purchase.html'; // Redirect to the purchase page
-    } else {
-        alert('Your cart is empty. Add items to proceed.');
-    }
-});
-            document.getElementById('buyNowButton').addEventListener('click', () => {
-                alert('Proceeding to checkout...');
-                // Add your checkout logic here
-            });
+        <!-- Unified login/profile modal from index.html -->
+        <div id="loginModal" class="modal">
+            <div class="modal-content">
+                <span class="close" id="closeLogin">&times;</span>
+                <div class="modal-header">
+                    <h2>Login / Profile</h2>
+                </div>
+                <div class="modal-body">
+                    <p id="userProfile" style="display:none;"></p>
+                    <div id="loginForm">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" required>
+                        <br>
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" required>
+                        <br>
+                        <button id="loginButton">Login</button>
+                        <button id="registerButton">Register</button>
+                    </div>
+                    <div id="profileInfo" style="display:none;">
+                        <p>Profile Information:</p>
+                        <p id="profileEmail"></p>
+                        <button id="logoutButton">Logout</button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="closeLoginBtn">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <script type="module">
+            import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js';
+            import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js';
+            import { getDatabase, ref, set, get, child, update } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-database.js';
+
+            // Your web app's Firebase configuration
+            const firebaseConfig = {
+                apiKey: "AIzaSyD-EXAMPLEKEY",
+                authDomain: "your-project-id.firebaseapp.com",
+                databaseURL: "https://your-project-id.firebaseio.com",
+                projectId: "your-project-id",
+                storageBucket: "your-project-id.appspot.com",
+                messagingSenderId: "123456789",
+                appId: "1:123456789:web:abcdef123456"
+            };
+
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth();
+            const db = getDatabase();
 
             // Function to open the dialog
             function openDialog() {
@@ -435,6 +529,105 @@
 
             // Load the cart when the page loads
             document.addEventListener('DOMContentLoaded', updateCart);
+
+            // Login and profile functionality
+            const loginModal = document.getElementById('loginModal');
+            const closeLogin = document.getElementById('closeLogin');
+            const closeLoginBtn = document.getElementById('closeLoginBtn');
+            const loginButton = document.getElementById('loginButton');
+            const registerButton = document.getElementById('registerButton');
+            const logoutButton = document.getElementById('logoutButton');
+            const userProfile = document.getElementById('userProfile');
+            const profileEmail = document.getElementById('profileEmail');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+
+            // Open login modal
+            function openLoginModal() {
+                loginModal.style.display = 'block';
+            }
+
+            // Close login modal
+            function closeLoginModal() {
+                loginModal.style.display = 'none';
+            }
+
+            closeLogin.onclick = closeLoginModal;
+            closeLoginBtn.onclick = closeLoginModal;
+
+            // Login function
+            loginButton.onclick = () => {
+                const email = emailInput.value;
+                const password = passwordInput.value;
+
+                signInWithEmailAndPassword(auth, email, password)
+                    .then((userCredential) => {
+                        // Signed in 
+                        const user = userCredential.user;
+                        alert('Login successful!');
+                        closeLoginModal();
+                    })
+                    .catch((error) => {
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                        alert(`Error: ${errorMessage}`);
+                    });
+            };
+
+            // Register function (simplified)
+            registerButton.onclick = () => {
+                const email = emailInput.value;
+                const password = passwordInput.value;
+
+                // Basic validation
+                if (email === '' || password === '') {
+                    alert('Please enter both email and password.');
+                    return;
+                }
+
+                // Register the user
+                auth.createUserWithEmailAndPassword(email, password)
+                    .then((userCredential) => {
+                        // Registered 
+                        const user = userCredential.user;
+                        alert('Registration successful! Please log in.');
+                    })
+                    .catch((error) => {
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                        alert(`Error: ${errorMessage}`);
+                    });
+            };
+
+            // Logout function
+            logoutButton.onclick = () => {
+                signOut(auth).then(() => {
+                    alert('Logout successful!');
+                }).catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    alert(`Error: ${errorMessage}`);
+                });
+            };
+
+            // Monitor auth state
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    // User is signed in.
+                    const uid = user.uid;
+                    userProfile.style.display = 'block';
+                    profileEmail.textContent = `Logged in as: ${user.email}`;
+                } else {
+                    // No user is signed in.
+                    userProfile.style.display = 'none';
+                }
+            });
+
+            // Open login modal on page load if needed (for demo)
+            window.onload = () => {
+                // Uncomment the line below to open the login modal on every page load
+                // openLoginModal();
+            };
         </script>
     </body>
 </html>

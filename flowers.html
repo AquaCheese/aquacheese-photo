@@ -242,6 +242,105 @@
 #closeCart:hover {
     background-color: darkred;
 }
+
+/* Unified modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1002;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #444;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.close-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-title {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #ffcc00;
+}
+
+.modal-body {
+    margin-top: 10px;
+    color: whitesmoke;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.modal-footer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.btn {
+    background-color: #ffcc00;
+    color: #2c2c2c;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #ffa500;
+}
+
+/* Profile modal specific styles */
+#profileModal .modal-title {
+    color: #4CAF50;
+}
+
+#profileModal .modal-body {
+    color: #333;
+}
+
+#profileModal .btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#profileModal .btn:hover {
+    background-color: #45a049;
+}
 </style>
     </head>
 
@@ -303,20 +402,42 @@
             <button id="buyNowButton">Buy Now</button>
         </div>
 
-        <script>
-            document.getElementById('buyNowButton').addEventListener('click', () => {
-    if (cart.length > 0) {
-        localStorage.removeItem('singleItem'); // Clear single item data
-        localStorage.setItem('cartPurchase', true); // Indicate that the cart is being purchased
-        window.location.href = 'Purchase.html'; // Redirect to the purchase page
-    } else {
-        alert('Your cart is empty. Add items to proceed.');
-    }
-});
-            document.getElementById('buyNowButton').addEventListener('click', () => {
-                alert('Proceeding to checkout...');
-                // Add your checkout logic here
-            });
+        <!-- Profile modal -->
+        <div id="profileModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeProfileModal()">&times;</span>
+                <div class="modal-header">
+                    <h2 class="modal-title">Profile</h2>
+                </div>
+                <div class="modal-body">
+                    <p>Welcome to your profile!</p>
+                    <!-- Profile content goes here -->
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" onclick="closeProfileModal()">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <script type="module">
+            import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js';
+import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js';
+import { getFirestore, collection, addDoc, getDocs, query, where, doc, updateDoc, deleteDoc } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js';
+
+            // Your web app's Firebase configuration
+            const firebaseConfig = {
+                apiKey: "AIzaSyD-EXAMPLEKEY",
+                authDomain: "your-project-id.firebaseapp.com",
+                projectId: "your-project-id",
+                storageBucket: "your-project-id.appspot.com",
+                messagingSenderId: "123456789",
+                appId: "1:123456789:web:abcdef123456"
+            };
+
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth(app);
+            const db = getFirestore(app);
 
             // Function to open the dialog
             function openDialog() {
@@ -435,6 +556,52 @@
 
             // Load the cart when the page loads
             document.addEventListener('DOMContentLoaded', updateCart);
+
+            // Profile modal functionality
+            const profileModal = document.getElementById('profileModal');
+
+            // Open the profile modal
+            function openProfileModal() {
+                profileModal.style.display = 'block';
+            }
+
+            // Close the profile modal
+            function closeProfileModal() {
+                profileModal.style.display = 'none';
+            }
+
+            // Check if the user is authenticated
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    // User is signed in, show profile info
+                    const uid = user.uid;
+                    const email = user.email;
+
+                    // Display the user's email in the profile modal
+                    document.getElementById('profileEmail').textContent = `Email: ${email}`;
+
+                    // Optionally, you can fetch and display additional user data from Firestore
+                    const userDoc = doc(db, 'users', uid);
+                    getDoc(userDoc).then((doc) => {
+                        if (doc.exists()) {
+                            const userData = doc.data();
+                            // Display user data in the profile modal
+                            document.getElementById('profileName').textContent = `Name: ${userData.name}`;
+                            document.getElementById('profileBio').textContent = `Bio: ${userData.bio}`;
+                        } else {
+                            console.log('No such document!');
+                        }
+                    }).catch((error) => {
+                        console.log('Error getting document:', error);
+                    });
+
+                } else {
+                    // No user is signed in, show default profile info
+                    document.getElementById('profileEmail').textContent = 'Email: Not signed in';
+                    document.getElementById('profileName').textContent = 'Name: Guest';
+                    document.getElementById('profileBio').textContent = 'Bio: N/A';
+                }
+            });
         </script>
     </body>
 </html>

@@ -242,7 +242,124 @@
 #closeCart:hover {
     background-color: darkred;
 }
-</style>
+
+/* Unified modal styles */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-box {
+    position: relative;
+    background-color: #444;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    width: 90%;
+    max-width: 500px;
+    height: auto;
+    max-height: 80%;
+    overflow: hidden;
+}
+
+.modal-box img {
+    max-width: 100%;
+    max-height: 300px;
+    border: 2px solid whitesmoke;
+    border-radius: 8px;
+}
+
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: crimson;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1001;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.close-modal:hover {
+    background-color: darkred;
+}
+
+/* Profile and login modal styles */
+#profileModal, #loginModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #444;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    width: 90%;
+    max-width: 400px;
+}
+
+.modal-content h2 {
+    color: #ffcc00;
+    margin-bottom: 20px;
+}
+
+.modal-content label {
+    display: block;
+    margin: 10px 0 5px;
+    text-align: left;
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background-color: #333;
+    color: whitesmoke;
+}
+
+.modal-content button {
+    width: 100%;
+    padding: 10px;
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.modal-content button:hover {
+    background-color: darkgreen;
+}
+        </style>
     </head>
 
     <body>
@@ -304,138 +421,236 @@
             <button id="buyNowButton">Buy Now</button>
         </div>
 
-        <script>
-            document.getElementById('buyNowButton').addEventListener('click', () => {
-    if (cart.length > 0) {
-        localStorage.removeItem('singleItem'); // Clear single item data
-        localStorage.setItem('cartPurchase', true); // Indicate that the cart is being purchased
-        window.location.href = 'Purchase.html'; // Redirect to the purchase page
-    } else {
-        alert('Your cart is empty. Add items to proceed.');
-    }
+        <!-- Unified login/profile modal -->
+        <div id="profileModal" class="modal-overlay">
+            <div class="modal-content">
+                <button class="close-modal" onclick="closeProfileModal()">X</button>
+                <h2>Login / Profile</h2>
+                <form id="loginForm">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                    <button type="submit">Login</button>
+                </form>
+                <p style="margin-top: 10px; color: #ffcc00;">Or</p>
+                <button onclick="openRegisterModal()">Create an Account</button>
+            </div>
+        </div>
+
+        <div id="registerModal" class="modal-overlay">
+            <div class="modal-content">
+                <button class="close-modal" onclick="closeRegisterModal()">X</button>
+                <h2>Create Account</h2>
+                <form id="registerForm">
+                    <label for="newUsername">Username:</label>
+                    <input type="text" id="newUsername" name="username" required>
+                    <label for="newPassword">Password:</label>
+                    <input type="password" id="newPassword" name="password" required>
+                    <button type="submit">Register</button>
+                </form>
+                <p style="margin-top: 10px; color: #ffcc00;">Already have an account? <a href="javascript:void(0);" onclick="openProfileModal()">Login here</a></p>
+            </div>
+        </div>
+
+        <script type="module">
+            import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js';
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js';
+import { getDatabase, ref, set, get, child, update } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-database.js';
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyD-EXAMPLEKEY",
+    authDomain: "your-project-id.firebaseapp.com",
+    databaseURL: "https://your-project-id.firebaseio.com",
+    projectId: "your-project-id",
+    storageBucket: "your-project-id.appspot.com",
+    messagingSenderId: "123456789",
+    appId: "1:123456789:web:abcdef123456"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+const db = getDatabase();
+
+// Function to open the dialog
+function openDialog() {
+    document.getElementById('dialogOverlay').style.display = 'flex';
+}
+
+// Function to close the dialog
+function closeDialog() {
+    document.getElementById('dialogOverlay').style.display = 'none';
+}
+
+// Cart functionality
+let cart = JSON.parse(localStorage.getItem('cart')) || []; // Load cart from localStorage or initialize as empty
+const cartButton = document.getElementById('cartButton');
+const cartPanel = document.getElementById('cartPanel');
+const cartList = document.getElementById('cartList');
+const cartSubtotal = document.getElementById('cartSubtotal');
+const closeCart = document.getElementById('closeCart');
+
+// Open the cart panel
+cartButton.addEventListener('click', () => {
+    cartPanel.style.right = '0';
+    cartButton.style.display = 'none'; // Hide the cart button
 });
-            document.getElementById('buyNowButton').addEventListener('click', () => {
-                alert('Proceeding to checkout...');
-                // Add your checkout logic here
-            });
 
-            // Function to open the dialog
-            function openDialog() {
-                document.getElementById('dialogOverlay').style.display = 'flex';
-            }
+// Close the cart panel
+closeCart.addEventListener('click', () => {
+    cartPanel.style.right = '-100%';
+    cartButton.style.display = 'block'; // Show the cart button
+});
 
-            // Function to close the dialog
-            function closeDialog() {
-                document.getElementById('dialogOverlay').style.display = 'none';
-            }
+// Add to cart function
+function addToCart(itemName, itemImage) {
+    if (!itemName) {
+        alert("Error: Item name is missing.");
+        return;
+    }
 
-            // Cart functionality
-            let cart = JSON.parse(localStorage.getItem('cart')) || []; // Load cart from localStorage or initialize as empty
-            const cartButton = document.getElementById('cartButton');
-            const cartPanel = document.getElementById('cartPanel');
-            const cartList = document.getElementById('cartList');
-            const cartSubtotal = document.getElementById('cartSubtotal');
-            const closeCart = document.getElementById('closeCart');
+    // Add the item details to the cart array
+    cart.push({ name: itemName, image: itemImage, price: 15 }); // Assume each image costs £15
+    saveCart(); // Save the cart to localStorage
+    updateCart();
+    alert(`${itemName} has been added to your cart.`);
+}
 
-            // Open the cart panel
-            cartButton.addEventListener('click', () => {
-                cartPanel.style.right = '0';
-                cartButton.style.display = 'none'; // Hide the cart button
-            });
+// Update the cart list and cart button text
+function updateCart() {
+    cartList.innerHTML = ''; // Clear the current cart list
+    let subtotal = 0; // Initialize subtotal
 
-            // Close the cart panel
-            closeCart.addEventListener('click', () => {
-                cartPanel.style.right = '-100%';
-                cartButton.style.display = 'block'; // Show the cart button
-            });
+    cart.forEach((item, index) => {
+        const listItem = document.createElement('li');
+        listItem.style.display = 'flex';
+        listItem.style.alignItems = 'center';
+        listItem.style.marginBottom = '10px';
 
-            // Add to cart function
-            function addToCart(itemName, itemImage) {
-                if (!itemName) {
-                    alert("Error: Item name is missing.");
-                    return;
-                }
+        // Add the image to the cart item (if available)
+        if (item.image) {
+            const itemImage = document.createElement('img');
+            itemImage.src = item.image;
+            itemImage.alt = item.name;
+            itemImage.style.width = '50px';
+            itemImage.style.height = '50px';
+            itemImage.style.marginRight = '10px';
+            itemImage.style.border = '1px solid whitesmoke';
+            listItem.appendChild(itemImage);
+        }
 
-                // Add the item details to the cart array
-                cart.push({ name: itemName, image: itemImage, price: 15 }); // Assume each image costs £15
-                saveCart(); // Save the cart to localStorage
-                updateCart();
-                alert(`${itemName} has been added to your cart.`);
-            }
+        // Add the name of the item
+        const itemName = document.createElement('span');
+        itemName.textContent = item.name;
+        listItem.appendChild(itemName);
 
-            // Update the cart list and cart button text
-            function updateCart() {
-                cartList.innerHTML = ''; // Clear the current cart list
-                let subtotal = 0; // Initialize subtotal
+        // Add the price of the item
+        const itemPrice = document.createElement('span');
+        itemPrice.textContent = ` - £${item.price}`;
+        itemPrice.style.marginLeft = 'auto';
+        listItem.appendChild(itemPrice);
 
-                cart.forEach((item, index) => {
-                    const listItem = document.createElement('li');
-                    listItem.style.display = 'flex';
-                    listItem.style.alignItems = 'center';
-                    listItem.style.marginBottom = '10px';
+        // Add a remove button for each item
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'Remove';
+        removeButton.style.marginLeft = '10px';
+        removeButton.style.backgroundColor = 'red';
+        removeButton.style.color = 'white';
+        removeButton.style.border = 'none';
+        removeButton.style.borderRadius = '5px';
+        removeButton.style.cursor = 'pointer';
 
-                    // Add the image to the cart item (if available)
-                    if (item.image) {
-                        const itemImage = document.createElement('img');
-                        itemImage.src = item.image;
-                        itemImage.alt = item.name;
-                        itemImage.style.width = '50px';
-                        itemImage.style.height = '50px';
-                        itemImage.style.marginRight = '10px';
-                        itemImage.style.border = '1px solid whitesmoke';
-                        listItem.appendChild(itemImage);
-                    }
+        // Remove item from the cart when the button is clicked
+        removeButton.addEventListener('click', () => {
+            cart.splice(index, 1); // Remove the item from the cart array
+            saveCart(); // Save the updated cart to localStorage
+            updateCart(); // Update the cart display
+        });
 
-                    // Add the name of the item
-                    const itemName = document.createElement('span');
-                    itemName.textContent = item.name;
-                    listItem.appendChild(itemName);
+        listItem.appendChild(removeButton);
+        cartList.appendChild(listItem);
 
-                    // Add the price of the item
-                    const itemPrice = document.createElement('span');
-                    itemPrice.textContent = ` - £${item.price}`;
-                    itemPrice.style.marginLeft = 'auto';
-                    listItem.appendChild(itemPrice);
+        // Add the item's price to the subtotal
+        subtotal += item.price;
+    });
 
-                    // Add a remove button for each item
-                    const removeButton = document.createElement('button');
-                    removeButton.textContent = 'Remove';
-                    removeButton.style.marginLeft = '10px';
-                    removeButton.style.backgroundColor = 'red';
-                    removeButton.style.color = 'white';
-                    removeButton.style.border = 'none';
-                    removeButton.style.borderRadius = '5px';
-                    removeButton.style.cursor = 'pointer';
+    // Update the subtotal display
+    cartSubtotal.textContent = `Subtotal: £${subtotal}`;
 
-                    // Remove item from the cart when the button is clicked
-                    removeButton.addEventListener('click', () => {
-                        cart.splice(index, 1); // Remove the item from the cart array
-                        saveCart(); // Save the updated cart to localStorage
-                        updateCart(); // Update the cart display
-                    });
+    // Update the cart button text with the number of items
+    const itemCount = cart.length;
+    cartButton.textContent = itemCount > 0 ? `Cart (${itemCount})` : 'Cart';
+}
 
-                    listItem.appendChild(removeButton);
-                    cartList.appendChild(listItem);
+// Save the cart to localStorage
+function saveCart() {
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
 
-                    // Add the item's price to the subtotal
-                    subtotal += item.price;
-                });
+// Load the cart when the page loads
+document.addEventListener('DOMContentLoaded', updateCart);
 
-                // Update the subtotal display
-                cartSubtotal.textContent = `Subtotal: £${subtotal}`;
+// Login and registration functionality
+const loginForm = document.getElementById('loginForm');
+const registerForm = document.getElementById('registerForm');
 
-                // Update the cart button text with the number of items
-                const itemCount = cart.length;
-                cartButton.textContent = itemCount > 0 ? `Cart (${itemCount})` : 'Cart';
-            }
+loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const username = loginForm.username.value;
+    const password = loginForm.password.value;
 
-            // Save the cart to localStorage
-            function saveCart() {
-                localStorage.setItem('cart', JSON.stringify(cart));
-            }
+    signInWithEmailAndPassword(auth, username, password)
+        .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            alert('Login successful!');
+            closeProfileModal();
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            alert(`Error: ${errorMessage}`);
+        });
+});
 
-            // Load the cart when the page loads
-            document.addEventListener('DOMContentLoaded', updateCart);
+registerForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const username = registerForm.username.value;
+    const password = registerForm.password.value;
+
+    createUserWithEmailAndPassword(auth, username, password)
+        .then((userCredential) => {
+            // Registered 
+            const user = userCredential.user;
+            alert('Registration successful! You can now log in.');
+            closeRegisterModal();
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            alert(`Error: ${errorMessage}`);
+        });
+});
+
+// Profile modal functions
+function openProfileModal() {
+    document.getElementById('profileModal').style.display = 'flex';
+}
+
+function closeProfileModal() {
+    document.getElementById('profileModal').style.display = 'none';
+}
+
+// Register modal functions
+function openRegisterModal() {
+    document.getElementById('registerModal').style.display = 'flex';
+}
+
+function closeRegisterModal() {
+    document.getElementById('registerModal').style.display = 'none';
+}
         </script>
     </body>
 </html>
