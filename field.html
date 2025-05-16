@@ -459,6 +459,94 @@
 .profile-box button:hover {
     background-color: darkgreen;
 }
+
+/* Login modal styles */
+#loginModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-box {
+    background-color: #444;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    width: 90%;
+    max-width: 400px;
+}
+
+.login-box h2 {
+    color: #ffcc00;
+    margin-bottom: 20px;
+}
+
+.login-box label {
+    display: block;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.login-box input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background-color: #333;
+    color: whitesmoke;
+}
+
+.login-box button {
+    width: 100%;
+    padding: 10px;
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.login-box button:hover {
+    background-color: darkgreen;
+}
+
+/* Profile menu styles */
+#profileMenu {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background-color: #333;
+    color: whitesmoke;
+    border: 1px solid #555;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+#profileMenu button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: transparent;
+    color: whitesmoke;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+}
+
+#profileMenu button:hover {
+    background-color: #444;
+}
     </style>
     </head>
 
@@ -504,19 +592,15 @@
         &lt;&lt;&lt;&nbsp; &copy; 2025 AquaCheese &nbsp;&gt;&gt;&gt;
 
         <!-- Cart button -->
-        <button id="cartButton">Cart</button>
+        <button id="cartButton" style="position: fixed; top: 20px; right: 20px; background-color: gold; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer; z-index: 1000; transition: background-color 0.3s;">Cart</button>
 
         <!-- Cart panel -->
-        <div id="cartPanel">
-            <button id="closeCart">&times;</button>
-            <h2>Your Cart</h2>
-            <ul id="cartList">
-                <!-- Items will be dynamically added here -->
-            </ul>
-            <div id="cartSubtotal">
-                Subtotal: £0
-            </div>
-            <button id="buyNowButton">Buy Now</button>
+        <div id="cartPanel" style="position: fixed; top: 0; right: -100%; width: 300px; height: 100%; background-color: #333; color: whitesmoke; box-shadow: -2px 0 5px rgba(0,0,0,0.5); overflow-y: auto; transition: right 0.3s ease; z-index: 999; padding: 20px; display: block;">
+            <button id="closeCart" style="position: absolute; top: 10px; right: 10px; background-color: red; color: white; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 1001;">&times;</button>
+            <h2 style="text-align: center; color: #ffcc00;">Your Cart</h2>
+            <ul id="cartList" style="list-style-type: none; padding: 0;"></ul>
+            <div id="cartSubtotal" style="margin-top: 20px; font-size: 18px; text-align: center; border-top: 1px solid whitesmoke; padding-top: 10px;">Subtotal: £0</div>
+            <button id="buyNowButton" style="margin-top: 20px; width: 100%; padding: 10px; background-color: green; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">Buy Now</button>
         </div>
 
         <!-- Profile button (for logged-in users) -->
@@ -535,9 +619,28 @@
             </div>
         </div>
 
+        <!-- Login modal -->
+        <div id="loginModal">
+            <div class="login-box">
+                <h2>Login</h2>
+                <label for="loginEmail">Email:</label>
+                <input type="email" id="loginEmail" placeholder="Enter your email">
+                <label for="loginPassword">Password:</label>
+                <input type="password" id="loginPassword" placeholder="Enter your password">
+                <button id="loginButton">Login</button>
+                <button class="close-modal" onclick="closeLoginModal()">X</button>
+            </div>
+        </div>
+
+        <!-- Profile menu -->
+        <div id="profileMenu">
+            <button id="openProfileButton">Open Profile</button>
+            <button id="logoutButton">Logout</button>
+        </div>
+
         <script type="module">
             import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js';
-import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js';
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js';
 import { getDatabase, ref, set, onValue } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-database.js';
 
 // Your web app's Firebase configuration
@@ -556,75 +659,57 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getDatabase();
 
-// Cart functionality
-let cart = JSON.parse(localStorage.getItem('cart')) || []; // Load cart from localStorage or initialize as empty
+// Cart functionality (from index.html)
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
 const cartButton = document.getElementById('cartButton');
 const cartPanel = document.getElementById('cartPanel');
 const cartList = document.getElementById('cartList');
 const cartSubtotal = document.getElementById('cartSubtotal');
 const closeCart = document.getElementById('closeCart');
 
-// Open the cart panel
 cartButton.addEventListener('click', () => {
     cartPanel.style.right = '0';
-    cartButton.style.display = 'none'; // Hide the cart button
+    cartButton.style.display = 'none';
 });
-
-// Close the cart panel
 closeCart.addEventListener('click', () => {
     cartPanel.style.right = '-100%';
-    cartButton.style.display = 'block'; // Show the cart button
+    cartButton.style.display = 'block';
 });
-
-// Add to cart function
 function addToCart(itemName, itemImage) {
     if (!itemName) {
         alert("Error: Item name is missing.");
         return;
     }
-
-    // Add the item details to the cart array
-    cart.push({ name: itemName, image: itemImage, price: 15 }); // Assume each image costs £15
-    saveCart(); // Save the cart to localStorage
+    cart.push({ name: itemName, image: itemImage, price: 15 });
+    saveCart();
     updateCart();
     alert(`${itemName} has been added to your cart.`);
 }
-
-// Update the cart list and cart button text
 function updateCart() {
-    cartList.innerHTML = ''; // Clear the current cart list
-    let subtotal = 0; // Initialize subtotal
-
+    cartList.innerHTML = '';
+    let subtotal = 0;
     cart.forEach((item, index) => {
         const listItem = document.createElement('li');
         listItem.style.display = 'flex';
         listItem.style.alignItems = 'center';
         listItem.style.marginBottom = '10px';
-
-        // Add the image to the cart item (if available)
         if (item.image) {
-            const itemImage = document.createElement('img');
-            itemImage.src = item.image;
-            itemImage.alt = item.name;
-            itemImage.style.width = '50px';
-            itemImage.style.height = '50px';
-            itemImage.style.marginRight = '10px';
-            itemImage.style.border = '1px solid whitesmoke';
-            listItem.appendChild(itemImage);
+            const img = document.createElement('img');
+            img.src = item.image;
+            img.alt = item.name;
+            img.style.width = '50px';
+            img.style.height = '50px';
+            img.style.marginRight = '10px';
+            img.style.border = '1px solid whitesmoke';
+            listItem.appendChild(img);
         }
-
-        // Add the name of the item
         const itemName = document.createElement('span');
         itemName.textContent = item.name;
         listItem.appendChild(itemName);
-
-        // Add the price of the item
         const itemPrice = document.createElement('span');
         itemPrice.textContent = ` - £${item.price}`;
         itemPrice.style.marginLeft = 'auto';
         listItem.appendChild(itemPrice);
-
-        // Add a remove button for each item
         const removeButton = document.createElement('button');
         removeButton.textContent = 'Remove';
         removeButton.style.marginLeft = '10px';
@@ -633,35 +718,31 @@ function updateCart() {
         removeButton.style.border = 'none';
         removeButton.style.borderRadius = '5px';
         removeButton.style.cursor = 'pointer';
-
-        // Remove item from the cart when the button is clicked
         removeButton.addEventListener('click', () => {
-            cart.splice(index, 1); // Remove the item from the cart array
-            saveCart(); // Save the updated cart to localStorage
-            updateCart(); // Update the cart display
+            cart.splice(index, 1);
+            saveCart();
+            updateCart();
         });
-
         listItem.appendChild(removeButton);
         cartList.appendChild(listItem);
-
-        // Add the item's price to the subtotal
         subtotal += item.price;
     });
-
-    // Update the subtotal display
     cartSubtotal.textContent = `Subtotal: £${subtotal}`;
-
-    // Update the cart button text with the number of items
     const itemCount = cart.length;
     cartButton.textContent = itemCount > 0 ? `Cart (${itemCount})` : 'Cart';
 }
-
-// Save the cart to localStorage
 function saveCart() {
     localStorage.setItem('cart', JSON.stringify(cart));
 }
-
-// Load the cart when the page loads
+document.getElementById('buyNowButton').addEventListener('click', () => {
+    if (cart.length > 0) {
+        localStorage.removeItem('singleItem');
+        localStorage.setItem('cartPurchase', true);
+        window.location.href = 'Purchase.html';
+    } else {
+        alert('Your cart is empty. Add items to proceed.');
+    }
+});
 document.addEventListener('DOMContentLoaded', updateCart);
 
 // Dialog functionality
@@ -730,6 +811,69 @@ document.getElementById('saveProfileButton').addEventListener('click', () => {
         });
     } else {
         alert('No user is signed in.');
+    }
+});
+
+// Login functionality
+const loginButton = document.getElementById('loginButton');
+const loginModal = document.getElementById('loginModal');
+
+// Open login modal
+document.getElementById('openLoginButton').addEventListener('click', () => {
+    loginModal.style.display = 'flex';
+});
+
+// Close login modal
+function closeLoginModal() {
+    loginModal.style.display = 'none';
+}
+
+// Login user
+loginButton.addEventListener('click', () => {
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+
+    signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            alert('Login successful!');
+            closeLoginModal();
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            alert('Error: ' + errorMessage);
+        });
+});
+
+// Logout functionality
+document.getElementById('logoutButton').addEventListener('click', () => {
+    signOut(auth).then(() => {
+        // Sign-out successful.
+        alert('Logout successful!');
+    }).catch((error) => {
+        // An error happened.
+        console.error('Error during logout:', error);
+    });
+});
+
+// Profile menu functionality
+const profileMenu = document.getElementById('profileMenu');
+
+// Toggle profile menu visibility
+profileButton.addEventListener('click', () => {
+    if (profileMenu.style.display === 'block') {
+        profileMenu.style.display = 'none';
+    } else {
+        profileMenu.style.display = 'block';
+    }
+});
+
+// Close profile menu when clicking outside
+window.addEventListener('click', (event) => {
+    if (!event.target.matches('#profileButton') && !event.target.matches('#profileMenu') && !event.target.matches('#profileMenu *')) {
+        profileMenu.style.display = 'none';
     }
 });
         </script>

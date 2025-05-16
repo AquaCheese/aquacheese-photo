@@ -56,75 +56,415 @@
         font-size: 1em;
         cursor: not-allowed;
     }
+    /* Cart button styles */
+    #cartButton {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: gold;
+        color: black;
+        border: none;
+        border-radius: 12px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        z-index: 1000;
+        transition: background-color 0.3s ease;
+    }
+
+    #cartButton:hover {
+        background-color: goldenrod;
+    }
+
+    /* Cart panel styles (match Seagull car img.html) */
+    #cartPanel {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 300px;
+        height: 100%;
+        background-color: #333;
+        color: whitesmoke;
+        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+        overflow-y: auto;
+        transition: right 0.3s ease;
+        z-index: 999;
+        padding: 20px;
+        display: block; /* Always block, control with right property only */
+    }
+
+    #cartPanel h2 {
+        text-align: center;
+        color: #ffcc00;
+    }
+
+    #cartPanel ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    #cartPanel ul li {
+        margin: 10px 0;
+        border-bottom: 1px solid whitesmoke;
+        padding-bottom: 10px;
+        display: flex;
+        align-items: center;
+    }
+
+    #cartPanel ul li img {
+        width: 50px;
+        height: 50px;
+        margin-right: 10px;
+        border: 1px solid whitesmoke;
+        border-radius: 5px;
+    }
+
+    #cartPanel ul li button {
+        margin-left: auto;
+        background-color: crimson;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+
+    #cartPanel ul li button:hover {
+        background-color: darkred;
+    }
+
+    #cartSubtotal {
+        margin-top: 20px;
+        font-size: 18px;
+        text-align: center;
+        border-top: 1px solid whitesmoke;
+        padding-top: 10px;
+    }
+
+    #buyNowButton {
+        margin-top: 20px;
+        width: 100%;
+        padding: 10px;
+        background-color: green;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    #buyNowButton:hover {
+        background-color: darkgreen;
+    }
+
+    #closeCart {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: red;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        font-size: 24px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1001;
+    }
+
+    #closeCart:hover {
+        background-color: darkred;
+    }
+    /* Login Modal */
+    #loginModal {
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+    #loginModal div {
+        background-color: #444;
+    }
+    #googleLoginButton {
+        background-color: #4285F4;
+    }
+    #googleLoginButton:hover {
+        background-color: #357ae8;
+    }
+    #emailLoginButton {
+        background-color: #555;
+    }
+    #emailLoginButton:hover {
+        background-color: #333;
+    }
+    #closeLoginModal {
+        background-color: #dc3545;
+    }
+    #closeLoginModal:hover {
+        background-color: #a71d2a;
+    }
+    #loginModal form {
+        border: none !important;
+        background: none !important;
+        box-shadow: none !important;
+        margin: 0 auto !important;
+        padding: 0 !important;
+        width: 90% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+    #loginModal hr {
+      display: none !important;
+    }
+    #loginModal form[style*="display:none"] {
+        display: none !important;
+    }
+    #loginModal .hidden { display: none !important; }
+    .hidden { display: none !important; }
+    #loginModal button {
+      display: block;
+      width: 90%;
+      margin: 10px auto;
+    }
+    /* Profile Menu */
+    #profileMenu {
+        display: none;
+        position: absolute;
+        top: 60px;
+        right: 20px;
+        background-color: #333;
+        color: whitesmoke;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        padding: 10px;
+        width: 200px;
+    }
+
+    #profileMenu h2 {
+        font-size: 18px;
+        margin: 0 0 10px 0;
+        color: #ffcc00;
+        text-align: center;
+    }
+
+    #profileMenu button {
+        background-color: #555;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        width: 100%;
+        margin: 5px 0;
+        transition: background-color 0.3s ease;
+    }
+
+    #profileMenu button:hover {
+        background-color: #777;
+    }
+
+    #profilePic {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+        border: 2px solid #ffcc00;
+    }
+
+    #profileContainer {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    #profileContainer:hover #profileMenu {
+        display: block;
+    }
   </style>
 </head>
 <body>
-  <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-    <button id="loginButton" style="background-color: lightblue; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer;">
-      Log In
-    </button>
-    <section id="upload-button-section" style="display: none;">
-      <button id="upload-page-button" style="font-size: large; padding: 10px 20px; border-radius: 5px; background-color: lightblue; border: none; cursor: pointer;">
-        Upload
-      </button>
-    </section>
-  </div>
-  <button id="cartButton">Cart</button>
-  <div id="cartPanel" style="display:none;">
-    <button id="closeCart">&times;</button>
-    <h2>Your Cart</h2>
-    <ul id="cartList"></ul>
-    <div id="cartSubtotal" style="margin-top: 20px; font-size: 18px; text-align: center; border-top: 1px solid whitesmoke; padding-top: 10px;"></div>
-    <button id="buyNowButton" style="margin-top: 20px; width: 100%; padding: 10px; background-color: green; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">Buy Now</button>
-  </div>
-  <div id="loginModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;">
-        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #333; color: whitesmoke; padding: 20px; border-radius: 8px; width: 300px; text-align: center;">
-            <button id="closeLoginModal" style="position: absolute; top: 10px; right: 10px; background: none; border: none; color: white; font-size: 20px; cursor: pointer;">&times;</button>
-            <button id="googleLoginButton" style="background-color: #4285F4; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer;">Login with Google</button>
-            <button id="showEmailLoginForm" style="margin-top: 10px; background-color: #6c757d; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer;">Login with Email</button>
-            <button id="showRegisterForm" style="margin-top: 10px; background-color: #6c757d; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer;">Register</button>
-            <form id="emailLoginForm" style="display: none; margin-top: 10px;">
-                <input id="emailInput" type="email" placeholder="Email" style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ccc;">
-                <input id="passwordInput" type="password" placeholder="Password" style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ccc;">
-                <div id="emailLoginError" style="color: red; font-size: 14px; margin-bottom: 10px;"></div>
-                <button type="submit" style="background-color: #28a745; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer;">Login</button>
-                <button id="cancelEmailLogin" type="button" style="margin-top: 10px; background-color: #dc3545; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer;">Cancel</button>
-            </form>
-            <form id="registerForm" style="display: none; margin-top: 10px;">
-                <input id="registerEmail" type="email" placeholder="Email" style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ccc;">
-                <input id="registerPassword" type="password" placeholder="Password" style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ccc;">
-                <div id="emailLoginError" style="color: red; font-size: 14px; margin-bottom: 10px;"></div>
-                <button type="submit" style="background-color: #28a745; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer;">Register</button>
-                <button id="cancelRegister" type="button" style="margin-top: 10px; background-color: #dc3545; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer;">Cancel</button>
-            </form>
+    <!-- Login/Profile Section (from index.html) -->
+    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000; display: flex; align-items: center;">
+      <div id="profileContainer" style="display: none;">
+        <img id="profilePic" src="" alt="Profile Picture">
+        <div id="profileMenu">
+          <h2>Profile</h2>
+          <button id="upload-page-button" style="font-size: large; padding: 10px 20px; border-radius: 5px; background-color: lightblue; border: none; cursor: pointer;">
+            Upload Media
+          </button>
+          <button id="logoutButton" style="background-color: #dc3545; color: white; border: none; border-radius: 5px; padding: 10px; font-size: 16px; cursor: pointer;">
+            Log Out
+          </button>
         </div>
-    </div>
-    <div id="profileMenu" style="display:none; position:fixed; top:70px; left:20px; background:#444; color:#fff; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.3); z-index:2000; min-width:140px; padding:16px 12px;">
-        <button id="logoutButton" style="background-color: #dc3545; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer;">Logout</button>
-    </div>
-  <div class="gallery-container">
-    <h1>Videos Gallery</h1>
-    <div style="margin: 20px;">
-        <input type="text" id="searchBar" placeholder="Search for videos..." style="width: 300px; padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc;">
-        <button onclick="searchVideos()" class="btn_search">Search</button>
-    </div>
-    <div class="video-grid">
-      <div class="gallery-item" data-title="Video 1" data-price="19.99" data-img="video1.png">
-        <a href="video1.html"><img src="video1.png" alt="Video 1"></a>
-        <div class="gallery-item-title">Video 1</div>
-        <button class="add-to-cart-btn" style="background-color:#ffc107;color:black;margin-top:8px;">Add to Cart</button>
       </div>
-      <div class="gallery-item" data-title="Video 2" data-price="17.99" data-img="video2.png">
-        <a href="video2.html"><img src="video2.png" alt="Video 2"></a>
-        <div class="gallery-item-title">Video 2</div>
-        <button class="add-to-cart-btn" style="background-color:#ffc107;color:black;margin-top:8px;">Add to Cart</button>
-      </div>
-      <div class="gallery-item" data-title="Video 3" data-price="21.99" data-img="video3.png">
-        <a href="video3.html"><img src="video3.png" alt="Video 3"></a>
-        <div class="gallery-item-title">Video 3</div>
-        <button class="add-to-cart-btn" style="background-color:#ffc107;color:black;margin-top:8px;">Add to Cart</button>
+      <button id="loginButton" style="background-color: lightblue; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer;">
+        Log In
+      </button>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;">
+      <div style="
+        position: relative;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #222;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+        width: 90%;
+        max-width: 400px;
+        color: whitesmoke;
+      ">
+        <button id="closeLoginModal" style="
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          background-color: transparent;
+          color: white;
+          border: none;
+          font-size: 18px;
+          cursor: pointer;
+        ">&times;</button>
+        <h2 style="text-align: center; color: #ffcc00;">Login</h2>
+        <div id="googleLoginButton" style="
+          background-color: #4285F4;
+          color: white;
+          padding: 10px;
+          border-radius: 5px;
+          text-align: center;
+          cursor: pointer;
+          margin-bottom: 10px;
+        ">
+          <strong>Login with Google</strong>
+        </div>
+        <div style="display: flex; justify-content: center; margin-bottom: 10px;">
+          <div style="width: 45%; height: 2px; background: linear-gradient(to right, transparent, #ffcc00, transparent);"></div>
+        </div>
+        <form id="emailLoginForm" style="display: none;">
+          <div style="margin-bottom: 10px;">
+            <input type="email" id="emailInput" placeholder="Email" required style="
+              width: 100%;
+              padding: 10px;
+              border: 1px solid #555;
+              border-radius: 5px;
+              background-color: #333;
+              color: white;
+            ">
+          </div>
+          <div style="margin-bottom: 10px;">
+            <input type="password" id="passwordInput" placeholder="Password" required style="
+              width: 100%;
+              padding: 10px;
+              border: 1px solid #555;
+              border-radius: 5px;
+              background-color: #333;
+              color: white;
+            ">
+          </div>
+          <div id="emailLoginError" style="color: crimson; font-size: 14px; margin-bottom: 10px;"></div>
+          <button type="submit" style="
+            width: 100%;
+            padding: 10px;
+            background-color: #ffc107;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+          ">
+            Login
+          </button>
+        </form>
+        <div style="text-align: center; margin-top: 10px; margin-bottom: 10px; color: #ccc; font-size: 14px;">
+          or
+        </div>
+        <div id="showEmailLoginForm" style="
+          background-color: #555;
+          color: white;
+          padding: 10px;
+          border-radius: 5px;
+          text-align: center;
+          cursor: pointer;
+          margin-bottom: 10px;
+        ">
+          Login with Email
+        </div>
+        <div id="showRegisterFormBtn" style="
+          background-color: #555;
+          color: white;
+          padding: 10px;
+          border-radius: 5px;
+          text-align: center;
+          cursor: pointer;
+        ">
+          Register
+        </div>
       </div>
     </div>
+
+    <div class="gallery-container">
+      <h1>Videos Gallery</h1>
+      <input type="text" id="searchBar" placeholder="Search videos..." style="
+        width: 100%;
+        max-width: 600px;
+        padding: 10px;
+        border: 1px solid #555;
+        border-radius: 5px;
+        background-color: #333;
+        color: white;
+        margin-bottom: 20px;
+      ">
+      <div class="video-grid">
+        <!-- Video cards will be populated here by JavaScript -->
+      </div>
+    </div>
+
+    <!-- Cart panel (match Seagull car img.html) -->
+    <div id="cartPanel">
+      <h2>Shopping Cart</h2>
+      <ul id="cartList">
+        <!-- Cart items will be populated here by JavaScript -->
+      </ul>
+      <div id="cartSubtotal" style="font-weight: bold; margin-top: 10px;">Subtotal: £0</div>
+      <button id="buyNowButton" style="
+        margin-top: 10px;
+        width: 100%;
+        padding: 10px;
+        background-color: green;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+      ">
+        Buy Now
+      </button>
+      <button id="closeCart" style="
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: red;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        font-size: 24px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1001;
+      ">
+        &times;
+      </button>
+    </div>
+
     <br>
     <a href="index.html"><button class="btnback" style="border-radius: 12px; font-size: 20px;">&larr; Back to Home</button></a>
   </div>
@@ -154,273 +494,275 @@
             cards.forEach(card => { card.style.display = 'block'; });
         }
     }
-    // Cart logic
-    const cartKey = 'acp_cart';
-    function getCart() {
-        return JSON.parse(localStorage.getItem(cartKey) || '[]');
+    // Cart functionality (from index.html)
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+const cartButton = document.getElementById('cartButton');
+const cartPanel = document.getElementById('cartPanel');
+const cartList = document.getElementById('cartList');
+const cartSubtotal = document.getElementById('cartSubtotal');
+const closeCart = document.getElementById('closeCart');
+
+cartButton.addEventListener('click', () => {
+    cartPanel.style.right = '0';
+    cartButton.style.display = 'none';
+});
+closeCart.addEventListener('click', () => {
+    cartPanel.style.right = '-100%';
+    cartButton.style.display = 'block';
+});
+function addToCart(itemName, itemImage) {
+    if (!itemName) {
+        alert("Error: Item name is missing.");
+        return;
     }
-    function saveCart(cart) {
-        localStorage.setItem(cartKey, JSON.stringify(cart));
+    // Determine price: £20 for videos, £15 for images
+    let price = 15;
+    if (itemImage && (itemImage.toLowerCase().endsWith('.mp4') || itemImage.toLowerCase().endsWith('.mov') || itemImage.toLowerCase().endsWith('.webm') || itemImage.toLowerCase().includes('video'))) {
+        price = 20;
     }
-    function updateCartUI() {
-        const cart = getCart();
-        const cartList = document.getElementById('cartList');
-        const cartSubtotal = document.getElementById('cartSubtotal');
-        cartList.innerHTML = '';
-        let subtotal = 0;
-        cart.forEach((item, idx) => {
-            subtotal += item.price * item.qty;
-            const li = document.createElement('li');
-            li.style.marginBottom = '10px';
-            li.innerHTML = `
-                <span style="font-weight:bold;">${item.title}</span> x${item.qty} - $${(item.price*item.qty).toFixed(2)}
-                <button class="remove-cart-item" data-idx="${idx}" style="margin-left:10px;background:#e74c3c;color:white;border:none;border-radius:5px;padding:2px 8px;cursor:pointer;">Remove</button>
-            `;
-            cartList.appendChild(li);
-        });
-        cartSubtotal.textContent = `Subtotal: $${subtotal.toFixed(2)}`;
-        document.getElementById('buyNowButton').disabled = cart.length === 0;
-    }
-    function addToCart(item) {
-        let cart = getCart();
-        const idx = cart.findIndex(i => i.title === item.title);
-        if (idx > -1) {
-            cart[idx].qty += 1;
-        } else {
-            cart.push({...item, qty: 1});
+    cart.push({ name: itemName, image: itemImage, price });
+    saveCart();
+    updateCart();
+    alert(`${itemName} has been added to your cart.`);
+}
+function updateCart() {
+    cartList.innerHTML = '';
+    let subtotal = 0;
+    cart.forEach((item, index) => {
+        const listItem = document.createElement('li');
+        listItem.style.display = 'flex';
+        listItem.style.alignItems = 'center';
+        listItem.style.marginBottom = '10px';
+        if (item.image) {
+            const img = document.createElement('img');
+            img.src = item.image;
+            img.alt = item.name;
+            img.style.width = '50px';
+            img.style.height = '50px';
+            img.style.marginRight = '10px';
+            img.style.border = '1px solid whitesmoke';
+            listItem.appendChild(img);
         }
-        saveCart(cart);
-        updateCartUI();
-    }
-    function removeFromCart(idx) {
-        let cart = getCart();
-        cart.splice(idx, 1);
-        saveCart(cart);
-        updateCartUI();
-    }
-    document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const itemDiv = btn.closest('.gallery-item');
-            const item = {
-                title: itemDiv.getAttribute('data-title'),
-                price: parseFloat(itemDiv.getAttribute('data-price')),
-                img: itemDiv.getAttribute('data-img')
-            };
-            addToCart(item);
+        const itemName = document.createElement('span');
+        itemName.textContent = item.name;
+        listItem.appendChild(itemName);
+        const itemPrice = document.createElement('span');
+        itemPrice.textContent = ` - £${item.price}`;
+        itemPrice.style.marginLeft = 'auto';
+        listItem.appendChild(itemPrice);
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'Remove';
+        removeButton.style.marginLeft = '10px';
+        removeButton.style.backgroundColor = 'red';
+        removeButton.style.color = 'white';
+        removeButton.style.border = 'none';
+        removeButton.style.borderRadius = '5px';
+        removeButton.style.cursor = 'pointer';
+        removeButton.addEventListener('click', () => {
+            cart.splice(index, 1);
+            saveCart();
+            updateCart();
         });
+        listItem.appendChild(removeButton);
+        cartList.appendChild(listItem);
+        subtotal += item.price;
     });
-    document.getElementById('cartButton').addEventListener('click', () => {
-        document.getElementById('cartPanel').style.display = 'block';
-        updateCartUI();
-    });
-    document.getElementById('closeCart').addEventListener('click', () => {
-        document.getElementById('cartPanel').style.display = 'none';
-    });
-    document.getElementById('cartList').addEventListener('click', function(e) {
-        if (e.target.classList.contains('remove-cart-item')) {
-            removeFromCart(Number(e.target.getAttribute('data-idx')));
+    cartSubtotal.textContent = `Subtotal: £${subtotal}`;
+    const itemCount = cart.length;
+    cartButton.textContent = itemCount > 0 ? `Cart (${itemCount})` : 'Cart';
+}
+function saveCart() {
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
+document.getElementById('buyNowButton').addEventListener('click', () => {
+    if (cart.length > 0) {
+        localStorage.removeItem('singleItem');
+        localStorage.setItem('cartPurchase', true);
+        window.location.href = 'Purchase.html';
+    } else {
+        alert('Your cart is empty. Add items to proceed.');
+    }
+});
+document.addEventListener('DOMContentLoaded', updateCart);
+
+    // Firebase Auth and session sync logic (from index.html)
+    (function() {
+      const auth = firebase.auth();
+      const googleProvider = new firebase.auth.GoogleAuthProvider();
+      const loginButton = document.getElementById('loginButton');
+      const loginModal = document.getElementById('loginModal');
+      const closeLoginModal = document.getElementById('closeLoginModal');
+      const googleLoginButton = document.getElementById('googleLoginButton');
+      const showEmailLoginFormBtn = document.getElementById('showEmailLoginForm');
+      const showRegisterFormBtn = document.getElementById('showRegisterForm');
+      const emailLoginForm = document.getElementById('emailLoginForm');
+      const registerForm = document.getElementById('registerForm');
+      const cancelEmailLoginBtn = document.getElementById('cancelEmailLogin');
+      const cancelRegisterBtn = document.getElementById('cancelRegister');
+      const emailInput = document.getElementById('emailInput');
+      const passwordInput = document.getElementById('passwordInput');
+      const emailLoginError = document.getElementById('emailLoginError');
+      const uploadButtonSection = document.getElementById('upload-button-section');
+      const logoutButton = document.getElementById('logoutButton');
+      const profileContainer = document.getElementById('profileContainer');
+      const profilePic = document.getElementById('profilePic');
+      const profileMenu = document.getElementById('profileMenu');
+
+      function show(el) { el.classList.remove('hidden'); }
+      function hide(el) { el.classList.add('hidden'); }
+
+      function resetLoginModal() {
+          hide(emailLoginForm);
+          hide(registerForm);
+          show(googleLoginButton);
+          show(showEmailLoginFormBtn);
+          show(showRegisterFormBtn);
+          emailLoginError.textContent = '';
+          if (typeof emailLoginForm.reset === 'function') emailLoginForm.reset();
+          if (typeof registerForm.reset === 'function') registerForm.reset();
+      }
+
+      loginButton.addEventListener('click', () => {
+          resetLoginModal();
+          loginModal.style.display = 'block';
+          loginModal.style.zIndex = '9999';
+          loginModal.style.backgroundColor = 'rgba(0,0,0,0.5)';
+          if (loginModal.firstElementChild) {
+              loginModal.firstElementChild.style.backgroundColor = '#333';
+              loginModal.firstElementChild.style.color = 'whitesmoke';
+              loginModal.firstElementChild.style.border = '';
+          }
+      });
+
+      closeLoginModal.addEventListener('click', () => {
+          loginModal.style.display = 'none';
+          resetLoginModal();
+      });
+
+      googleLoginButton.addEventListener('click', () => {
+          auth.signInWithPopup(googleProvider)
+              .then((result) => {
+                  const user = result.user;
+                  localStorage.setItem('loggedInUser', JSON.stringify({
+                      displayName: user.displayName || user.email,
+                      profilePicUrl: user.photoURL,
+                      email: user.email
+                  }));
+                  loginModal.style.display = 'none';
+                  showUploadButtonIfAllowed(user.email);
+              })
+              .catch((error) => {
+                  emailLoginError.textContent = 'Google Login Failed: ' + error.message;
+              });
+      });
+
+      document.getElementById('emailLoginForm').addEventListener('submit', function(e) {
+          e.preventDefault();
+          emailLoginError.textContent = '';
+          const email = emailInput.value.trim();
+          const password = passwordInput.value;
+          auth.signInWithEmailAndPassword(email, password)
+              .then((result) => {
+                  const user = result.user;
+                  localStorage.setItem('loggedInUser', JSON.stringify({
+                      displayName: user.displayName || user.email,
+                      profilePicUrl: user.photoURL,
+                      email: user.email
+                  }));
+                  loginModal.style.display = 'none';
+                  showUploadButtonIfAllowed(user.email);
+              })
+              .catch((error) => {
+                  emailLoginError.textContent = error.message.replace('Firebase: ', '');
+              });
+      });
+
+      registerForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          emailLoginError.textContent = '';
+          const email = document.getElementById('registerEmail').value.trim();
+          const password = document.getElementById('registerPassword').value;
+          auth.createUserWithEmailAndPassword(email, password)
+              .then((result) => {
+                  const user = result.user;
+                  localStorage.setItem('loggedInUser', JSON.stringify({
+                      displayName: user.displayName || user.email,
+                      profilePicUrl: user.photoURL,
+                      email: user.email
+                  }));
+                  loginModal.style.display = 'none';
+                  registerForm.reset();
+                  registerForm.style.display = 'none';
+                  showEmailLoginFormBtn.style.display = 'inline-block';
+                  showRegisterFormBtn.style.display = 'inline-block';
+                  showUploadButtonIfAllowed(user.email);
+              })
+              .catch((error) => {
+                  emailLoginError.textContent = error.message.replace('Firebase: ', '');
+              });
+      });
+
+      function showUploadButtonIfAllowed(email) {
+          const allowedEmail = "aquacheese.yt@gmail.com";
+          if (email === allowedEmail) {
+              uploadButtonSection.style.display = 'block';
+          } else {
+              uploadButtonSection.style.display = 'none';
+          }
+      }
+
+      auth.onAuthStateChanged((user) => {
+          if (user) {
+              const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+              if (loggedInUser) {
+                  profilePic.src = loggedInUser.profilePicUrl;
+                  profileContainer.style.display = 'flex';
+                  logoutButton.style.display = 'block';
+              }
+              showUploadButtonIfAllowed(user.email);
+          } else {
+              profileContainer.style.display = 'none';
+              logoutButton.style.display = 'none';
+          }
+      });
+
+      logoutButton.addEventListener('click', () => {
+          localStorage.removeItem('loggedInUser');
+          profileContainer.style.display = 'none';
+          logoutButton.style.display = 'none';
+          auth.signOut();
+      });
+
+      // Remove duplicate logoutButton in profileMenu if present
+      const logoutBtns = profileMenu.querySelectorAll('#logoutButton');
+      if (logoutBtns.length > 1) {
+        for (let i = 1; i < logoutBtns.length; i++) {
+          logoutBtns[i].remove();
         }
-    });
-    document.getElementById('buyNowButton').addEventListener('click', function() {
-        alert('Checkout is not implemented in this demo.');
-    });
-    window.addEventListener('DOMContentLoaded', updateCartUI);
+      }
+    })();
   </script>
-  <script type="module">
-    import { initializeApp } from "firebase/app";
-    import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
-    import { firebaseConfig } from './firebase-config.js';
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const googleProvider = new GoogleAuthProvider();
-
-    // Login/Profile Modal Logic (same as landscape.html)
-    document.addEventListener('DOMContentLoaded', () => {
-        // Elements
-        const loginButton = document.getElementById('loginButton');
-        const loginModal = document.getElementById('loginModal');
-        const closeLoginModal = document.getElementById('closeLoginModal');
-        const googleLoginButton = document.getElementById('googleLoginButton');
-        const showEmailLoginFormBtn = document.getElementById('showEmailLoginForm');
-        const showRegisterFormBtn = document.getElementById('showRegisterForm');
-        const emailLoginForm = document.getElementById('emailLoginForm');
-        const registerForm = document.getElementById('registerForm');
-        const cancelEmailLoginBtn = document.getElementById('cancelEmailLogin');
-        const cancelRegisterBtn = document.getElementById('cancelRegister');
-        const emailInput = document.getElementById('emailInput');
-        const passwordInput = document.getElementById('passwordInput');
-        const emailLoginError = document.getElementById('emailLoginError');
-        const uploadButtonSection = document.getElementById('upload-button-section');
-
-        // Modal open/close
-        loginButton.addEventListener('click', () => {
-            loginModal.style.display = 'block';
-        });
-        closeLoginModal.addEventListener('click', () => {
-            loginModal.style.display = 'none';
-        });
-
-        // Show/hide forms in modal
-        showEmailLoginFormBtn.addEventListener('click', () => {
-            showEmailLoginFormBtn.style.display = 'none';
-            showRegisterFormBtn.style.display = 'none';
-            emailLoginForm.style.display = 'block';
-            registerForm.style.display = 'none';
-            emailLoginError.textContent = '';
-        });
-        cancelEmailLoginBtn.addEventListener('click', () => {
-            emailLoginForm.style.display = 'none';
-            showEmailLoginFormBtn.style.display = 'inline-block';
-            showRegisterFormBtn.style.display = 'inline-block';
-            emailLoginError.textContent = '';
-        });
-        showRegisterFormBtn.addEventListener('click', () => {
-            showEmailLoginFormBtn.style.display = 'none';
-            showRegisterFormBtn.style.display = 'none';
-            emailLoginForm.style.display = 'none';
-            registerForm.style.display = 'block';
-            emailLoginError.textContent = '';
-        });
-        cancelRegisterBtn.addEventListener('click', () => {
-            registerForm.style.display = 'none';
-            showEmailLoginFormBtn.style.display = 'inline-block';
-            showRegisterFormBtn.style.display = 'inline-block';
-            emailLoginError.textContent = '';
-        });
-
-        // Google Login
-        googleLoginButton.addEventListener('click', () => {
-            signInWithPopup(auth, googleProvider)
-                .then((result) => {
-                    const user = result.user;
-                    localStorage.setItem('loggedInUser', JSON.stringify({
-                        displayName: user.displayName || user.email,
-                        profilePicUrl: user.photoURL,
-                        email: user.email
-                    }));
-                    setProfilePicture(user.photoURL, user.displayName || user.email);
-                    loginModal.style.display = 'none';
-                    showUploadButtonIfAllowed(user.email);
-                })
-                .catch((error) => {
-                    emailLoginError.textContent = 'Google Login Failed: ' + error.message;
-                });
-        });
-
-        // Email Login
-        emailLoginForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            emailLoginError.textContent = '';
-            const email = emailInput.value.trim();
-            const password = passwordInput.value;
-
-            signInWithEmailAndPassword(auth, email, password)
-                .then((result) => {
-                    const user = result.user;
-                    localStorage.setItem('loggedInUser', JSON.stringify({
-                        displayName: user.displayName || user.email,
-                        profilePicUrl: user.photoURL,
-                        email: user.email
-                    }));
-                    setProfilePicture(user.photoURL, user.displayName || user.email);
-                    loginModal.style.display = 'none';
-                    showUploadButtonIfAllowed(user.email);
-                })
-                .catch((error) => {
-                    emailLoginError.textContent = error.message.replace('Firebase: ', '');
-                });
-        });
-
-        // Registration logic
-        registerForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            emailLoginError.textContent = '';
-            const email = document.getElementById('registerEmail').value.trim();
-            const password = document.getElementById('registerPassword').value;
-
-            createUserWithEmailAndPassword(auth, email, password)
-                .then((result) => {
-                    const user = result.user;
-                    localStorage.setItem('loggedInUser', JSON.stringify({
-                        displayName: user.displayName || user.email,
-                        profilePicUrl: user.photoURL,
-                        email: user.email
-                    }));
-                    setProfilePicture(user.photoURL, user.displayName || user.email);
-                    loginModal.style.display = 'none';
-                    registerForm.reset();
-                    registerForm.style.display = 'none';
-                    showEmailLoginFormBtn.style.display = 'inline-block';
-                    showRegisterFormBtn.style.display = 'inline-block';
-                    showUploadButtonIfAllowed(user.email);
-                })
-                .catch((error) => {
-                    emailLoginError.textContent = error.message.replace('Firebase: ', '');
-                });
-        });
-
-        // Set profile picture and replace the login button
-        function setProfilePicture(profilePicUrl, displayName) {
-            loginButton.style.display = 'none';
-
-            // Remove existing profile pic if present
-            const existingProfilePic = document.getElementById('profilePic');
-            if (existingProfilePic) existingProfilePic.remove();
-
-            const profilePic = document.createElement('img');
-            profilePic.src = profilePicUrl || 'default-profile.png';
-            profilePic.alt = displayName || 'Profile Picture';
-            profilePic.style.position = 'fixed';
-            profilePic.style.top = '20px';
-            profilePic.style.left = '20px';
-            profilePic.style.width = '40px';
-            profilePic.style.height = '40px';
-            profilePic.style.borderRadius = '50%';
-            profilePic.style.cursor = 'pointer';
-            profilePic.style.zIndex = '1000';
-            profilePic.id = 'profilePic';
-            document.body.appendChild(profilePic);
-
-            // Show/hide profile menu on click
-            profilePic.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const menu = document.getElementById('profileMenu');
-                menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
-            });
-
-            // Hide menu if clicking outside
-            document.addEventListener('click', (e) => {
-                const menu = document.getElementById('profileMenu');
-                if (menu && !menu.contains(e.target) && e.target.id !== 'profilePic') {
-                    menu.style.display = 'none';
-                }
-            });
+  <!-- Firebase App (the core Firebase SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app-compat.js"></script>
+    <!-- Firebase Auth -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-auth-compat.js"></script>
+    <!-- Your custom Firebase config -->
+    <script src="firebase-config.js"></script>
+    <script>
+    (function waitForFirebaseAndRun(attempts = 0) {
+    if (!(window.firebase && window.firebaseConfig && window._firebaseInitialized)) {
+        if (attempts === 0) {
+            console.warn('Waiting for Firebase to be ready...');
         }
-
-        // Logout button logic
-        document.getElementById('logoutButton').addEventListener('click', () => {
-            localStorage.removeItem('loggedInUser');
-            location.reload();
-        });
-
-        // Show upload button only for allowed email
-        function showUploadButtonIfAllowed(email) {
-            const allowedEmail = "aquacheese.yt@gmail.com";
-            if (email === allowedEmail) {
-                uploadButtonSection.style.display = 'block';
-            } else {
-                uploadButtonSection.style.display = 'none';
-            }
+        if (attempts > 100) {
+            console.error('ERROR: Firebase config or initialization not detected after 5 seconds.');
+            return;
         }
-
-        // On page load, show profile if logged in
-        const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
-        if (loggedInUser) {
-            setProfilePicture(loggedInUser.profilePicUrl, loggedInUser.displayName);
-            showUploadButtonIfAllowed(loggedInUser.email);
-        }
-    });
-  </script>
+        setTimeout(() => waitForFirebaseAndRun(attempts + 1), 50);
+        return;
+    }
+    // Firebase is ready, run any initialization code here
+    })();
+    </script>
 </body>
 </html>

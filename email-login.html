@@ -38,6 +38,75 @@
             background-color: #4285F4;
             color: white;
         }
+        /* Cart styles */
+        #cartButton {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: gold;
+            color: black;
+            border: none;
+            border-radius: 12px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            z-index: 1000;
+            transition: background-color 0.3s;
+        }
+        #cartPanel {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 300px;
+            height: 100%;
+            background-color: #333;
+            color: whitesmoke;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+            overflow-y: auto;
+            transition: right 0.3s ease;
+            z-index: 999;
+            padding: 20px;
+            display: block;
+        }
+        #closeCart {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+        }
+        #cartList {
+            list-style-type: none;
+            padding: 0;
+        }
+        #cartSubtotal {
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: center;
+            border-top: 1px solid whitesmoke;
+            padding-top: 10px;
+        }
+        #buyNowButton {
+            margin-top: 20px;
+            width: 100%;
+            padding: 10px;
+            background-color: green;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -52,6 +121,18 @@
     <!-- Back to Main Page Button -->
     <button onclick="window.location.href='index.html'" class="back-btn">Back to Main Page</button>
 
+    <!-- Cart button -->
+    <button id="cartButton">Cart</button>
+
+    <!-- Cart panel -->
+    <div id="cartPanel">
+        <button id="closeCart">&times;</button>
+        <h2 style="text-align: center; color: #ffcc00;">Your Cart</h2>
+        <ul id="cartList"></ul>
+        <div id="cartSubtotal">Subtotal: £0</div>
+        <button id="buyNowButton">Buy Now</button>
+    </div>
+
     <script type="module">
         import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
@@ -59,20 +140,116 @@
 
         // Handle email login
         document.getElementById('loginForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
 
-    signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            alert('Logged in successfully!');
-            window.location.href = 'index.html'; // Redirect to homepage
-        })
-        .catch((error) => {
-            console.error('Login Error:', error.message);
-            alert('Login failed: ' + error.message);
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    alert('Logged in successfully!');
+                    window.location.href = 'index.html'; // Redirect to homepage
+                })
+                .catch((error) => {
+                    console.error('Login Error:', error.message);
+                    alert('Login failed: ' + error.message);
+                });
         });
-});
+
+        // Cart functionality
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartButton = document.getElementById('cartButton');
+        const cartPanel = document.getElementById('cartPanel');
+        const cartList = document.getElementById('cartList');
+        const cartSubtotal = document.getElementById('cartSubtotal');
+        const closeCart = document.getElementById('closeCart');
+
+        cartButton.addEventListener('click', () => {
+            cartPanel.style.right = '0';
+            cartButton.style.display = 'none';
+        });
+
+        closeCart.addEventListener('click', () => {
+            cartPanel.style.right = '-100%';
+            cartButton.style.display = 'block';
+        });
+
+        function addToCart(itemName, itemImage) {
+            if (!itemName) {
+                alert("Error: Item name is missing.");
+                return;
+            }
+            cart.push({ name: itemName, image: itemImage, price: 15 });
+            saveCart();
+            updateCart();
+            alert(`${itemName} has been added to your cart.`);
+        }
+
+        function updateCart() {
+            cartList.innerHTML = '';
+            let subtotal = 0;
+            cart.forEach((item, index) => {
+                const listItem = document.createElement('li');
+                listItem.style.display = 'flex';
+                listItem.style.alignItems = 'center';
+                listItem.style.marginBottom = '10px';
+
+                if (item.image) {
+                    const itemImage = document.createElement('img');
+                    itemImage.src = item.image;
+                    itemImage.alt = item.name;
+                    itemImage.style.width = '50px';
+                    itemImage.style.height = '50px';
+                    itemImage.style.marginRight = '10px';
+                    itemImage.style.border = '1px solid whitesmoke';
+                    listItem.appendChild(itemImage);
+                }
+
+                const itemName = document.createElement('span');
+                itemName.textContent = item.name;
+                listItem.appendChild(itemName);
+
+                const itemPrice = document.createElement('span');
+                itemPrice.textContent = ` - £${item.price}`;
+                itemPrice.style.marginLeft = 'auto';
+                listItem.appendChild(itemPrice);
+
+                const removeButton = document.createElement('button');
+                removeButton.textContent = 'Remove';
+                removeButton.style.marginLeft = '10px';
+                removeButton.style.backgroundColor = 'red';
+                removeButton.style.color = 'white';
+                removeButton.style.border = 'none';
+                removeButton.style.borderRadius = '5px';
+                removeButton.style.cursor = 'pointer';
+                removeButton.addEventListener('click', () => {
+                    cart.splice(index, 1);
+                    saveCart();
+                    updateCart();
+                });
+                listItem.appendChild(removeButton);
+                cartList.appendChild(listItem);
+                subtotal += item.price;
+            });
+            cartSubtotal.textContent = `Subtotal: £${subtotal}`;
+            const itemCount = cart.length;
+            cartButton.textContent = itemCount > 0 ? `Cart (${itemCount})` : 'Cart';
+        }
+
+        function saveCart() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        document.getElementById('buyNowButton').addEventListener('click', () => {
+            if (cart.length > 0) {
+                localStorage.removeItem('singleItem');
+                localStorage.setItem('cartPurchase', true);
+                window.location.href = 'Purchase.html';
+            } else {
+                alert('Your cart is empty. Add items to proceed.');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', updateCart);
     </script>
 </body>
 </html>

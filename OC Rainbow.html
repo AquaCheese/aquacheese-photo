@@ -299,6 +299,141 @@
     text-align: right;
 }
 
+.hidden {
+  display: none !important;
+}
+
+#loginModal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+#loginModal > div {
+  background: #fff;
+  color: #222;
+  border-radius: 10px;
+  max-width: 400px;
+  margin: 80px auto;
+  padding: 30px 20px;
+  position: relative;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+
+#closeLoginModal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: red;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+#loginModal h2 {
+  text-align: center;
+}
+
+#loginModal button {
+  background-color: #4285F4;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 10px 0;
+}
+
+#loginModal input {
+  margin-bottom: 8px;
+  width: 90%;
+  padding: 8px;
+}
+
+#errorMessage {
+  color: red;
+  margin-bottom: 10px;
+}
+
+/* Profile menu styles */
+#profileMenu {
+  display: none;
+  position: absolute;
+  top: 60px;
+  left: 10px;
+  background-color: #444;
+  color: whitesmoke;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1002;
+  padding: 10px;
+  width: 200px;
+}
+
+#profileMenu a {
+  color: whitesmoke;
+  text-decoration: none;
+  display: block;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+#profileMenu a:hover {
+  background-color: #555;
+}
+
+/* Upload button styles */
+#uploadButton {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#uploadButton:hover {
+  background-color: #218838;
+}
+
+/* Spinner styles */
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top: 4px solid #fff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
     </style>
     </head>
 
@@ -345,289 +480,190 @@
         &lt;&lt;&lt;&nbsp; &copy; 2025 AquaCheese &nbsp;&gt;&gt;&gt;
 
         <!-- Cart button -->
-        <button id="cartButton">Cart</button>
+        <button id="cartButton" style="position: fixed; top: 20px; right: 20px; background-color: gold; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer; z-index: 1000; transition: background-color 0.3s;">Cart</button>
 
         <!-- Cart panel -->
-        <div id="cartPanel">
-            <button id="closeCart">&times;</button>
-            <h2>Your Cart</h2>
-            <ul id="cartList">
-                <!-- Items will be dynamically added here -->
-            </ul>
-            <div id="cartSubtotal">
-                Subtotal: £0
-            </div>
-            <button id="buyNowButton">Buy Now</button>
+        <div id="cartPanel" style="position: fixed; top: 0; right: -100%; width: 300px; height: 100%; background-color: #333; color: whitesmoke; box-shadow: -2px 0 5px rgba(0,0,0,0.5); overflow-y: auto; transition: right 0.3s ease; z-index: 999; padding: 20px; display: block;">
+            <button id="closeCart" style="position: absolute; top: 10px; right: 10px; background-color: red; color: white; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 1001;">&times;</button>
+            <h2 style="text-align: center; color: #ffcc00;">Your Cart</h2>
+            <ul id="cartList" style="list-style-type: none; padding: 0;"></ul>
+            <div id="cartSubtotal" style="margin-top: 20px; font-size: 18px; text-align: center; border-top: 1px solid whitesmoke; padding-top: 10px;">Subtotal: £0</div>
+            <button id="buyNowButton" style="margin-top: 20px; width: 100%; padding: 10px; background-color: green; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">Buy Now</button>
         </div>
 
-        <!-- Unified login/profile modal from index.html -->
-        <div id="loginModal" class="modal">
-            <div class="modal-content">
-                <span class="close" id="closeLogin">&times;</span>
-                <div class="modal-header">
-                    <h2>Login / Profile</h2>
-                </div>
-                <div class="modal-body">
-                    <p id="userProfile" style="display:none;"></p>
-                    <div id="loginForm">
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" required>
-                        <br>
-                        <label for="password">Password:</label>
-                        <input type="password" id="password" required>
-                        <br>
-                        <button id="loginButton">Login</button>
-                        <button id="registerButton">Register</button>
-                    </div>
-                    <div id="profileInfo" style="display:none;">
-                        <p>Profile Information:</p>
-                        <p id="profileEmail"></p>
-                        <button id="logoutButton">Logout</button>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button id="closeLoginBtn">Close</button>
-                </div>
-            </div>
-        </div>
+        <!-- Robust Login Modal (copied from index.html, no duplicate JS) -->
+<button id="loginButton" style="background-color: lightblue; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer;">Login</button>
+<div id="loginModal" class="hidden" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;">
+  <div style="background: #fff; color: #222; border-radius: 10px; max-width: 400px; margin: 80px auto; padding: 30px 20px; position: relative; box-shadow: 0 4px 16px rgba(0,0,0,0.3);">
+    <button id="closeLoginModal" style="position: absolute; top: 10px; right: 10px; background: red; color: white; border: none; border-radius: 50%; width: 32px; height: 32px; font-size: 20px; cursor: pointer;">&times;</button>
+    <h2 style="text-align:center;">Login / Register</h2>
+    <div style="display:flex; flex-direction:column; align-items:center;">
+      <button id="googleLoginButton" style="background-color: #4285F4; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In with Google</button>
+      <button id="showEmailLoginForm" style="background-color: #555; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In with Email</button>
+      <button id="showRegisterForm" style="background-color: #888; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Register</button>
+      <form id="emailLoginForm" class="hidden" style="margin-top:10px;">
+        <input type="email" id="loginEmail" placeholder="Email" required style="margin-bottom:8px; width:90%; padding:8px;">
+        <input type="password" id="loginPassword" placeholder="Password" required style="margin-bottom:8px; width:90%; padding:8px;">
+        <div id="emailLoginError" style="color:red; min-height:20px; margin-bottom:8px;"></div>
+        <button type="submit" style="background-color:#4285F4;color:white;border:none;border-radius:5px;padding:8px 16px;">Log In</button>
+        <button type="button" id="cancelEmailLogin" style="margin-left:10px;">Cancel</button>
+      </form>
+      <form id="registerForm" class="hidden" style="margin-top:10px;">
+        <input type="email" id="registerEmail" placeholder="Email" required style="margin-bottom:8px; width:90%; padding:8px;">
+        <input type="password" id="registerPassword" placeholder="Password" required style="margin-bottom:8px; width:90%; padding:8px;">
+        <div id="registerError" style="color:red; min-height:20px; margin-bottom:8px;"></div>
+        <button type="submit" style="background-color:#888;color:white;border:none;border-radius:5px;padding:8px 16px;">Register</button>
+        <button type="button" id="cancelRegister" style="margin-left:10px;">Cancel</button>
+      </form>
+    </div>
+  </div>
+</div>
+<style>
+#loginModal .hidden { display: none !important; }
+</style>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+<script>
+const firebaseConfig = { apiKey: "AIzaSyD-EXAMPLEKEY", authDomain: "your-project-id.firebaseapp.com", projectId: "your-project-id", storageBucket: "your-project-id.appspot.com", messagingSenderId: "123456789", appId: "1:123456789:web:abcdef123456" };
+if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
+const auth = firebase.auth();
+function show(el) { if (el) el.classList.remove('hidden'); }
+function hide(el) { if (el) el.classList.add('hidden'); }
+function resetLoginModal() {
+  hide(document.getElementById('emailLoginForm'));
+  hide(document.getElementById('registerForm'));
+  show(document.getElementById('googleLoginButton'));
+  show(document.getElementById('showEmailLoginForm'));
+  show(document.getElementById('showRegisterForm'));
+  document.getElementById('emailLoginError').textContent = '';
+  document.getElementById('registerError').textContent = '';
+  document.getElementById('emailLoginForm').reset && document.getElementById('emailLoginForm').reset();
+  document.getElementById('registerForm').reset && document.getElementById('registerForm').reset();
+}
+const loginModal = document.getElementById('loginModal');
+const loginButton = document.getElementById('loginButton');
+const closeLoginModal = document.getElementById('closeLoginModal');
+const googleLoginButton = document.getElementById('googleLoginButton');
+const showEmailLoginForm = document.getElementById('showEmailLoginForm');
+const showRegisterForm = document.getElementById('showRegisterForm');
+const emailLoginForm = document.getElementById('emailLoginForm');
+const registerForm = document.getElementById('registerForm');
+const cancelEmailLogin = document.getElementById('cancelEmailLogin');
+const cancelRegister = document.getElementById('cancelRegister');
+loginButton.addEventListener('click', () => {
+  resetLoginModal();
+  loginModal.style.display = 'block';
+  loginModal.classList.remove('hidden');
+});
+closeLoginModal.addEventListener('click', () => {
+  loginModal.style.display = 'none';
+  loginModal.classList.add('hidden');
+  resetLoginModal();
+});
+googleLoginButton.addEventListener('click', () => {
+  alert('Google login is not enabled in this demo.');
+});
+showEmailLoginForm.addEventListener('click', () => {
+  hide(googleLoginButton); hide(showEmailLoginForm); hide(showRegisterForm);
+  show(emailLoginForm);
+});
+showRegisterForm.addEventListener('click', () => {
+  hide(googleLoginButton); hide(showEmailLoginForm); hide(showRegisterForm);
+  show(registerForm);
+});
+cancelEmailLogin.addEventListener('click', () => {
+  hide(emailLoginForm);
+  show(googleLoginButton); show(showEmailLoginForm); show(showRegisterForm);
+  document.getElementById('emailLoginError').textContent = '';
+  emailLoginForm.reset();
+});
+cancelRegister.addEventListener('click', () => {
+  hide(registerForm);
+  show(googleLoginButton); show(showEmailLoginForm); show(showRegisterForm);
+  document.getElementById('registerError').textContent = '';
+  registerForm.reset();
+});
+emailLoginForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+  const email = document.getElementById('loginEmail').value;
+  const password = document.getElementById('loginPassword').value;
+  auth.signInWithEmailAndPassword(email, password)
+    .then(userCredential => {
+      resetLoginModal();
+      loginModal.style.display = 'none';
+      loginModal.classList.add('hidden');
+      localStorage.setItem('user', JSON.stringify(userCredential.user));
+    })
+    .catch(error => {
+      document.getElementById('emailLoginError').textContent = error.message;
+    });
+});
+registerForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+  const email = document.getElementById('registerEmail').value;
+  const password = document.getElementById('registerPassword').value;
+  auth.createUserWithEmailAndPassword(email, password)
+    .then(userCredential => {
+      resetLoginModal();
+      loginModal.style.display = 'none';
+      loginModal.classList.add('hidden');
+      localStorage.setItem('user', JSON.stringify(userCredential.user));
+    })
+    .catch(error => {
+      document.getElementById('registerError').textContent = error.message;
+    });
+});
 
-        <script type="module">
-            import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js';
-            import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js';
-            import { getDatabase, ref, set, get, child, update } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-database.js';
+// Profile and upload logic
+const profileMenu = document.getElementById('profileMenu');
+const uploadButton = document.getElementById('uploadButton');
 
-            // Your web app's Firebase configuration
-            const firebaseConfig = {
-                apiKey: "AIzaSyD-EXAMPLEKEY",
-                authDomain: "your-project-id.firebaseapp.com",
-                databaseURL: "https://your-project-id.firebaseio.com",
-                projectId: "your-project-id",
-                storageBucket: "your-project-id.appspot.com",
-                messagingSenderId: "123456789",
-                appId: "1:123456789:web:abcdef123456"
-            };
+function toggleProfileMenu() {
+  if (profileMenu.style.display === 'block') {
+    profileMenu.style.display = 'none';
+  } else {
+    profileMenu.style.display = 'block';
+  }
+}
 
-            // Initialize Firebase
-            const app = initializeApp(firebaseConfig);
-            const auth = getAuth();
-            const db = getDatabase();
+function updateProfileUI(user) {
+  const profilePic = document.getElementById('profilePic');
+  const userName = document.getElementById('userName');
+  const userEmail = document.getElementById('userEmail');
 
-            // Function to open the dialog
-            function openDialog() {
-                document.getElementById('dialogOverlay').style.display = 'flex';
-            }
+  if (user) {
+    profilePic.src = user.photoURL || 'default-profile.png';
+    userName.textContent = user.displayName || 'User';
+    userEmail.textContent = user.email;
+    show(uploadButton);
+  } else {
+    profilePic.src = 'default-profile.png';
+    userName.textContent = 'Guest';
+    userEmail.textContent = '';
+    hide(uploadButton);
+  }
+}
 
-            // Function to close the dialog
-            function closeDialog() {
-                document.getElementById('dialogOverlay').style.display = 'none';
-            }
+auth.onAuthStateChanged(user => {
+  if (user) {
+    // User is signed in
+    updateProfileUI(user);
+  } else {
+    // No user is signed in
+    updateProfileUI(null);
+  }
+});
 
-            // Cart functionality
-            let cart = JSON.parse(localStorage.getItem('cart')) || []; // Load cart from localStorage or initialize as empty
-            const cartButton = document.getElementById('cartButton');
-            const cartPanel = document.getElementById('cartPanel');
-            const cartList = document.getElementById('cartList');
-            const cartSubtotal = document.getElementById('cartSubtotal');
-            const closeCart = document.getElementById('closeCart');
-
-            // Open the cart panel
-            cartButton.addEventListener('click', () => {
-                cartPanel.style.right = '0';
-                cartButton.style.display = 'none'; // Hide the cart button
-            });
-
-            // Close the cart panel
-            closeCart.addEventListener('click', () => {
-                cartPanel.style.right = '-100%';
-                cartButton.style.display = 'block'; // Show the cart button
-            });
-
-            // Add to cart function
-            function addToCart(itemName, itemImage) {
-                if (!itemName) {
-                    alert("Error: Item name is missing.");
-                    return;
-                }
-
-                // Add the item details to the cart array
-                cart.push({ name: itemName, image: itemImage, price: 15 }); // Assume each image costs £15
-                saveCart(); // Save the cart to localStorage
-                updateCart();
-                alert(`${itemName} has been added to your cart.`);
-            }
-
-            // Update the cart list and cart button text
-            function updateCart() {
-                cartList.innerHTML = ''; // Clear the current cart list
-                let subtotal = 0; // Initialize subtotal
-
-                cart.forEach((item, index) => {
-                    const listItem = document.createElement('li');
-                    listItem.style.display = 'flex';
-                    listItem.style.alignItems = 'center';
-                    listItem.style.marginBottom = '10px';
-
-                    // Add the image to the cart item (if available)
-                    if (item.image) {
-                        const itemImage = document.createElement('img');
-                        itemImage.src = item.image;
-                        itemImage.alt = item.name;
-                        itemImage.style.width = '50px';
-                        itemImage.style.height = '50px';
-                        itemImage.style.marginRight = '10px';
-                        itemImage.style.border = '1px solid whitesmoke';
-                        listItem.appendChild(itemImage);
-                    }
-
-                    // Add the name of the item
-                    const itemName = document.createElement('span');
-                    itemName.textContent = item.name;
-                    listItem.appendChild(itemName);
-
-                    // Add the price of the item
-                    const itemPrice = document.createElement('span');
-                    itemPrice.textContent = ` - £${item.price}`;
-                    itemPrice.style.marginLeft = 'auto';
-                    listItem.appendChild(itemPrice);
-
-                    // Add a remove button for each item
-                    const removeButton = document.createElement('button');
-                    removeButton.textContent = 'Remove';
-                    removeButton.style.marginLeft = '10px';
-                    removeButton.style.backgroundColor = 'red';
-                    removeButton.style.color = 'white';
-                    removeButton.style.border = 'none';
-                    removeButton.style.borderRadius = '5px';
-                    removeButton.style.cursor = 'pointer';
-
-                    // Remove item from the cart when the button is clicked
-                    removeButton.addEventListener('click', () => {
-                        cart.splice(index, 1); // Remove the item from the cart array
-                        saveCart(); // Save the updated cart to localStorage
-                        updateCart(); // Update the cart display
-                    });
-
-                    listItem.appendChild(removeButton);
-                    cartList.appendChild(listItem);
-
-                    // Add the item's price to the subtotal
-                    subtotal += item.price;
-                });
-
-                // Update the subtotal display
-                cartSubtotal.textContent = `Subtotal: £${subtotal}`;
-
-                // Update the cart button text with the number of items
-                const itemCount = cart.length;
-                cartButton.textContent = itemCount > 0 ? `Cart (${itemCount})` : 'Cart';
-            }
-
-            // Save the cart to localStorage
-            function saveCart() {
-                localStorage.setItem('cart', JSON.stringify(cart));
-            }
-
-            // Load the cart when the page loads
-            document.addEventListener('DOMContentLoaded', updateCart);
-
-            // Login and profile functionality
-            const loginModal = document.getElementById('loginModal');
-            const closeLogin = document.getElementById('closeLogin');
-            const closeLoginBtn = document.getElementById('closeLoginBtn');
-            const loginButton = document.getElementById('loginButton');
-            const registerButton = document.getElementById('registerButton');
-            const logoutButton = document.getElementById('logoutButton');
-            const userProfile = document.getElementById('userProfile');
-            const profileEmail = document.getElementById('profileEmail');
-            const emailInput = document.getElementById('email');
-            const passwordInput = document.getElementById('password');
-
-            // Open login modal
-            function openLoginModal() {
-                loginModal.style.display = 'block';
-            }
-
-            // Close login modal
-            function closeLoginModal() {
-                loginModal.style.display = 'none';
-            }
-
-            closeLogin.onclick = closeLoginModal;
-            closeLoginBtn.onclick = closeLoginModal;
-
-            // Login function
-            loginButton.onclick = () => {
-                const email = emailInput.value;
-                const password = passwordInput.value;
-
-                signInWithEmailAndPassword(auth, email, password)
-                    .then((userCredential) => {
-                        // Signed in 
-                        const user = userCredential.user;
-                        alert('Login successful!');
-                        closeLoginModal();
-                    })
-                    .catch((error) => {
-                        const errorCode = error.code;
-                        const errorMessage = error.message;
-                        alert(`Error: ${errorMessage}`);
-                    });
-            };
-
-            // Register function (simplified)
-            registerButton.onclick = () => {
-                const email = emailInput.value;
-                const password = passwordInput.value;
-
-                // Basic validation
-                if (email === '' || password === '') {
-                    alert('Please enter both email and password.');
-                    return;
-                }
-
-                // Register the user
-                auth.createUserWithEmailAndPassword(email, password)
-                    .then((userCredential) => {
-                        // Registered 
-                        const user = userCredential.user;
-                        alert('Registration successful! Please log in.');
-                    })
-                    .catch((error) => {
-                        const errorCode = error.code;
-                        const errorMessage = error.message;
-                        alert(`Error: ${errorMessage}`);
-                    });
-            };
-
-            // Logout function
-            logoutButton.onclick = () => {
-                signOut(auth).then(() => {
-                    alert('Logout successful!');
-                }).catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    alert(`Error: ${errorMessage}`);
-                });
-            };
-
-            // Monitor auth state
-            onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    // User is signed in.
-                    const uid = user.uid;
-                    userProfile.style.display = 'block';
-                    profileEmail.textContent = `Logged in as: ${user.email}`;
-                } else {
-                    // No user is signed in.
-                    userProfile.style.display = 'none';
-                }
-            });
-
-            // Open login modal on page load if needed (for demo)
-            window.onload = () => {
-                // Uncomment the line below to open the login modal on every page load
-                // openLoginModal();
-            };
+// Upload button click handler
+uploadButton.addEventListener('click', () => {
+  const user = auth.currentUser;
+  if (user) {
+    // Proceed with upload
+    alert('Upload feature is not implemented in this demo.');
+  } else {
+    alert('Please log in to upload images.');
+  }
+});
         </script>
     </body>
 </html>

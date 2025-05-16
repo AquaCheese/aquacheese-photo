@@ -1,39 +1,209 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="author" content="AquaCheese">
-        <title>AquaCheese Photography - img 3</title>
-        <style>
-            body{
-                background-color: #333;
-                color: whitesmoke;
-                text-align: center;
-                font-family: Arial, Helvetica, sans-serif;
-    
-                a {
-                color: cornsilk;
-                }
-                a :visited{
-                color: aqua;
-                }
-                a :hover{
-                color: gray;
-                }
-                a :active{
-                color: white;
-                }
-            }
-        </style>
-        <!-- Unified login/profile modal and cart logic from index.html inserted here. -->
-    </head>
-    <body>
-        <h1>WHAT DID I JUST TELL YOU?</h1>
-        <p>THERE IS NO LOCATION!</p>
-        <p style="font-size: x-small;">that you know of...</p>
-        <a href="index.html">Back to Main Page</a>
-        <br><br>
-        &lt;&lt;&lt;&nbsp; &copy; 2025 AquaCheese &nbsp;&gt;&gt;&gt;
-        <!-- Cart button, cart panel, login/profile modal, and all related scripts/styles replaced with unified logic from index.html. -->
-    </body>
-</html>
+<!-- Cart button -->
+<button id="cartButton" style="position: fixed; top: 20px; right: 20px; background-color: gold; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer; z-index: 1000; transition: background-color 0.3s;">Cart</button>
+
+<!-- Cart panel -->
+<div id="cartPanel" style="position: fixed; top: 0; right: -100%; width: 300px; height: 100%; background-color: #333; color: whitesmoke; box-shadow: -2px 0 5px rgba(0,0,0,0.5); overflow-y: auto; transition: right 0.3s ease; z-index: 999; padding: 20px; display: block;">
+    <button id="closeCart" style="position: absolute; top: 10px; right: 10px; background-color: red; color: white; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 1001;">&times;</button>
+    <h2 style="text-align: center; color: #ffcc00;">Your Cart</h2>
+    <ul id="cartList" style="list-style-type: none; padding: 0;"></ul>
+    <div id="cartSubtotal" style="margin-top: 20px; font-size: 18px; text-align: center; border-top: 1px solid whitesmoke; padding-top: 10px;">Subtotal: £0</div>
+    <button id="buyNowButton" style="margin-top: 20px; width: 100%; padding: 10px; background-color: green; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">Buy Now</button>
+</div>
+
+<!-- Login Modal -->
+<div id="loginModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.8); z-index:1002; justify-content:center; align-items:center;">
+    <div style="background-color:#222; padding:20px; border-radius:8px; width:300px; margin:auto;">
+        <h2 style="color:#ffcc00; text-align:center;">Login</h2>
+        <input type="email" id="loginEmail" placeholder="Email" style="width:100%; padding:10px; margin-bottom:10px; border:none; border-radius:4px;">
+        <input type="password" id="loginPassword" placeholder="Password" style="width:100%; padding:10px; margin-bottom:10px; border:none; border-radius:4px;">
+        <button id="loginButton" style="width:100%; padding:10px; background-color:green; color:white; border:none; border-radius:4px; cursor:pointer;">Login</button>
+        <button id="registerButton" style="width:100%; padding:10px; background-color:blue; color:white; border:none; border-radius:4px; cursor:pointer; margin-top:10px;">Register</button>
+        <button id="closeLogin" style="width:100%; padding:10px; background-color:red; color:white; border:none; border-radius:4px; cursor:pointer; margin-top:10px;">Close</button>
+    </div>
+</div>
+
+<!-- Profile Menu -->
+<div id="profileMenu" style="display:none; position:fixed; top:60px; right:20px; background-color:#333; color:whitesmoke; border-radius:8px; box-shadow:0 4px 8px rgba(0,0,0,0.2); z-index:1003; padding:10px;">
+    <div id="profileInfo" style="display:flex; align-items:center; margin-bottom:10px;">
+        <img id="profilePicture" src="" alt="Profile Picture" style="width:40px; height:40px; border-radius:50%; margin-right:10px;">
+        <div style="flex-grow:1;">
+            <div id="userName" style="font-weight:bold;"></div>
+            <div id="userEmail" style="font-size:12px; color:#ccc;"></div>
+        </div>
+        <button id="logoutButton" style="background-color:red; color:white; border:none; border-radius:4px; padding:5px 10px; cursor:pointer;">Logout</button>
+    </div>
+    <button id="uploadButton" style="width:100%; padding:10px; background-color:blue; color:white; border:none; border-radius:4px; cursor:pointer;">Upload</button>
+</div>
+
+<script>
+// Cart functionality (from index.html)
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+const cartButton = document.getElementById('cartButton');
+const cartPanel = document.getElementById('cartPanel');
+const cartList = document.getElementById('cartList');
+const cartSubtotal = document.getElementById('cartSubtotal');
+const closeCart = document.getElementById('closeCart');
+cartButton.addEventListener('click', () => {
+    cartPanel.style.right = '0';
+    cartButton.style.display = 'none';
+});
+closeCart.addEventListener('click', () => {
+    cartPanel.style.right = '-100%';
+    cartButton.style.display = 'block';
+});
+function addToCart(itemName, itemImage) {
+    if (!itemName) {
+        alert("Error: Item name is missing.");
+        return;
+    }
+    cart.push({ name: itemName, image: itemImage, price: 15 });
+    saveCart();
+    updateCart();
+    alert(`${itemName} has been added to your cart.`);
+}
+function updateCart() {
+    cartList.innerHTML = '';
+    let subtotal = 0;
+    cart.forEach((item, index) => {
+        const listItem = document.createElement('li');
+        listItem.style.display = 'flex';
+        listItem.style.alignItems = 'center';
+        listItem.style.marginBottom = '10px';
+        if (item.image) {
+            const itemImage = document.createElement('img');
+            itemImage.src = item.image;
+            itemImage.alt = item.name;
+            itemImage.style.width = '50px';
+            itemImage.style.height = '50px';
+            itemImage.style.marginRight = '10px';
+            itemImage.style.border = '1px solid whitesmoke';
+            listItem.appendChild(itemImage);
+        }
+        const itemName = document.createElement('span');
+        itemName.textContent = item.name;
+        listItem.appendChild(itemName);
+        const itemPrice = document.createElement('span');
+        itemPrice.textContent = ` - £${item.price}`;
+        itemPrice.style.marginLeft = 'auto';
+        listItem.appendChild(itemPrice);
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'Remove';
+        removeButton.style.marginLeft = '10px';
+        removeButton.style.backgroundColor = 'red';
+        removeButton.style.color = 'white';
+        removeButton.style.border = 'none';
+        removeButton.style.borderRadius = '5px';
+        removeButton.style.cursor = 'pointer';
+        removeButton.addEventListener('click', () => {
+            cart.splice(index, 1);
+            saveCart();
+            updateCart();
+        });
+        listItem.appendChild(removeButton);
+        cartList.appendChild(listItem);
+        subtotal += item.price;
+    });
+    cartSubtotal.textContent = `Subtotal: £${subtotal}`;
+    const itemCount = cart.length;
+    cartButton.textContent = itemCount > 0 ? `Cart (${itemCount})` : 'Cart';
+}
+function saveCart() {
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
+document.getElementById('buyNowButton').addEventListener('click', () => {
+    if (cart.length > 0) {
+        localStorage.removeItem('singleItem');
+        localStorage.setItem('cartPurchase', true);
+        window.location.href = 'Purchase.html';
+    } else {
+        alert('Your cart is empty. Add items to proceed.');
+    }
+});
+document.addEventListener('DOMContentLoaded', updateCart);
+
+// Login and Profile functionality
+const loginModal = document.getElementById('loginModal');
+const closeLogin = document.getElementById('closeLogin');
+const loginButton = document.getElementById('loginButton');
+const registerButton = document.getElementById('registerButton');
+const logoutButton = document.getElementById('logoutButton');
+const uploadButton = document.getElementById('uploadButton');
+const profileMenu = document.getElementById('profileMenu');
+const profilePicture = document.getElementById('profilePicture');
+const userName = document.getElementById('userName');
+const userEmail = document.getElementById('userEmail');
+
+closeLogin.addEventListener('click', () => {
+    loginModal.style.display = 'none';
+});
+
+loginButton.addEventListener('click', () => {
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+    firebase.auth().signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            console.log('Login successful:', user);
+            loginModal.style.display = 'none';
+            updateProfileMenu(user);
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.error('Error during login:', errorCode, errorMessage);
+            alert('Login failed. Please check your credentials and try again.');
+        });
+});
+
+registerButton.addEventListener('click', () => {
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            // Registered 
+            const user = userCredential.user;
+            console.log('Registration successful:', user);
+            alert('Registration successful! You can now log in.');
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.error('Error during registration:', errorCode, errorMessage);
+            alert('Registration failed. Please try again.');
+        });
+});
+
+logoutButton.addEventListener('click', () => {
+    firebase.auth().signOut().then(() => {
+        console.log('User signed out.');
+        profileMenu.style.display = 'none';
+        cartButton.style.display = 'block';
+    }).catch((error) => {
+        console.error('Error during sign out:', error);
+    });
+});
+
+uploadButton.addEventListener('click', () => {
+    // Upload button functionality here
+    alert('Upload button clicked!');
+});
+
+firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+        console.log('User is signed in:', user);
+        updateProfileMenu(user);
+    } else {
+        console.log('No user is signed in.');
+        profileMenu.style.display = 'none';
+    }
+});
+
+function updateProfileMenu(user) {
+    userName.textContent = user.displayName || user.email;
+    userEmail.textContent = user.email;
+    profilePicture.src = user.photoURL || 'default-profile.png';
+    profileMenu.style.display = 'block';
+    cartButton.style.display = 'none';
+}
+</script>

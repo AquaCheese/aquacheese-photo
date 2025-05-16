@@ -242,6 +242,120 @@
 #closeCart:hover {
     background-color: darkred;
 }
+
+#loginButton {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    background-color: deepskyblue;
+    color: black;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    z-index: 1000;
+    transition: background-color 0.3s;
+}
+
+#loginModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1001;
+    justify-content: center;
+    align-items: center;
+}
+
+#loginModal > div {
+    background-color: #444;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+#loginModal h2 {
+    color: #ffcc00;
+}
+
+#loginModal input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+}
+
+#loginModal button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#loginModal #submitLogin {
+    background-color: green;
+    color: white;
+}
+
+#loginModal #closeLogin {
+    background-color: red;
+    color: white;
+    margin-top: 10px;
+}
+
+#profileMenu {
+    display: none;
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    background-color: #444;
+    color: whitesmoke;
+    border: 1px solid #555;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    z-index: 1002;
+}
+
+#profileMenu button {
+    background-color: transparent;
+    color: whitesmoke;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    text-align: left;
+    width: 100%;
+}
+
+#profileMenu button:hover {
+    background-color: #555;
+}
+
+#profilePicture {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1001;
+    border: 2px solid #ffcc00;
+}
+
+#profilePicture img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
     </style>
     </head>
 
@@ -287,18 +401,215 @@
         <br><br>
         &lt;&lt;&lt;&nbsp; &copy; 2025 AquaCheese &nbsp;&gt;&gt;&gt;
 
-        <!-- Unified login/profile modal and cart logic from index.html inserted here. -->
+        <!-- Cart button -->
+<button id="cartButton" style="position: fixed; top: 20px; right: 20px; background-color: gold; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer; z-index: 1000; transition: background-color 0.3s;">Cart</button>
 
-        <script>
-            // Function to open the dialog
-            function openDialog() {
-                document.getElementById('dialogOverlay').style.display = 'flex';
-            }
+<!-- Cart panel -->
+<div id="cartPanel" style="position: fixed; top: 0; right: -100%; width: 300px; height: 100%; background-color: #333; color: whitesmoke; box-shadow: -2px 0 5px rgba(0,0,0,0.5); overflow-y: auto; transition: right 0.3s ease; z-index: 999; padding: 20px; display: block;">
+    <button id="closeCart" style="position: absolute; top: 10px; right: 10px; background-color: red; color: white; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 1001;">&times;</button>
+    <h2 style="text-align: center; color: #ffcc00;">Your Cart</h2>
+    <ul id="cartList" style="list-style-type: none; padding: 0;"></ul>
+    <div id="cartSubtotal" style="margin-top: 20px; font-size: 18px; text-align: center; border-top: 1px solid whitesmoke; padding-top: 10px;">Subtotal: £0</div>
+    <button id="buyNowButton" style="margin-top: 20px; width: 100%; padding: 10px; background-color: green; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">Buy Now</button>
+</div>
 
-            // Function to close the dialog
-            function closeDialog() {
-                document.getElementById('dialogOverlay').style.display = 'none';
-            }
+        <!-- Login Modal, Login Button, Upload Button, and all related scripts/styles from index.html inserted here for login feature consistency -->
+
+        <!-- Login button -->
+<button id="loginButton" style="position: fixed; top: 80px; right: 20px; background-color: deepskyblue; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer; z-index: 1000; transition: background-color 0.3s;">Login</button>
+
+<!-- Login modal -->
+<div id="loginModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.8); z-index:1001; justify-content:center; align-items:center;">
+    <div style="background-color:#444; padding:20px; border-radius:10px; width:300px; text-align:center; box-shadow:0 4px 8px rgba(0,0,0,0.5);">
+        <h2 style="color:#ffcc00;">Login</h2>
+        <input type="text" id="username" placeholder="Username" style="width:100%; padding:10px; margin:10px 0; border:none; border-radius:5px;">
+        <input type="password" id="password" placeholder="Password" style="width:100%; padding:10px; margin:10px 0; border:none; border-radius:5px;">
+        <button id="submitLogin" style="width:100%; padding:10px; background-color:green; color:white; border:none; border-radius:5px; cursor:pointer;">Submit</button>
+        <button id="closeLogin" style="width:100%; padding:10px; background-color:red; color:white; border:none; border-radius:5px; cursor:pointer; margin-top:10px;">Close</button>
+    </div>
+</div>
+
+<!-- Upload button (visible only to logged-in users) -->
+<button id="uploadButton" style="position: fixed; top: 140px; right: 20px; background-color: orange; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer; z-index: 1000; transition: background-color 0.3s; display:none;">Upload</button>
+
+<!-- Profile picture and menu -->
+<div id="profilePicture" style="position: fixed; top: 20px; right: 20px; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; z-index: 1001; border: 2px solid #ffcc00; display:none;">
+    <img src="default-profile.png" alt="Profile Picture">
+</div>
+<div id="profileMenu" style="display:none; position: fixed; top: 80px; right: 20px; background-color: #444; color: whitesmoke; border: 1px solid #555; border-radius: 10px; padding: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); z-index: 1002;">
+    <button id="viewProfile" style="background-color: transparent; color: whitesmoke; border: none; cursor: pointer; padding: 10px; text-align: left; width: 100%;">View Profile</button>
+    <button id="logoutButton" style="background-color: transparent; color: whitesmoke; border: none; cursor: pointer; padding: 10px; text-align: left; width: 100%;">Logout</button>
+</div>
+
+<!-- Scripts for login functionality -->
+<script>
+    // Function to open the dialog
+    function openDialog() {
+        document.getElementById('dialogOverlay').style.display = 'flex';
+    }
+
+    // Function to close the dialog
+    function closeDialog() {
+        document.getElementById('dialogOverlay').style.display = 'none';
+    }
+
+    // Cart functionality (from index.html)
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+const cartButton = document.getElementById('cartButton');
+const cartPanel = document.getElementById('cartPanel');
+const cartList = document.getElementById('cartList');
+const cartSubtotal = document.getElementById('cartSubtotal');
+const closeCart = document.getElementById('closeCart');
+
+cartButton.addEventListener('click', () => {
+    cartPanel.style.right = '0';
+    cartButton.style.display = 'none';
+});
+closeCart.addEventListener('click', () => {
+    cartPanel.style.right = '-100%';
+    cartButton.style.display = 'block';
+});
+function addToCart(itemName, itemImage) {
+    if (!itemName) {
+        alert("Error: Item name is missing.");
+        return;
+    }
+    cart.push({ name: itemName, image: itemImage, price: 15 });
+    saveCart();
+    updateCart();
+    alert(`${itemName} has been added to your cart.`);
+}
+function updateCart() {
+    cartList.innerHTML = '';
+    let subtotal = 0;
+    cart.forEach((item, index) => {
+        const listItem = document.createElement('li');
+        listItem.style.display = 'flex';
+        listItem.style.alignItems = 'center';
+        listItem.style.marginBottom = '10px';
+        if (item.image) {
+            const img = document.createElement('img');
+            img.src = item.image;
+            img.alt = item.name;
+            img.style.width = '50px';
+            img.style.height = '50px';
+            img.style.marginRight = '10px';
+            img.style.border = '1px solid whitesmoke';
+            listItem.appendChild(img);
+        }
+        const itemName = document.createElement('span');
+        itemName.textContent = item.name;
+        listItem.appendChild(itemName);
+        const itemPrice = document.createElement('span');
+        itemPrice.textContent = ` - £${item.price}`;
+        itemPrice.style.marginLeft = 'auto';
+        listItem.appendChild(itemPrice);
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'Remove';
+        removeButton.style.marginLeft = '10px';
+        removeButton.style.backgroundColor = 'red';
+        removeButton.style.color = 'white';
+        removeButton.style.border = 'none';
+        removeButton.style.borderRadius = '5px';
+        removeButton.style.cursor = 'pointer';
+        removeButton.addEventListener('click', () => {
+            cart.splice(index, 1);
+            saveCart();
+            updateCart();
+        });
+        listItem.appendChild(removeButton);
+        cartList.appendChild(listItem);
+        subtotal += item.price;
+    });
+    cartSubtotal.textContent = `Subtotal: £${subtotal}`;
+    const itemCount = cart.length;
+    cartButton.textContent = itemCount > 0 ? `Cart (${itemCount})` : 'Cart';
+}
+function saveCart() {
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
+document.getElementById('buyNowButton').addEventListener('click', () => {
+    if (cart.length > 0) {
+        localStorage.removeItem('singleItem');
+        localStorage.setItem('cartPurchase', true);
+        window.location.href = 'Purchase.html';
+    } else {
+        alert('Your cart is empty. Add items to proceed.');
+    }
+});
+document.addEventListener('DOMContentLoaded', updateCart);
+
+    // Login functionality
+    const loginButton = document.getElementById('loginButton');
+    const loginModal = document.getElementById('loginModal');
+    const closeLogin = document.getElementById('closeLogin');
+    const submitLogin = document.getElementById('submitLogin');
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    const uploadButton = document.getElementById('uploadButton');
+    const profilePicture = document.getElementById('profilePicture');
+    const profileMenu = document.getElementById('profileMenu');
+    const logoutButton = document.getElementById('logoutButton');
+    const viewProfileButton = document.getElementById('viewProfile');
+
+    loginButton.addEventListener('click', () => {
+        loginModal.style.display = 'flex';
+    });
+
+    closeLogin.addEventListener('click', () => {
+        loginModal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === loginModal) {
+            loginModal.style.display = 'none';
+        }
+    });
+
+    submitLogin.addEventListener('click', () => {
+        const username = usernameInput.value.trim();
+        const password = passwordInput.value.trim();
+
+        if (username === 'admin' && password === 'password') {
+            alert('Login successful!');
+            loginModal.style.display = 'none';
+            uploadButton.style.display = 'block';
+            loginButton.style.display = 'none';
+            profilePicture.style.display = 'block';
+            syncProfileMenu();
+        } else {
+            alert('Invalid username or password.');
+        }
+    });
+
+    profilePicture.addEventListener('click', () => {
+        profileMenu.style.display = profileMenu.style.display === 'block' ? 'none' : 'block';
+    });
+
+    logoutButton.addEventListener('click', () => {
+        alert('Logout successful!');
+        profileMenu.style.display = 'none';
+        profilePicture.style.display = 'none';
+        loginButton.style.display = 'block';
+        uploadButton.style.display = 'none';
+    });
+
+    viewProfileButton.addEventListener('click', () => {
+        alert('Profile feature is not implemented yet.');
+    });
+
+    function syncProfileMenu() {
+        const isLoggedIn = !!localStorage.getItem('cartPurchase');
+        profileMenu.style.display = isLoggedIn ? 'block' : 'none';
+        loginButton.style.display = isLoggedIn ? 'none' : 'block';
+        uploadButton.style.display = isLoggedIn ? 'block' : 'none';
+        profilePicture.style.display = isLoggedIn ? 'block' : 'none';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        syncProfileMenu();
+        updateCart();
+    });
         </script>
     </body>
 </html>

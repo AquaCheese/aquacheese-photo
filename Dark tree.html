@@ -332,6 +332,33 @@
     font-size: 0.9rem;
     margin-top: 10px;
 }
+
+#profileMenu {
+    display: none;
+    position: absolute;
+    top: 60px;
+    left: 10px;
+    background-color: #444;
+    border: 1px solid #555;
+    border-radius: 8px;
+    padding: 10px;
+    z-index: 1002;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#profileMenu button {
+    background-color: transparent;
+    color: whitesmoke;
+    border: none;
+    padding: 10px;
+    text-align: left;
+    width: 100%;
+    cursor: pointer;
+}
+
+#profileMenu button:hover {
+    background-color: #555;
+}
 </style>
     </head>
 
@@ -378,19 +405,15 @@
         &lt;&lt;&lt;&nbsp; &copy; 2025 AquaCheese &nbsp;&gt;&gt;&gt;
 
         <!-- Cart button -->
-        <button id="cartButton">Cart</button>
+        <button id="cartButton" style="position: fixed; top: 20px; right: 20px; background-color: gold; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer; z-index: 1000; transition: background-color 0.3s;">Cart</button>
 
         <!-- Cart panel -->
-        <div id="cartPanel">
-            <button id="closeCart">&times;</button>
-            <h2>Your Cart</h2>
-            <ul id="cartList">
-                <!-- Items will be dynamically added here -->
-            </ul>
-            <div id="cartSubtotal">
-                Subtotal: £0
-            </div>
-            <button id="buyNowButton">Buy Now</button>
+        <div id="cartPanel" style="position: fixed; top: 0; right: -100%; width: 300px; height: 100%; background-color: #333; color: whitesmoke; box-shadow: -2px 0 5px rgba(0,0,0,0.5); overflow-y: auto; transition: right 0.3s ease; z-index: 999; padding: 20px; display: block;">
+            <button id="closeCart" style="position: absolute; top: 10px; right: 10px; background-color: red; color: white; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 1001;">&times;</button>
+            <h2 style="text-align: center; color: #ffcc00;">Your Cart</h2>
+            <ul id="cartList" style="list-style-type: none; padding: 0;"></ul>
+            <div id="cartSubtotal" style="margin-top: 20px; font-size: 18px; text-align: center; border-top: 1px solid whitesmoke; padding-top: 10px;">Subtotal: £0</div>
+            <button id="buyNowButton" style="margin-top: 20px; width: 100%; padding: 10px; background-color: green; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">Buy Now</button>
         </div>
 
         <!-- Login/Profile Modal -->
@@ -429,6 +452,12 @@
             </div>
         </div>
 
+        <!-- Profile Menu (hidden by default) -->
+        <div id="profileMenu" style="display:none;">
+            <button id="viewProfile" style="width:100%;padding:10px;background-color:#444;color:whitesmoke;border:none;border-radius:5px;margin-top:10px;">View Profile</button>
+            <button id="logoutButton" style="width:100%;padding:10px;background-color:#444;color:whitesmoke;border:none;border-radius:5px;margin-top:10px;">Logout</button>
+        </div>
+
         <script type="module">
             import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js';
             import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup, FacebookAuthProvider } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js';
@@ -459,113 +488,62 @@
                 document.getElementById('dialogOverlay').style.display = 'none';
             }
 
-            // Cart functionality
-            let cart = JSON.parse(localStorage.getItem('cart')) || []; // Load cart from localStorage or initialize as empty
-            const cartButton = document.getElementById('cartButton');
-            const cartPanel = document.getElementById('cartPanel');
-            const cartList = document.getElementById('cartList');
-            const cartSubtotal = document.getElementById('cartSubtotal');
-            const closeCart = document.getElementById('closeCart');
+            // Cart logic from index.html
+const cartButton = document.getElementById('cartButton');
+const cartPanel = document.getElementById('cartPanel');
+const closeCart = document.getElementById('closeCart');
+const cartList = document.getElementById('cartList');
+const cartSubtotal = document.getElementById('cartSubtotal');
+const buyNowButton = document.getElementById('buyNowButton');
 
-            // Open the cart panel
-            cartButton.addEventListener('click', () => {
-                cartPanel.style.right = '0';
-                cartButton.style.display = 'none'; // Hide the cart button
-            });
-
-            // Close the cart panel
-            closeCart.addEventListener('click', () => {
-                cartPanel.style.right = '-100%';
-                cartButton.style.display = 'block'; // Show the cart button
-            });
-
-            // Add to cart function
-            function addToCart(itemName, itemImage) {
-                if (!itemName) {
-                    alert("Error: Item name is missing.");
-                    return;
-                }
-
-                // Add the item details to the cart array
-                cart.push({ name: itemName, image: itemImage, price: 15 }); // Assume each image costs £15
-                saveCart(); // Save the cart to localStorage
-                updateCart();
-                alert(`${itemName} has been added to your cart.`);
-            }
-
-            // Update the cart list and cart button text
-            function updateCart() {
-                cartList.innerHTML = ''; // Clear the current cart list
-                let subtotal = 0; // Initialize subtotal
-
-                cart.forEach((item, index) => {
-                    const listItem = document.createElement('li');
-                    listItem.style.display = 'flex';
-                    listItem.style.alignItems = 'center';
-                    listItem.style.marginBottom = '10px';
-
-                    // Add the image to the cart item (if available)
-                    if (item.image) {
-                        const itemImage = document.createElement('img');
-                        itemImage.src = item.image;
-                        itemImage.alt = item.name;
-                        itemImage.style.width = '50px';
-                        itemImage.style.height = '50px';
-                        itemImage.style.marginRight = '10px';
-                        itemImage.style.border = '1px solid whitesmoke';
-                        listItem.appendChild(itemImage);
-                    }
-
-                    // Add the name of the item
-                    const itemName = document.createElement('span');
-                    itemName.textContent = item.name;
-                    listItem.appendChild(itemName);
-
-                    // Add the price of the item
-                    const itemPrice = document.createElement('span');
-                    itemPrice.textContent = ` - £${item.price}`;
-                    itemPrice.style.marginLeft = 'auto';
-                    listItem.appendChild(itemPrice);
-
-                    // Add a remove button for each item
-                    const removeButton = document.createElement('button');
-                    removeButton.textContent = 'Remove';
-                    removeButton.style.marginLeft = '10px';
-                    removeButton.style.backgroundColor = 'red';
-                    removeButton.style.color = 'white';
-                    removeButton.style.border = 'none';
-                    removeButton.style.borderRadius = '5px';
-                    removeButton.style.cursor = 'pointer';
-
-                    // Remove item from the cart when the button is clicked
-                    removeButton.addEventListener('click', () => {
-                        cart.splice(index, 1); // Remove the item from the cart array
-                        saveCart(); // Save the updated cart to localStorage
-                        updateCart(); // Update the cart display
-                    });
-
-                    listItem.appendChild(removeButton);
-                    cartList.appendChild(listItem);
-
-                    // Add the item's price to the subtotal
-                    subtotal += item.price;
-                });
-
-                // Update the subtotal display
-                cartSubtotal.textContent = `Subtotal: £${subtotal}`;
-
-                // Update the cart button text with the number of items
-                const itemCount = cart.length;
-                cartButton.textContent = itemCount > 0 ? `Cart (${itemCount})` : 'Cart';
-            }
-
-            // Save the cart to localStorage
-            function saveCart() {
-                localStorage.setItem('cart', JSON.stringify(cart));
-            }
-
-            // Load the cart when the page loads
-            document.addEventListener('DOMContentLoaded', updateCart);
+function getCart() {
+  return JSON.parse(localStorage.getItem('cart') || '[]');
+}
+function setCart(cart) {
+  localStorage.setItem('cart', JSON.stringify(cart));
+}
+function updateCartUI() {
+  const cart = getCart();
+  cartList.innerHTML = '';
+  let subtotal = 0;
+  cart.forEach((item, idx) => {
+    const li = document.createElement('li');
+    li.style.display = 'flex';
+    li.style.justifyContent = 'space-between';
+    li.style.alignItems = 'center';
+    li.style.marginBottom = '8px';
+    li.innerHTML = `<span>${item.name}</span> <span>£${item.price}</span> <button style="background:red;color:white;border:none;border-radius:4px;padding:2px 8px;cursor:pointer;" onclick="removeFromCart(${idx})">Remove</button>`;
+    cartList.appendChild(li);
+    subtotal += item.price;
+  });
+  cartSubtotal.textContent = `Subtotal: £${subtotal}`;
+}
+function addToCart(name, img) {
+  const price = 15;
+  const cart = getCart();
+  cart.push({ name, img, price });
+  setCart(cart);
+  updateCartUI();
+}
+function removeFromCart(idx) {
+  const cart = getCart();
+  cart.splice(idx, 1);
+  setCart(cart);
+  updateCartUI();
+}
+cartButton.addEventListener('click', () => {
+  cartPanel.style.right = '0';
+  updateCartUI();
+});
+closeCart.addEventListener('click', () => {
+  cartPanel.style.right = '-100%';
+});
+buyNowButton.addEventListener('click', () => {
+  alert('Purchasing is not enabled in this beta.');
+});
+window.addToCart = addToCart;
+window.removeFromCart = removeFromCart;
+window.addEventListener('DOMContentLoaded', updateCartUI);
 
             // Login / Profile functionality
             const loginModal = document.getElementById('loginModal');
@@ -574,6 +552,9 @@
             const loginForm = document.getElementById('loginForm');
             const loginError = document.getElementById('loginError');
             const loginSuccess = document.getElementById('loginSuccess');
+            const profileMenu = document.getElementById('profileMenu');
+            const viewProfile = document.getElementById('viewProfile');
+            const logoutButton = document.getElementById('logoutButton');
 
             // Open login modal
             function openLoginModal() {
@@ -640,15 +621,17 @@
                     // User is signed in
                     document.getElementById('profileLink').style.display = 'block';
                     document.getElementById('loginLink').style.display = 'none';
+                    profileMenu.style.display = 'block';
                 } else {
                     // No user is signed in
                     document.getElementById('profileLink').style.display = 'none';
                     document.getElementById('loginLink').style.display = 'block';
+                    profileMenu.style.display = 'none';
                 }
             });
 
             // Logout function
-            document.getElementById('logoutButton').onclick = async () => {
+            logoutButton.onclick = async () => {
                 try {
                     await signOut(auth);
                     location.reload();

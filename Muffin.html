@@ -462,7 +462,8 @@
             <address>[NO LOCATION]</address>
         </fieldset>
         <br>
-        <button type="button" style="font-size: large;">Add to Cart</button> &nbsp;&nbsp;&nbsp; <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+        <!-- Add to Cart button -->
+        <button type="button" style="font-size: large;" onclick="addToCart('Mini Muffin', 'Muffin WM.png', 15)">Add to Cart</button> &nbsp;&nbsp;&nbsp; <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
         <br><br>
         &lt;&lt;&lt;&nbsp; &copy; 2025 AquaCheese &nbsp;&gt;&gt;&gt;
 
@@ -503,15 +504,17 @@
             </div>
         </div>
 
-        <div class="dialog-overlay" id="cartPanel">
-            <div class="dialog-box">
-                <button class="close-btn" onclick="closeCart()">&times;</button>
-                <h2>Your Cart</h2>
-                <div id="cartItems">Loading...</div>
-                <div id="cartSubtotal">Subtotal: £0.00</div>
-                <button id="buyNowButton" onclick="buyNow()">Buy Now</button>
-            </div>
-        </div>
+        <!-- Cart button -->
+<button id="cartButton" style="position: fixed; top: 20px; right: 20px; background-color: gold; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer; z-index: 1000; transition: background-color 0.3s;">Cart</button>
+
+<!-- Cart panel -->
+<div id="cartPanel" style="position: fixed; top: 0; right: -100%; width: 300px; height: 100%; background-color: #333; color: whitesmoke; box-shadow: -2px 0 5px rgba(0,0,0,0.5); overflow-y: auto; transition: right 0.3s ease; z-index: 999; padding: 20px; display: block;">
+    <button id="closeCart" style="position: absolute; top: 10px; right: 10px; background-color: red; color: white; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 1001;">&times;</button>
+    <h2 style="text-align: center; color: #ffcc00;">Your Cart</h2>
+    <ul id="cartList" style="list-style-type: none; padding: 0;"></ul>
+    <div id="cartSubtotal" style="margin-top: 20px; font-size: 18px; text-align: center; border-top: 1px solid whitesmoke; padding-top: 10px;">Subtotal: £0</div>
+    <button id="buyNowButton" style="margin-top: 20px; width: 100%; padding: 10px; background-color: green; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">Buy Now</button>
+</div>
 
         <script type="module">
             import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js';
@@ -534,54 +537,6 @@
             const auth = getAuth();
             const db = getFirestore();
             const storage = getStorage();
-
-            // Cart functionality
-            let cart = [];
-
-            function openCart() {
-                document.getElementById('cartPanel').style.display = 'flex';
-                updateCartUI();
-            }
-
-            function closeCart() {
-                document.getElementById('cartPanel').style.display = 'none';
-            }
-
-            function updateCartUI() {
-                const cartItemsDiv = document.getElementById('cartItems');
-                cartItemsDiv.innerHTML = '';
-
-                cart.forEach((item, index) => {
-                    const div = document.createElement('div');
-                    div.innerHTML = `
-                        <img src="${item.image}" alt="${item.name}">
-                        <div>
-                            <strong>${item.name}</strong>
-                            <p>£${item.price.toFixed(2)}</p>
-                        </div>
-                        <button onclick="removeFromCart(${index})">Remove</button>
-                    `;
-                    cartItemsDiv.appendChild(div);
-                });
-
-                const subtotal = cart.reduce((sum, item) => sum + item.price, 0);
-                document.getElementById('cartSubtotal').innerText = `Subtotal: £${subtotal.toFixed(2)}`;
-            }
-
-            function addToCart(item) {
-                cart.push(item);
-                updateCartUI();
-            }
-
-            function removeFromCart(index) {
-                cart.splice(index, 1);
-                updateCartUI();
-            }
-
-            function buyNow() {
-                // Implement buy now functionality
-                alert('Implement buy now functionality');
-            }
 
             // Authentication functionality
             const loginModal = document.getElementById('loginModal');
@@ -684,6 +639,65 @@
             function closeDialog() {
                 document.getElementById('dialogOverlay').style.display = 'none';
             }
+        </script>
+
+        <script>
+// Cart logic from index.html
+const cartButton = document.getElementById('cartButton');
+const cartPanel = document.getElementById('cartPanel');
+const closeCart = document.getElementById('closeCart');
+const cartList = document.getElementById('cartList');
+const cartSubtotal = document.getElementById('cartSubtotal');
+const buyNowButton = document.getElementById('buyNowButton');
+
+function getCart() {
+  return JSON.parse(localStorage.getItem('cart') || '[]');
+}
+function setCart(cart) {
+  localStorage.setItem('cart', JSON.stringify(cart));
+}
+function updateCartUI() {
+  const cart = getCart();
+  cartList.innerHTML = '';
+  let subtotal = 0;
+  cart.forEach((item, idx) => {
+    const li = document.createElement('li');
+    li.style.display = 'flex';
+    li.style.justifyContent = 'space-between';
+    li.style.alignItems = 'center';
+    li.style.marginBottom = '8px';
+    li.innerHTML = `<span>${item.name}</span> <span>£${item.price}</span> <button style="background:red;color:white;border:none;border-radius:4px;padding:2px 8px;cursor:pointer;" onclick="removeFromCart(${idx})">Remove</button>`;
+    cartList.appendChild(li);
+    subtotal += item.price;
+  });
+  cartSubtotal.textContent = `Subtotal: £${subtotal}`;
+}
+function addToCart(name, img) {
+  const price = 15;
+  const cart = getCart();
+  cart.push({ name, img, price });
+  setCart(cart);
+  updateCartUI();
+}
+function removeFromCart(idx) {
+  const cart = getCart();
+  cart.splice(idx, 1);
+  setCart(cart);
+  updateCartUI();
+}
+cartButton.addEventListener('click', () => {
+  cartPanel.style.right = '0';
+  updateCartUI();
+});
+closeCart.addEventListener('click', () => {
+  cartPanel.style.right = '-100%';
+});
+buyNowButton.addEventListener('click', () => {
+  alert('Purchasing is not enabled in this beta.');
+});
+window.addToCart = addToCart;
+window.removeFromCart = removeFromCart;
+window.addEventListener('DOMContentLoaded', updateCartUI);
         </script>
     </body>
 </html>

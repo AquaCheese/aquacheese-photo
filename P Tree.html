@@ -359,6 +359,53 @@
 .modal-content button:hover {
     background-color: darkgreen;
 }
+
+/* Profile menu styles */
+#profileMenu {
+    display: none;
+    position: absolute;
+    top: 60px;
+    left: 20px;
+    background-color: #333;
+    color: whitesmoke;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    z-index: 1002;
+    padding: 10px;
+}
+
+#profileMenu a {
+    color: #ffcc00;
+    text-decoration: none;
+    display: block;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+#profileMenu a:hover {
+    background-color: #444;
+}
+
+/* Upload button styles */
+#uploadButton {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background-color: #ffcc00;
+    color: black;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    z-index: 1000;
+    transition: background-color 0.3s ease;
+}
+
+#uploadButton:hover {
+    background-color: goldenrod;
+}
         </style>
     </head>
 
@@ -406,19 +453,15 @@
         &lt;&lt;&lt;&nbsp; &copy; 2025 AquaCheese &nbsp;&gt;&gt;&gt;
 
         <!-- Cart button -->
-        <button id="cartButton">Cart</button>
+        <button id="cartButton" style="position: fixed; top: 20px; right: 20px; background-color: gold; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer; z-index: 1000; transition: background-color 0.3s;">Cart</button>
 
         <!-- Cart panel -->
-        <div id="cartPanel">
-            <button id="closeCart">&times;</button>
-            <h2>Your Cart</h2>
-            <ul id="cartList">
-                <!-- Items will be dynamically added here -->
-            </ul>
-            <div id="cartSubtotal">
-                Subtotal: £0
-            </div>
-            <button id="buyNowButton">Buy Now</button>
+        <div id="cartPanel" style="position: fixed; top: 0; right: -100%; width: 300px; height: 100%; background-color: #333; color: whitesmoke; box-shadow: -2px 0 5px rgba(0,0,0,0.5); overflow-y: auto; transition: right 0.3s ease; z-index: 999; padding: 20px; display: block;">
+            <button id="closeCart" style="position: absolute; top: 10px; right: 10px; background-color: red; color: white; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 1001;">&times;</button>
+            <h2 style="text-align: center; color: #ffcc00;">Your Cart</h2>
+            <ul id="cartList" style="list-style-type: none; padding: 0;"></ul>
+            <div id="cartSubtotal" style="margin-top: 20px; font-size: 18px; text-align: center; border-top: 1px solid whitesmoke; padding-top: 10px;">Subtotal: £0</div>
+            <button id="buyNowButton" style="margin-top: 20px; width: 100%; padding: 10px; background-color: green; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">Buy Now</button>
         </div>
 
         <!-- Unified login/profile modal -->
@@ -453,6 +496,23 @@
             </div>
         </div>
 
+        <!-- Profile menu -->
+        <div id="profileMenu">
+            <a href="javascript:void(0);" onclick="openUploadModal()">Upload Photo</a>
+            <a href="javascript:void(0);" onclick="logout()">Logout</a>
+        </div>
+
+        <!-- Upload modal -->
+        <div id="uploadModal" class="modal-overlay">
+            <div class="modal-content">
+                <button class="close-modal" onclick="closeUploadModal()">X</button>
+                <h2>Upload Photo</h2>
+                <input type="file" id="photoUpload" accept="image/*">
+                <button id="submitUpload" style="margin-top: 10px;">Upload</button>
+                <div id="uploadStatus" style="margin-top: 10px;"></div>
+            </div>
+        </div>
+
         <script type="module">
             import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js';
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js';
@@ -484,113 +544,62 @@ function closeDialog() {
     document.getElementById('dialogOverlay').style.display = 'none';
 }
 
-// Cart functionality
-let cart = JSON.parse(localStorage.getItem('cart')) || []; // Load cart from localStorage or initialize as empty
+// Cart logic from index.html
 const cartButton = document.getElementById('cartButton');
 const cartPanel = document.getElementById('cartPanel');
+const closeCart = document.getElementById('closeCart');
 const cartList = document.getElementById('cartList');
 const cartSubtotal = document.getElementById('cartSubtotal');
-const closeCart = document.getElementById('closeCart');
+const buyNowButton = document.getElementById('buyNowButton');
 
-// Open the cart panel
+function getCart() {
+  return JSON.parse(localStorage.getItem('cart') || '[]');
+}
+function setCart(cart) {
+  localStorage.setItem('cart', JSON.stringify(cart));
+}
+function updateCartUI() {
+  const cart = getCart();
+  cartList.innerHTML = '';
+  let subtotal = 0;
+  cart.forEach((item, idx) => {
+    const li = document.createElement('li');
+    li.style.display = 'flex';
+    li.style.justifyContent = 'space-between';
+    li.style.alignItems = 'center';
+    li.style.marginBottom = '8px';
+    li.innerHTML = `<span>${item.name}</span> <span>£${item.price}</span> <button style="background:red;color:white;border:none;border-radius:4px;padding:2px 8px;cursor:pointer;" onclick="removeFromCart(${idx})">Remove</button>`;
+    cartList.appendChild(li);
+    subtotal += item.price;
+  });
+  cartSubtotal.textContent = `Subtotal: £${subtotal}`;
+}
+function addToCart(name, img) {
+  const price = 15;
+  const cart = getCart();
+  cart.push({ name, img, price });
+  setCart(cart);
+  updateCartUI();
+}
+function removeFromCart(idx) {
+  const cart = getCart();
+  cart.splice(idx, 1);
+  setCart(cart);
+  updateCartUI();
+}
 cartButton.addEventListener('click', () => {
-    cartPanel.style.right = '0';
-    cartButton.style.display = 'none'; // Hide the cart button
+  cartPanel.style.right = '0';
+  updateCartUI();
 });
-
-// Close the cart panel
 closeCart.addEventListener('click', () => {
-    cartPanel.style.right = '-100%';
-    cartButton.style.display = 'block'; // Show the cart button
+  cartPanel.style.right = '-100%';
 });
-
-// Add to cart function
-function addToCart(itemName, itemImage) {
-    if (!itemName) {
-        alert("Error: Item name is missing.");
-        return;
-    }
-
-    // Add the item details to the cart array
-    cart.push({ name: itemName, image: itemImage, price: 15 }); // Assume each image costs £15
-    saveCart(); // Save the cart to localStorage
-    updateCart();
-    alert(`${itemName} has been added to your cart.`);
-}
-
-// Update the cart list and cart button text
-function updateCart() {
-    cartList.innerHTML = ''; // Clear the current cart list
-    let subtotal = 0; // Initialize subtotal
-
-    cart.forEach((item, index) => {
-        const listItem = document.createElement('li');
-        listItem.style.display = 'flex';
-        listItem.style.alignItems = 'center';
-        listItem.style.marginBottom = '10px';
-
-        // Add the image to the cart item (if available)
-        if (item.image) {
-            const itemImage = document.createElement('img');
-            itemImage.src = item.image;
-            itemImage.alt = item.name;
-            itemImage.style.width = '50px';
-            itemImage.style.height = '50px';
-            itemImage.style.marginRight = '10px';
-            itemImage.style.border = '1px solid whitesmoke';
-            listItem.appendChild(itemImage);
-        }
-
-        // Add the name of the item
-        const itemName = document.createElement('span');
-        itemName.textContent = item.name;
-        listItem.appendChild(itemName);
-
-        // Add the price of the item
-        const itemPrice = document.createElement('span');
-        itemPrice.textContent = ` - £${item.price}`;
-        itemPrice.style.marginLeft = 'auto';
-        listItem.appendChild(itemPrice);
-
-        // Add a remove button for each item
-        const removeButton = document.createElement('button');
-        removeButton.textContent = 'Remove';
-        removeButton.style.marginLeft = '10px';
-        removeButton.style.backgroundColor = 'red';
-        removeButton.style.color = 'white';
-        removeButton.style.border = 'none';
-        removeButton.style.borderRadius = '5px';
-        removeButton.style.cursor = 'pointer';
-
-        // Remove item from the cart when the button is clicked
-        removeButton.addEventListener('click', () => {
-            cart.splice(index, 1); // Remove the item from the cart array
-            saveCart(); // Save the updated cart to localStorage
-            updateCart(); // Update the cart display
-        });
-
-        listItem.appendChild(removeButton);
-        cartList.appendChild(listItem);
-
-        // Add the item's price to the subtotal
-        subtotal += item.price;
-    });
-
-    // Update the subtotal display
-    cartSubtotal.textContent = `Subtotal: £${subtotal}`;
-
-    // Update the cart button text with the number of items
-    const itemCount = cart.length;
-    cartButton.textContent = itemCount > 0 ? `Cart (${itemCount})` : 'Cart';
-}
-
-// Save the cart to localStorage
-function saveCart() {
-    localStorage.setItem('cart', JSON.stringify(cart));
-}
-
-// Load the cart when the page loads
-document.addEventListener('DOMContentLoaded', updateCart);
+buyNowButton.addEventListener('click', () => {
+  alert('Purchasing is not enabled in this beta.');
+});
+window.addToCart = addToCart;
+window.removeFromCart = removeFromCart;
+window.addEventListener('DOMContentLoaded', updateCartUI);
 
 // Login and registration functionality
 const loginForm = document.getElementById('loginForm');
@@ -650,6 +659,70 @@ function openRegisterModal() {
 
 function closeRegisterModal() {
     document.getElementById('registerModal').style.display = 'none';
+}
+
+// Profile menu and upload logic
+const profileMenu = document.getElementById('profileMenu');
+const uploadButton = document.getElementById('uploadButton');
+const photoUpload = document.getElementById('photoUpload');
+const submitUpload = document.getElementById('submitUpload');
+const uploadStatus = document.getElementById('uploadStatus');
+
+function toggleProfileMenu() {
+    if (profileMenu.style.display === 'block') {
+        profileMenu.style.display = 'none';
+    } else {
+        profileMenu.style.display = 'block';
+    }
+}
+
+function openUploadModal() {
+    document.getElementById('uploadModal').style.display = 'flex';
+}
+
+function closeUploadModal() {
+    document.getElementById('uploadModal').style.display = 'none';
+}
+
+submitUpload.addEventListener('click', () => {
+    const file = photoUpload.files[0];
+    if (!file) {
+        uploadStatus.textContent = 'Please select a file to upload.';
+        return;
+    }
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        // Here you would typically upload the file to your server or Firebase Storage
+        // For demonstration, we'll just show the uploaded image in the status div
+        uploadStatus.innerHTML = `<img src="${e.target.result}" alt="Uploaded Image" style="max-width:100%;border:2px solid #ffcc00;border-radius:8px;">`;
+    };
+    reader.readAsDataURL(file);
+});
+
+// Auth state change listener
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        // User is signed in
+        const uid = user.uid;
+        // Fetch and display user profile data if needed
+        // For now, just show the logout button and profile menu
+        document.getElementById('profilePic').src = 'default-profile.png'; // Placeholder image
+        document.getElementById('profilePic').style.display = 'block';
+        uploadButton.style.display = 'block';
+        profileMenu.style.display = 'none'; // Hide menu by default
+    } else {
+        // No user is signed in
+        document.getElementById('profilePic').style.display = 'none';
+        uploadButton.style.display = 'none';
+    }
+});
+
+function logout() {
+    auth.signOut().then(() => {
+        alert('Logged out successfully.');
+    }).catch((error) => {
+        alert(`Error logging out: ${error.message}`);
+    });
 }
         </script>
     </body>

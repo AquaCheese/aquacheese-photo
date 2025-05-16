@@ -123,6 +123,7 @@
         color: #ffcc00;
     }
 
+    /* Cart button styles */
     #cartButton {
         position: fixed;
         top: 20px;
@@ -142,6 +143,7 @@
         background-color: goldenrod;
     }
 
+    /* Cart panel styles (match Seagull car img.html) */
     #cartPanel {
         position: fixed;
         top: 0;
@@ -155,6 +157,7 @@
         transition: right 0.3s ease;
         z-index: 999;
         padding: 20px;
+        display: block; /* Always block, control with right property only */
     }
 
     #cartPanel h2 {
@@ -222,29 +225,31 @@
     }
 
     #closeCart {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: red;
-    color: white;
-    border: none;
-    border-radius: 50%; /* Makes it circular */
-    width: 40px; /* Adjust width */
-    height: 40px; /* Adjust height */
-    font-size: 24px; /* Adjust font size */
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center; /* Centers the "×" inside the circle */
-    z-index: 1001;
-}
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: red;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        font-size: 24px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1001;
+    }
 
-#closeCart:hover {
-    background-color: darkred;
-}
+    #closeCart:hover {
+        background-color: darkred;
+    }
+
+    #loginModal .hidden { display: none !important; }
+    .hidden { display: none !important; }
+    /* Place the login modal at the end of <body> for best stacking */
     </style>
-    </head>
-
     <body>
         <h1>Train Leaving the Station</h1>
         <a href="index.html"><button type="button" style="position: absolute;">&larr; Back to Home</button></a>
@@ -288,285 +293,299 @@
         &lt;&lt;&lt;&nbsp; &copy; 2025 AquaCheese &nbsp;&gt;&gt;&gt;
 
         <!-- Cart button -->
-        <button id="cartButton">Cart</button>
+        <button id="cartButton" style="position: fixed; top: 20px; right: 20px; background-color: gold; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer; z-index: 1000; transition: background-color 0.3s;">Cart</button>
 
         <!-- Cart panel -->
-        <div id="cartPanel">
-            <button id="closeCart">&times;</button>
-            <h2>Your Cart</h2>
-            <ul id="cartList">
-                <!-- Items will be dynamically added here -->
-            </ul>
-            <div id="cartSubtotal">
-                Subtotal: £0
-            </div>
-            <button id="buyNowButton">Buy Now</button>
+        <div id="cartPanel" style="position: fixed; top: 0; right: -100%; width: 300px; height: 100%; background-color: #333; color: whitesmoke; box-shadow: -2px 0 5px rgba(0,0,0,0.5); overflow-y: auto; transition: right 0.3s ease; z-index: 999; padding: 20px; display: block;">
+            <button id="closeCart" style="position: absolute; top: 10px; right: 10px; background-color: red; color: white; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 1001;">&times;</button>
+            <h2 style="text-align: center; color: #ffcc00;">Your Cart</h2>
+            <ul id="cartList" style="list-style-type: none; padding: 0;"></ul>
+            <div id="cartSubtotal" style="margin-top: 20px; font-size: 18px; text-align: center; border-top: 1px solid whitesmoke; padding-top: 10px;">Subtotal: £0</div>
+            <button id="buyNowButton" style="margin-top: 20px; width: 100%; padding: 10px; background-color: green; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">Buy Now</button>
         </div>
-
-        <!-- Login/Profile Modal -->
-        <div id="loginModal" class="modal">
-            <div class="modal-content">
-                <span class="close" id="closeLoginModal">&times;</span>
-                <h2>Login</h2>
-                <form id="loginForm">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required>
-                    <br>
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" required>
-                    <br>
-                    <button type="submit">Login</button>
-                </form>
-                <p>Don't have an account? <a href="javascript:void(0);" id="showRegister">Register here</a></p>
-            </div>
+        <!-- Robust Login/Profile Modal (unified version) -->
+        <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+          <button id="loginButton" style="background-color: lightblue; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer;">
+            Log In
+          </button>
+          <section id="upload-button-section" style="display: none;">
+            <button id="upload-page-button" style="font-size: large; padding: 10px 20px; border-radius: 5px; background-color: lightblue; border: none; cursor: pointer;">
+              Upload Media
+            </button>
+          </section>
         </div>
-
-        <!-- Register Modal -->
-        <div id="registerModal" class="modal">
-            <div class="modal-content">
-                <span class="close" id="closeRegisterModal">&times;</span>
-                <h2>Register</h2>
-                <form id="registerForm">
-                    <label for="newEmail">Email:</label>
-                    <input type="email" id="newEmail" name="email" required>
-                    <br>
-                    <label for="newPassword">Password:</label>
-                    <input type="password" id="newPassword" name="password" required>
-                    <br>
-                    <button type="submit">Register</button>
-                </form>
-                <p>Already have an account? <a href="javascript:void(0);" id="showLogin">Login here</a></p>
-            </div>
+        <div id="loginModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;">
+          <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #333; color: whitesmoke; padding: 20px; border-radius: 8px; width: 300px; text-align: center;">
+            <h2>Log In</h2>
+            <button id="googleLoginButton" style="background-color: #4285F4; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In with Google</button>
+            <button id="showEmailLoginForm" style="background-color: #555; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In with Email</button>
+            <button id="showRegisterForm" style="background-color: #ffc107; color: black; border: none; border-radius: 5px; padding: 8px 16px; font-size: 15px; cursor: pointer; margin: 10px; display: inline-block;">Register</button>
+            <form id="emailLoginForm" class="hidden" style="margin-top:10px;">
+              <input id="emailInput" type="email" placeholder="Email" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
+              <input id="passwordInput" type="password" placeholder="Password" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
+              <button type="submit" style="background-color: #555; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In</button>
+              <button type="button" id="cancelEmailLogin" style="background-color: #dc3545; color: white; border: none; border-radius: 5px; padding: 8px 16px; font-size: 15px; cursor: pointer; margin: 10px;">Cancel</button>
+            </form>
+            <form id="registerForm" class="hidden" style="margin-top:10px;">
+              <input id="registerEmail" type="email" placeholder="Email" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
+              <input id="registerPassword" type="password" placeholder="Password" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
+              <button type="submit" style="background-color: #28a745; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Register</button>
+              <button type="button" id="cancelRegister" style="background-color: #dc3545; color: white; border: none; border-radius: 5px; padding: 8px 16px; font-size: 15px; cursor: pointer; margin: 10px;">Cancel</button>
+            </form>
+            <div id="emailLoginError" style="color:#ff6666; margin-top:8px; min-height:20px;"></div>
+            <br>
+            <hr style="border: 0; border-top: 1px solid #888; margin: 16px 0 8px 0;">
+            <button id="closeLoginModal" style="background-color: red; color: white; border: none; border-radius: 5px; padding: 5px 10px; font-size: 14px; cursor: pointer; margin-top: 10px;">Close</button>
+            <button id="logoutButton" style="background-color: #343a40; color: white; border: none; border-radius: 5px; padding: 8px 16px; font-size: 15px; cursor: pointer; margin: 10px; display: none;">Log Out</button>
+          </div>
         </div>
-
-        <script type="module">
-// Import Firebase modules
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js';
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js';
-import { getDatabase, ref, set, get, child, update, remove } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-database.js';
-
-// TODO: Replace with your app's Firebase project configuration
-const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    databaseURL: "YOUR_DATABASE_URL",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth();
-const db = getDatabase();
-
-// Handle login form submission
-document.getElementById('loginForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            // Signed in 
-            const user = userCredential.user;
-            alert('Login successful!');
-            // Close the modal
-            document.getElementById('closeLoginModal').click();
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            alert('Error: ' + errorMessage);
-        });
-});
-
-// Handle register form submission
-document.getElementById('registerForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const email = document.getElementById('newEmail').value;
-    const password = document.getElementById('newPassword').value;
-    createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            // Registered 
-            const user = userCredential.user;
-            alert('Registration successful!');
-            // Close the modal
-            document.getElementById('closeRegisterModal').click();
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            alert('Error: ' + errorMessage);
-        });
-});
-
-// Function to open the dialog
-function openDialog() {
-    document.getElementById('dialogOverlay').style.display = 'flex';
-}
-
-// Function to close the dialog
-function closeDialog() {
-    document.getElementById('dialogOverlay').style.display = 'none';
-}
-
-// Cart functionality
-let cart = JSON.parse(localStorage.getItem('cart')) || []; // Load cart from localStorage or initialize as empty
-const cartButton = document.getElementById('cartButton');
-const cartPanel = document.getElementById('cartPanel');
-const cartList = document.getElementById('cartList');
-const cartSubtotal = document.getElementById('cartSubtotal');
-const closeCart = document.getElementById('closeCart');
-
-// Open the cart panel
-cartButton.addEventListener('click', () => {
-    cartPanel.style.right = '0';
-    cartButton.style.display = 'none'; // Hide the cart button
-});
-
-// Close the cart panel
-closeCart.addEventListener('click', () => {
-    cartPanel.style.right = '-100%';
-    cartButton.style.display = 'block'; // Show the cart button
-});
-
-// Add to cart function
-function addToCart(itemName, itemImage) {
-    if (!itemName) {
-        alert("Error: Item name is missing.");
-        return;
-    }
-
-    // Add the item details to the cart array
-    cart.push({ name: itemName, image: itemImage, price: 15 }); // Assume each image costs £15
-    saveCart(); // Save the cart to localStorage
-    updateCart();
-    alert(`${itemName} has been added to your cart.`);
-}
-
-// Update the cart list and cart button text
-function updateCart() {
-    cartList.innerHTML = ''; // Clear the current cart list
-    let subtotal = 0; // Initialize subtotal
-
-    cart.forEach((item, index) => {
-        const listItem = document.createElement('li');
-        listItem.style.display = 'flex';
-        listItem.style.alignItems = 'center';
-        listItem.style.marginBottom = '10px';
-
-        // Add the image to the cart item (if available)
-        if (item.image) {
-            const itemImage = document.createElement('img');
-            itemImage.src = item.image;
-            itemImage.alt = item.name;
-            itemImage.style.width = '50px';
-            itemImage.style.height = '50px';
-            itemImage.style.marginRight = '10px';
-            itemImage.style.border = '1px solid whitesmoke';
-            listItem.appendChild(itemImage);
-        }
-
-        // Add the name of the item
-        const itemName = document.createElement('span');
-        itemName.textContent = item.name;
-        listItem.appendChild(itemName);
-
-        // Add the price of the item
-        const itemPrice = document.createElement('span');
-        itemPrice.textContent = ` - £${item.price}`;
-        itemPrice.style.marginLeft = 'auto';
-        listItem.appendChild(itemPrice);
-
-        // Add a remove button for each item
-        const removeButton = document.createElement('button');
-        removeButton.textContent = 'Remove';
-        removeButton.style.marginLeft = '10px';
-        removeButton.style.backgroundColor = 'red';
-        removeButton.style.color = 'white';
-        removeButton.style.border = 'none';
-        removeButton.style.borderRadius = '5px';
-        removeButton.style.cursor = 'pointer';
-
-        // Remove item from the cart when the button is clicked
-        removeButton.addEventListener('click', () => {
-            cart.splice(index, 1); // Remove the item from the cart array
-            saveCart(); // Save the updated cart to localStorage
-            updateCart(); // Update the cart display
-        });
-
-        listItem.appendChild(removeButton);
-        cartList.appendChild(listItem);
-
-        // Add the item's price to the subtotal
-        subtotal += item.price;
-    });
-
-    // Update the subtotal display
-    cartSubtotal.textContent = `Subtotal: £${subtotal}`;
-
-    // Update the cart button text with the number of items
-    const itemCount = cart.length;
-    cartButton.textContent = itemCount > 0 ? `Cart (${itemCount})` : 'Cart';
-}
-
-// Save the cart to localStorage
-function saveCart() {
-    localStorage.setItem('cart', JSON.stringify(cart));
-}
-
-// Load the cart when the page loads
-document.addEventListener('DOMContentLoaded', updateCart);
-
-// Modal functionality
-const modal = document.getElementById('loginModal');
-const closeModal = document.getElementById('closeLoginModal');
-const showRegister = document.getElementById('showRegister');
-const registerModal = document.getElementById('registerModal');
-const closeRegisterModal = document.getElementById('closeRegisterModal');
-const showLogin = document.getElementById('showLogin');
-
-// Open login modal
-document.getElementById('loginButton').addEventListener('click', () => {
-    modal.style.display = 'block';
-});
-
-// Close login modal
-closeModal.addEventListener('click', () => {
-    modal.style.display = 'none';
-});
-
-// Show register form
-showRegister.addEventListener('click', () => {
-    modal.style.display = 'none';
-    registerModal.style.display = 'block';
-});
-
-// Open register modal
-document.getElementById('registerButton').addEventListener('click', () => {
-    registerModal.style.display = 'block';
-});
-
-// Close register modal
-closeRegisterModal.addEventListener('click', () => {
-    registerModal.style.display = 'none';
-});
-
-// Show login form
-showLogin.addEventListener('click', () => {
-    registerModal.style.display = 'none';
-    modal.style.display = 'block';
-});
-
-// Close modals when clicking outside of them
-window.addEventListener('click', (event) => {
-    if (event.target === modal) {
-        modal.style.display = 'none';
-    } else if (event.target === registerModal) {
-        registerModal.style.display = 'none';
-    }
-});
+        <div id="profileMenu" style="display: none; position: fixed; top: 60px; right: 20px; background-color: #333; color: whitesmoke; padding: 10px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); z-index: 1000;">
+          <div id="profileInfo" style="display: flex; align-items: center; margin-bottom: 10px;">
+            <img id="profilePic" src="" alt="Profile Picture" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
+            <div style="flex-grow: 1;">
+              <div id="profileName" style="font-weight: bold;"></div>
+              <div id="profileEmail" style="font-size: 0.9rem;"></div>
+            </div>
+          </div>
+          <button id="myProfileButton" style="width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; margin-bottom: 10px;">My Profile</button>
+          <button id="logoutFromMenuButton" style="width: 100%; padding: 10px; background-color: #dc3545; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">Log Out</button>
+        </div>
+        <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-auth-compat.js"></script>
+        <script src="firebase-config.js"></script>
+        <script>
+        (function waitForFirebaseAndRun(attempts = 0) {
+          if (!(window.firebase && window.firebaseConfig && window._firebaseInitialized)) {
+            if (attempts === 0) {
+              console.warn('Waiting for Firebase to be ready...');
+            }
+            if (attempts > 100) {
+              console.error('ERROR: Firebase config or initialization not detected after 5 seconds.');
+              return;
+            }
+            setTimeout(() => waitForFirebaseAndRun(attempts + 1), 50);
+            return;
+          }
+          function runLoginModalLogic() {
+            const loginButton = document.getElementById('loginButton');
+            const loginModal = document.getElementById('loginModal');
+            const closeLoginModal = document.getElementById('closeLoginModal');
+            const googleLoginButton = document.getElementById('googleLoginButton');
+            const showEmailLoginFormBtn = document.getElementById('showEmailLoginForm');
+            const showRegisterFormBtn = document.getElementById('showRegisterForm');
+            const emailLoginForm = document.getElementById('emailLoginForm');
+            const registerForm = document.getElementById('registerForm');
+            const cancelEmailLoginBtn = document.getElementById('cancelEmailLogin');
+            const cancelRegisterBtn = document.getElementById('cancelRegister');
+            const emailInput = document.getElementById('emailInput');
+            const passwordInput = document.getElementById('passwordInput');
+            const emailLoginError = document.getElementById('emailLoginError');
+            const uploadButtonSection = document.getElementById('upload-button-section');
+            const logoutButton = document.getElementById('logoutButton');
+            const profileMenu = document.getElementById('profileMenu');
+            const profilePic = document.getElementById('profilePic');
+            const profileName = document.getElementById('profileName');
+            const profileEmail = document.getElementById('profileEmail');
+            const myProfileButton = document.getElementById('myProfileButton');
+            const logoutFromMenuButton = document.getElementById('logoutFromMenuButton');
+            if (!loginButton || !loginModal || !closeLoginModal || !googleLoginButton || !showEmailLoginFormBtn || !showRegisterFormBtn || !emailLoginForm || !registerForm || !cancelEmailLoginBtn || !cancelRegisterBtn || !emailInput || !passwordInput || !emailLoginError || !uploadButtonSection || !logoutButton || !profileMenu || !profilePic || !profileName || !profileEmail || !myProfileButton || !logoutFromMenuButton) return;
+            const auth = firebase.auth();
+            const googleProvider = new firebase.auth.GoogleAuthProvider();
+            function show(el) { el.classList.remove('hidden'); }
+            function hide(el) { el.classList.add('hidden'); }
+            function resetLoginModal() {
+              hide(emailLoginForm);
+              hide(registerForm);
+              show(googleLoginButton);
+              show(showEmailLoginFormBtn);
+              show(showRegisterFormBtn);
+              emailLoginError.textContent = '';
+              if (typeof emailLoginForm.reset === 'function') emailLoginForm.reset();
+              if (typeof registerForm.reset === 'function') registerForm.reset();
+            }
+            loginButton.addEventListener('click', () => {
+              resetLoginModal();
+              loginModal.style.display = 'block';
+              loginModal.style.zIndex = '9999';
+              loginModal.style.backgroundColor = 'rgba(0,0,0,0.5)';
+              if (loginModal.firstElementChild) {
+                loginModal.firstElementChild.style.backgroundColor = '#333';
+                loginModal.firstElementChild.style.color = 'whitesmoke';
+                loginModal.firstElementChild.style.border = '';
+              }
+              const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+              if (loggedInUser) {
+                logoutButton.style.display = 'block';
+                profilePic.src = loggedInUser.profilePicUrl || '';
+                profileName.textContent = loggedInUser.displayName || loggedInUser.email;
+                profileEmail.textContent = loggedInUser.email;
+                profileMenu.style.display = 'block';
+                myProfileButton.style.display = 'block';
+                logoutFromMenuButton.style.display = 'block';
+                uploadButtonSection.style.display = loggedInUser.email === "aquacheese.yt@gmail.com" ? 'block' : 'none';
+              } else {
+                logoutButton.style.display = 'none';
+                profileMenu.style.display = 'none';
+                myProfileButton.style.display = 'none';
+                logoutFromMenuButton.style.display = 'none';
+                uploadButtonSection.style.display = 'none';
+              }
+            });
+            closeLoginModal.addEventListener('click', () => {
+              loginModal.style.display = 'none';
+              resetLoginModal();
+            });
+            showEmailLoginFormBtn.addEventListener('click', () => {
+              hide(googleLoginButton);
+              hide(showEmailLoginFormBtn);
+              hide(showRegisterFormBtn);
+              show(emailLoginForm);
+              hide(registerForm);
+              emailLoginError.textContent = '';
+              if (typeof emailLoginForm.reset === 'function') emailLoginForm.reset();
+            });
+            cancelEmailLoginBtn.addEventListener('click', () => {
+              show(googleLoginButton);
+              hide(emailLoginForm);
+              show(showEmailLoginFormBtn);
+              show(showRegisterFormBtn);
+              emailLoginError.textContent = '';
+              if (typeof emailLoginForm.reset === 'function') emailLoginForm.reset();
+            });
+            showRegisterFormBtn.addEventListener('click', () => {
+              hide(googleLoginButton);
+              hide(showEmailLoginFormBtn);
+              hide(showRegisterFormBtn);
+              hide(emailLoginForm);
+              show(registerForm);
+              emailLoginError.textContent = '';
+              if (typeof registerForm.reset === 'function') registerForm.reset();
+            });
+            cancelRegisterBtn.addEventListener('click', () => {
+              show(googleLoginButton);
+              hide(registerForm);
+              show(showEmailLoginFormBtn);
+              show(showRegisterFormBtn);
+              emailLoginError.textContent = '';
+              if (typeof registerForm.reset === 'function') registerForm.reset();
+            });
+            googleLoginButton.addEventListener('click', () => {
+              auth.signInWithPopup(googleProvider)
+                .then((result) => {
+                  const user = result.user;
+                  localStorage.setItem('loggedInUser', JSON.stringify({
+                    displayName: user.displayName || user.email,
+                    profilePicUrl: user.photoURL,
+                    email: user.email
+                  }));
+                  loginModal.style.display = 'none';
+                  profilePic.src = user.photoURL || '';
+                  profileName.textContent = user.displayName || user.email;
+                  profileEmail.textContent = user.email;
+                  profileMenu.style.display = 'block';
+                  myProfileButton.style.display = 'block';
+                  logoutFromMenuButton.style.display = 'block';
+                  uploadButtonSection.style.display = user.email === "aquacheese.yt@gmail.com" ? 'block' : 'none';
+                })
+                .catch((error) => {
+                  emailLoginError.textContent = 'Google Login Failed: ' + error.message;
+                });
+            });
+            emailLoginForm.addEventListener('submit', function(e) {
+              e.preventDefault();
+              emailLoginError.textContent = '';
+              const email = emailInput.value.trim();
+              const password = passwordInput.value;
+              auth.signInWithEmailAndPassword(email, password)
+                .then((result) => {
+                  const user = result.user;
+                  localStorage.setItem('loggedInUser', JSON.stringify({
+                    displayName: user.displayName || user.email,
+                    profilePicUrl: user.photoURL,
+                    email: user.email
+                  }));
+                  loginModal.style.display = 'none';
+                  profilePic.src = user.photoURL || '';
+                  profileName.textContent = user.displayName || user.email;
+                  profileEmail.textContent = user.email;
+                  profileMenu.style.display = 'block';
+                  myProfileButton.style.display = 'block';
+                  logoutFromMenuButton.style.display = 'block';
+                  uploadButtonSection.style.display = user.email === "aquacheese.yt@gmail.com" ? 'block' : 'none';
+                })
+                .catch((error) => {
+                  emailLoginError.textContent = error.message.replace('Firebase: ', '');
+                });
+            });
+            registerForm.addEventListener('submit', function(e) {
+              e.preventDefault();
+              emailLoginError.textContent = '';
+              const email = document.getElementById('registerEmail').value.trim();
+              const password = document.getElementById('registerPassword').value;
+              auth.createUserWithEmailAndPassword(email, password)
+                .then((result) => {
+                  const user = result.user;
+                  localStorage.setItem('loggedInUser', JSON.stringify({
+                    displayName: user.displayName || user.email,
+                    profilePicUrl: user.photoURL,
+                    email: user.email
+                  }));
+                  loginModal.style.display = 'none';
+                  registerForm.reset();
+                  registerForm.style.display = 'none';
+                  showEmailLoginFormBtn.style.display = 'inline-block';
+                  showRegisterFormBtn.style.display = 'inline-block';
+                  profilePic.src = user.photoURL || '';
+                  profileName.textContent = user.displayName || user.email;
+                  profileEmail.textContent = user.email;
+                  profileMenu.style.display = 'block';
+                  myProfileButton.style.display = 'block';
+                  logoutFromMenuButton.style.display = 'block';
+                  uploadButtonSection.style.display = user.email === "aquacheese.yt@gmail.com" ? 'block' : 'none';
+                })
+                .catch((error) => {
+                  emailLoginError.textContent = error.message.replace('Firebase: ', '');
+                });
+            });
+            logoutButton.addEventListener('click', () => {
+              localStorage.removeItem('loggedInUser');
+              profileMenu.style.display = 'none';
+              runLoginModalLogic();
+              location.reload();
+            });
+            logoutFromMenuButton.addEventListener('click', () => {
+              localStorage.removeItem('loggedInUser');
+              profileMenu.style.display = 'none';
+              runLoginModalLogic();
+              location.reload();
+            });
+            myProfileButton.addEventListener('click', () => {
+              // Redirect to profile page or open profile modal
+              window.location.href = 'profile.html'; // Change to your profile page URL
+            });
+            // Remove duplicate logoutButton in profileMenu if present
+            const profileMenu = document.getElementById('profileMenu');
+            if (profileMenu) {
+              const logoutBtns = profileMenu.querySelectorAll('#logoutButton');
+              if (logoutBtns.length > 1) {
+                for (let i = 1; i < logoutBtns.length; i++) {
+                  logoutBtns[i].remove();
+                }
+              }
+            }
+            const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+            if (loggedInUser) {
+              profilePic.src = loggedInUser.profilePicUrl || '';
+              profileName.textContent = loggedInUser.displayName || loggedInUser.email;
+              profileEmail.textContent = loggedInUser.email;
+              profileMenu.style.display = 'block';
+              myProfileButton.style.display = 'block';
+              logoutFromMenuButton.style.display = 'block';
+              uploadButtonSection.style.display = loggedInUser.email === "aquacheese.yt@gmail.com" ? 'block' : 'none';
+            }
+          }
+          runLoginModalLogic();
+        })();
         </script>
     </body>
 </html>
