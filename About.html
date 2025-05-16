@@ -52,9 +52,6 @@
 
     &lt;&lt;&lt; &copy; 2025 AquaCheese &gt;&gt;&gt;
 
-    <!-- Unified login/profile modal and cart logic from index.html inserted here. -->
-    <!-- Cart button, cart panel, login/profile modal, and all related scripts/styles replaced with unified logic from index.html. -->
-
     <!-- Cart button -->
     <button id="cartButton" style="position: fixed; top: 20px; right: 20px; background-color: gold; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer; z-index: 1000; transition: background-color 0.3s;">Cart</button>
 
@@ -66,92 +63,6 @@
         <div id="cartSubtotal" style="margin-top: 20px; font-size: 18px; text-align: center; border-top: 1px solid whitesmoke; padding-top: 10px;">Subtotal: £0</div>
         <button id="buyNowButton" style="margin-top: 20px; width: 100%; padding: 10px; background-color: green; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">Buy Now</button>
     </div>
-    <script>
-    // Cart functionality (from index.html)
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const cartButton = document.getElementById('cartButton');
-    const cartPanel = document.getElementById('cartPanel');
-    const cartList = document.getElementById('cartList');
-    const cartSubtotal = document.getElementById('cartSubtotal');
-    const closeCart = document.getElementById('closeCart');
-    cartButton.addEventListener('click', () => {
-        cartPanel.style.right = '0';
-        cartButton.style.display = 'none';
-    });
-    closeCart.addEventListener('click', () => {
-        cartPanel.style.right = '-100%';
-        cartButton.style.display = 'block';
-    });
-    function addToCart(itemName, itemImage) {
-        if (!itemName) {
-            alert("Error: Item name is missing.");
-            return;
-        }
-        cart.push({ name: itemName, image: itemImage, price: 15 });
-        saveCart();
-        updateCart();
-        alert(`${itemName} has been added to your cart.`);
-    }
-    function updateCart() {
-        cartList.innerHTML = '';
-        let subtotal = 0;
-        cart.forEach((item, index) => {
-            const listItem = document.createElement('li');
-            listItem.style.display = 'flex';
-            listItem.style.alignItems = 'center';
-            listItem.style.marginBottom = '10px';
-            if (item.image) {
-                const itemImage = document.createElement('img');
-                itemImage.src = item.image;
-                itemImage.alt = item.name;
-                itemImage.style.width = '50px';
-                itemImage.style.height = '50px';
-                itemImage.style.marginRight = '10px';
-                itemImage.style.border = '1px solid whitesmoke';
-                listItem.appendChild(itemImage);
-            }
-            const itemName = document.createElement('span');
-            itemName.textContent = item.name;
-            listItem.appendChild(itemName);
-            const itemPrice = document.createElement('span');
-            itemPrice.textContent = ` - £${item.price}`;
-            itemPrice.style.marginLeft = 'auto';
-            listItem.appendChild(itemPrice);
-            const removeButton = document.createElement('button');
-            removeButton.textContent = 'Remove';
-            removeButton.style.marginLeft = '10px';
-            removeButton.style.backgroundColor = 'red';
-            removeButton.style.color = 'white';
-            removeButton.style.border = 'none';
-            removeButton.style.borderRadius = '5px';
-            removeButton.style.cursor = 'pointer';
-            removeButton.addEventListener('click', () => {
-                cart.splice(index, 1);
-                saveCart();
-                updateCart();
-            });
-            listItem.appendChild(removeButton);
-            cartList.appendChild(listItem);
-            subtotal += item.price;
-        });
-        cartSubtotal.textContent = `Subtotal: £${subtotal}`;
-        const itemCount = cart.length;
-        cartButton.textContent = itemCount > 0 ? `Cart (${itemCount})` : 'Cart';
-    }
-    function saveCart() {
-        localStorage.setItem('cart', JSON.stringify(cart));
-    }
-    document.getElementById('buyNowButton').addEventListener('click', () => {
-        if (cart.length > 0) {
-            localStorage.removeItem('singleItem');
-            localStorage.setItem('cartPurchase', true);
-            window.location.href = 'Purchase.html';
-        } else {
-            alert('Your cart is empty. Add items to proceed.');
-        }
-    });
-    document.addEventListener('DOMContentLoaded', updateCart);
-    </script>
 
     <!-- Robust Login/Profile Modal (unified version) -->
     <div id="loginModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;">
@@ -179,6 +90,10 @@
         <button id="logoutButton" style="background-color: #343a40; color: white; border: none; border-radius: 5px; padding: 8px 16px; font-size: 15px; cursor: pointer; margin: 10px; display: none;">Log Out</button>
       </div>
     </div>
+    <div id="profileMenu" style="display:none; position:fixed; top:70px; left:20px; background:#444; color:#fff; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.3); z-index:2000; min-width:140px; padding:16px 12px;">
+        <button id="logoutButton" style="background-color: #dc3545; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer;">Logout</button>
+    </div>
+
     <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-auth-compat.js"></script>
     <script src="firebase-config.js"></script>

@@ -490,6 +490,49 @@
     </head>
 
     <body>
+        <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+            <button id="loginButton" style="background-color: lightblue; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer;">Log In</button>
+            <button id="registerButton" style="background-color: #ffc107; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin-left: 8px;">Register</button>
+            <section id="upload-button-section" style="display: none;">
+                <button id="upload-page-button" style="font-size: large; padding: 10px 20px; border-radius: 5px; background-color: lightblue; border: none; cursor: pointer;">Upload Media</button>
+            </section>
+        </div>
+        <div id="loginModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;">
+            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #333; color: whitesmoke; padding: 20px; border-radius: 8px; width: 300px; text-align: center;">
+                <h2>Log In</h2>
+                <button id="googleLoginButton" style="background-color: #4285F4; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In with Google</button>
+                <button id="showEmailLoginForm" style="background-color: #555; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In with Email</button>
+                <form id="emailLoginForm" style="display:none; margin-top:10px;">
+                    <input id="emailInput" type="email" placeholder="Email" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
+                    <input id="passwordInput" type="password" placeholder="Password" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
+                    <button type="submit" style="background-color: #555; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In</button>
+                    <button type="button" id="cancelEmailLogin" style="background-color: #dc3545; color: white; border: none; border-radius: 5px; padding: 8px 16px; font-size: 15px; cursor: pointer; margin: 10px;">Cancel</button>
+                </form>
+                <form id="registerForm" style="display:none; margin-top:10px;">
+                    <input id="registerEmail" type="email" placeholder="Email" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
+                    <input id="registerPassword" type="password" placeholder="Password" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
+                    <button type="submit" style="background-color: #28a745; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Register</button>
+                    <button type="button" id="cancelRegister" style="background-color: #dc3545; color: white; border: none; border-radius: 5px; padding: 8px 16px; font-size: 15px; cursor: pointer; margin: 10px;">Cancel</button>
+                </form>
+                <div id="emailLoginError" style="color:#ff6666; margin-top:8px; min-height:20px;"></div>
+                <br>
+                <hr style="border: 0; border-top: 1px solid #888; margin: 16px 0 8px 0;">
+                <button id="showRegisterForm" style="background-color: #ffc107; color: black; border: none; border-radius: 5px; padding: 8px 16px; font-size: 15px; cursor: pointer; margin: 10px; display: inline-block;">Register</button>
+                <button id="closeLoginModal" style="background-color: red; color: white; border: none; border-radius: 5px; padding: 5px 10px; font-size: 14px; cursor: pointer; margin-top: 10px;">Close</button>
+            </div>
+        </div>
+        <button id="cartButton" style="position: fixed; top: 20px; right: 20px; background-color: gold; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer; z-index: 1000; transition: background-color 0.3s;">Cart</button>
+        <div id="cartPanel" style="position: fixed; top: 0; right: -100%; width: 300px; height: 100%; background-color: #333; color: whitesmoke; box-shadow: -2px 0 5px rgba(0,0,0,0.5); overflow-y: auto; transition: right 0.3s ease; z-index: 999; padding: 20px; display: block;">
+            <button id="closeCart" style="position: absolute; top: 10px; right: 10px; background-color: red; color: white; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 1001;">&times;</button>
+            <h2 style="text-align: center; color: #ffcc00;">Your Cart</h2>
+            <ul id="cartList" style="list-style-type: none; padding: 0;"></ul>
+            <div id="cartSubtotal" style="margin-top: 20px; font-size: 18px; text-align: center; border-top: 1px solid whitesmoke; padding-top: 10px;">Subtotal: £0</div>
+            <button id="buyNowButton" style="margin-top: 20px; width: 100%; padding: 10px; background-color: green; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">Buy Now</button>
+        </div>
+        <div id="profileMenu" style="display:none; position:fixed; top:70px; left:20px; background:#444; color:#fff; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.3); z-index:2000; min-width:140px; padding:16px 12px;">
+            <button id="logoutButton" style="background-color: #dc3545; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer;">Logout</button>
+        </div>
+
         <h1>Traffic Lights</h1>
         <a href="index.html"><button type="button" style="position: absolute;">&larr; Back to Home</button></a>
 
@@ -530,79 +573,6 @@
         <button type="button" style="font-size: large;" onclick="addToCart('Traffic Lights', 'Traffic lights WM.png')">Add to Cart</button> &nbsp;&nbsp;&nbsp; <a href="Purchase img.html"><button type="button" style="font-size: large;">Buy Now</button></a>
         <br><br>
         &lt;&lt;&lt;&nbsp; &copy; 2025 AquaCheese &nbsp;&gt;&gt;&gt;
-
-        <!-- Cart button -->
-        <button id="cartButton" style="position: fixed; top: 20px; right: 20px; background-color: gold; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer; z-index: 1000; transition: background-color 0.3s;">Cart</button>
-
-        <!-- Cart panel -->
-        <div id="cartPanel" style="position: fixed; top: 0; right: -100%; width: 300px; height: 100%; background-color: #333; color: whitesmoke; box-shadow: -2px 0 5px rgba(0,0,0,0.5); overflow-y: auto; transition: right 0.3s ease; z-index: 999; padding: 20px; display: block;">
-            <button id="closeCart" style="position: absolute; top: 10px; right: 10px; background-color: red; color: white; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 1001;">&times;</button>
-            <h2 style="text-align: center; color: #ffcc00;">Your Cart</h2>
-            <ul id="cartList" style="list-style-type: none; padding: 0;"></ul>
-            <div id="cartSubtotal" style="margin-top: 20px; font-size: 18px; text-align: center; border-top: 1px solid whitesmoke; padding-top: 10px;">Subtotal: £0</div>
-            <button id="buyNowButton" style="margin-top: 20px; width: 100%; padding: 10px; background-color: green; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">Buy Now</button>
-        </div>
-
-        <!-- Unified login/profile modal -->
-        <div id="profileModal">
-            <div class="modal-box">
-                <button class="modal-close-btn" onclick="closeProfileModal()">X</button>
-                <h2>Login / Profile</h2>
-                <form id="profileForm">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" required>
-
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
-
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required>
-
-                    <button type="submit">Login / Register</button>
-                </form>
-                <p style="color: #ffcc00; margin-top: 10px;">Or</p>
-                <button onclick="toggleProfileModal()">Continue as Guest</button>
-            </div>
-        </div>
-
-        <!-- Login Modal (for email and Google login) -->
-        <div id="loginModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;">
-      <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #333; color: whitesmoke; padding: 20px; border-radius: 8px; width: 300px; text-align: center;">
-        <h2>Log In</h2>
-        <button id="googleLoginButton" style="background-color: #4285F4; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In with Google</button>
-        <button id="showEmailLoginForm" style="background-color: #555; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In with Email</button>
-        <button id="showRegisterForm" style="background-color: #ffc107; color: black; border: none; border-radius: 5px; padding: 8px 16px; font-size: 15px; cursor: pointer; margin: 10px; display: inline-block;">Register</button>
-        <form id="emailLoginForm" class="hidden" style="margin-top:10px;">
-          <input id="emailInput" type="email" placeholder="Email" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
-          <input id="passwordInput" type="password" placeholder="Password" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
-          <button type="submit" style="background-color: #555; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In</button>
-          <button type="button" id="cancelEmailLogin" style="background-color: #dc3545; color: white; border: none; border-radius: 5px; padding: 8px 16px; font-size: 15px; cursor: pointer; margin: 10px;">Cancel</button>
-        </form>
-        <form id="registerForm" class="hidden" style="margin-top:10px;">
-          <input id="registerEmail" type="email" placeholder="Email" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
-          <input id="registerPassword" type="password" placeholder="Password" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
-          <button type="submit" style="background-color: #28a745; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Register</button>
-          <button type="button" id="cancelRegister" style="background-color: #dc3545; color: white; border: none; border-radius: 5px; padding: 8px 16px; font-size: 15px; cursor: pointer; margin: 10px;">Cancel</button>
-        </form>
-        <div id="emailLoginError" style="color:#ff6666; margin-top:8px; min-height:20px;"></div>
-        <br>
-        <hr style="border: 0; border-top: 1px solid #888; margin: 16px 0 8px 0;">
-        <button id="closeLoginModal" style="background-color: red; color: white; border: none; border-radius: 5px; padding: 5px 10px; font-size: 14px; cursor: pointer; margin-top: 10px;">Close</button>
-        <button id="logoutButton" style="background-color: #343a40; color: white; border: none; border-radius: 5px; padding: 8px 16px; font-size: 15px; cursor: pointer; margin: 10px; display: none;">Log Out</button>
-      </div>
-    </div>
-
-        <!-- Profile menu (for logged in users) -->
-        <div id="profileMenu" style="display: none; position: absolute; top: 60px; left: 20px; background-color: #333; color: whitesmoke; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); z-index: 1000; width: 200px;">
-          <button id="viewProfileButton" style="background-color: transparent; color: whitesmoke; border: none; padding: 10px; text-align: left; width: 100%; cursor: pointer; transition: background-color 0.3s;">View Profile</button>
-          <button id="uploadButton" style="background-color: transparent; color: whitesmoke; border: none; padding: 10px; text-align: left; width: 100%; cursor: pointer; transition: background-color 0.3s; display: none;">Upload Content</button>
-          <button id="logoutButtonMenu" style="background-color: transparent; color: whitesmoke; border: none; padding: 10px; text-align: left; width: 100%; cursor: pointer; transition: background-color 0.3s;">Log Out</button>
-        </div>
-
-        <!-- Upload button section (for admin) -->
-        <div id="upload-button-section" style="display: none; position: fixed; top: 80px; right: 20px; background-color: #444; color: whitesmoke; padding: 10px 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); z-index: 1000;">
-          <button id="uploadButtonAdmin" style="background-color: #28a745; color: white; border: none; border-radius: 5px; padding: 10px 20px; cursor: pointer; font-size: 16px;">Upload New Content</button>
-        </div>
 
         <!-- Firebase App (the core Firebase SDK) -->
     <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app-compat.js"></script>
@@ -817,7 +787,6 @@
             location.reload();
         });
         // Remove duplicate 'const profileMenu = document.getElementById('profileMenu');' declarations. Only declare once at the top of the relevant script section, and re-use the variable in all logic.
-        const profileMenu = document.getElementById('profileMenu');
         if (profileMenu) {
           const logoutBtns = profileMenu.querySelectorAll('#logoutButton');
           if (logoutBtns.length > 1) {

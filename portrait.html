@@ -314,17 +314,17 @@
 
     <h1>Portrait Images</h1>
     <div class="gallery">
-        <div class="gallery-item" data-title="GWR Train" data-price="12.99" data-img="GWR Train WM.png">
+        <div class="gallery-item" data-title="GWR Train" data-price="15" data-img="GWR Train WM.png">
             <a href="GWR Train.html"><img src="GWR Train WM.png" alt="GWR Train"></a>
             <div class="gallery-item-title">GWR Train</div>
             <button type="button" style="background-color:#ffc107;color:black;margin-top:8px;" onclick="addToCart('GWR Train', 'GWR Train WM.png')">Add to Cart</button>
         </div>
-        <div class="gallery-item" data-title="Mini Muffin" data-price="9.99" data-img="Muffin WM.png">
+        <div class="gallery-item" data-title="Mini Muffin" data-price="15" data-img="Muffin WM.png">
             <a href="Muffin.html"><img src="Muffin WM.png" alt="Mini Muffin"></a>
             <div class="gallery-item-title">Mini Muffin</div>
             <button type="button" style="background-color:#ffc107;color:black;margin-top:8px;" onclick="addToCart('Mini Muffin', 'Muffin WM.png')">Add to Cart</button>
         </div>
-        <div class="gallery-item" data-title="Portrait Tree" data-price="10.99" data-img="Tree Portrait WM.png">
+        <div class="gallery-item" data-title="Portrait Tree" data-price="15" data-img="Tree Portrait WM.png">
             <a href="P Tree.html"><img src="Tree Portrait WM.png" alt="Portrait Tree"></a>
             <div class="gallery-item-title">Portrait Tree</div>
             <button type="button" style="background-color:#ffc107;color:black;margin-top:8px;" onclick="addToCart('Portrait Tree', 'Tree Portrait WM.png')">Add to Cart</button>
@@ -807,95 +807,62 @@
     })();
     </script>
     <script>
-    // Cart functionality (from index.html)
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const cartButton = document.getElementById('cartButton');
-    const cartPanel = document.getElementById('cartPanel');
-    const cartList = document.getElementById('cartList');
-    const cartSubtotal = document.getElementById('cartSubtotal');
-    const closeCart = document.getElementById('closeCart');
-    cartButton.addEventListener('click', () => {
-        cartPanel.style.right = '0';
-        cartButton.style.display = 'none';
-    });
-    closeCart.addEventListener('click', () => {
-        cartPanel.style.right = '-100%';
-        cartButton.style.display = 'block';
-    });
-    function addToCart(itemName, itemImage) {
-        if (!itemName) {
-            alert("Error: Item name is missing.");
-            return;
-        }
-        // Determine price: £20 for videos, £15 for images
+    // --- Robust Cart Logic (from index.html) ---
+    (function() {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const cartButton = document.getElementById('cartButton');
+      const cartPanel = document.getElementById('cartPanel');
+      const cartList = document.getElementById('cartList');
+      const cartSubtotal = document.getElementById('cartSubtotal');
+      const closeCart = document.getElementById('closeCart');
+      const buyNowButton = document.getElementById('buyNowButton');
+      function updateCart() {
+        cartList.innerHTML = '';
+        let subtotal = 0;
+        cart.forEach((item, idx) => {
+          subtotal += item.price;
+          const li = document.createElement('li');
+          li.innerHTML = `<img src="${item.image}" alt="" width="40" height="40"><span>${item.name}</span> <span>£${item.price}</span> <button onclick="removeFromCart(${idx})">Remove</button>`;
+          cartList.appendChild(li);
+        });
+        cartSubtotal.textContent = `Subtotal: £${subtotal}`;
+        cartButton.textContent = cart.length > 0 ? `Cart (${cart.length})` : 'Cart';
+      }
+      window.addToCart = function(itemName, itemImage) {
+        if (!itemName) return;
         let price = 15;
-        if (itemImage && (itemImage.toLowerCase().endsWith('.mp4') || itemImage.toLowerCase().endsWith('.mov') || itemImage.toLowerCase().endsWith('.webm') || itemImage.toLowerCase().includes('video'))) {
-            price = 20;
-        }
         cart.push({ name: itemName, image: itemImage, price });
         saveCart();
         updateCart();
         alert(`${itemName} has been added to your cart.`);
-    }
-    function updateCart() {
-        cartList.innerHTML = '';
-        let subtotal = 0;
-        cart.forEach((item, index) => {
-            const listItem = document.createElement('li');
-            listItem.style.display = 'flex';
-            listItem.style.alignItems = 'center';
-            listItem.style.marginBottom = '10px';
-            if (item.image) {
-                const itemImage = document.createElement('img');
-                itemImage.src = item.image;
-                itemImage.alt = item.name;
-                itemImage.style.width = '50px';
-                itemImage.style.height = '50px';
-                itemImage.style.marginRight = '10px';
-                itemImage.style.border = '1px solid whitesmoke';
-                listItem.appendChild(itemImage);
-            }
-            const itemName = document.createElement('span');
-            itemName.textContent = item.name;
-            listItem.appendChild(itemName);
-            const itemPrice = document.createElement('span');
-            itemPrice.textContent = ` - £${item.price}`;
-            itemPrice.style.marginLeft = 'auto';
-            listItem.appendChild(itemPrice);
-            const removeButton = document.createElement('button');
-            removeButton.textContent = 'Remove';
-            removeButton.style.marginLeft = '10px';
-            removeButton.style.backgroundColor = 'red';
-            removeButton.style.color = 'white';
-            removeButton.style.border = 'none';
-            removeButton.style.borderRadius = '5px';
-            removeButton.style.cursor = 'pointer';
-            removeButton.addEventListener('click', () => {
-                cart.splice(index, 1);
-                saveCart();
-                updateCart();
-            });
-            listItem.appendChild(removeButton);
-            cartList.appendChild(listItem);
-            subtotal += item.price;
-        });
-        cartSubtotal.textContent = `Subtotal: £${subtotal}`;
-        const itemCount = cart.length;
-        cartButton.textContent = itemCount > 0 ? `Cart (${itemCount})` : 'Cart';
-    }
-    function saveCart() {
+      };
+      window.removeFromCart = function(idx) {
+        cart.splice(idx, 1);
+        saveCart();
+        updateCart();
+      };
+      function saveCart() {
         localStorage.setItem('cart', JSON.stringify(cart));
-    }
-    document.getElementById('buyNowButton').addEventListener('click', () => {
-        if (cart.length > 0) {
-            localStorage.removeItem('singleItem');
-            localStorage.setItem('cartPurchase', true);
+      }
+      if (cartButton && cartPanel && closeCart) {
+        cartButton.addEventListener('click', function() {
+          cartPanel.style.right = '0';
+        });
+        closeCart.addEventListener('click', function() {
+          cartPanel.style.right = '-100%';
+        });
+      }
+      if (buyNowButton) {
+        buyNowButton.addEventListener('click', function() {
+          if (cart.length > 0) {
             window.location.href = 'Purchase.html';
-        } else {
-            alert('Your cart is empty. Add items to proceed.');
-        }
-    });
-    document.addEventListener('DOMContentLoaded', updateCart);
+          } else {
+            alert('Your cart is empty!');
+          }
+        });
+      }
+      document.addEventListener('DOMContentLoaded', updateCart);
+    })();
     </script>
 </body>
 </html>

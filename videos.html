@@ -76,7 +76,7 @@
         background-color: goldenrod;
     }
 
-    /* Cart panel styles (match Seagull car img.html) */
+    /* Cart panel styles */
     #cartPanel {
         position: fixed;
         top: 0;
@@ -90,7 +90,7 @@
         transition: right 0.3s ease;
         z-index: 999;
         padding: 20px;
-        display: block; /* Always block, control with right property only */
+        display: block;
     }
 
     #cartPanel h2 {
@@ -286,7 +286,7 @@
   </style>
 </head>
 <body>
-    <!-- Login/Profile Section (from index.html) -->
+    <!-- Login/Profile Section -->
     <div style="position: fixed; top: 20px; left: 20px; z-index: 1000; display: flex; align-items: center;">
       <div id="profileContainer" style="display: none;">
         <img id="profilePic" src="" alt="Profile Picture">
@@ -407,6 +407,18 @@
       </div>
     </div>
 
+    <!-- Cart button -->
+    <button id="cartButton" style="position: fixed; top: 20px; right: 20px; background-color: gold; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer; z-index: 1000; transition: background-color 0.3s;">Cart</button>
+
+    <!-- Cart panel -->
+    <div id="cartPanel" style="position: fixed; top: 0; right: -100%; width: 300px; height: 100%; background-color: #333; color: whitesmoke; box-shadow: -2px 0 5px rgba(0,0,0,0.5); overflow-y: auto; transition: right 0.3s ease; z-index: 999; padding: 20px; display: block;">
+        <button id="closeCart" style="position: absolute; top: 10px; right: 10px; background-color: red; color: white; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 1001;">&times;</button>
+        <h2 style="text-align: center; color: #ffcc00;">Your Cart</h2>
+        <ul id="cartList" style="list-style-type: none; padding: 0;"></ul>
+        <div id="cartSubtotal" style="margin-top: 20px; font-size: 18px; text-align: center; border-top: 1px solid whitesmoke; padding-top: 10px;">Subtotal: £0</div>
+        <button id="buyNowButton" style="margin-top: 20px; width: 100%; padding: 10px; background-color: green; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">Buy Now</button>
+    </div>
+
     <div class="gallery-container">
       <h1>Videos Gallery</h1>
       <input type="text" id="searchBar" placeholder="Search videos..." style="
@@ -422,47 +434,6 @@
       <div class="video-grid">
         <!-- Video cards will be populated here by JavaScript -->
       </div>
-    </div>
-
-    <!-- Cart panel (match Seagull car img.html) -->
-    <div id="cartPanel">
-      <h2>Shopping Cart</h2>
-      <ul id="cartList">
-        <!-- Cart items will be populated here by JavaScript -->
-      </ul>
-      <div id="cartSubtotal" style="font-weight: bold; margin-top: 10px;">Subtotal: £0</div>
-      <button id="buyNowButton" style="
-        margin-top: 10px;
-        width: 100%;
-        padding: 10px;
-        background-color: green;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        font-size: 16px;
-        cursor: pointer;
-      ">
-        Buy Now
-      </button>
-      <button id="closeCart" style="
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        background-color: red;
-        color: white;
-        border: none;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        font-size: 24px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 1001;
-      ">
-        &times;
-      </button>
     </div>
 
     <br>
@@ -494,7 +465,7 @@
             cards.forEach(card => { card.style.display = 'block'; });
         }
     }
-    // Cart functionality (from index.html)
+    // Cart functionality
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 const cartButton = document.getElementById('cartButton');
 const cartPanel = document.getElementById('cartPanel');
@@ -585,7 +556,7 @@ document.getElementById('buyNowButton').addEventListener('click', () => {
 });
 document.addEventListener('DOMContentLoaded', updateCart);
 
-    // Firebase Auth and session sync logic (from index.html)
+    // Firebase Auth and session sync logic
     (function() {
       const auth = firebase.auth();
       const googleProvider = new firebase.auth.GoogleAuthProvider();
