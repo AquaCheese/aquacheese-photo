@@ -242,41 +242,202 @@
 #closeCart:hover {
     background-color: darkred;
 }
-</style>
+
+/* Unified modal styles from index.html */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1002;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 10px;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-header {
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.modal-body {
+    padding: 10px 0;
+}
+
+.modal-footer {
+    padding: 10px 0;
+    border-top: 1px solid #ddd;
+    text-align: right;
+}
+
+.hidden {
+  display: none !important;
+}
+
+#loginModal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+#loginModal > div {
+  background: #fff;
+  color: #222;
+  border-radius: 10px;
+  max-width: 400px;
+  margin: 80px auto;
+  padding: 30px 20px;
+  position: relative;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+
+#closeLoginModal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: red;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+#loginModal h2 {
+  text-align: center;
+}
+
+#loginModal button {
+  background-color: #4285F4;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 10px 0;
+}
+
+#loginModal input {
+  margin-bottom: 8px;
+  width: 90%;
+  padding: 8px;
+}
+
+#errorMessage {
+  color: red;
+  margin-bottom: 10px;
+}
+
+/* Profile menu styles */
+#profileMenu {
+  display: none;
+  position: absolute;
+  top: 60px;
+  left: 10px;
+  background-color: #444;
+  color: whitesmoke;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1002;
+  padding: 10px;
+  width: 200px;
+}
+
+#profileMenu a {
+  color: whitesmoke;
+  text-decoration: none;
+  display: block;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+#profileMenu a:hover {
+  background-color: #555;
+}
+
+/* Upload button styles */
+#uploadButton {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#uploadButton:hover {
+  background-color: #218838;
+}
+
+/* Spinner styles */
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top: 4px solid #fff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+    </style>
     </head>
 
     <body>
-        <!-- Login Button and Modal -->
-        <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-            <button id="loginButton" style="background-color: lightblue; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer;">Log In</button>
-            <button id="registerButton" style="background-color: #ffc107; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin-left: 8px;">Register</button>
-        </div>
-        <div id="loginModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;">
-            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #333; color: whitesmoke; padding: 20px; border-radius: 8px; width: 300px; text-align: center;">
-                <h2>Log In</h2>
-                <button id="googleLoginButton" style="background-color: #4285F4; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In with Google</button>
-                <button id="showEmailLoginForm" style="background-color: #555; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In with Email</button>
-                <form id="emailLoginForm" style="display:none; margin-top:10px;">
-                    <input id="emailInput" type="email" placeholder="Email" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
-                    <input id="passwordInput" type="password" placeholder="Password" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
-                    <button type="submit" style="background-color: #555; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In</button>
-                    <button type="button" id="cancelEmailLogin" style="background-color: #dc3545; color: white; border: none; border-radius: 5px; padding: 8px 16px; font-size: 15px; cursor: pointer; margin: 10px;">Cancel</button>
-                </form>
-                <form id="registerForm" style="display:none; margin-top:10px;">
-                    <input id="registerEmail" type="email" placeholder="Email" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
-                    <input id="registerPassword" type="password" placeholder="Password" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
-                    <button type="submit" style="background-color: #28a745; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Register</button>
-                    <button type="button" id="cancelRegister" style="background-color: #dc3545; color: white; border: none; border-radius: 5px; padding: 8px 16px; font-size: 15px; cursor: pointer; margin: 10px;">Cancel</button>
-                </form>
-                <div id="emailLoginError" style="color:#ff6666; margin-top:8px; min-height:20px;"></div>
-                <br>
-                <hr style="border: 0; border-top: 1px solid #888; margin: 16px 0 8px 0;">
-                <button id="showRegisterForm" style="background-color: #ffc107; color: black; border: none; border-radius: 5px; padding: 8px 16px; font-size: 15px; cursor: pointer; margin: 10px; display: inline-block;">Register</button>
-                <button id="closeLoginModal" style="background-color: red; color: white; border: none; border-radius: 5px; padding: 5px 10px; font-size: 14px; cursor: pointer; margin-top: 10px;">Close</button>
-            </div>
-        </div>
-        <!-- End Login Button and Modal -->
-
         <h1>Overcast Rainbow</h1>
         <a href="index.html"><button type="button" style="position: absolute;">&larr; Back to Home</button></a>
 
@@ -319,165 +480,190 @@
         &lt;&lt;&lt;&nbsp; &copy; 2025 AquaCheese &nbsp;&gt;&gt;&gt;
 
         <!-- Cart button -->
-        <button id="cartButton" style="position:fixed;top:20px;right:20px;z-index:1000;background:#ffc107;color:black;border:none;border-radius:12px;padding:10px 20px;font-size:16px;cursor:pointer;">Cart</button>
+        <button id="cartButton" style="position: fixed; top: 20px; right: 20px; background-color: gold; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer; z-index: 1000; transition: background-color 0.3s;">Cart</button>
 
         <!-- Cart panel -->
-        <div id="cartPanel" style="display:none;position:fixed;top:70px;right:20px;width:340px;max-width:90vw;background:#222;color:#fff;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,0.4);z-index:2000;padding:24px 18px 18px 18px;">
-            <button id="closeCart" style="position:absolute;top:8px;right:12px;background:none;color:#fff;border:none;font-size:22px;cursor:pointer;">&times;</button>
-            <h2 style="margin-top:0;font-size:22px;">Your Cart</h2>
-            <ul id="cartList" style="list-style:none;padding:0;margin:0 0 10px 0;"></ul>
-            <div id="cartSubtotal" style="margin-top: 20px; font-size: 18px; text-align: center; border-top: 1px solid whitesmoke; padding-top: 10px;"></div>
+        <div id="cartPanel" style="position: fixed; top: 0; right: -100%; width: 300px; height: 100%; background-color: #333; color: whitesmoke; box-shadow: -2px 0 5px rgba(0,0,0,0.5); overflow-y: auto; transition: right 0.3s ease; z-index: 999; padding: 20px; display: block;">
+            <button id="closeCart" style="position: absolute; top: 10px; right: 10px; background-color: red; color: white; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 1001;">&times;</button>
+            <h2 style="text-align: center; color: #ffcc00;">Your Cart</h2>
+            <ul id="cartList" style="list-style-type: none; padding: 0;"></ul>
+            <div id="cartSubtotal" style="margin-top: 20px; font-size: 18px; text-align: center; border-top: 1px solid whitesmoke; padding-top: 10px;">Subtotal: £0</div>
             <button id="buyNowButton" style="margin-top: 20px; width: 100%; padding: 10px; background-color: green; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">Buy Now</button>
         </div>
 
-        <script>
-            // Cart logic (avoid redeclaration)
-            window.acp_cartKey = window.acp_cartKey || 'acp_cart';
-            function getCart() {
-                return JSON.parse(localStorage.getItem(window.acp_cartKey) || '[]');
-            }
-            function saveCart(cart) {
-                localStorage.setItem(window.acp_cartKey, JSON.stringify(cart));
-            }
-            function updateCartUI() {
-                const cart = getCart();
-                const cartList = document.getElementById('cartList');
-                const cartSubtotal = document.getElementById('cartSubtotal');
-                cartList.innerHTML = '';
-                let subtotal = 0;
-                cart.forEach((item, idx) => {
-                    subtotal += item.price * item.qty;
-                    const li = document.createElement('li');
-                    li.style.marginBottom = '10px';
-                    li.innerHTML = `
-                        <span style="font-weight:bold;">${item.title}</span> x${item.qty} - $${(item.price*item.qty).toFixed(2)}
-                        <button class="remove-cart-item" data-idx="${idx}" style="margin-left:10px;background:#e74c3c;color:white;border:none;border-radius:5px;padding:2px 8px;cursor:pointer;">Remove</button>
-                    `;
-                    cartList.appendChild(li);
-                });
-                cartSubtotal.textContent = `Subtotal: $${subtotal.toFixed(2)}`;
-                document.getElementById('buyNowButton').disabled = cart.length === 0;
-            }
-            function addToCart(item) {
-                let cart = getCart();
-                const idx = cart.findIndex(i => i.title === item.title);
-                if (idx > -1) {
-                    cart[idx].qty += 1;
-                } else {
-                    cart.push({...item, qty: 1});
-                }
-                saveCart(cart);
-                updateCartUI();
-            }
-            function removeFromCart(idx) {
-                let cart = getCart();
-                cart.splice(idx, 1);
-                saveCart(cart);
-                updateCartUI();
-            }
-            document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const itemDiv = btn.closest('.gallery-item');
-                    const item = {
-                        title: itemDiv.getAttribute('data-title'),
-                        price: parseFloat(itemDiv.getAttribute('data-price')),
-                        img: itemDiv.getAttribute('data-img')
-                    };
-                    addToCart(item);
-                });
-            });
-            document.getElementById('cartButton').addEventListener('click', () => {
-                document.getElementById('cartPanel').style.display = 'block';
-                updateCartUI();
-            });
-            document.getElementById('closeCart').addEventListener('click', () => {
-                document.getElementById('cartPanel').style.display = 'none';
-            });
-            document.getElementById('cartList').addEventListener('click', function(e) {
-                if (e.target.classList.contains('remove-cart-item')) {
-                    removeFromCart(Number(e.target.getAttribute('data-idx')));
-                }
-            });
-            document.getElementById('buyNowButton').addEventListener('click', function() {
-                alert('Checkout is not implemented in this demo.');
-            });
-            window.addEventListener('DOMContentLoaded', updateCartUI);
+        <!-- Robust Login Modal (copied from index.html, no duplicate JS) -->
+<button id="loginButton" style="background-color: lightblue; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer;">Login</button>
+<div id="loginModal" class="hidden" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;">
+  <div style="background: #fff; color: #222; border-radius: 10px; max-width: 400px; margin: 80px auto; padding: 30px 20px; position: relative; box-shadow: 0 4px 16px rgba(0,0,0,0.3);">
+    <button id="closeLoginModal" style="position: absolute; top: 10px; right: 10px; background: red; color: white; border: none; border-radius: 50%; width: 32px; height: 32px; font-size: 20px; cursor: pointer;">&times;</button>
+    <h2 style="text-align:center;">Login / Register</h2>
+    <div style="display:flex; flex-direction:column; align-items:center;">
+      <button id="googleLoginButton" style="background-color: #4285F4; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In with Google</button>
+      <button id="showEmailLoginForm" style="background-color: #555; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In with Email</button>
+      <button id="showRegisterForm" style="background-color: #888; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Register</button>
+      <form id="emailLoginForm" class="hidden" style="margin-top:10px;">
+        <input type="email" id="loginEmail" placeholder="Email" required style="margin-bottom:8px; width:90%; padding:8px;">
+        <input type="password" id="loginPassword" placeholder="Password" required style="margin-bottom:8px; width:90%; padding:8px;">
+        <div id="emailLoginError" style="color:red; min-height:20px; margin-bottom:8px;"></div>
+        <button type="submit" style="background-color:#4285F4;color:white;border:none;border-radius:5px;padding:8px 16px;">Log In</button>
+        <button type="button" id="cancelEmailLogin" style="margin-left:10px;">Cancel</button>
+      </form>
+      <form id="registerForm" class="hidden" style="margin-top:10px;">
+        <input type="email" id="registerEmail" placeholder="Email" required style="margin-bottom:8px; width:90%; padding:8px;">
+        <input type="password" id="registerPassword" placeholder="Password" required style="margin-bottom:8px; width:90%; padding:8px;">
+        <div id="registerError" style="color:red; min-height:20px; margin-bottom:8px;"></div>
+        <button type="submit" style="background-color:#888;color:white;border:none;border-radius:5px;padding:8px 16px;">Register</button>
+        <button type="button" id="cancelRegister" style="margin-left:10px;">Cancel</button>
+      </form>
+    </div>
+  </div>
+</div>
+<style>
+#loginModal .hidden { display: none !important; }
+</style>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+<script>
+const firebaseConfig = { apiKey: "AIzaSyD-EXAMPLEKEY", authDomain: "your-project-id.firebaseapp.com", projectId: "your-project-id", storageBucket: "your-project-id.appspot.com", messagingSenderId: "123456789", appId: "1:123456789:web:abcdef123456" };
+if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
+const auth = firebase.auth();
+function show(el) { if (el) el.classList.remove('hidden'); }
+function hide(el) { if (el) el.classList.add('hidden'); }
+function resetLoginModal() {
+  hide(document.getElementById('emailLoginForm'));
+  hide(document.getElementById('registerForm'));
+  show(document.getElementById('googleLoginButton'));
+  show(document.getElementById('showEmailLoginForm'));
+  show(document.getElementById('showRegisterForm'));
+  document.getElementById('emailLoginError').textContent = '';
+  document.getElementById('registerError').textContent = '';
+  document.getElementById('emailLoginForm').reset && document.getElementById('emailLoginForm').reset();
+  document.getElementById('registerForm').reset && document.getElementById('registerForm').reset();
+}
+const loginModal = document.getElementById('loginModal');
+const loginButton = document.getElementById('loginButton');
+const closeLoginModal = document.getElementById('closeLoginModal');
+const googleLoginButton = document.getElementById('googleLoginButton');
+const showEmailLoginForm = document.getElementById('showEmailLoginForm');
+const showRegisterForm = document.getElementById('showRegisterForm');
+const emailLoginForm = document.getElementById('emailLoginForm');
+const registerForm = document.getElementById('registerForm');
+const cancelEmailLogin = document.getElementById('cancelEmailLogin');
+const cancelRegister = document.getElementById('cancelRegister');
+loginButton.addEventListener('click', () => {
+  resetLoginModal();
+  loginModal.style.display = 'block';
+  loginModal.classList.remove('hidden');
+});
+closeLoginModal.addEventListener('click', () => {
+  loginModal.style.display = 'none';
+  loginModal.classList.add('hidden');
+  resetLoginModal();
+});
+googleLoginButton.addEventListener('click', () => {
+  alert('Google login is not enabled in this demo.');
+});
+showEmailLoginForm.addEventListener('click', () => {
+  hide(googleLoginButton); hide(showEmailLoginForm); hide(showRegisterForm);
+  show(emailLoginForm);
+});
+showRegisterForm.addEventListener('click', () => {
+  hide(googleLoginButton); hide(showEmailLoginForm); hide(showRegisterForm);
+  show(registerForm);
+});
+cancelEmailLogin.addEventListener('click', () => {
+  hide(emailLoginForm);
+  show(googleLoginButton); show(showEmailLoginForm); show(showRegisterForm);
+  document.getElementById('emailLoginError').textContent = '';
+  emailLoginForm.reset();
+});
+cancelRegister.addEventListener('click', () => {
+  hide(registerForm);
+  show(googleLoginButton); show(showEmailLoginForm); show(showRegisterForm);
+  document.getElementById('registerError').textContent = '';
+  registerForm.reset();
+});
+emailLoginForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+  const email = document.getElementById('loginEmail').value;
+  const password = document.getElementById('loginPassword').value;
+  auth.signInWithEmailAndPassword(email, password)
+    .then(userCredential => {
+      resetLoginModal();
+      loginModal.style.display = 'none';
+      loginModal.classList.add('hidden');
+      localStorage.setItem('user', JSON.stringify(userCredential.user));
+    })
+    .catch(error => {
+      document.getElementById('emailLoginError').textContent = error.message;
+    });
+});
+registerForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+  const email = document.getElementById('registerEmail').value;
+  const password = document.getElementById('registerPassword').value;
+  auth.createUserWithEmailAndPassword(email, password)
+    .then(userCredential => {
+      resetLoginModal();
+      loginModal.style.display = 'none';
+      loginModal.classList.add('hidden');
+      localStorage.setItem('user', JSON.stringify(userCredential.user));
+    })
+    .catch(error => {
+      document.getElementById('registerError').textContent = error.message;
+    });
+});
 
-            // Authentication modal functionality
-            const loginButton = document.getElementById('loginButton');
-            const registerButton = document.getElementById('registerButton');
-            const loginModal = document.getElementById('loginModal');
-            const emailLoginForm = document.getElementById('emailLoginForm');
-            const registerForm = document.getElementById('registerForm');
-            const showEmailLoginForm = document.getElementById('showEmailLoginForm');
-            const showRegisterForm = document.getElementById('showRegisterForm');
-            const closeLoginModal = document.getElementById('closeLoginModal');
-            const cancelEmailLogin = document.getElementById('cancelEmailLogin');
-            const cancelRegister = document.getElementById('cancelRegister');
-            const emailLoginError = document.getElementById('emailLoginError');
+// Profile and upload logic
+const profileMenu = document.getElementById('profileMenu');
+const uploadButton = document.getElementById('uploadButton');
 
-            loginButton.addEventListener('click', () => {
-                loginModal.style.display = 'block';
-                emailLoginForm.style.display = 'none';
-                registerForm.style.display = 'none';
-                emailLoginError.textContent = '';
-            });
+function toggleProfileMenu() {
+  if (profileMenu.style.display === 'block') {
+    profileMenu.style.display = 'none';
+  } else {
+    profileMenu.style.display = 'block';
+  }
+}
 
-            registerButton.addEventListener('click', () => {
-                loginModal.style.display = 'block';
-                emailLoginForm.style.display = 'none';
-                registerForm.style.display = 'block';
-                emailLoginError.textContent = '';
-            });
+function updateProfileUI(user) {
+  const profilePic = document.getElementById('profilePic');
+  const userName = document.getElementById('userName');
+  const userEmail = document.getElementById('userEmail');
 
-            showEmailLoginForm.addEventListener('click', () => {
-                emailLoginForm.style.display = 'block';
-                registerForm.style.display = 'none';
-                emailLoginError.textContent = '';
-            });
+  if (user) {
+    profilePic.src = user.photoURL || 'default-profile.png';
+    userName.textContent = user.displayName || 'User';
+    userEmail.textContent = user.email;
+    show(uploadButton);
+  } else {
+    profilePic.src = 'default-profile.png';
+    userName.textContent = 'Guest';
+    userEmail.textContent = '';
+    hide(uploadButton);
+  }
+}
 
-            showRegisterForm.addEventListener('click', () => {
-                emailLoginForm.style.display = 'none';
-                registerForm.style.display = 'block';
-                emailLoginError.textContent = '';
-            });
+auth.onAuthStateChanged(user => {
+  if (user) {
+    // User is signed in
+    updateProfileUI(user);
+  } else {
+    // No user is signed in
+    updateProfileUI(null);
+  }
+});
 
-            closeLoginModal.addEventListener('click', () => {
-                loginModal.style.display = 'none';
-            });
-
-            cancelEmailLogin.addEventListener('click', () => {
-                emailLoginForm.style.display = 'none';
-                emailLoginError.textContent = '';
-            });
-
-            cancelRegister.addEventListener('click', () => {
-                registerForm.style.display = 'none';
-            });
-
-            emailLoginForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const email = document.getElementById('emailInput').value;
-                const password = document.getElementById('passwordInput').value;
-                if (email && password) {
-                    alert(`Logged in with email: ${email}`);
-                    loginModal.style.display = 'none';
-                } else {
-                    emailLoginError.textContent = 'Invalid email or password.';
-                }
-            });
-
-            registerForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const email = document.getElementById('registerEmail').value;
-                const password = document.getElementById('registerPassword').value;
-                if (email && password) {
-                    alert(`Registered with email: ${email}`);
-                    loginModal.style.display = 'none';
-                } else {
-                    emailLoginError.textContent = 'Invalid email or password.';
-                }
-            });
+// Upload button click handler
+uploadButton.addEventListener('click', () => {
+  const user = auth.currentUser;
+  if (user) {
+    // Proceed with upload
+    alert('Upload feature is not implemented in this demo.');
+  } else {
+    alert('Please log in to upload images.');
+  }
+});
         </script>
     </body>
 </html>

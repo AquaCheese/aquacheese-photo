@@ -242,6 +242,184 @@
 #closeCart:hover {
     background-color: darkred;
 }
+
+    /* Unified modal and cart styles from index.html */
+    .modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        background-color: #444;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        width: 90%;
+        max-width: 500px;
+        position: relative;
+    }
+
+    .modal-content h2 {
+        margin-top: 0;
+        color: #ffcc00;
+    }
+
+    .modal-content p {
+        color: whitesmoke;
+    }
+
+    .modal-close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: crimson;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1001;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-close:hover {
+        background-color: darkred;
+    }
+
+    /* Cart button and panel styles */
+    #cartButton {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: gold;
+        color: black;
+        border: none;
+        border-radius: 12px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        z-index: 1000;
+        transition: background-color 0.3s ease;
+    }
+
+    #cartButton:hover {
+        background-color: goldenrod;
+    }
+
+    #cartPanel {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 300px;
+        height: 100%;
+        background-color: #333;
+        color: whitesmoke;
+        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+        overflow-y: auto;
+        transition: right 0.3s ease;
+        z-index: 999;
+        padding: 20px;
+    }
+
+    #cartPanel h2 {
+        text-align: center;
+        color: #ffcc00;
+    }
+
+    #cartPanel ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    #cartPanel ul li {
+        margin: 10px 0;
+        border-bottom: 1px solid whitesmoke;
+        padding-bottom: 10px;
+        display: flex;
+        align-items: center;
+    }
+
+    #cartPanel ul li img {
+        width: 50px;
+        height: 50px;
+        margin-right: 10px;
+        border: 1px solid whitesmoke;
+        border-radius: 5px;
+    }
+
+    #cartPanel ul li button {
+        margin-left: auto;
+        background-color: crimson;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+
+    #cartPanel ul li button:hover {
+        background-color: darkred;
+    }
+
+    #cartSubtotal {
+        margin-top: 20px;
+        font-size: 18px;
+        text-align: center;
+        border-top: 1px solid whitesmoke;
+        padding-top: 10px;
+    }
+
+    #buyNowButton {
+        margin-top: 20px;
+        width: 100%;
+        padding: 10px;
+        background-color: green;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    #buyNowButton:hover {
+        background-color: darkgreen;
+    }
+
+    #closeCart {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 50%; /* Makes it circular */
+    width: 40px; /* Adjust width */
+    height: 40px; /* Adjust height */
+    font-size: 24px; /* Adjust font size */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centers the "×" inside the circle */
+    z-index: 1001;
+}
+
+#closeCart:hover {
+    background-color: darkred;
+}
 </style>
     </head>
 
@@ -327,11 +505,174 @@
             <address>[NO LOCATION]</address>
         </fieldset>
         <br>
-        <button type="button" style="font-size: large;">Add to Cart</button> &nbsp;&nbsp;&nbsp; <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
+        <!-- Add to Cart button -->
+        <button type="button" style="font-size: large;" onclick="addToCart('Mini Muffin', 'Muffin WM.png', 15)">Add to Cart</button> &nbsp;&nbsp;&nbsp; <a href="Purchase.html"><button type="button" style="font-size: large;">Buy Now</button></a>
         <br><br>
         &lt;&lt;&lt;&nbsp; &copy; 2025 AquaCheese &nbsp;&gt;&gt;&gt;
 
-        <script>
+        <!-- Unified login/profile modal and cart logic from index.html inserted here. -->
+        <div class="modal-overlay" id="loginModal">
+            <div class="modal-content">
+                <button class="modal-close" onclick="closeLoginModal()">&times;</button>
+                <h2>Login</h2>
+                <form id="loginForm">
+                    <input type="email" id="email" placeholder="Email" required>
+                    <input type="password" id="password" placeholder="Password" required>
+                    <button type="submit">Login</button>
+                </form>
+                <p>Don't have an account? <a href="javascript:void(0);" onclick="openSignupModal()">Sign up here</a></p>
+            </div>
+        </div>
+
+        <div class="modal-overlay" id="signupModal">
+            <div class="modal-content">
+                <button class="modal-close" onclick="closeSignupModal()">&times;</button>
+                <h2>Sign Up</h2>
+                <form id="signupForm">
+                    <input type="text" id="name" placeholder="Full Name" required>
+                    <input type="email" id="signupEmail" placeholder="Email" required>
+                    <input type="password" id="signupPassword" placeholder="Password" required>
+                    <button type="submit">Sign Up</button>
+                </form>
+                <p>Already have an account? <a href="javascript:void(0);" onclick="openLoginModal()">Login here</a></p>
+            </div>
+        </div>
+
+        <div class="modal-overlay" id="profileModal">
+            <div class="modal-content">
+                <button class="modal-close" onclick="closeProfileModal()">&times;</button>
+                <h2>Your Profile</h2>
+                <p id="profileInfo">Loading...</p>
+                <button onclick="logout()">Logout</button>
+            </div>
+        </div>
+
+        <!-- Cart button -->
+<button id="cartButton" style="position: fixed; top: 20px; right: 20px; background-color: gold; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer; z-index: 1000; transition: background-color 0.3s;">Cart</button>
+
+<!-- Cart panel -->
+<div id="cartPanel" style="position: fixed; top: 0; right: -100%; width: 300px; height: 100%; background-color: #333; color: whitesmoke; box-shadow: -2px 0 5px rgba(0,0,0,0.5); overflow-y: auto; transition: right 0.3s ease; z-index: 999; padding: 20px; display: block;">
+    <button id="closeCart" style="position: absolute; top: 10px; right: 10px; background-color: red; color: white; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 1001;">&times;</button>
+    <h2 style="text-align: center; color: #ffcc00;">Your Cart</h2>
+    <ul id="cartList" style="list-style-type: none; padding: 0;"></ul>
+    <div id="cartSubtotal" style="margin-top: 20px; font-size: 18px; text-align: center; border-top: 1px solid whitesmoke; padding-top: 10px;">Subtotal: £0</div>
+    <button id="buyNowButton" style="margin-top: 20px; width: 100%; padding: 10px; background-color: green; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">Buy Now</button>
+</div>
+
+        <script type="module">
+            import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js';
+            import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js';
+            import { getFirestore, collection, addDoc, getDocs, query, where, updateDoc, doc } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js';
+            import { getStorage, ref, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-storage.js';
+
+            // Your web app's Firebase configuration
+            const firebaseConfig = {
+                apiKey: "YOUR_API_KEY",
+                authDomain: "YOUR_AUTH_DOMAIN",
+                projectId: "YOUR_PROJECT_ID",
+                storageBucket: "YOUR_STORAGE_BUCKET",
+                messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+                appId: "YOUR_APP_ID"
+            };
+
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth();
+            const db = getFirestore();
+            const storage = getStorage();
+
+            // Authentication functionality
+            const loginModal = document.getElementById('loginModal');
+            const signupModal = document.getElementById('signupModal');
+            const profileModal = document.getElementById('profileModal');
+
+            function openLoginModal() {
+                loginModal.style.display = 'flex';
+            }
+
+            function closeLoginModal() {
+                loginModal.style.display = 'none';
+            }
+
+            function openSignupModal() {
+                signupModal.style.display = 'flex';
+            }
+
+            function closeSignupModal() {
+                signupModal.style.display = 'none';
+            }
+
+            function openProfileModal() {
+                profileModal.style.display = 'flex';
+                loadProfile();
+            }
+
+            function closeProfileModal() {
+                profileModal.style.display = 'none';
+            }
+
+            function loadProfile() {
+                const user = auth.currentUser;
+                if (user) {
+                    document.getElementById('profileInfo').innerText = `Logged in as: ${user.email}`;
+                } else {
+                    document.getElementById('profileInfo').innerText = 'Not logged in';
+                }
+            }
+
+            auth.onAuthStateChanged((user) => {
+                if (user) {
+                    // User is signed in
+                    document.getElementById('profileInfo').innerText = `Logged in as: ${user.email}`;
+                } else {
+                    // No user is signed in
+                    document.getElementById('profileInfo').innerText = 'Not logged in';
+                }
+            });
+
+            document.getElementById('loginForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+
+                signInWithEmailAndPassword(auth, email, password)
+                    .then((userCredential) => {
+                        // Signed in
+                        const user = userCredential.user;
+                        console.log('Login successful:', user);
+                        closeLoginModal();
+                    })
+                    .catch((error) => {
+                        console.error('Error during login:', error);
+                    });
+            });
+
+            document.getElementById('signupForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('signupEmail').value;
+                const password = document.getElementById('signupPassword').value;
+
+                createUserWithEmailAndPassword(auth, email, password)
+                    .then((userCredential) => {
+                        // Signed up
+                        const user = userCredential.user;
+                        console.log('Signup successful:', user);
+                        closeSignupModal();
+                    })
+                    .catch((error) => {
+                        console.error('Error during signup:', error);
+                    });
+            });
+
+            function logout() {
+                signOut(auth).then(() => {
+                    console.log('User signed out');
+                }).catch((error) => {
+                    console.error('Error during sign out:', error);
+                });
+            }
+
             // Function to open the dialog
             function openDialog() {
                 document.getElementById('dialogOverlay').style.display = 'flex';
@@ -450,6 +791,65 @@
             document.getElementById('googleLoginButton').addEventListener('click', function() {
                 alert('Google login not implemented yet.');
             });
+        </script>
+
+        <script>
+// Cart logic from index.html
+const cartButton = document.getElementById('cartButton');
+const cartPanel = document.getElementById('cartPanel');
+const closeCart = document.getElementById('closeCart');
+const cartList = document.getElementById('cartList');
+const cartSubtotal = document.getElementById('cartSubtotal');
+const buyNowButton = document.getElementById('buyNowButton');
+
+function getCart() {
+  return JSON.parse(localStorage.getItem('cart') || '[]');
+}
+function setCart(cart) {
+  localStorage.setItem('cart', JSON.stringify(cart));
+}
+function updateCartUI() {
+  const cart = getCart();
+  cartList.innerHTML = '';
+  let subtotal = 0;
+  cart.forEach((item, idx) => {
+    const li = document.createElement('li');
+    li.style.display = 'flex';
+    li.style.justifyContent = 'space-between';
+    li.style.alignItems = 'center';
+    li.style.marginBottom = '8px';
+    li.innerHTML = `<span>${item.name}</span> <span>£${item.price}</span> <button style="background:red;color:white;border:none;border-radius:4px;padding:2px 8px;cursor:pointer;" onclick="removeFromCart(${idx})">Remove</button>`;
+    cartList.appendChild(li);
+    subtotal += item.price;
+  });
+  cartSubtotal.textContent = `Subtotal: £${subtotal}`;
+}
+function addToCart(name, img) {
+  const price = 15;
+  const cart = getCart();
+  cart.push({ name, img, price });
+  setCart(cart);
+  updateCartUI();
+}
+function removeFromCart(idx) {
+  const cart = getCart();
+  cart.splice(idx, 1);
+  setCart(cart);
+  updateCartUI();
+}
+cartButton.addEventListener('click', () => {
+  cartPanel.style.right = '0';
+  updateCartUI();
+});
+closeCart.addEventListener('click', () => {
+  cartPanel.style.right = '-100%';
+});
+buyNowButton.addEventListener('click', () => {
+  alert('Purchasing is not enabled in this beta.');
+});
+window.addToCart = addToCart;
+window.removeFromCart = removeFromCart;
+window.addEventListener('DOMContentLoaded', updateCartUI);
         </script>
     </body>
 </html>

@@ -230,6 +230,8 @@
         display: none !important;
     }
 
+    #loginModal .hidden { display: none !important; }
+
     /* Responsive Design */
     @media (max-width: 768px) {
         body {
@@ -367,21 +369,35 @@
   width: 90%;
   margin: 10px auto;
 }
+
+.hidden { display: none !important; }
 </style>
 
     </head>
     <body> 
+        <!-- DEBUG: Top of <body> loaded -->
+<script>
+console.log('DEBUG: <body> loaded');
+</script>
+
         <b><h1 style="font-size: xxx-large;">Photography & Videography</h1></b>
         <br>
         <b style="font-size: xx-large;">[OPEN BETA]</b>
         <br><br>
-        v. 0.9.7
+        v. 0.9.8
         <br>
         <br>
         THIS SITE IS IDEALLY VIEWED ON DESKTOP / LAPTOP <br> (viewing on other devices may lead to alignment, or other visual issues)
         <br><br>
+        <div style="font-size: large; margin-bottom: 18px;">
+            Images will load very slowly with a bad connection<br><br>
+            All image heights have been resized to 200 <abbr title="Pixels">px</abbr> for ✨viewing ease✨ (the real dimentions may differ)<br><br>
+            (all image formats are JPG (except the watermarked photos))<br><br>
+            <h3 style="margin: 10px 0 0 0;"><u><b>PURCHASING ANY IMAGE WILL NOT WORK!</b></u></h3>
+            <br>
+            (almost) ALL images on or associated with this site were taken / created by AquaCheese
+        </div>
         <hr>
-        
         <a href="Contact Me Form.html"><button class="btncontact" style="font-size: 16px; text-align: center; border-radius: 12px;">Contact Me</button></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://www.youtube.com/@aquacheese1" target="_blank" style="vertical-align: middle;">
   <img src="2-21145_youtube-logo-transparent-png-pictures-transparent-background-youtube.png" alt="YouTube" style="height:48px; width:auto; border-radius:12px; vertical-align:middle; box-shadow:0 2px 8px rgba(0,0,0,0.2);">
 </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="About.html"><button class="btnabt" style="font-size: 16px; text-align: center; border-radius: 12px;">About</button></a>
@@ -438,33 +454,33 @@
   });
 
   dropdownList.addEventListener('click', (e) => {
-    if (e.target.matches('li')) {
-      dropdownBtn.innerHTML = e.target.textContent + '<span class="dropdown-arrow"></span>';
-      closeDropdown();
-      // Redirect to section page instead of scrolling
-      const val = e.target.getAttribute('data-value');
-      if (val) {
-        let page = '';
-        switch(val) {
-          case 'land':
-            page = 'landscape.html';
-            break;
-          case 'port':
-            page = 'portrait.html';
-            break;
-          case 'All':
-            page = 'all imgs.html';
-            break;
-          case 'videos':
-            page = 'videos.html';
-            break;
-        }
-        if (page) {
-          window.location.href = page;
-        }
+  if (e.target.matches('li')) {
+    dropdownBtn.innerHTML = e.target.textContent + '<span class="dropdown-arrow"></span>';
+    closeDropdown();
+    // Redirect to section page instead of scrolling
+    const val = e.target.getAttribute('data-value');
+    if (val) {
+      let page = '';
+      switch(val) {
+        case 'land':
+          page = 'landscape.html';
+          break;
+        case 'port':
+          page = 'portrait.html';
+          break;
+        case 'All':
+          page = 'all imgs.html';
+          break;
+        case 'videos':
+          page = 'videos.html';
+          break;
+      }
+      if (page) {
+        window.location.href = page;
       }
     }
-  });
+  }
+});
 
   // Keyboard navigation for dropdown list
   dropdownList.addEventListener('keydown', (e) => {
@@ -495,27 +511,7 @@
         </script>
 
         <hr>
-        <br>
-        <p style="font-size: x-large;">
-        THIS SITE IS STILL A <abbr title="Work In Progress">WIP</abbr> AND WILL BE UPDATED REGULARLY! <br> (If you find a bug or just want to say something, use the <a href="Contact Me Form.html">contact me form</a>)
-        </p>
-        
-        <br>
-        Images will load very slowly with a bad connection
-        <br>
-        <hr>
-        <br>
-        All image heights have been resized to 200 <abbr title="Pixels">px</abbr> for ✨viewing ease✨ (the real dimentions may differ)
-        <br><br>
-        (all image formats are JPG (except the watermarked photos))
-        <br><br>
-        <h3><u><b>PURCHASING ANY IMAGE WILL NOT WORK!</b></u></h3>
-        <br><br>
-        (almost) ALL images on or associated with this site were taken / created by AquaCheese
-        <br><br>
-        <hr>
-
-    <button id="mobileViewButton" style="font-size: large; margin: 20px; padding: 10px; border-radius: 5px; background-color: lightblue; border: none; cursor: pointer;">
+        <button id="mobileViewButton" style="font-size: large; margin: 20px; padding: 10px; border-radius: 5px; background-color: lightblue; border: none; cursor: pointer;">
     Tap if you're on mobile
     </button>
 
@@ -546,28 +542,44 @@
         });
     </script>
 
-        <hr>
+    <hr>
+    <!-- Featured Images Section (restored) -->
+<h2 style="color: #ffcc00; margin-top: 40px;">3 Featured Images</h2>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 32px; margin: 30px auto 40px auto; max-width: 1400px;">
+  <div style="background: #3a3a3a; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.25); padding: 18px 18px 12px 18px; width: 320px; max-width: 95vw; text-align: center;">
+    <a href="Seagull car img.html"><img src="Seagull on a Car WM.png" alt="Seagull on a Car" style="width: 100%; height: auto; border-radius: 8px; margin-bottom: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.18); background: #232323;"></a>
+    <div style="color: #ffcc00; font-size: 1.15rem; font-weight: bold; margin-bottom: 6px;">Seagull on a Car</div>
+    <div style="color: #fff; margin-bottom: 8px;">£15</div>
+    <button type="button" style="background-color:#ffc107;color:black;margin-top:8px;" onclick="addToCart('Seagull on a Car', 'Seagull on a Car WM.png')">Add to Cart</button>
+  </div>
+  <div style="background: #3a3a3a; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.25); padding: 18px 18px 12px 18px; width: 320px; max-width: 95vw; text-align: center;">
+    <a href="Gavel.html"><img src="Gavel WM.png" alt="Gavel" style="width: 100%; height: auto; border-radius: 8px; margin-bottom: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.18); background: #232323;"></a>
+    <div style="color: #ffcc00; font-size: 1.15rem; font-weight: bold; margin-bottom: 6px;">Gavel</div>
+    <div style="color: #fff; margin-bottom: 8px;">£15</div>
+    <button type="button" style="background-color:#ffc107;color:black;margin-top:8px;" onclick="addToCart('Gavel', 'Gavel WM.png')">Add to Cart</button>
+  </div>
+  <div style="background: #3a3a3a; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.25); padding: 18px 18px 12px 18px; width: 320px; max-width: 95vw; text-align: center;">
+    <a href="flowers.html"><img src="flowers WM.png" alt="Flowers" style="width: 100%; height: auto; border-radius: 8px; margin-bottom: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.18); background: #232323;"></a>
+    <div style="color: #ffcc00; font-size: 1.15rem; font-weight: bold; margin-bottom: 6px;">Flowers</div>
+    <div style="color: #fff; margin-bottom: 8px;">£15</div>
+    <button type="button" style="background-color:#ffc107;color:black;margin-top:8px;" onclick="addToCart('Flowers', 'flowers WM.png')">Add to Cart</button>
+  </div>
+</div>
+<!-- End Featured Images -->
+<hr>
+        <br>
+        <!-- Remove the second mobile button and the bottom info message -->
 
    <!-- Cart button -->
-<button id="cartButton">Cart</button>
+<button id="cartButton" style="position: fixed; top: 20px; right: 20px; background-color: gold; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer; z-index: 1000; transition: background-color 0.3s;">Cart</button>
 
 <!-- Cart panel -->
-<div id="cartPanel">
-  <button id="closeCart">&times;</button>
-    <h2>Your Cart</h2>
-    <ul id="cartList">
-        <!-- Items will be dynamically added here -->
-    </ul>
-
-    <div id="cartSubtotal" style="margin-top: 20px; font-size: 18px; text-align: center; border-top: 1px solid whitesmoke; padding-top: 10px;">
-        Subtotal: £0
-    </div>
-
-    <!-- Buy Now button -->
-    <button id="buyNowButton" style="margin-top: 20px; width: 100%; padding: 10px; background-color: green; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
-        Buy Now
-    </button>
-</div>
+<div id="cartPanel" style="position: fixed; top: 0; right: -100%; width: 300px; height: 100%; background-color: #333; color: whitesmoke; box-shadow: -2px 0 5px rgba(0,0,0,0.5); overflow-y: auto; transition: right 0.3s ease; z-index: 999; padding: 20px; display: block;">
+    <button id="closeCart" style="position: absolute; top: 10px; right: 10px; background-color: red; color: white; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 1001;">&times;</button>
+    <h2 style="text-align: center; color: #ffcc00;">Your Cart</h2>
+    <ul id="cartList" style="list-style-type: none; padding: 0;"></ul>
+    <div id="cartSubtotal" style="margin-top: 20px; font-size: 18px; text-align: center; border-top: 1px solid whitesmoke; padding-top: 10px;">Subtotal: £0</div>
+    <button id="buyNowButton" style="margin-top: 20px; width: 100%; padding: 10px 20px; background-color: green; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">Buy Now</button>
 </div>
 
 <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
@@ -586,13 +598,14 @@
     <h2>Log In</h2>
     <button id="googleLoginButton" style="background-color: #4285F4; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In with Google</button>
     <button id="showEmailLoginForm" style="background-color: #555; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In with Email</button>
-    <form id="emailLoginForm" style="display:none; margin-top:10px;">
+    <button id="showRegisterForm" style="background-color: #ffc107; color: black; border: none; border-radius: 5px; padding: 8px 16px; font-size: 15px; cursor: pointer; margin: 10px; display: inline-block;">Register</button>
+    <form id="emailLoginForm" class="hidden" style="margin-top:10px;">
       <input id="emailInput" type="email" placeholder="Email" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
       <input id="passwordInput" type="password" placeholder="Password" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
       <button type="submit" style="background-color: #555; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Log In</button>
       <button type="button" id="cancelEmailLogin" style="background-color: #dc3545; color: white; border: none; border-radius: 5px; padding: 8px 16px; font-size: 15px; cursor: pointer; margin: 10px;">Cancel</button>
     </form>
-    <form id="registerForm" style="display:none; margin-top:10px;">
+    <form id="registerForm" class="hidden" style="margin-top:10px;">
       <input id="registerEmail" type="email" placeholder="Email" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
       <input id="registerPassword" type="password" placeholder="Password" required style="width:90%;margin-bottom:8px;padding:8px;border-radius:5px;border:none;">
       <button type="submit" style="background-color: #28a745; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px;">Register</button>
@@ -601,572 +614,482 @@
     <div id="emailLoginError" style="color:#ff6666; margin-top:8px; min-height:20px;"></div>
     <br>
     <hr style="border: 0; border-top: 1px solid #888; margin: 16px 0 8px 0;">
-    <button id="showRegisterForm" style="background-color: #ffc107; color: black; border: none; border-radius: 5px; padding: 8px 16px; font-size: 15px; cursor: pointer; margin: 10px; display: inline-block;">Register</button>
     <button id="closeLoginModal" style="background-color: red; color: white; border: none; border-radius: 5px; padding: 5px 10px; font-size: 14px; cursor: pointer; margin-top: 10px;">Close</button>
+    <button id="logoutButton" style="background-color: #343a40; color: white; border: none; border-radius: 5px; padding: 8px 16px; font-size: 15px; cursor: pointer; margin: 10px; display: none;">Log Out</button>
   </div>
 </div>
-<script type="module">
-import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
-import { firebaseConfig } from './firebase-config.js';
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const googleProvider = new GoogleAuthProvider();
+<div id="profileMenu" style="display:none; position:fixed; top:70px; left:20px; background:#444; color:#fff; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.3); z-index:2000; min-width:140px; padding:16px 12px;">
+    <button id="logoutButton" style="background-color: #dc3545; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer;">Logout</button>
+</div>
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Elements
-    const loginButton = document.getElementById('loginButton');
-    const loginModal = document.getElementById('loginModal');
-    const closeLoginModal = document.getElementById('closeLoginModal');
-    const googleLoginButton = document.getElementById('googleLoginButton');
-    const showEmailLoginFormBtn = document.getElementById('showEmailLoginForm');
-    const showRegisterFormBtn = document.getElementById('showRegisterForm');
-    const emailLoginForm = document.getElementById('emailLoginForm');
-    const registerForm = document.getElementById('registerForm');
-    const cancelEmailLoginBtn = document.getElementById('cancelEmailLogin');
-    const cancelRegisterBtn = document.getElementById('cancelRegister');
-    const emailInput = document.getElementById('emailInput');
-    const passwordInput = document.getElementById('passwordInput');
-    const emailLoginError = document.getElementById('emailLoginError');
-    const uploadButtonSection = document.getElementById('upload-button-section');
-
-    // Modal open/close
-    loginButton.addEventListener('click', () => {
-        loginModal.style.display = 'block';
-    });
-    closeLoginModal.addEventListener('click', () => {
-        loginModal.style.display = 'none';
-    });
-
-    // Show/hide forms in modal
-    showEmailLoginFormBtn.addEventListener('click', () => {
-        showEmailLoginFormBtn.style.display = 'none';
-        showRegisterFormBtn.style.display = 'none';
-        emailLoginForm.style.display = 'block';
-        registerForm.style.display = 'none';
-        emailLoginError.textContent = '';
-    });
-    cancelEmailLoginBtn.addEventListener('click', () => {
-        emailLoginForm.style.display = 'none';
-        showEmailLoginFormBtn.style.display = 'inline-block';
-        showRegisterFormBtn.style.display = 'inline-block';
-        emailLoginError.textContent = '';
-    });
-    showRegisterFormBtn.addEventListener('click', () => {
-        showEmailLoginFormBtn.style.display = 'none';
-        showRegisterFormBtn.style.display = 'none';
-        emailLoginForm.style.display = 'none';
-        registerForm.style.display = 'block';
-        emailLoginError.textContent = '';
-    });
-    cancelRegisterBtn.addEventListener('click', () => {
-        registerForm.style.display = 'none';
-        showEmailLoginFormBtn.style.display = 'inline-block';
-        showRegisterFormBtn.style.display = 'inline-block';
-        emailLoginError.textContent = '';
-    });
-
-    // Google Login
-    googleLoginButton.addEventListener('click', () => {
-        signInWithPopup(auth, googleProvider)
-            .then((result) => {
-                const user = result.user;
-                localStorage.setItem('loggedInUser', JSON.stringify({
-                    displayName: user.displayName || user.email,
-                    profilePicUrl: user.photoURL,
-                    email: user.email
-                }));
-                setProfilePicture(user.photoURL, user.displayName || user.email);
-                loginModal.style.display = 'none';
-                showUploadButtonIfAllowed(user.email);
-            })
-            .catch((error) => {
-                emailLoginError.textContent = 'Google Login Failed: ' + error.message;
-            });
-    });
-
-    // Email Login
-    emailLoginForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        emailLoginError.textContent = '';
-        const email = emailInput.value.trim();
-        const password = passwordInput.value;
-
-        signInWithEmailAndPassword(auth, email, password)
-            .then((result) => {
-                const user = result.user;
-                localStorage.setItem('loggedInUser', JSON.stringify({
-                    displayName: user.displayName || user.email,
-                    profilePicUrl: user.photoURL,
-                    email: user.email
-                }));
-                setProfilePicture(user.photoURL, user.displayName || user.email);
-                loginModal.style.display = 'none';
-                showUploadButtonIfAllowed(user.email);
-            })
-            .catch((error) => {
-                emailLoginError.textContent = error.message.replace('Firebase: ', '');
-            });
-    });
-
-    // Registration logic
-    registerForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        emailLoginError.textContent = '';
-        const email = document.getElementById('registerEmail').value.trim();
-        const password = document.getElementById('registerPassword').value;
-
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((result) => {
-                const user = result.user;
-                localStorage.setItem('loggedInUser', JSON.stringify({
-                    displayName: user.displayName || user.email,
-                    profilePicUrl: user.photoURL,
-                    email: user.email
-                }));
-                setProfilePicture(user.photoURL, user.displayName || user.email);
-                loginModal.style.display = 'none';
-                registerForm.reset();
-                registerForm.style.display = 'none';
-                showEmailLoginFormBtn.style.display = 'inline-block';
-                showRegisterFormBtn.style.display = 'inline-block';
-                showUploadButtonIfAllowed(user.email);
-            })
-            .catch((error) => {
-                emailLoginError.textContent = error.message.replace('Firebase: ', '');
-            });
-    });
-
-    // Set profile picture and replace the login button
-    function setProfilePicture(profilePicUrl, displayName) {
-        loginButton.style.display = 'none';
-
-        // Remove existing profile pic if present
-        const existingProfilePic = document.getElementById('profilePic');
-        if (existingProfilePic) existingProfilePic.remove();
-
-        const profilePic = document.createElement('img');
-        profilePic.src = profilePicUrl || 'default-profile.png';
-        profilePic.alt = displayName || 'Profile Picture';
-        profilePic.style.position = 'fixed';
-        profilePic.style.top = '20px';
-        profilePic.style.left = '20px';
-        profilePic.style.width = '40px';
-        profilePic.style.height = '40px';
-        profilePic.style.borderRadius = '50%';
-        profilePic.style.cursor = 'pointer';
-        profilePic.style.zIndex = '1000';
-        profilePic.id = 'profilePic';
-        document.body.appendChild(profilePic);
-
-        // Show/hide profile menu on click
-        profilePic.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const menu = document.getElementById('profileMenu');
-            menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
-        });
-
-        // Hide menu if clicking outside
-        document.addEventListener('click', (e) => {
-            const menu = document.getElementById('profileMenu');
-            if (menu && !menu.contains(e.target) && e.target.id !== 'profilePic') {
-                menu.style.display = 'none';
-            }
-        });
+    <!-- Move all Firebase and login modal scripts to the very end of body -->
+    <!-- Firebase App (the core Firebase SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app-compat.js"></script>
+    <!-- Firebase Auth -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-auth-compat.js"></script>
+    <!-- Your custom Firebase config -->
+    <script src="firebase-config.js"></script>
+    <script>
+    // DEBUG: Firebase initialization script running
+    console.log('DEBUG: Firebase initialization script running');
+    // Initialize Firebase
+    if (!window._firebaseInitialized && window.firebase && window.firebaseConfig) {
+      firebase.initializeApp(firebaseConfig);
+      window._firebaseInitialized = true;
     }
+    </script>
+    <script>
+    (function() {
+// Cart functionality (match Seagull car img.html)
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+const cartButton = document.getElementById('cartButton');
+const cartPanel = document.getElementById('cartPanel');
+const cartList = document.getElementById('cartList');
+const cartSubtotal = document.getElementById('cartSubtotal');
+const closeCart = document.getElementById('closeCart');
 
-    // Logout button logic
-    document.getElementById('logoutButton').addEventListener('click', () => {
-        localStorage.removeItem('loggedInUser');
-        location.reload();
-    });
-
-    // Show upload button only for allowed email
-    function showUploadButtonIfAllowed(email) {
-        const allowedEmail = "aquacheese.yt@gmail.com";
-        if (email === allowedEmail) {
-            uploadButtonSection.style.display = 'block';
-        } else {
-            uploadButtonSection.style.display = 'none';
-        }
-    }
-
-    // On page load, show profile if logged in
-    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
-    if (loggedInUser) {
-        setProfilePicture(loggedInUser.profilePicUrl, loggedInUser.displayName);
-        showUploadButtonIfAllowed(loggedInUser.email);
-    }
+// Open the cart panel (slide in)
+cartButton.addEventListener('click', () => {
+    cartPanel.style.right = '0';
+    cartButton.style.display = 'none';
 });
-</script>
-
-<style>
-    /* Cart button styles */
-    #cartButton {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background-color: gold;
-        color: black;
-        border: none;
-        border-radius: 12px;
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-        z-index: 1000;
+// Close the cart panel (slide out)
+closeCart.addEventListener('click', () => {
+    cartPanel.style.right = '-100%';
+    cartButton.style.display = 'block';
+});
+// Add to cart function (for use on this page if needed)
+window.addToCart = function(itemName, itemImage) {
+    if (!itemName) {
+        alert("Error: Item name is missing.");
+        return;
     }
-
-    #cartButton:hover {
-        background-color: goldenrod;
+    // Determine price: £20 for videos, £15 for images
+    let price = 15;
+    if (itemImage && (itemImage.toLowerCase().endsWith('.mp4') || itemImage.toLowerCase().endsWith('.mov') || itemImage.toLowerCase().endsWith('.webm') || itemImage.toLowerCase().includes('video'))) {
+        price = 20;
     }
-
-    /* Cart panel styles */
-    #cartPanel {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: 300px;
-        height: 100%;
-        background-color: #333;
-        color: whitesmoke;
-        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
-        overflow-y: auto;
-        transition: right 0.3s ease;
-        z-index: 999;
-        padding: 20px;
-    }
-
-    #cartPanel h2 {
-        text-align: center;
-    }
-
-    #cartPanel ul {
-        list-style-type: none;
-        padding: 0;
-    }
- 
-    #cartPanel ul li {
-        margin: 10px 0;
-        border-bottom: 1px solid whitesmoke;
-        padding-bottom: 10px;
-    }
-
-    #closeCart {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: red;
-    color: white;
-    border: none;
-    border-radius: 50%; /* Makes it circular */
-    width: 40px; /* Adjust width */
-    height: 40px; /* Adjust height */
-    font-size: 36px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center; /* Centers the "×" inside the circle */
+    cart.push({ name: itemName, image: itemImage, price });
+    saveCart();
+    updateCart();
+    alert(`${itemName} has been added to your cart.`);
 }
-
-#closeCart:hover {
-    background-color: darkred;
+// Update the cart list and cart button text
+function updateCart() {
+    cartList.innerHTML = '';
+    let subtotal = 0;
+    cart.forEach((item, index) => {
+        const listItem = document.createElement('li');
+        listItem.style.display = 'flex';
+        listItem.style.alignItems = 'center';
+        listItem.style.marginBottom = '10px';
+        if (item.image) {
+            const itemImage = document.createElement('img');
+            itemImage.src = item.image;
+            itemImage.alt = item.name;
+            itemImage.style.width = '50px';
+            itemImage.style.height = '50px';
+            itemImage.style.marginRight = '10px';
+            itemImage.style.border = '1px solid whitesmoke';
+            listItem.appendChild(itemImage);
+        }
+        const itemName = document.createElement('span');
+        itemName.textContent = item.name;
+        listItem.appendChild(itemName);
+        const itemPrice = document.createElement('span');
+        itemPrice.textContent = ` - £${item.price}`;
+        itemPrice.style.marginLeft = 'auto';
+        listItem.appendChild(itemPrice);
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'Remove';
+        removeButton.style.marginLeft = '10px';
+        removeButton.style.backgroundColor = 'red';
+        removeButton.style.color = 'white';
+        removeButton.style.border = 'none';
+        removeButton.style.borderRadius = '5px';
+        removeButton.style.cursor = 'pointer';
+        removeButton.addEventListener('click', () => {
+            cart.splice(index, 1);
+            saveCart();
+            updateCart();
+        });
+        listItem.appendChild(removeButton);
+        cartList.appendChild(listItem);
+        subtotal += item.price;
+    });
+    cartSubtotal.textContent = `Subtotal: £${subtotal}`;
+    const itemCount = cart.length;
+    cartButton.textContent = itemCount > 0 ? `Cart (${itemCount})` : 'Cart';
 }
-</style>
-
-<script>
+function saveCart() {
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
 document.getElementById('buyNowButton').addEventListener('click', () => {
     if (cart.length > 0) {
-        localStorage.removeItem('singleItem'); // Clear single item data
-        localStorage.setItem('cartPurchase', true); // Indicate that the cart is being purchased
-        window.location.href = 'Purchase.html'; // Redirect to the purchase page
+        localStorage.removeItem('singleItem');
+        localStorage.setItem('cartPurchase', true);
+        window.location.href = 'Purchase.html';
     } else {
         alert('Your cart is empty. Add items to proceed.');
     }
 });
-    function buyNowForImage() {
-    localStorage.setItem('singleItem', JSON.stringify({ type: 'image', price: 15 }));
-    window.location.href = 'Purchase.html';
-}
-
-function buyNowForVideo() {
-    localStorage.setItem('singleItem', JSON.stringify({ type: 'video', price: 20 }));
-    window.location.href = 'Purchase.html';
-}
-    // Add functionality for the Buy Now button
-    document.getElementById('buyNowButton').addEventListener('click', () => {
-        if (cart.length === 0) {
-            alert('Your cart is empty. Add items to proceed.');
-        } else {
-            alert('Proceeding to checkout...');
-            // Add your checkout logic here
+document.addEventListener('DOMContentLoaded', updateCart);
+    })();
+    </script>
+    <script>
+    // DEBUG: Login modal logic script block parsed
+    console.log('DEBUG: Login modal logic script block parsed');
+    (function waitForFirebaseAndRun(attempts = 0) {
+    if (!(window.firebase && window.firebaseConfig && window._firebaseInitialized)) {
+        if (attempts === 0) {
+            console.warn('Waiting for Firebase to be ready...');
         }
-    });
-    // Cart functionality
-    let cart = JSON.parse(localStorage.getItem('cart')) || []; // Load cart from localStorage or initialize as empty
-    const cartButton = document.getElementById('cartButton');
-    const cartPanel = document.getElementById('cartPanel');
-    const cartList = document.getElementById('cartList');
-    const cartSubtotal = document.getElementById('cartSubtotal');
-    const closeCart = document.getElementById('closeCart');
-
-    // Open the cart panel
-    cartButton.addEventListener('click', () => {
-        cartPanel.style.right = '0';
-        cartButton.style.display = 'none'; // Hide the cart button
-    });
-
-    // Close the cart panel
-    closeCart.addEventListener('click', () => {
-        cartPanel.style.right = '-100%';
-        cartButton.style.display = 'block'; // Show the cart button
-    });
-
-    // Add to cart function
-    function addToCart(itemName, itemImage) {
-        if (!itemName) {
-            alert("Error: Item name is missing.");
+        if (attempts > 100) { // 100 * 50ms = 5 seconds
+            console.error('ERROR: Firebase config or initialization not detected after 5 seconds.');
+            console.error('window.firebase:', window.firebase);
+            console.error('window.firebaseConfig:', window.firebaseConfig);
+            console.error('window._firebaseInitialized:', window._firebaseInitialized);
             return;
         }
-
-        // Add the item details to the cart array
-        cart.push({ name: itemName, image: itemImage, price: 15 }); // Assume each image costs £15
-        saveCart(); // Save the cart to localStorage
-        updateCart();
-        alert(`${itemName} has been added to your cart.`);
+        setTimeout(() => waitForFirebaseAndRun(attempts + 1), 50);
+        return;
     }
+    // DEBUG: Confirm login modal logic script is running
+    console.log('Login modal logic script running (after Firebase ready)');
+    function runLoginModalLogic() {
+            // DEBUG: Top of login modal logic script
+            console.log('DEBUG: Top of login modal logic script');
+            console.log('runLoginModalLogic called'); // DEBUG
+            // Elements
+            const loginButton = document.getElementById('loginButton');
+            const loginModal = document.getElementById('loginModal');
+            const closeLoginModal = document.getElementById('closeLoginModal');
+            const googleLoginButton = document.getElementById('googleLoginButton');
+            const showEmailLoginFormBtn = document.getElementById('showEmailLoginForm');
+            const showRegisterFormBtn = document.getElementById('showRegisterForm');
+            const emailLoginForm = document.getElementById('emailLoginForm');
+            const registerForm = document.getElementById('registerForm');
+            const cancelEmailLoginBtn = document.getElementById('cancelEmailLogin');
+            const cancelRegisterBtn = document.getElementById('cancelRegister');
+            const emailInput = document.getElementById('emailInput');
+            const passwordInput = document.getElementById('passwordInput');
+            const emailLoginError = document.getElementById('emailLoginError');
+            const uploadButtonSection = document.getElementById('upload-button-section');
+            const logoutButton = document.getElementById('logoutButton');
 
-    // Update the cart list and cart button text
-    function updateCart() {
-        cartList.innerHTML = ''; // Clear the current cart list
-        let subtotal = 0; // Initialize subtotal
+            // Defensive checks for all required elements
+            if (!loginButton) { console.error('loginButton not found'); return; }
+            if (!loginModal) { console.error('loginModal not found'); return; }
+            if (!closeLoginModal) { console.error('closeLoginModal not found'); return; }
+            if (!googleLoginButton) { console.error('googleLoginButton not found'); return; }
+            if (!showEmailLoginFormBtn) { console.error('showEmailLoginFormBtn not found'); return; }
+            if (!showRegisterFormBtn) { console.error('showRegisterFormBtn not found'); return; }
+            if (!emailLoginForm) { console.error('emailLoginForm not found'); return; }
+            if (!registerForm) { console.error('registerForm not found'); return; }
+            if (!cancelEmailLoginBtn) { console.error('cancelEmailLoginBtn not found'); return; }
+            if (!cancelRegisterBtn) { console.error('cancelRegisterBtn not found'); return; }
+            if (!emailInput) { console.error('emailInput not found'); return; }
+            if (!passwordInput) { console.error('passwordInput not found'); return; }
+            if (!emailLoginError) { console.error('emailLoginError not found'); return; }
+            if (!uploadButtonSection) { console.error('uploadButtonSection not found'); return; }
+            if (!logoutButton) { console.error('logoutButton not found'); return; }
 
-        cart.forEach((item, index) => {
-            const listItem = document.createElement('li');
-            listItem.style.display = 'flex';
-            listItem.style.alignItems = 'center';
-            listItem.style.marginBottom = '10px';
+            // Firebase Auth references
+            const auth = firebase.auth();
+            const googleProvider = new firebase.auth.GoogleAuthProvider();
 
-            // Add the image to the cart item (if available)
-            if (item.image) {
-                const itemImage = document.createElement('img');
-                itemImage.src = item.image;
-                itemImage.alt = item.name;
-                itemImage.style.width = '50px';
-                itemImage.style.height = '50px';
-                itemImage.style.marginRight = '10px';
-                itemImage.style.border = '1px solid whitesmoke';
-                listItem.appendChild(itemImage);
+            // Utility functions for show/hide
+            function show(el) { el.classList.remove('hidden'); }
+            function hide(el) { el.classList.add('hidden'); }
+
+            // Reset login modal to initial state
+            function resetLoginModal() {
+                // Always hide both forms
+                hide(emailLoginForm);
+                hide(registerForm);
+                // Always show all main buttons
+                show(googleLoginButton);
+                show(showEmailLoginFormBtn);
+                show(showRegisterFormBtn);
+                // Clear error
+                emailLoginError.textContent = '';
+                // Reset forms
+                if (typeof emailLoginForm.reset === 'function') emailLoginForm.reset();
+                if (typeof registerForm.reset === 'function') registerForm.reset();
             }
 
-            // Add the name of the item
-            const itemName = document.createElement('span');
-            itemName.textContent = item.name;
-            listItem.appendChild(itemName);
-
-            // Add the price of the item
-            const itemPrice = document.createElement('span');
-            itemPrice.textContent = ` - £${item.price}`;
-            itemPrice.style.marginLeft = 'auto';
-            listItem.appendChild(itemPrice);
-
-            // Add a remove button for each item
-            const removeButton = document.createElement('button');
-            removeButton.textContent = 'Remove';
-            removeButton.style.marginLeft = '10px';
-            removeButton.style.backgroundColor = 'red';
-            removeButton.style.color = 'white';
-            removeButton.style.border = 'none';
-            removeButton.style.borderRadius = '5px';
-            removeButton.style.cursor = 'pointer';
-
-            // Remove item from the cart when the button is clicked
-            removeButton.addEventListener('click', () => {
-                cart.splice(index, 1); // Remove the item from the cart array
-                saveCart(); // Save the updated cart to localStorage
-                updateCart(); // Update the cart display
+            // Modal open/close
+            loginButton.addEventListener('click', () => {
+                resetLoginModal();
+                console.log('loginButton clicked'); // DEBUG
+                loginModal.style.display = 'block';
+                loginModal.style.zIndex = '9999'; // keep modal on top
+                // Remove debug styles
+                loginModal.style.backgroundColor = 'rgba(0,0,0,0.5)';
+                loginModal.style.border = '';
+                // Restore modal inner div styles
+                if (loginModal.firstElementChild) {
+                    loginModal.firstElementChild.style.backgroundColor = '#333';
+                    loginModal.firstElementChild.style.color = 'whitesmoke';
+                    loginModal.firstElementChild.style.border = '';
+                }
+                // Show/hide logout button based on login state
+                const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+                if (loggedInUser) {
+                    logoutButton.style.display = 'block';
+                } else {
+                    logoutButton.style.display = 'none';
+                }
+                // DEBUG: Log modal element and its children
+                console.log('loginModal element:', loginModal);
+                console.log('loginModal innerHTML:', loginModal.innerHTML);
+                // DEBUG: Log bounding rect
+                console.log('loginModal bounding rect:', loginModal.getBoundingClientRect());
+            });
+            closeLoginModal.addEventListener('click', () => {
+                loginModal.style.display = 'none';
+                resetLoginModal();
             });
 
-            listItem.appendChild(removeButton);
-            cartList.appendChild(listItem);
+            // Show/hide forms in modal
+            showEmailLoginFormBtn.addEventListener('click', () => {
+                hide(googleLoginButton);
+                hide(showEmailLoginFormBtn);
+                hide(showRegisterFormBtn);
+                show(emailLoginForm);
+                hide(registerForm);
+                emailLoginError.textContent = '';
+                if (typeof emailLoginForm.reset === 'function') emailLoginForm.reset();
+            });
+            cancelEmailLoginBtn.addEventListener('click', () => {
+                show(googleLoginButton);
+                hide(emailLoginForm);
+                show(showEmailLoginFormBtn);
+                show(showRegisterFormBtn);
+                emailLoginError.textContent = '';
+                if (typeof emailLoginForm.reset === 'function') emailLoginForm.reset();
+            });
+            showRegisterFormBtn.addEventListener('click', () => {
+                hide(googleLoginButton);
+                hide(showEmailLoginFormBtn);
+                hide(showRegisterFormBtn);
+                hide(emailLoginForm);
+                show(registerForm);
+                emailLoginError.textContent = '';
+                if (typeof registerForm.reset === 'function') registerForm.reset();
+            });
+            cancelRegisterBtn.addEventListener('click', () => {
+                show(googleLoginButton);
+                hide(registerForm);
+                show(showEmailLoginFormBtn);
+                show(showRegisterFormBtn);
+                emailLoginError.textContent = '';
+                if (typeof registerForm.reset === 'function') registerForm.reset();
+            });
 
-            // Add the item's price to the subtotal
-            subtotal += item.price;
+            // Google Login
+            googleLoginButton.addEventListener('click', () => {
+                auth.signInWithPopup(googleProvider)
+                    .then((result) => {
+                        const user = result.user;
+                        localStorage.setItem('loggedInUser', JSON.stringify({
+                            displayName: user.displayName || user.email,
+                            profilePicUrl: user.photoURL,
+                            email: user.email
+                        }));
+                        setProfilePicture(user.photoURL, user.displayName || user.email);
+                        loginModal.style.display = 'none';
+                        showUploadButtonIfAllowed(user.email);
+                    })
+                    .catch((error) => {
+                        emailLoginError.textContent = 'Google Login Failed: ' + error.message;
+                    });
+            });
+
+            // Email Login
+            emailLoginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                emailLoginError.textContent = '';
+                const email = emailInput.value.trim();
+                const password = passwordInput.value;
+
+                auth.signInWithEmailAndPassword(email, password)
+                    .then((result) => {
+                        const user = result.user;
+                        localStorage.setItem('loggedInUser', JSON.stringify({
+                            displayName: user.displayName || user.email,
+                            profilePicUrl: user.photoURL,
+                            email: user.email
+                        }));
+                        setProfilePicture(user.photoURL, user.displayName || user.email);
+                        loginModal.style.display = 'none';
+                        showUploadButtonIfAllowed(user.email);
+                    })
+                    .catch((error) => {
+                        emailLoginError.textContent = error.message.replace('Firebase: ', '');
+                    });
+            });
+
+            // Registration logic
+            registerForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                emailLoginError.textContent = '';
+                const email = document.getElementById('registerEmail').value.trim();
+                const password = document.getElementById('registerPassword').value;
+
+                auth.createUserWithEmailAndPassword(email, password)
+                    .then((result) => {
+                        const user = result.user;
+                        localStorage.setItem('loggedInUser', JSON.stringify({
+                            displayName: user.displayName || user.email,
+                            profilePicUrl: user.photoURL,
+                            email: user.email
+                        }));
+                        setProfilePicture(user.photoURL, user.displayName || user.email);
+                        loginModal.style.display = 'none';
+                        registerForm.reset();
+                        registerForm.style.display = 'none';
+                        showEmailLoginFormBtn.style.display = 'inline-block';
+                        showRegisterFormBtn.style.display = 'inline-block';
+                        showUploadButtonIfAllowed(user.email);
+                    })
+                    .catch((error) => {
+                        emailLoginError.textContent = error.message.replace('Firebase: ', '');
+                    });
+            });
+
+            // Profile menu logic
+function showProfileMenu() {
+    const menu = document.getElementById('profileMenu');
+    if (menu) {
+        menu.style.display = 'block';
+    }
+}
+function hideProfileMenu() {
+    const menu = document.getElementById('profileMenu');
+    if (menu) {
+        menu.style.display = 'none';
+    }
+}
+function setProfilePicture(profilePicUrl, displayName) {
+    const loginButton = document.getElementById('loginButton');
+    if (loginButton) loginButton.style.display = 'none';
+    // Remove existing profile pic if present
+    const existingProfilePic = document.getElementById('profilePic');
+    if (existingProfilePic) existingProfilePic.remove();
+    // Add new profile pic
+    const profilePic = document.createElement('img');
+    profilePic.src = profilePicUrl || 'default-profile.png';
+    profilePic.alt = displayName || 'Profile Picture';
+    profilePic.style.position = 'fixed';
+    profilePic.style.top = '20px';
+    profilePic.style.left = '20px';
+    profilePic.style.width = '40px';
+    profilePic.style.height = '40px';
+    profilePic.style.borderRadius = '50%';
+    profilePic.style.cursor = 'pointer';
+    profilePic.style.zIndex = '1000';
+    profilePic.id = 'profilePic';
+    document.body.appendChild(profilePic);
+    if (displayName) profilePic.title = displayName;
+    profilePic.onclick = function(e) {
+        e.stopPropagation();
+        showProfileMenu();
+    };
+    // Hide menu when clicking outside
+    document.addEventListener('click', function handler(event) {
+        const menu = document.getElementById('profileMenu');
+        if (menu && !menu.contains(event.target) && event.target !== profilePic) {
+            hideProfileMenu();
+            document.removeEventListener('click', handler);
+        }
+    });
+}
+function removeProfilePicture() {
+    const profilePic = document.getElementById('profilePic');
+    if (profilePic) profilePic.remove();
+    const loginButton = document.getElementById('loginButton');
+    if (loginButton) loginButton.style.display = 'inline-block';
+    hideProfileMenu();
+}
+// Add logout logic for menu
+const profileMenuLogout = document.querySelector('#profileMenu #logoutButton');
+if (profileMenuLogout) {
+    profileMenuLogout.onclick = function() {
+        firebase.auth().signOut().then(() => {
+            localStorage.removeItem('loggedInUser');
+            removeProfilePicture();
+            hideProfileMenu();
+            // Optionally reload or update UI
         });
+    };
+}
 
-        // Update the subtotal display
-        cartSubtotal.textContent = `Subtotal: £${subtotal}`;
+//            // Set profile picture and replace the login button
+//            function setProfilePicture(profilePicUrl, displayName) {
+//                loginButton.style.display = 'none';
+//
+//                // Remove existing profile pic if present
+//                const existingProfilePic = document.getElementById('profilePic');
+//                if (existingProfilePic) existingProfilePic.remove();
+//
+//                const profilePic = document.createElement('img');
+//                profilePic.src = profilePicUrl || 'default-profile.png';
+//                profilePic.alt = displayName || 'Profile Picture';
+//                profilePic.style.position = 'fixed';
+//                profilePic.style.top = '20px';
+//                profilePic.style.left = '20px';
+//                profilePic.style.width = '40px';
+//                profilePic.style.height = '40px';
+//                profilePic.style.borderRadius = '50%';
+//                profilePic.style.cursor = 'pointer';
+//                profilePic.style.zIndex = '1000';
+//                profilePic.id = 'profilePic';
+//                document.body.appendChild(profilePic);
+//
+//                // Show/hide profile menu on click
+//                profilePic.addEventListener('click', (e) => {
+//                    e.stopPropagation();
+//                    const menu = document.getElementById('profileMenu');
+//                    if (menu) menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+//                });
+//
+//                // Hide menu if clicking outside
+//                document.addEventListener('click', (e) => {
+//                    const menu = document.getElementById('profileMenu');
+//                    if (menu && !menu.contains(e.target) && e.target.id !== 'profilePic') {
+//                        menu.style.display = 'none';
+//                    }
+//                });
+//            }
 
-        // Update the cart button text with the number of items
-        const itemCount = cart.length;
-        cartButton.textContent = itemCount > 0 ? `Cart (${itemCount})` : 'Cart';
-    }
+            // Logout button logic
+            logoutButton.addEventListener('click', () => {
+                localStorage.removeItem('loggedInUser');
+                location.reload();
+            });
 
-    // Save the cart to localStorage
-    function saveCart() {
-        localStorage.setItem('cart', JSON.stringify(cart));
-    }
-
-    // Load the cart when the page loads
-    document.addEventListener('DOMContentLoaded', updateCart);
-</script>
-        
-    <br><br><br><br>
-    <!-- All image sections, fieldsets, and related buttons have been removed as requested. -->
-    <br><br><br><br>
-    <!-- You can add a new modern featured section or leave this area blank for now. -->
-    <br><br><br><br>
-
-    <fieldset width="fit-content" style="width: fit-content;">
-        <legend>
-            FEATURED IMAGES
-        </legend>
-        <table>
-            <tr>
-                <td>
-                    <fieldset width="100%" style="align-items: center; align-content: center; margin: auto; align-self: center;">
-                        <legend>
-                            seagull on a car
-                        </legend>
-                        <table style="width:100%;">
-                            <tr>
-                                <td style="text-align:left; vertical-align:top; width:50%;">
-                                    <fieldset style="width: fit-content; margin-left: 0; margin-right: auto; display: flex; flex-direction: column; align-items: center;">
-                                        <legend style="text-align: center;">Description</legend>
-                                        <div style="width: 100%; text-align: center;">
-                                            this is a picture of a seagull atop a car... <br><br> that's kinda it
-                                        </div>
-                                    </fieldset>
-                                </td>
-                                <td style="text-align:right; vertical-align:top; width:50%;">
-                                    <a href="Seagull car img.html"><img src="Seagull on a Car WM.png" alt="ERROR 404: IMAGE NOT FOUND" style="width: 500px; height: auto;"></a>
-                                </td>
-                            </tr>
-                        </table>
-                        <div style="text-align: center; margin-top: 20px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-                            <a href="Purchase%20img.html">
-                                <button style="background-color: green; color: white; border: none; border-radius: 8px; padding: 12px 32px; font-size: 20px; font-family: Arial, Helvetica, sans-serif; box-shadow: 0 4px 8px rgba(0,0,0,0.2); cursor: pointer; transition: background 0.2s;">
-                                    Buy Now
-                                </button>
-                            </a>
-                            <button id="addSeagullToCart" style="background-color: #ffc107; color: #232323; border: none; border-radius: 8px; padding: 12px 32px; font-size: 20px; font-family: Arial, Helvetica, sans-serif; box-shadow: 0 4px 8px rgba(0,0,0,0.2); cursor: pointer; transition: background 0.2s;">
-                                Add to Cart
-                            </button>
-                        </div>
-                    </fieldset>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <fieldset width="100%" style="align-items: center; align-content: center; margin: auto; align-self: center;">
-                        <legend>
-                            Gavel
-                        </legend>
-                        <table style="width:100%;">
-                            <tr>
-                                <td style="text-align:left; vertical-align:top; width:50%;">
-                                    <fieldset style="width: fit-content; margin-left: 0; margin-right: auto; display: flex; flex-direction: column; align-items: center;">
-                                        <legend style="text-align: center;">Description</legend>
-                                        <div style="width: 100%; text-align: center;">
-                                            this is a picture of a gavel <b>"ORDER!"</b> <br><br> a judge somewhere, sometime
-                                        </div>
-                                    </fieldset>
-                                </td>
-                                <td style="text-align:right; vertical-align:top; width:50%;">
-                                    <a href="Gavel.html"><img src="Gavel WM.png" alt="ERROR 404: IMAGE NOT FOUND" style="width: 350px; height: auto;"></a>
-                                </td>
-                            </tr>
-                        </table>
-                        <div style="text-align: center; margin-top: 20px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-                            <a href="Purchase%20img.html">
-                                <button style="background-color: green; color: white; border: none; border-radius: 8px; padding: 12px 32px; font-size: 20px; font-family: Arial, Helvetica, sans-serif; box-shadow: 0 4px 8px rgba(0,0,0,0.2); cursor: pointer; transition: background 0.2s;">
-                                    Buy Now
-                                </button>
-                            </a>
-                            <button id="addGavelToCart" style="background-color: #ffc107; color: #232323; border: none; border-radius: 8px; padding: 12px 32px; font-size: 20px; font-family: Arial, Helvetica, sans-serif; box-shadow: 0 4px 8px rgba(0,0,0,0.2); cursor: pointer; transition: background 0.2s;">
-                                Add to Cart
-                            </button>
-                        </div>
-                    </fieldset>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <fieldset width="100%" style="align-items: center; align-content: center; margin: auto; align-self: center;">
-                        <legend>
-                            Mini Muffin
-                        </legend>
-                        <table style="width:100%;">
-                            <tr>
-                                <td style="text-align:left; vertical-align:top; width:50%;">
-                                    <fieldset style="width: fit-content; margin-left: 0; margin-right: auto; display: flex; flex-direction: column; align-items: center;">
-                                        <legend style="text-align: center;">Description</legend>
-                                        <div style="width: 100%; text-align: center;">
-                                            this is a picture of a mini chocolate chip muffin <br><br> "it was good" - me
-                                        </div>
-                                    </fieldset>
-                                </td>
-                                <td style="text-align:right; vertical-align:top; width:50%;">
-                                    <a href="Muffin.html"><img src="Muffin WM.png" alt="ERROR 404: IMAGE NOT FOUND" style="width: 500px; height: auto;"></a>
-                                </td>
-                            </tr>
-                        </table>
-                        <div style="text-align: center; margin-top: 20px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-                            <a href="Purchase%20img.html">
-                                <button style="background-color: green; color: white; border: none; border-radius: 8px; padding: 12px 32px; font-size: 20px; font-family: Arial, Helvetica, sans-serif; box-shadow: 0 4px 8px rgba(0,0,0,0.2); cursor: pointer; transition: background 0.2s;">
-                                    Buy Now
-                                </button>
-                            </a>
-                            <button id="addMuffinToCart" style="background-color: #ffc107; color: #232323; border: none; border-radius: 8px; padding: 12px 32px; font-size: 20px; font-family: Arial, Helvetica, sans-serif; box-shadow: 0 4px 8px rgba(0,0,0,0.2); cursor: pointer; transition: background 0.2s;">
-                                Add to Cart
-                            </button>
-                        </div>
-                    </fieldset>
-                </td>
-            </tr>
-        </table>
-    </fieldset>
-
-    <br><br>
-    <a href="#"><button class="btnback" style="border-radius: 12px; font-size: 20px;">&uarr; Back to Top &uarr;</button></a>
-    <br><br><br>
-    &lt;&lt;&lt;&nbsp; &copy; 2025 AquaCheese &nbsp;&gt;&gt;&gt;
-
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-
-    <a href="testing stuff.html"><button class="btnsec" style="border-radius: 12px; font-size: 20px;">Secret button :)</button></a>
-    <br><br><br>
-
-<script>
-  const allowedEmail = "aquacheese.yt@gmail.com";
-  const firebaseAuth = getAuth(app);
-
-  // Show the upload button only for the allowed email
-  firebaseAuth.onAuthStateChanged(user => {
-    if (user && user.email === allowedEmail) {
-      document.getElementById('upload-button-section').style.display = 'block';
-      document.getElementById('upload-page-button').addEventListener('click', () => {
-        window.location.href = 'upload.html';
-      });
-    }
-  });
-</script>
-
-<div id="profileMenu" style="display:none; position:fixed; top:70px; left:20px; background:#444; color:#fff; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.3); z-index:2000; min-width:140px; padding:16px 12px;">
-  <button id="logoutButton" style="background:#dc3545; color:white; border:none; border-radius:6px; padding:10px 20px; width:100%; font-size:16px; cursor:pointer;">Log Out</button>
-</div>
-
-<script>
-document.getElementById('addSeagullToCart').addEventListener('click', function() {
-    addToCart('Seagull on a Car', 'Seagull on a Car WM.png');
-});
-document.getElementById('addGavelToCart').addEventListener('click', function() {
-    addToCart('Gavel', 'Gavel WM.png');
-});
-document.getElementById('addMuffinToCart').addEventListener('click', function() {
-    addToCart('Mini Muffin', 'Muffin WM.png');
-});
-</script>
-
+            // Show upload button only for allowed email
+            function showUploadButtonIfAllowed(email) {
+                const allowedEmail = "aquacheese.yt@gmail.com";
+                if (email === allowedEmail) {
+                    uploadButtonSection.style.display = 'block';
+                } else {
+                    uploadButtonSection.style.display = 'none';
+                }
+            }
+            // On page load, show profile if logged in
+            const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+            if (loggedInUser) {
+                setProfilePicture(loggedInUser.profilePicUrl, loggedInUser.displayName);
+                showUploadButtonIfAllowed(loggedInUser.email);
+            }
+        }
+        // Run logic immediately (DOM is ready since script is at end of body)
+        runLoginModalLogic();
+    })();
+    </script>
     </body>
+    
 </html>
