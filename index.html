@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="author" content="AquaCheese">
@@ -386,18 +386,19 @@ console.log('DEBUG: <body> loaded');
         <br>
         <b style="font-size: xx-large;">[OPEN BETA]</b>
         <br><br>
-        v. 0.9.9
+        <span>v. 0.9.9</span>
         <br>
         <br>
-        THIS SITE IS IDEALLY VIEWED ON DESKTOP / LAPTOP <br> (viewing on other devices may lead to alignment, or other visual issues)
+        <span>THIS SITE IS IDEALLY VIEWED ON DESKTOP / LAPTOP <br> (viewing on other devices may lead to alignment, or other visual issues)</span>
         <br><br>
         <div style="font-size: large; margin-bottom: 18px;">
-            Images will load very slowly with a bad connection<br><br>
-            All image heights have been resized to 200 <abbr title="Pixels">px</abbr> for ✨viewing ease✨ (the real dimentions may differ)<br><br>
-            (all image formats are JPG (except the watermarked photos))<br><br>
+            <span>Images will load very slowly with a bad connection</span><br><br>
+            <span id="imgHeightInfo">All image heights have been resized to 200 <abbr title="Pixels">px</abbr> for ✨viewing ease✨ (the real dimentions may differ)</span><br><br>
+            <span>(all image formats are JPG (except the watermarked photos))</span><br><br>
+            <span id='deviceWarningSpan'>(viewing on other devices may lead to alignment, or other visual issues)</span><br><br>
             <h3 style="margin: 10px 0 0 0;"><u><b>PURCHASING ANY IMAGE WILL NOT WORK!</b></u></h3>
             <br>
-            (almost) ALL images on or associated with this site were taken / created by AquaCheese
+            <span>(almost) ALL images on or associated with this site were taken / created by AquaCheese</span>
         </div>
         <hr>
         <a href="Contact Me Form.html"><button class="btncontact" style="font-size: 16px; text-align: center; border-radius: 12px;">Contact Me</button></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://www.youtube.com/@aquacheese1" target="_blank" style="vertical-align: middle;">
@@ -409,7 +410,7 @@ console.log('DEBUG: <body> loaded');
   <label for="customDropdown" class="dropdown-label">catagories:</label>
   <div class="dropdown-animated-wrapper">
     <button id="customDropdown" class="dropdown-animated-select" aria-haspopup="listbox" aria-expanded="false" type="button">
-      Go to catagory...
+      <span>Go to catagory...</span>
       <span class="dropdown-arrow"></span>
     </button>
     <ul id="dropdownList" class="dropdown-list" tabindex="-1" role="listbox" aria-labelledby="customDropdown">
@@ -583,15 +584,11 @@ console.log('DEBUG: <body> loaded');
     <button id="buyNowButton" style="margin-top: 20px; width: 100%; padding: 10px 20px; background-color: green; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">Buy Now</button>
 </div>
 
-<div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+<div style="position: fixed; top: 20px; left: 20px; z-index: 1000; display: flex; align-items: center; gap: 12px;">
   <button id="loginButton" style="background-color: lightblue; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer;">
     Log In
   </button>
-  <section id="upload-button-section" style="display: none;">
-    <button id="upload-page-button" style="font-size: large; padding: 10px 20px; border-radius: 5px; background-color: lightblue; border: none; cursor: pointer;">
-      Upload Media
-    </button>
-  </section>
+  <img id="profilePic" src="" alt="Profile" style="display:none;width:48px;height:48px;border-radius:50%;margin-left:0px;vertical-align:middle;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.2);background:#eee;object-fit:cover;">
 </div>
 
 <div id="loginModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;">
@@ -621,7 +618,7 @@ console.log('DEBUG: <body> loaded');
 </div>
 
 <div id="profileMenu" style="display:none; position:fixed; top:70px; left:20px; background:#444; color:#fff; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.3); z-index:2000; min-width:140px; padding:16px 12px;">
-    <button id="logoutButton" style="background-color: #dc3545; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer;">Logout</button>
+    <button id="profileMenuLogoutButton" style="background-color: #dc3545; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer;">Logout</button>
 </div>
 
     <!-- Move all Firebase and login modal scripts to the very end of body -->
@@ -641,456 +638,270 @@ console.log('DEBUG: <body> loaded');
     }
     </script>
     <script>
-    (function() {
-// Cart functionality (match Seagull car img.html)
-let cart = JSON.parse(localStorage.getItem('cart')) || [];
-const cartButton = document.getElementById('cartButton');
-const cartPanel = document.getElementById('cartPanel');
-const cartList = document.getElementById('cartList');
-const cartSubtotal = document.getElementById('cartSubtotal');
-const closeCart = document.getElementById('closeCart');
-
-// Open the cart panel (slide in)
-cartButton.addEventListener('click', () => {
-    cartPanel.style.right = '0';
-    cartButton.style.display = 'none';
-});
-// Close the cart panel (slide out)
-closeCart.addEventListener('click', () => {
-    cartPanel.style.right = '-100%';
-    cartButton.style.display = 'block';
-});
-// Add to cart function (for use on this page if needed)
-window.addToCart = function(itemName, itemImage) {
-    if (!itemName) {
-        alert("Error: Item name is missing.");
-        return;
-    }
-    // Determine price: £20 for videos, £15 for images
-    let price = 15;
-    if (itemImage && (itemImage.toLowerCase().endsWith('.mp4') || itemImage.toLowerCase().endsWith('.mov') || itemImage.toLowerCase().endsWith('.webm') || itemImage.toLowerCase().includes('video'))) {
-        price = 20;
-    }
-    cart.push({ name: itemName, image: itemImage, price });
-    saveCart();
-    updateCart();
-    alert(`${itemName} has been added to your cart.`);
-}
-// Update the cart list and cart button text
-function updateCart() {
-    cartList.innerHTML = '';
-    let subtotal = 0;
-    cart.forEach((item, index) => {
-        const listItem = document.createElement('li');
-        listItem.style.display = 'flex';
-        listItem.style.alignItems = 'center';
-        listItem.style.marginBottom = '10px';
-        if (item.image) {
-            const itemImage = document.createElement('img');
-            itemImage.src = item.image;
-            itemImage.alt = item.name;
-            itemImage.style.width = '50px';
-            itemImage.style.height = '50px';
-            itemImage.style.marginRight = '10px';
-            itemImage.style.border = '1px solid whitesmoke';
-            listItem.appendChild(itemImage);
-        }
-        const itemName = document.createElement('span');
-        itemName.textContent = item.name;
-        listItem.appendChild(itemName);
-        const itemPrice = document.createElement('span');
-        itemPrice.textContent = ` - £${item.price}`;
-        itemPrice.style.marginLeft = 'auto';
-        listItem.appendChild(itemPrice);
-        const removeButton = document.createElement('button');
-        removeButton.textContent = 'Remove';
-        removeButton.style.marginLeft = '10px';
-        removeButton.style.backgroundColor = 'red';
-        removeButton.style.color = 'white';
-        removeButton.style.border = 'none';
-        removeButton.style.borderRadius = '5px';
-        removeButton.style.cursor = 'pointer';
-        removeButton.addEventListener('click', () => {
-            cart.splice(index, 1);
-            saveCart();
-            updateCart();
-        });
-        listItem.appendChild(removeButton);
-        cartList.appendChild(listItem);
-        subtotal += item.price;
+// --- LOGIN MODAL LOGIC: Always enable modal UI, only require Firebase for login actions ---
+(function setupLoginModalUI() {
+  const loginButton = document.getElementById('loginButton');
+  const loginModal = document.getElementById('loginModal');
+  const closeLoginModal = document.getElementById('closeLoginModal');
+  const googleLoginButton = document.getElementById('googleLoginButton');
+  const showEmailLoginFormBtn = document.getElementById('showEmailLoginForm');
+  const showRegisterFormBtn = document.getElementById('showRegisterForm');
+  const emailLoginForm = document.getElementById('emailLoginForm');
+  const registerForm = document.getElementById('registerForm');
+  const cancelEmailLoginBtn = document.getElementById('cancelEmailLogin');
+  const cancelRegisterBtn = document.getElementById('cancelRegister');
+  const emailInput = document.getElementById('emailInput');
+  const passwordInput = document.getElementById('passwordInput');
+  const emailLoginError = document.getElementById('emailLoginError');
+  const logoutButton = document.getElementById('logoutButton');
+  const profilePic = document.getElementById('profilePic');
+  const profileMenu = document.getElementById('profileMenu');
+  const profileMenuLogoutButton = document.getElementById('profileMenuLogoutButton');
+  function show(el) { el.classList.remove('hidden'); }
+  function hide(el) { el.classList.add('hidden'); }
+  function resetLoginModal() {
+    hide(emailLoginForm);
+    hide(registerForm);
+    show(googleLoginButton);
+    show(showEmailLoginFormBtn);
+    show(showRegisterFormBtn);
+    emailLoginError.textContent = '';
+    if (typeof emailLoginForm.reset === 'function') emailLoginForm.reset();
+    if (typeof registerForm.reset === 'function') registerForm.reset();
+  }
+  if (loginButton) {
+    loginButton.addEventListener('click', () => {
+      resetLoginModal();
+      loginModal.style.display = 'block';
+      loginModal.style.zIndex = '9999';
+      loginModal.style.backgroundColor = 'rgba(0,0,0,0.5)';
+      if (loginModal.firstElementChild) {
+        loginModal.firstElementChild.style.backgroundColor = '#333';
+        loginModal.firstElementChild.style.color = 'whitesmoke';
+        loginModal.firstElementChild.style.border = '';
+      }
+      const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+      if (loggedInUser) {
+        logoutButton.style.display = 'block';
+      } else {
+        logoutButton.style.display = 'none';
+      }
     });
-    cartSubtotal.textContent = `Subtotal: £${subtotal}`;
-    const itemCount = cart.length;
-    cartButton.textContent = itemCount > 0 ? `Cart (${itemCount})` : 'Cart';
-}
-function saveCart() {
-    localStorage.setItem('cart', JSON.stringify(cart));
-}
-document.getElementById('buyNowButton').addEventListener('click', () => {
-    if (cart.length > 0) {
-        localStorage.removeItem('singleItem');
-        localStorage.setItem('cartPurchase', true);
-        window.location.href = 'Purchase.html';
+  }
+  if (closeLoginModal) {
+    closeLoginModal.addEventListener('click', () => {
+      loginModal.style.display = 'none';
+      resetLoginModal();
+    });
+  }
+  if (showEmailLoginFormBtn) {
+    showEmailLoginFormBtn.addEventListener('click', () => {
+      hide(googleLoginButton);
+      hide(showEmailLoginFormBtn);
+      hide(showRegisterFormBtn);
+      show(emailLoginForm);
+      hide(registerForm);
+      emailLoginError.textContent = '';
+      if (typeof emailLoginForm.reset === 'function') emailLoginForm.reset();
+    });
+  }
+  if (cancelEmailLoginBtn) {
+    cancelEmailLoginBtn.addEventListener('click', () => {
+      show(googleLoginButton);
+      hide(emailLoginForm);
+      show(showEmailLoginFormBtn);
+      show(showRegisterFormBtn);
+      emailLoginError.textContent = '';
+      if (typeof emailLoginForm.reset === 'function') emailLoginForm.reset();
+    });
+  }
+  if (showRegisterFormBtn) {
+    showRegisterFormBtn.addEventListener('click', () => {
+      hide(googleLoginButton);
+      hide(showEmailLoginFormBtn);
+      hide(showRegisterFormBtn);
+      hide(emailLoginForm);
+      show(registerForm);
+      emailLoginError.textContent = '';
+      if (typeof registerForm.reset === 'function') registerForm.reset();
+    });
+  }
+  if (cancelRegisterBtn) {
+    cancelRegisterBtn.addEventListener('click', () => {
+      show(googleLoginButton);
+      hide(registerForm);
+      show(showEmailLoginFormBtn);
+      show(showRegisterFormBtn);
+      emailLoginError.textContent = '';
+      if (typeof registerForm.reset === 'function') registerForm.reset();
+    });
+  }
+})();
+// --- END LOGIN MODAL UI LOGIC ---
+
+// --- LOGIN/REGISTER ACTIONS: Only require Firebase for actual login/register ---
+(function waitForFirebaseAndRun(attempts = 0) {
+  if (!(window.firebase && window.firebaseConfig && window._firebaseInitialized)) {
+    if (attempts === 0) {
+      console.warn('Waiting for Firebase to be ready...');
+    }
+    if (attempts > 100) {
+      console.error('ERROR: Firebase config or initialization not detected after 5 seconds.');
+      // Show error for login/register actions
+      const emailLoginError = document.getElementById('emailLoginError');
+      if (emailLoginError) emailLoginError.textContent = 'Login/register is currently unavailable.';
+      // Disable login/register buttons
+      const googleLoginButton = document.getElementById('googleLoginButton');
+      const showEmailLoginFormBtn = document.getElementById('showEmailLoginForm');
+      const showRegisterFormBtn = document.getElementById('showRegisterForm');
+      if (googleLoginButton) googleLoginButton.disabled = true;
+      if (showEmailLoginFormBtn) showEmailLoginFormBtn.disabled = true;
+      if (showRegisterFormBtn) showRegisterFormBtn.disabled = true;
+      return;
+    }
+    setTimeout(() => waitForFirebaseAndRun(attempts + 1), 50);
+    return;
+  }
+  const googleLoginButton = document.getElementById('googleLoginButton');
+  const emailLoginForm = document.getElementById('emailLoginForm');
+  const registerForm = document.getElementById('registerForm');
+  const emailLoginError = document.getElementById('emailLoginError');
+  const logoutButton = document.getElementById('logoutButton');
+  const profilePic = document.getElementById('profilePic');
+  const profileMenu = document.getElementById('profileMenu');
+  const profileMenuLogoutButton = document.getElementById('profileMenuLogoutButton');
+  const emailInput = document.getElementById('emailInput');
+  const passwordInput = document.getElementById('passwordInput');
+  const showEmailLoginFormBtn = document.getElementById('showEmailLoginForm');
+  const showRegisterFormBtn = document.getElementById('showRegisterForm');
+  if (!googleLoginButton || !emailLoginForm || !registerForm || !emailLoginError || !logoutButton || !profileMenuLogoutButton) return;
+  const auth = firebase.auth();
+  const googleProvider = new firebase.auth.GoogleAuthProvider();
+  function updateProfileUI() {
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    if (loggedInUser && profilePic) {
+      profilePic.src = loggedInUser.profilePicUrl || 'default-profile.png';
+      profilePic.style.display = 'inline-block';
+      const loginButton = document.getElementById('loginButton');
+      if (loginButton) loginButton.style.display = 'none';
+      if (profileMenu) profileMenu.style.display = 'none';
     } else {
-        alert('Your cart is empty. Add items to proceed.');
+      if (profilePic) profilePic.style.display = 'none';
+      const loginButton = document.getElementById('loginButton');
+      if (loginButton) loginButton.style.display = 'inline-block';
+      if (profileMenu) profileMenu.style.display = 'none';
     }
-});
-document.addEventListener('DOMContentLoaded', updateCart);
-    })();
-    </script>
-    <script>
-    // DEBUG: Login modal logic script block parsed
-    console.log('DEBUG: Login modal logic script block parsed');
-    (function waitForFirebaseAndRun(attempts = 0) {
-    if (!(window.firebase && window.firebaseConfig && window._firebaseInitialized)) {
-        if (attempts === 0) {
-            console.warn('Waiting for Firebase to be ready...');
-        }
-        if (attempts > 100) { // 100 * 50ms = 5 seconds
-            console.error('ERROR: Firebase config or initialization not detected after 5 seconds.');
-            console.error('window.firebase:', window.firebase);
-            console.error('window.firebaseConfig:', window.firebaseConfig);
-            console.error('window._firebaseInitialized:', window._firebaseInitialized);
-            return;
-        }
-        setTimeout(() => waitForFirebaseAndRun(attempts + 1), 50);
-        return;
+  }
+  googleLoginButton.addEventListener('click', () => {
+    auth.signInWithPopup(googleProvider)
+      .then((result) => {
+        const user = result.user;
+        localStorage.setItem('loggedInUser', JSON.stringify({
+          displayName: user.displayName || user.email,
+          profilePicUrl: user.photoURL,
+          email: user.email
+        }));
+        document.getElementById('loginModal').style.display = 'none';
+        updateProfileUI();
+      })
+      .catch((error) => {
+        emailLoginError.textContent = 'Google Login Failed: ' + error.message;
+      });
+  });
+  emailLoginForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    emailLoginError.textContent = '';
+    const email = emailInput.value.trim();
+    const password = passwordInput.value;
+    auth.signInWithEmailAndPassword(email, password)
+      .then((result) => {
+        const user = result.user;
+        localStorage.setItem('loggedInUser', JSON.stringify({
+          displayName: user.displayName || user.email,
+          profilePicUrl: user.photoURL,
+          email: user.email
+        }));
+        document.getElementById('loginModal').style.display = 'none';
+        updateProfileUI();
+      })
+      .catch((error) => {
+        emailLoginError.textContent = error.message.replace('Firebase: ', '');
+      });
+  });
+  registerForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    emailLoginError.textContent = '';
+    const email = document.getElementById('registerEmail').value.trim();
+    const password = document.getElementById('registerPassword').value;
+    auth.createUserWithEmailAndPassword(email, password)
+      .then((result) => {
+        const user = result.user;
+        localStorage.setItem('loggedInUser', JSON.stringify({
+          displayName: user.displayName || user.email,
+          profilePicUrl: user.photoURL,
+          email: user.email
+        }));
+        document.getElementById('loginModal').style.display = 'none';
+        updateProfileUI();
+      })
+      .catch((error) => {
+        emailLoginError.textContent = error.message.replace('Firebase: ', '');
+      });
+  });
+  function robustLogout() {
+    localStorage.removeItem('loggedInUser');
+    if (window.firebase && firebase.auth) {
+      firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE).then(() => {
+        sessionStorage.setItem('justLoggedOut', '1');
+        return firebase.auth().signOut();
+      }).then(() => {
+        window.location.reload();
+      });
+    } else {
+      window.location.reload();
     }
-    // DEBUG: Confirm login modal logic script is running
-    console.log('Login modal logic script running (after Firebase ready)');
-    function runLoginModalLogic() {
-            // DEBUG: Top of login modal logic script
-            console.log('DEBUG: Top of login modal logic script');
-            console.log('runLoginModalLogic called'); // DEBUG
-            // Elements
-            const loginButton = document.getElementById('loginButton');
-            const loginModal = document.getElementById('loginModal');
-            const closeLoginModal = document.getElementById('closeLoginModal');
-            const googleLoginButton = document.getElementById('googleLoginButton');
-            const showEmailLoginFormBtn = document.getElementById('showEmailLoginForm');
-            const showRegisterFormBtn = document.getElementById('showRegisterForm');
-            const emailLoginForm = document.getElementById('emailLoginForm');
-            const registerForm = document.getElementById('registerForm');
-            const cancelEmailLoginBtn = document.getElementById('cancelEmailLogin');
-            const cancelRegisterBtn = document.getElementById('cancelRegister');
-            const emailInput = document.getElementById('emailInput');
-            const passwordInput = document.getElementById('passwordInput');
-            const emailLoginError = document.getElementById('emailLoginError');
-            const uploadButtonSection = document.getElementById('upload-button-section');
-            const logoutButton = document.getElementById('logoutButton');
-
-            // Defensive checks for all required elements
-            if (!loginButton) { console.error('loginButton not found'); return; }
-            if (!loginModal) { console.error('loginModal not found'); return; }
-            if (!closeLoginModal) { console.error('closeLoginModal not found'); return; }
-            if (!googleLoginButton) { console.error('googleLoginButton not found'); return; }
-            if (!showEmailLoginFormBtn) { console.error('showEmailLoginFormBtn not found'); return; }
-            if (!showRegisterFormBtn) { console.error('showRegisterFormBtn not found'); return; }
-            if (!emailLoginForm) { console.error('emailLoginForm not found'); return; }
-            if (!registerForm) { console.error('registerForm not found'); return; }
-            if (!cancelEmailLoginBtn) { console.error('cancelEmailLoginBtn not found'); return; }
-            if (!cancelRegisterBtn) { console.error('cancelRegisterBtn not found'); return; }
-            if (!emailInput) { console.error('emailInput not found'); return; }
-            if (!passwordInput) { console.error('passwordInput not found'); return; }
-            if (!emailLoginError) { console.error('emailLoginError not found'); return; }
-            if (!uploadButtonSection) { console.error('uploadButtonSection not found'); return; }
-            if (!logoutButton) { console.error('logoutButton not found'); return; }
-
-            // Firebase Auth references
-            const auth = firebase.auth();
-            const googleProvider = new firebase.auth.GoogleAuthProvider();
-
-            // Utility functions for show/hide
-            function show(el) { el.classList.remove('hidden'); }
-            function hide(el) { el.classList.add('hidden'); }
-
-            // Reset login modal to initial state
-            function resetLoginModal() {
-                // Always hide both forms
-                hide(emailLoginForm);
-                hide(registerForm);
-                // Always show all main buttons
-                show(googleLoginButton);
-                show(showEmailLoginFormBtn);
-                show(showRegisterFormBtn);
-                // Clear error
-                emailLoginError.textContent = '';
-                // Reset forms
-                if (typeof emailLoginForm.reset === 'function') emailLoginForm.reset();
-                if (typeof registerForm.reset === 'function') registerForm.reset();
-            }
-
-            // Modal open/close
-            loginButton.addEventListener('click', () => {
-                resetLoginModal();
-                console.log('loginButton clicked'); // DEBUG
-                loginModal.style.display = 'block';
-                loginModal.style.zIndex = '9999'; // keep modal on top
-                // Remove debug styles
-                loginModal.style.backgroundColor = 'rgba(0,0,0,0.5)';
-                loginModal.style.border = '';
-                // Restore modal inner div styles
-                if (loginModal.firstElementChild) {
-                    loginModal.firstElementChild.style.backgroundColor = '#333';
-                    loginModal.firstElementChild.style.color = 'whitesmoke';
-                    loginModal.firstElementChild.style.border = '';
-                }
-                // Show/hide logout button based on login state
-                const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
-                if (loggedInUser) {
-                    logoutButton.style.display = 'block';
-                } else {
-                    logoutButton.style.display = 'none';
-                }
-                // DEBUG: Log modal element and its children
-                console.log('loginModal element:', loginModal);
-                console.log('loginModal innerHTML:', loginModal.innerHTML);
-                // DEBUG: Log bounding rect
-                console.log('loginModal bounding rect:', loginModal.getBoundingClientRect());
-            });
-            closeLoginModal.addEventListener('click', () => {
-                loginModal.style.display = 'none';
-                resetLoginModal();
-            });
-
-            // Show/hide forms in modal
-            showEmailLoginFormBtn.addEventListener('click', () => {
-                hide(googleLoginButton);
-                hide(showEmailLoginFormBtn);
-                hide(showRegisterFormBtn);
-                show(emailLoginForm);
-                hide(registerForm);
-                emailLoginError.textContent = '';
-                if (typeof emailLoginForm.reset === 'function') emailLoginForm.reset();
-            });
-            cancelEmailLoginBtn.addEventListener('click', () => {
-                show(googleLoginButton);
-                hide(emailLoginForm);
-                show(showEmailLoginFormBtn);
-                show(showRegisterFormBtn);
-                emailLoginError.textContent = '';
-                if (typeof emailLoginForm.reset === 'function') emailLoginForm.reset();
-            });
-            showRegisterFormBtn.addEventListener('click', () => {
-                hide(googleLoginButton);
-                hide(showEmailLoginFormBtn);
-                hide(showRegisterFormBtn);
-                hide(emailLoginForm);
-                show(registerForm);
-                emailLoginError.textContent = '';
-                if (typeof registerForm.reset === 'function') registerForm.reset();
-            });
-            cancelRegisterBtn.addEventListener('click', () => {
-                show(googleLoginButton);
-                hide(registerForm);
-                show(showEmailLoginFormBtn);
-                show(showRegisterFormBtn);
-                emailLoginError.textContent = '';
-                if (typeof registerForm.reset === 'function') registerForm.reset();
-            });
-
-            // Google Login
-            googleLoginButton.addEventListener('click', () => {
-                auth.signInWithPopup(googleProvider)
-                    .then((result) => {
-                        const user = result.user;
-                        localStorage.setItem('loggedInUser', JSON.stringify({
-                            displayName: user.displayName || user.email,
-                            profilePicUrl: user.photoURL,
-                            email: user.email
-                        }));
-                        setProfilePicture(user.photoURL, user.displayName || user.email);
-                        loginModal.style.display = 'none';
-                        showUploadButtonIfAllowed(user.email);
-                    })
-                    .catch((error) => {
-                        emailLoginError.textContent = 'Google Login Failed: ' + error.message;
-                    });
-            });
-
-            // Email Login
-            emailLoginForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                emailLoginError.textContent = '';
-                const email = emailInput.value.trim();
-                const password = passwordInput.value;
-
-                auth.signInWithEmailAndPassword(email, password)
-                    .then((result) => {
-                        const user = result.user;
-                        localStorage.setItem('loggedInUser', JSON.stringify({
-                            displayName: user.displayName || user.email,
-                            profilePicUrl: user.photoURL,
-                            email: user.email
-                        }));
-                        setProfilePicture(user.photoURL, user.displayName || user.email);
-                        loginModal.style.display = 'none';
-                        showUploadButtonIfAllowed(user.email);
-                    })
-                    .catch((error) => {
-                        emailLoginError.textContent = error.message.replace('Firebase: ', '');
-                    });
-            });
-
-            // Registration logic
-            registerForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                emailLoginError.textContent = '';
-                const email = document.getElementById('registerEmail').value.trim();
-                const password = document.getElementById('registerPassword').value;
-
-                auth.createUserWithEmailAndPassword(email, password)
-                    .then((result) => {
-                        const user = result.user;
-                        localStorage.setItem('loggedInUser', JSON.stringify({
-                            displayName: user.displayName || user.email,
-                            profilePicUrl: user.photoURL,
-                            email: user.email
-                        }));
-                        setProfilePicture(user.photoURL, user.displayName || user.email);
-                        loginModal.style.display = 'none';
-                        registerForm.reset();
-                        registerForm.style.display = 'none';
-                        showEmailLoginFormBtn.style.display = 'inline-block';
-                        showRegisterFormBtn.style.display = 'inline-block';
-                        showUploadButtonIfAllowed(user.email);
-                    })
-                    .catch((error) => {
-                        emailLoginError.textContent = error.message.replace('Firebase: ', '');
-                    });
-            });
-
-            // Profile menu logic
-function showProfileMenu() {
-    const menu = document.getElementById('profileMenu');
-    if (menu) {
-        menu.style.display = 'block';
-    }
-}
-function hideProfileMenu() {
-    const menu = document.getElementById('profileMenu');
-    if (menu) {
-        menu.style.display = 'none';
-    }
-}
-function setProfilePicture(profilePicUrl, displayName) {
-    const loginButton = document.getElementById('loginButton');
-    if (loginButton) loginButton.style.display = 'none';
-    // Remove existing profile pic if present
-    const existingProfilePic = document.getElementById('profilePic');
-    if (existingProfilePic) existingProfilePic.remove();
-    // Add new profile pic
-    const profilePic = document.createElement('img');
-    profilePic.src = profilePicUrl || 'default-profile.png';
-    profilePic.alt = displayName || 'Profile Picture';
-    profilePic.style.position = 'fixed';
-    profilePic.style.top = '20px';
-    profilePic.style.left = '20px';
-    profilePic.style.width = '40px';
-    profilePic.style.height = '40px';
-    profilePic.style.borderRadius = '50%';
-    profilePic.style.cursor = 'pointer';
-    profilePic.style.zIndex = '1000';
-    profilePic.id = 'profilePic';
-    document.body.appendChild(profilePic);
-    if (displayName) profilePic.title = displayName;
-    profilePic.onclick = function(e) {
-        e.stopPropagation();
-        showProfileMenu();
-    };
-    // Hide menu when clicking outside
-    document.addEventListener('click', function handler(event) {
-        const menu = document.getElementById('profileMenu');
-        if (menu && !menu.contains(event.target) && event.target !== profilePic) {
-            hideProfileMenu();
-            document.removeEventListener('click', handler);
-        }
+  }
+  profileMenuLogoutButton.addEventListener('click', robustLogout);
+  logoutButton.addEventListener('click', robustLogout);
+  if (profilePic && profileMenu) {
+    profilePic.addEventListener('click', (e) => {
+      e.stopPropagation();
+      profileMenu.style.display = profileMenu.style.display === 'block' ? 'none' : 'block';
     });
-}
-function removeProfilePicture() {
-    const profilePic = document.getElementById('profilePic');
-    if (profilePic) profilePic.remove();
-    const loginButton = document.getElementById('loginButton');
-    if (loginButton) loginButton.style.display = 'inline-block';
-    hideProfileMenu();
-}
-// Add logout logic for menu
-const profileMenuLogout = document.querySelector('#profileMenu #logoutButton');
-if (profileMenuLogout) {
-    profileMenuLogout.onclick = function() {
-        firebase.auth().signOut().then(() => {
-            localStorage.removeItem('loggedInUser');
-            removeProfilePicture();
-            hideProfileMenu();
-            // Optionally reload or update UI
-        });
-    };
-}
-
-//            // Set profile picture and replace the login button
-//            function setProfilePicture(profilePicUrl, displayName) {
-//                loginButton.style.display = 'none';
-//
-//                // Remove existing profile pic if present
-//                const existingProfilePic = document.getElementById('profilePic');
-//                if (existingProfilePic) existingProfilePic.remove();
-//
-//                const profilePic = document.createElement('img');
-//                profilePic.src = profilePicUrl || 'default-profile.png';
-//                profilePic.alt = displayName || 'Profile Picture';
-//                profilePic.style.position = 'fixed';
-//                profilePic.style.top = '20px';
-//                profilePic.style.left = '20px';
-//                profilePic.style.width = '40px';
-//                profilePic.style.height = '40px';
-//                profilePic.style.borderRadius = '50%';
-//                profilePic.style.cursor = 'pointer';
-//                profilePic.style.zIndex = '1000';
-//                profilePic.id = 'profilePic';
-//                document.body.appendChild(profilePic);
-//
-//                // Show/hide profile menu on click
-//                profilePic.addEventListener('click', (e) => {
-//                    e.stopPropagation();
-//                    const menu = document.getElementById('profileMenu');
-//                    if (menu) menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
-//                });
-//
-//                // Hide menu if clicking outside
-//                document.addEventListener('click', (e) => {
-//                    const menu = document.getElementById('profileMenu');
-//                    if (menu && !menu.contains(e.target) && e.target.id !== 'profilePic') {
-//                        menu.style.display = 'none';
-//                    }
-//                });
-//            }
-
-            // Logout button logic
-            logoutButton.addEventListener('click', () => {
-                localStorage.removeItem('loggedInUser');
-                location.reload();
-            });
-
-            // Show upload button only for allowed email
-            function showUploadButtonIfAllowed(email) {
-                const allowedEmail = "aquacheese.yt@gmail.com";
-                if (email === allowedEmail) {
-                    uploadButtonSection.style.display = 'block';
-                } else {
-                    uploadButtonSection.style.display = 'none';
-                }
-            }
-            // On page load, show profile if logged in
-            const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
-            if (loggedInUser) {
-                setProfilePicture(loggedInUser.profilePicUrl, loggedInUser.displayName);
-                showUploadButtonIfAllowed(loggedInUser.email);
-            }
-        }
-        // Run logic immediately (DOM is ready since script is at end of body)
-        runLoginModalLogic();
-    })();
+    document.addEventListener('click', (e) => {
+      if (profileMenu.style.display === 'block' && !profileMenu.contains(e.target) && e.target !== profilePic) {
+        profileMenu.style.display = 'none';
+      }
+    });
+  }
+  profileMenuLogoutButton.addEventListener('click', () => {
+    localStorage.removeItem('loggedInUser');
+    window.location.reload();
+  });
+  if (sessionStorage.getItem('justLoggedOut')) {
+    sessionStorage.removeItem('justLoggedOut');
+    if (window.firebase && firebase.auth) firebase.auth().signOut();
+    updateProfileUI();
+    return;
+  }
+  const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+  if (loggedInUser) {
+    updateProfileUI();
+  } else {
+    auth.onAuthStateChanged(function(user) {
+      if (user) {
+        localStorage.setItem('loggedInUser', JSON.stringify({
+          displayName: user.displayName || user.email,
+          profilePicUrl: user.photoURL,
+          email: user.email
+        }));
+        updateProfileUI();
+      } else {
+        updateProfileUI();
+      }
+    });
+  }
+})();
     </script>
     </body>
-    
-</html>
+    </html>

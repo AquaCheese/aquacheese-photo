@@ -277,11 +277,6 @@
         <button id="loginButton" style="background-color: lightblue; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer;">
             Log In
         </button>
-        <section id="upload-button-section" style="display: none;">
-            <button id="upload-page-button" style="font-size: large; padding: 10px 20px; border-radius: 5px; background-color: lightblue; border: none; cursor: pointer;">
-                Upload
-            </button>
-        </section>
     </div>
     <div id="loginModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;">
       <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #333; color: whitesmoke; padding: 20px; border-radius: 8px; width: 300px; text-align: center;">
@@ -317,30 +312,30 @@
         <div class="gallery-item" data-title="GWR Train" data-price="15" data-img="GWR Train WM.png">
             <a href="GWR Train.html"><img src="GWR Train WM.png" alt="GWR Train"></a>
             <div class="gallery-item-title">GWR Train</div>
-            <button type="button" style="background-color:#ffc107;color:black;margin-top:8px;" onclick="addToCart('GWR Train', 'GWR Train WM.png')">Add to Cart</button>
+            <button type="button" class="add-to-cart-btn" style="background-color:#ffc107;color:black;margin-top:8px;" onclick="addToCart('GWR Train', 'GWR Train WM.png')">Add to Cart</button>
         </div>
         <div class="gallery-item" data-title="Mini Muffin" data-price="15" data-img="Muffin WM.png">
             <a href="Muffin.html"><img src="Muffin WM.png" alt="Mini Muffin"></a>
             <div class="gallery-item-title">Mini Muffin</div>
-            <button type="button" style="background-color:#ffc107;color:black;margin-top:8px;" onclick="addToCart('Mini Muffin', 'Muffin WM.png')">Add to Cart</button>
+            <button type="button" class="add-to-cart-btn" style="background-color:#ffc107;color:black;margin-top:8px;" onclick="addToCart('Mini Muffin', 'Muffin WM.png')">Add to Cart</button>
         </div>
         <div class="gallery-item" data-title="Portrait Tree" data-price="15" data-img="Tree Portrait WM.png">
             <a href="P Tree.html"><img src="Tree Portrait WM.png" alt="Portrait Tree"></a>
             <div class="gallery-item-title">Portrait Tree</div>
-            <button type="button" style="background-color:#ffc107;color:black;margin-top:8px;" onclick="addToCart('Portrait Tree', 'Tree Portrait WM.png')">Add to Cart</button>
+            <button type="button" class="add-to-cart-btn" style="background-color:#ffc107;color:black;margin-top:8px;" onclick="addToCart('Portrait Tree', 'Tree Portrait WM.png')">Add to Cart</button>
         </div>
     </div>
     <br><br>
     <!-- Cart button -->
-    <button id="cartButton" style="position: fixed; top: 20px; right: 20px; background-color: gold; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer; z-index: 1000; transition: background-color 0.3s;">Cart</button>
+    <button id="cartButton" class="cart-btn" style="position: fixed; top: 20px; right: 20px; background-color: gold; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer; z-index: 1000; transition: background-color 0.3s;">Cart</button>
 
     <!-- Cart panel -->
     <div id="cartPanel" style="position: fixed; top: 0; right: -100%; width: 300px; height: 100%; background-color: #333; color: whitesmoke; box-shadow: -2px 0 5px rgba(0,0,0,0.5); overflow-y: auto; transition: right 0.3s ease; z-index: 999; padding: 20px; display: block;">
-        <button id="closeCart" style="position: absolute; top: 10px; right: 10px; background-color: red; color: white; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 1001;">&times;</button>
-        <h2 style="text-align: center; color: #ffcc00;">Your Cart</h2>
+        <button id="closeCart" class="cart-close" style="position: absolute; top: 10px; right: 10px; background-color: red; color: white; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 1001;">&times;</button>
+        <h2 class="cart-title" style="text-align: center; color: #ffcc00;">Your Cart</h2>
         <ul id="cartList" style="list-style-type: none; padding: 0;"></ul>
-        <div id="cartSubtotal" style="margin-top: 20px; font-size: 18px; text-align: center; border-top: 1px solid whitesmoke; padding-top: 10px;">Subtotal: £0</div>
-        <button id="buyNowButton" style="margin-top: 20px; width: 100%; padding: 10px; background-color: green; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">Buy Now</button>
+        <div id="cartSubtotal" class="cart-total-label" style="margin-top: 20px; font-size: 18px; text-align: center; border-top: 1px solid whitesmoke; padding-top: 10px;">Subtotal: £0</div>
+        <button id="buyNowButton" class="buy-now-btn" style="margin-top: 20px; width: 100%; padding: 10px; background-color: green; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">Buy Now</button>
     </div>
     <a href="index.html"><button class="btnback" style="border-radius: 12px; font-size: 20px;">&larr; Back to Home</button></a>
     <br><br>
@@ -382,7 +377,7 @@
     const auth = getAuth(app);
     const googleProvider = new GoogleAuthProvider();
 
-    // Login/Profile Modal Logic (same as landscape.html)
+    // Login/Profile Modal Logic (same as index.html)
     document.addEventListener('DOMContentLoaded', () => {
         // Elements
         const loginButton = document.getElementById('loginButton');
@@ -398,7 +393,6 @@
         const emailInput = document.getElementById('emailInput');
         const passwordInput = document.getElementById('passwordInput');
         const emailLoginError = document.getElementById('emailLoginError');
-        const uploadButtonSection = document.getElementById('upload-button-section');
 
         // Modal open/close
         loginButton.addEventListener('click', () => {
@@ -448,7 +442,6 @@
                     }));
                     setProfilePicture(user.photoURL, user.displayName || user.email);
                     loginModal.style.display = 'none';
-                    showUploadButtonIfAllowed(user.email);
                 })
                 .catch((error) => {
                     emailLoginError.textContent = 'Google Login Failed: ' + error.message;
@@ -472,7 +465,6 @@
                     }));
                     setProfilePicture(user.photoURL, user.displayName || user.email);
                     loginModal.style.display = 'none';
-                    showUploadButtonIfAllowed(user.email);
                 })
                 .catch((error) => {
                     emailLoginError.textContent = error.message.replace('Firebase: ', '');
@@ -500,7 +492,6 @@
                     registerForm.style.display = 'none';
                     showEmailLoginFormBtn.style.display = 'inline-block';
                     showRegisterFormBtn.style.display = 'inline-block';
-                    showUploadButtonIfAllowed(user.email);
                 })
                 .catch((error) => {
                     emailLoginError.textContent = error.message.replace('Firebase: ', '');
@@ -548,7 +539,6 @@
         // Logout button logic
         document.getElementById('logoutButton').addEventListener('click', () => {
             localStorage.removeItem('loggedInUser');
-            runLoginModalLogic();
             location.reload();
         });
 
@@ -563,21 +553,10 @@
           }
         }
 
-        // Show upload button only for allowed email
-        function showUploadButtonIfAllowed(email) {
-            const allowedEmail = "aquacheese.yt@gmail.com";
-            if (email === allowedEmail) {
-                uploadButtonSection.style.display = 'block';
-            } else {
-                uploadButtonSection.style.display = 'none';
-            }
-        }
-
         // On page load, show profile if logged in
         const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
         if (loggedInUser) {
             setProfilePicture(loggedInUser.profilePicUrl, loggedInUser.displayName);
-            showUploadButtonIfAllowed(loggedInUser.email);
         }
     });
     </script>
@@ -620,9 +599,8 @@
         const emailInput = document.getElementById('emailInput');
         const passwordInput = document.getElementById('passwordInput');
         const emailLoginError = document.getElementById('emailLoginError');
-        const uploadButtonSection = document.getElementById('upload-button-section');
         const logoutButton = document.getElementById('logoutButton');
-        if (!loginButton || !loginModal || !closeLoginModal || !googleLoginButton || !showEmailLoginFormBtn || !showRegisterFormBtn || !emailLoginForm || !registerForm || !cancelEmailLoginBtn || !cancelRegisterBtn || !emailInput || !passwordInput || !emailLoginError || !uploadButtonSection || !logoutButton) return;
+        if (!loginButton || !loginModal || !closeLoginModal || !googleLoginButton || !showEmailLoginFormBtn || !showRegisterFormBtn || !emailLoginForm || !registerForm || !cancelEmailLoginBtn || !cancelRegisterBtn || !emailInput || !passwordInput || !emailLoginError || !logoutButton) return;
         const auth = firebase.auth();
         const googleProvider = new firebase.auth.GoogleAuthProvider();
         function show(el) { el.classList.remove('hidden'); }
@@ -703,7 +681,6 @@
                     }));
                     setProfilePicture(user.photoURL, user.displayName || user.email);
                     loginModal.style.display = 'none';
-                    showUploadButtonIfAllowed(user.email);
                 })
                 .catch((error) => {
                     emailLoginError.textContent = 'Google Login Failed: ' + error.message;
@@ -724,7 +701,6 @@
                     }));
                     setProfilePicture(user.photoURL, user.displayName || user.email);
                     loginModal.style.display = 'none';
-                    showUploadButtonIfAllowed(user.email);
                 })
                 .catch((error) => {
                     emailLoginError.textContent = error.message.replace('Firebase: ', '');
@@ -749,7 +725,6 @@
                     registerForm.style.display = 'none';
                     showEmailLoginFormBtn.style.display = 'inline-block';
                     showRegisterFormBtn.style.display = 'inline-block';
-                    showUploadButtonIfAllowed(user.email);
                 })
                 .catch((error) => {
                     emailLoginError.textContent = error.message.replace('Firebase: ', '');
@@ -789,18 +764,9 @@
             runLoginModalLogic();
             location.reload();
         });
-        function showUploadButtonIfAllowed(email) {
-            const allowedEmail = "aquacheese.yt@gmail.com";
-            if (email === allowedEmail) {
-                uploadButtonSection.style.display = 'block';
-            } else {
-                uploadButtonSection.style.display = 'none';
-            }
-        }
         const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
         if (loggedInUser) {
             setProfilePicture(loggedInUser.profilePicUrl, loggedInUser.displayName);
-            showUploadButtonIfAllowed(loggedInUser.email);
         }
     }
     runLoginModalLogic();
@@ -822,7 +788,7 @@
         cart.forEach((item, idx) => {
           subtotal += item.price;
           const li = document.createElement('li');
-          li.innerHTML = `<img src="${item.image}" alt="" width="40" height="40"><span>${item.name}</span> <span>£${item.price}</span> <button onclick="removeFromCart(${idx})">Remove</button>`;
+          li.innerHTML = `<img src="${item.image}" alt="" width="40" height="40"><span>${item.name}</span> <span>£${item.price}</span> <button class="cart-remove" onclick="removeFromCart(${idx})">Remove</button>`;
           cartList.appendChild(li);
         });
         cartSubtotal.textContent = `Subtotal: £${subtotal}`;
@@ -863,6 +829,127 @@
       }
       document.addEventListener('DOMContentLoaded', updateCart);
     })();
+    </script>
+    <script>
+    // Update all visible text and UI elements when the site language changes
+    function updateSiteLanguage(lang) {
+        const translations = {
+            en: {
+                login: "Login",
+                logout: "Logout",
+                register: "Register",
+                email: "Email",
+                password: "Password",
+                confirmPassword: "Confirm Password",
+                googleLogin: "Login with Google",
+                emailLogin: "Login with Email",
+                addToCart: "Add to Cart",
+                cart: "Cart",
+                buyNow: "Buy Now",
+                close: "×",
+                cartTitle: "Your Cart",
+                emptyCart: "Your cart is empty.",
+                remove: "Remove",
+                total: "Total",
+                checkout: "Checkout",
+                profile: "Profile",
+                welcome: "Welcome",
+                categories: "Categories",
+                landscape: "Landscape Images",
+                portrait: "Portrait Images",
+                allImages: "All Images",
+                videos: "Videos",
+                goToCategory: "Go to category...",
+                imgHeightInfo: "Image height information"
+            },
+            fr: {
+                login: "Connexion",
+                logout: "Déconnexion",
+                register: "S'inscrire",
+                email: "E-mail",
+                password: "Mot de passe",
+                confirmPassword: "Confirmer le mot de passe",
+                googleLogin: "Connexion avec Google",
+                emailLogin: "Connexion avec E-mail",
+                addToCart: "Ajouter au panier",
+                cart: "Panier",
+                buyNow: "Acheter maintenant",
+                close: "×",
+                cartTitle: "Votre panier",
+                emptyCart: "Votre panier est vide.",
+                remove: "Retirer",
+                total: "Total",
+                checkout: "Passer à la caisse",
+                profile: "Profil",
+                welcome: "Bienvenue",
+                categories: "Catégories",
+                landscape: "Images de paysage",
+                portrait: "Images de portrait",
+                allImages: "Toutes les images",
+                videos: "Vidéos",
+                goToCategory: "Aller à la catégorie...",
+                imgHeightInfo: "Informations sur la hauteur de l'image"
+            },
+            // ...add more languages here
+        };
+        const t = translations[lang] || translations['en'];
+
+        // Login/Register modal
+        document.querySelectorAll('.login-btn').forEach(el => el.textContent = t.login);
+        document.querySelectorAll('.logout-btn').forEach(el => el.textContent = t.logout);
+        document.querySelectorAll('.register-btn').forEach(el => el.textContent = t.register);
+        document.querySelectorAll('.google-login-btn').forEach(el => el.textContent = t.googleLogin);
+        document.querySelectorAll('.email-login-btn').forEach(el => el.textContent = t.emailLogin);
+        document.querySelectorAll('.modal-label-email').forEach(el => el.textContent = t.email);
+        document.querySelectorAll('.modal-label-password').forEach(el => el.textContent = t.password);
+        document.querySelectorAll('.modal-label-confirm-password').forEach(el => el.textContent = t.confirmPassword);
+
+        // Cart
+        document.querySelectorAll('.cart-btn').forEach(el => el.textContent = t.cart);
+        document.querySelectorAll('.cart-title').forEach(el => el.textContent = t.cartTitle);
+        document.querySelectorAll('.cart-empty').forEach(el => el.textContent = t.emptyCart);
+        document.querySelectorAll('.cart-remove').forEach(el => el.textContent = t.remove);
+        document.querySelectorAll('.cart-total-label').forEach(el => el.textContent = t.total);
+        document.querySelectorAll('.cart-checkout').forEach(el => el.textContent = t.checkout);
+        document.querySelectorAll('.cart-close').forEach(el => el.textContent = t.close);
+
+        // Add to Cart buttons
+        document.querySelectorAll('.add-to-cart-btn').forEach(el => el.textContent = t.addToCart);
+        document.querySelectorAll('.buy-now-btn').forEach(el => el.textContent = t.buyNow);
+
+        // Profile
+        document.querySelectorAll('.profile-label').forEach(el => el.textContent = t.profile);
+        document.querySelectorAll('.welcome-label').forEach(el => el.textContent = t.welcome);
+
+        // Categories dropdown menu
+        const categoriesDropdownBtn = document.getElementById('categoriesDropdownBtn');
+        if (categoriesDropdownBtn && t.categories) categoriesDropdownBtn.textContent = t.categories;
+        const categoriesDropdownList = document.getElementById('categoriesDropdownList');
+        if (categoriesDropdownList) {
+            categoriesDropdownList.querySelectorAll('li').forEach(li => {
+                const textMap = {
+                    'Landscape Images': 'landscape',
+                    'Portrait Images': 'portrait',
+                    'All Images': 'allImages',
+                    'Videos': 'videos',
+                    'Go to category...': 'goToCategory'
+                };
+                const trimmed = li.textContent.trim();
+                const key = textMap[trimmed];
+                if (key && t[key]) li.textContent = t[key];
+            });
+        }
+
+        // Headings, navigation, etc. (add more selectors as needed)
+        // Example: document.querySelectorAll('.main-heading').forEach(el => el.textContent = t.mainHeading || el.textContent);
+
+        // Set cart close button to always be ×
+        document.querySelectorAll('.cart-close').forEach(el => el.textContent = t.close);
+
+        // --- Translate image height info text ---
+        const imgHeightInfo = document.getElementById('imgHeightInfo');
+        if (imgHeightInfo && t.imgHeightInfo) imgHeightInfo.textContent = t.imgHeightInfo;
+    }
     </script>
 </body>
 </html>

@@ -458,34 +458,6 @@
     #profileMenu button:hover {
         background-color: #555;
     }
-
-    /* Upload button section (for admin) */
-    #upload-button-section {
-        display: none;
-        position: fixed;
-        top: 80px;
-        right: 20px;
-        background-color: #444;
-        color: whitesmoke;
-        padding: 10px 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-        z-index: 1000;
-    }
-
-    #upload-button-section button {
-        background-color: #28a745;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        padding: 10px 20px;
-        cursor: pointer;
-        font-size: 16px;
-    }
-
-    #upload-button-section button:hover {
-        background-color: #218838;
-    }
 </style>
     </head>
 
@@ -493,9 +465,6 @@
         <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
             <button id="loginButton" style="background-color: lightblue; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer;">Log In</button>
             <button id="registerButton" style="background-color: #ffc107; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer; margin-left: 8px;">Register</button>
-            <section id="upload-button-section" style="display: none;">
-                <button id="upload-page-button" style="font-size: large; padding: 10px 20px; border-radius: 5px; background-color: lightblue; border: none; cursor: pointer;">Upload Media</button>
-            </section>
         </div>
         <div id="loginModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;">
             <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #333; color: whitesmoke; padding: 20px; border-radius: 8px; width: 300px; text-align: center;">
@@ -613,13 +582,11 @@
         const emailInput = document.getElementById('emailInput');
         const passwordInput = document.getElementById('passwordInput');
         const emailLoginError = document.getElementById('emailLoginError');
-        const uploadButtonSection = document.getElementById('upload-button-section');
         const logoutButton = document.getElementById('logoutButton');
         const profileMenu = document.getElementById('profileMenu');
         const viewProfileButton = document.getElementById('viewProfileButton');
-        const uploadButtonMenu = document.getElementById('uploadButton');
         const logoutButtonMenu = document.getElementById('logoutButtonMenu');
-        if (!loginButton || !loginModal || !closeLoginModal || !googleLoginButton || !showEmailLoginFormBtn || !showRegisterFormBtn || !emailLoginForm || !registerForm || !cancelEmailLoginBtn || !cancelRegisterBtn || !emailInput || !passwordInput || !emailLoginError || !uploadButtonSection || !logoutButton || !profileMenu || !viewProfileButton || !uploadButtonMenu || !logoutButtonMenu) return;
+        if (!loginButton || !loginModal || !closeLoginModal || !googleLoginButton || !showEmailLoginFormBtn || !showRegisterFormBtn || !emailLoginForm || !registerForm || !cancelEmailLoginBtn || !cancelRegisterBtn || !emailInput || !passwordInput || !emailLoginError || !logoutButton || !profileMenu || !viewProfileButton || !logoutButtonMenu) return;
         const auth = firebase.auth();
         const googleProvider = new firebase.auth.GoogleAuthProvider();
         function show(el) { el.classList.remove('hidden'); }
@@ -700,7 +667,6 @@
                     }));
                     setProfilePicture(user.photoURL, user.displayName || user.email);
                     loginModal.style.display = 'none';
-                    showUploadButtonIfAllowed(user.email);
                 })
                 .catch((error) => {
                     emailLoginError.textContent = 'Google Login Failed: ' + error.message;
@@ -721,7 +687,6 @@
                     }));
                     setProfilePicture(user.photoURL, user.displayName || user.email);
                     loginModal.style.display = 'none';
-                    showUploadButtonIfAllowed(user.email);
                 })
                 .catch((error) => {
                     emailLoginError.textContent = error.message.replace('Firebase: ', '');
@@ -746,7 +711,6 @@
                     registerForm.style.display = 'none';
                     showEmailLoginFormBtn.style.display = 'inline-block';
                     showRegisterFormBtn.style.display = 'inline-block';
-                    showUploadButtonIfAllowed(user.email);
                 })
                 .catch((error) => {
                     emailLoginError.textContent = error.message.replace('Firebase: ', '');
@@ -795,20 +759,9 @@
             }
           }
         }
-        function showUploadButtonIfAllowed(email) {
-            const allowedEmail = "aquacheese.yt@gmail.com";
-            if (email === allowedEmail) {
-                uploadButtonSection.style.display = 'block';
-                uploadButtonMenu.style.display = 'block';
-            } else {
-                uploadButtonSection.style.display = 'none';
-                uploadButtonMenu.style.display = 'none';
-            }
-        }
         const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
         if (loggedInUser) {
             setProfilePicture(loggedInUser.profilePicUrl, loggedInUser.displayName);
-            showUploadButtonIfAllowed(loggedInUser.email);
         }
 
         // Firebase Auth state change listener
@@ -822,7 +775,6 @@
                 };
                 localStorage.setItem('loggedInUser', JSON.stringify(userData));
                 setProfilePicture(user.photoURL, user.displayName || user.email);
-                showUploadButtonIfAllowed(user.email);
             } else {
                 // User is signed out
                 localStorage.removeItem('loggedInUser');

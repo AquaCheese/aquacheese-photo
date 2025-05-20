@@ -256,11 +256,7 @@
         <button id="loginButton" style="background-color: lightblue; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer;">
             Log In
         </button>
-        <section id="upload-button-section" style="display: none;">
-            <button id="upload-page-button" style="font-size: large; padding: 10px 20px; border-radius: 5px; background-color: lightblue; border: none; cursor: pointer;">
-                Upload
-            </button>
-        </section>
+        <img id="profilePic" src="" alt="Profile" style="display:none;width:48px;height:48px;border-radius:50%;margin-left:10px;vertical-align:middle;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.2);background:#eee;object-fit:cover;">
     </div>
     <!-- Cart button -->
     <button id="cartButton" style="position: fixed; top: 20px; right: 20px; background-color: gold; color: black; border: none; border-radius: 12px; padding: 10px 20px; font-size: 16px; cursor: pointer; z-index: 1000; transition: background-color 0.3s;">Cart</button>
@@ -299,7 +295,7 @@
       </div>
     </div>
     <div id="profileMenu" style="display:none; position:fixed; top:70px; left:20px; background:#444; color:#fff; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.3); z-index:2000; min-width:140px; padding:16px 12px;">
-        <button id="logoutButton" style="background-color: #dc3545; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer;">Logout</button>
+        <button id="profileMenuLogoutButton" style="background-color: #dc3545; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer;">Logout</button>
     </div>
     <h1>All Images</h1>
     <div style="margin: 20px;">
@@ -452,6 +448,128 @@
         updateCart();
     }
     updateCart();
+
+    // Update all visible text and UI elements when the site language changes
+    function updateSiteLanguage(lang) {
+        const translations = {
+            en: {
+                login: "Login",
+                logout: "Logout",
+                register: "Register",
+                email: "Email",
+                password: "Password",
+                confirmPassword: "Confirm Password",
+                googleLogin: "Login with Google",
+                emailLogin: "Login with Email",
+                addToCart: "Add to Cart",
+                cart: "Cart",
+                buyNow: "Buy Now",
+                close: "×",
+                cartTitle: "Your Cart",
+                emptyCart: "Your cart is empty.",
+                remove: "Remove",
+                total: "Total",
+                checkout: "Checkout",
+                profile: "Profile",
+                welcome: "Welcome",
+                categories: "Categories",
+                landscape: "Landscape Images",
+                portrait: "Portrait Images",
+                allImages: "All Images",
+                videos: "Videos",
+                goToCategory: "Go to category...",
+                imgHeightInfo: "Image height information"
+                // ...add more as needed
+            },
+            fr: {
+                login: "Connexion",
+                logout: "Déconnexion",
+                register: "S'inscrire",
+                email: "E-mail",
+                password: "Mot de passe",
+                confirmPassword: "Confirmer le mot de passe",
+                googleLogin: "Connexion avec Google",
+                emailLogin: "Connexion avec E-mail",
+                addToCart: "Ajouter au panier",
+                cart: "Panier",
+                buyNow: "Acheter maintenant",
+                close: "×",
+                cartTitle: "Votre panier",
+                emptyCart: "Votre panier est vide.",
+                remove: "Retirer",
+                total: "Total",
+                checkout: "Passer à la caisse",
+                profile: "Profil",
+                welcome: "Bienvenue",
+                categories: "Catégories",
+                landscape: "Images de paysage",
+                portrait: "Images de portrait",
+                allImages: "Toutes les images",
+                videos: "Vidéos",
+                goToCategory: "Aller à la catégorie...",
+                imgHeightInfo: "Informations sur la hauteur de l'image"
+                // ...add more as needed
+            },
+            // ...add more languages here
+        };
+        const t = translations[lang] || translations['en'];
+
+        // Login/Register modal
+        document.querySelectorAll('.login-btn').forEach(el => el.textContent = t.login);
+        document.querySelectorAll('.logout-btn').forEach(el => el.textContent = t.logout);
+        document.querySelectorAll('.register-btn').forEach(el => el.textContent = t.register);
+        document.querySelectorAll('.google-login-btn').forEach(el => el.textContent = t.googleLogin);
+        document.querySelectorAll('.email-login-btn').forEach(el => el.textContent = t.emailLogin);
+        document.querySelectorAll('.modal-label-email').forEach(el => el.textContent = t.email);
+        document.querySelectorAll('.modal-label-password').forEach(el => el.textContent = t.password);
+        document.querySelectorAll('.modal-label-confirm-password').forEach(el => el.textContent = t.confirmPassword);
+
+        // Cart
+        document.querySelectorAll('.cart-btn').forEach(el => el.textContent = t.cart);
+        document.querySelectorAll('.cart-title').forEach(el => el.textContent = t.cartTitle);
+        document.querySelectorAll('.cart-empty').forEach(el => el.textContent = t.emptyCart);
+        document.querySelectorAll('.cart-remove').forEach(el => el.textContent = t.remove);
+        document.querySelectorAll('.cart-total-label').forEach(el => el.textContent = t.total);
+        document.querySelectorAll('.cart-checkout').forEach(el => el.textContent = t.checkout);
+        document.querySelectorAll('.cart-close').forEach(el => el.textContent = t.close);
+
+        // Add to Cart buttons
+        document.querySelectorAll('.add-to-cart-btn').forEach(el => el.textContent = t.addToCart);
+        document.querySelectorAll('.buy-now-btn').forEach(el => el.textContent = t.buyNow);
+
+        // Profile
+        document.querySelectorAll('.profile-label').forEach(el => el.textContent = t.profile);
+        document.querySelectorAll('.welcome-label').forEach(el => el.textContent = t.welcome);
+
+        // Categories dropdown menu
+        const categoriesDropdownBtn = document.getElementById('categoriesDropdownBtn');
+        if (categoriesDropdownBtn && t.categories) categoriesDropdownBtn.textContent = t.categories;
+        const categoriesDropdownList = document.getElementById('categoriesDropdownList');
+        if (categoriesDropdownList) {
+            categoriesDropdownList.querySelectorAll('li').forEach(li => {
+                const textMap = {
+                    'Landscape Images': 'landscape',
+                    'Portrait Images': 'portrait',
+                    'All Images': 'allImages',
+                    'Videos': 'videos',
+                    'Go to category...': 'goToCategory'
+                };
+                const trimmed = li.textContent.trim();
+                const key = textMap[trimmed];
+                if (key && t[key]) li.textContent = t[key];
+            });
+        }
+
+        // Headings, navigation, etc. (add more selectors as needed)
+        // Example: document.querySelectorAll('.main-heading').forEach(el => el.textContent = t.mainHeading || el.textContent);
+
+        // Set cart close button to always be ×
+        document.querySelectorAll('.cart-close').forEach(el => el.textContent = t.close);
+
+        // --- Translate image height info text ---
+        const imgHeightInfo = document.getElementById('imgHeightInfo');
+        if (imgHeightInfo && t.imgHeightInfo) imgHeightInfo.textContent = t.imgHeightInfo;
+    }
     </script>
     <!-- Firebase App (the core Firebase SDK) -->
     <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app-compat.js"></script>
@@ -467,18 +585,18 @@
     </script>
     <script>
     (function waitForFirebaseAndRun(attempts = 0) {
-    if (!(window.firebase && window.firebaseConfig && window._firebaseInitialized)) {
+      if (!(window.firebase && window.firebaseConfig && window._firebaseInitialized)) {
         if (attempts === 0) {
-            console.warn('Waiting for Firebase to be ready...');
+          console.warn('Waiting for Firebase to be ready...');
         }
         if (attempts > 100) {
-            console.error('ERROR: Firebase config or initialization not detected after 5 seconds.');
-            return;
+          console.error('ERROR: Firebase config or initialization not detected after 5 seconds.');
+          return;
         }
         setTimeout(() => waitForFirebaseAndRun(attempts + 1), 50);
         return;
-    }
-    function runLoginModalLogic() {
+      }
+      function runLoginModalLogic() {
         const loginButton = document.getElementById('loginButton');
         const loginModal = document.getElementById('loginModal');
         const closeLoginModal = document.getElementById('closeLoginModal');
@@ -492,202 +610,204 @@
         const emailInput = document.getElementById('emailInput');
         const passwordInput = document.getElementById('passwordInput');
         const emailLoginError = document.getElementById('emailLoginError');
-        const uploadButtonSection = document.getElementById('upload-button-section');
         const logoutButton = document.getElementById('logoutButton');
-        if (!loginButton || !loginModal || !closeLoginModal || !googleLoginButton || !showEmailLoginFormBtn || !showRegisterFormBtn || !emailLoginForm || !registerForm || !cancelEmailLoginBtn || !cancelRegisterBtn || !emailInput || !passwordInput || !emailLoginError || !uploadButtonSection || !logoutButton) return;
+        const profilePic = document.getElementById('profilePic');
+        const profileMenu = document.getElementById('profileMenu');
+        const profileMenuLogoutButton = document.getElementById('profileMenuLogoutButton');
+        if (!loginButton || !loginModal || !closeLoginModal || !googleLoginButton || !showEmailLoginFormBtn || !showRegisterFormBtn || !emailLoginForm || !registerForm || !cancelEmailLoginBtn || !cancelRegisterBtn || !emailInput || !passwordInput || !emailLoginError || !logoutButton || !profileMenuLogoutButton) return;
         const auth = firebase.auth();
         const googleProvider = new firebase.auth.GoogleAuthProvider();
         function show(el) { el.classList.remove('hidden'); }
         function hide(el) { el.classList.add('hidden'); }
         function resetLoginModal() {
-            hide(emailLoginForm);
-            hide(registerForm);
-            show(googleLoginButton);
-            show(showEmailLoginFormBtn);
-            show(showRegisterFormBtn);
-            emailLoginError.textContent = '';
-            if (typeof emailLoginForm.reset === 'function') emailLoginForm.reset();
-            if (typeof registerForm.reset === 'function') registerForm.reset();
+          hide(emailLoginForm);
+          hide(registerForm);
+          show(googleLoginButton);
+          show(showEmailLoginFormBtn);
+          show(showRegisterFormBtn);
+          emailLoginError.textContent = '';
+          if (typeof emailLoginForm.reset === 'function') emailLoginForm.reset();
+          if (typeof registerForm.reset === 'function') registerForm.reset();
         }
         loginButton.addEventListener('click', () => {
-            resetLoginModal();
-            loginModal.style.display = 'block';
-            loginModal.style.zIndex = '9999';
-            loginModal.style.backgroundColor = 'rgba(0,0,0,0.5)';
-            if (loginModal.firstElementChild) {
-                loginModal.firstElementChild.style.backgroundColor = '#333';
-                loginModal.firstElementChild.style.color = 'whitesmoke';
-                loginModal.firstElementChild.style.border = '';
-            }
-            const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
-            if (loggedInUser) {
-                logoutButton.style.display = 'block';
-            } else {
-                logoutButton.style.display = 'none';
-            }
-        });
-        closeLoginModal.addEventListener('click', () => {
-            loginModal.style.display = 'none';
-            resetLoginModal();
-        });
-        showEmailLoginFormBtn.addEventListener('click', () => {
-            hide(googleLoginButton);
-            hide(showEmailLoginFormBtn);
-            hide(showRegisterFormBtn);
-            show(emailLoginForm);
-            hide(registerForm);
-            emailLoginError.textContent = '';
-            if (typeof emailLoginForm.reset === 'function') emailLoginForm.reset();
-        });
-        cancelEmailLoginBtn.addEventListener('click', () => {
-            show(googleLoginButton);
-            hide(emailLoginForm);
-            show(showEmailLoginFormBtn);
-            show(showRegisterFormBtn);
-            emailLoginError.textContent = '';
-            if (typeof emailLoginForm.reset === 'function') emailLoginForm.reset();
-        });
-        showRegisterFormBtn.addEventListener('click', () => {
-            hide(googleLoginButton);
-            hide(showEmailLoginFormBtn);
-            hide(showRegisterFormBtn);
-            hide(emailLoginForm);
-            show(registerForm);
-            emailLoginError.textContent = '';
-            if (typeof registerForm.reset === 'function') registerForm.reset();
-        });
-        cancelRegisterBtn.addEventListener('click', () => {
-            show(googleLoginButton);
-            hide(registerForm);
-            show(showEmailLoginFormBtn);
-            show(showRegisterFormBtn);
-            emailLoginError.textContent = '';
-            if (typeof registerForm.reset === 'function') registerForm.reset();
-        });
-        googleLoginButton.addEventListener('click', () => {
-            auth.signInWithPopup(googleProvider)
-                .then((result) => {
-                    const user = result.user;
-                    localStorage.setItem('loggedInUser', JSON.stringify({
-                        displayName: user.displayName || user.email,
-                        profilePicUrl: user.photoURL,
-                        email: user.email
-                    }));
-                    setProfilePicture(user.photoURL, user.displayName || user.email);
-                    loginModal.style.display = 'none';
-                    showUploadButtonIfAllowed(user.email);
-                })
-                .catch((error) => {
-                    emailLoginError.textContent = 'Google Login Failed: ' + error.message;
-                });
-        });
-        emailLoginForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            emailLoginError.textContent = '';
-            const email = emailInput.value.trim();
-            const password = passwordInput.value;
-            auth.signInWithEmailAndPassword(email, password)
-                .then((result) => {
-                    const user = result.user;
-                    localStorage.setItem('loggedInUser', JSON.stringify({
-                        displayName: user.displayName || user.email,
-                        profilePicUrl: user.photoURL,
-                        email: user.email
-                    }));
-                    setProfilePicture(user.photoURL, user.displayName || user.email);
-                    loginModal.style.display = 'none';
-                    showUploadButtonIfAllowed(user.email);
-                })
-                .catch((error) => {
-                    emailLoginError.textContent = error.message.replace('Firebase: ', '');
-                });
-        });
-        registerForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            emailLoginError.textContent = '';
-            const email = document.getElementById('registerEmail').value.trim();
-            const password = document.getElementById('registerPassword').value;
-            auth.createUserWithEmailAndPassword(email, password)
-                .then((result) => {
-                    const user = result.user;
-                    localStorage.setItem('loggedInUser', JSON.stringify({
-                        displayName: user.displayName || user.email,
-                        profilePicUrl: user.photoURL,
-                        email: user.email
-                    }));
-                    setProfilePicture(user.photoURL, user.displayName || user.email);
-                    loginModal.style.display = 'none';
-                    registerForm.reset();
-                    registerForm.style.display = 'none';
-                    showEmailLoginFormBtn.style.display = 'inline-block';
-                    showRegisterFormBtn.style.display = 'inline-block';
-                    showUploadButtonIfAllowed(user.email);
-                })
-                .catch((error) => {
-                    emailLoginError.textContent = error.message.replace('Firebase: ', '');
-                });
-        });
-        function setProfilePicture(profilePicUrl, displayName) {
-            loginButton.style.display = 'none';
-            const existingProfilePic = document.getElementById('profilePic');
-            if (existingProfilePic) existingProfilePic.remove();
-            const profilePic = document.createElement('img');
-            profilePic.src = profilePicUrl || 'default-profile.png';
-            profilePic.alt = displayName || 'Profile Picture';
-            profilePic.style.position = 'fixed';
-            profilePic.style.top = '20px';
-            profilePic.style.left = '20px';
-            profilePic.style.width = '40px';
-            profilePic.style.height = '40px';
-            profilePic.style.borderRadius = '50%';
-            profilePic.style.cursor = 'pointer';
-            profilePic.style.zIndex = '1000';
-            profilePic.id = 'profilePic';
-            document.body.appendChild(profilePic);
-            profilePic.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const menu = document.getElementById('profileMenu');
-                if (menu) menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
-            });
-            document.addEventListener('click', (e) => {
-                const menu = document.getElementById('profileMenu');
-                if (menu && !menu.contains(e.target) && e.target.id !== 'profilePic') {
-                    menu.style.display = 'none';
-                }
-            });
-        }
-        logoutButton.addEventListener('click', () => {
-            localStorage.removeItem('loggedInUser');
-            // Instead of location.reload(), re-run the login modal logic to re-attach listeners
-            runLoginModalLogic();
-            // Optionally, reload the page if needed
-            location.reload();
-        });
-        function showUploadButtonIfAllowed(email) {
-            const allowedEmail = "aquacheese.yt@gmail.com";
-            if (email === allowedEmail) {
-                uploadButtonSection.style.display = 'block';
-            } else {
-                uploadButtonSection.style.display = 'none';
-            }
-        }
-        // Remove duplicate logoutButton in profileMenu if present
-        const profileMenu = document.getElementById('profileMenu');
-        if (profileMenu) {
-          const logoutBtns = profileMenu.querySelectorAll('#logoutButton');
-          if (logoutBtns.length > 1) {
-            for (let i = 1; i < logoutBtns.length; i++) {
-              logoutBtns[i].remove();
-            }
+          resetLoginModal();
+          loginModal.style.display = 'block';
+          loginModal.style.zIndex = '9999';
+          loginModal.style.backgroundColor = 'rgba(0,0,0,0.5)';
+          if (loginModal.firstElementChild) {
+            loginModal.firstElementChild.style.backgroundColor = '#333';
+            loginModal.firstElementChild.style.color = 'whitesmoke';
+            loginModal.firstElementChild.style.border = '';
           }
+          const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+          if (loggedInUser) {
+            logoutButton.style.display = 'block';
+          } else {
+            logoutButton.style.display = 'none';
+          }
+        });
+        closeLoginModal && closeLoginModal.addEventListener('click', () => {
+          loginModal.style.display = 'none';
+          resetLoginModal();
+        });
+        showEmailLoginFormBtn && showEmailLoginFormBtn.addEventListener('click', () => {
+          hide(googleLoginButton);
+          hide(showEmailLoginFormBtn);
+          hide(showRegisterFormBtn);
+          show(emailLoginForm);
+          hide(registerForm);
+          emailLoginError.textContent = '';
+          if (typeof emailLoginForm.reset === 'function') emailLoginForm.reset();
+        });
+        cancelEmailLoginBtn && cancelEmailLoginBtn.addEventListener('click', () => {
+          show(googleLoginButton);
+          hide(emailLoginForm);
+          show(showEmailLoginFormBtn);
+          show(showRegisterFormBtn);
+          emailLoginError.textContent = '';
+          if (typeof emailLoginForm.reset === 'function') emailLoginForm.reset();
+        });
+        showRegisterFormBtn && showRegisterFormBtn.addEventListener('click', () => {
+          hide(googleLoginButton);
+          hide(showEmailLoginFormBtn);
+          hide(showRegisterFormBtn);
+          hide(emailLoginForm);
+          show(registerForm);
+          emailLoginError.textContent = '';
+          if (typeof registerForm.reset === 'function') registerForm.reset();
+        });
+        cancelRegisterBtn && cancelRegisterBtn.addEventListener('click', () => {
+          show(googleLoginButton);
+          hide(registerForm);
+          show(showEmailLoginFormBtn);
+          show(showRegisterFormBtn);
+          emailLoginError.textContent = '';
+          if (typeof registerForm.reset === 'function') registerForm.reset();
+        });
+        googleLoginButton && googleLoginButton.addEventListener('click', () => {
+          auth.signInWithPopup(googleProvider)
+            .then((result) => {
+              const user = result.user;
+              localStorage.setItem('loggedInUser', JSON.stringify({
+                displayName: user.displayName || user.email,
+                profilePicUrl: user.photoURL,
+                email: user.email
+              }));
+              loginModal.style.display = 'none';
+              updateProfileUI();
+            })
+            .catch((error) => {
+              emailLoginError.textContent = 'Google Login Failed: ' + error.message;
+            });
+        });
+        emailLoginForm && emailLoginForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          emailLoginError.textContent = '';
+          const email = emailInput.value.trim();
+          const password = passwordInput.value;
+          auth.signInWithEmailAndPassword(email, password)
+            .then((result) => {
+              const user = result.user;
+              localStorage.setItem('loggedInUser', JSON.stringify({
+                displayName: user.displayName || user.email,
+                profilePicUrl: user.photoURL,
+                email: user.email
+              }));
+              loginModal.style.display = 'none';
+              updateProfileUI();
+            })
+            .catch((error) => {
+              emailLoginError.textContent = error.message.replace('Firebase: ', '');
+            });
+        });
+        registerForm && registerForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          emailLoginError.textContent = '';
+          const email = document.getElementById('registerEmail')?.value.trim();
+          const password = document.getElementById('registerPassword')?.value;
+          auth.createUserWithEmailAndPassword(email, password)
+            .then((result) => {
+              const user = result.user;
+              localStorage.setItem('loggedInUser', JSON.stringify({
+                displayName: user.displayName || user.email,
+                profilePicUrl: user.photoURL,
+                email: user.email
+              }));
+              loginModal.style.display = 'none';
+              updateProfileUI();
+            })
+            .catch((error) => {
+              emailLoginError.textContent = error.message.replace('Firebase: ', '');
+            });
+        });
+        // Robust logout logic for both profile menu and modal
+        function robustLogout() {
+          localStorage.removeItem('loggedInUser');
+          if (window.firebase && firebase.auth) {
+            firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE).then(() => {
+              sessionStorage.setItem('justLoggedOut', '1');
+              return firebase.auth().signOut();
+            }).then(() => {
+              window.location.reload();
+            });
+          } else {
+            window.location.reload();
+          }
+        }
+        profileMenuLogoutButton && profileMenuLogoutButton.addEventListener('click', robustLogout);
+        logoutButton && logoutButton.addEventListener('click', robustLogout);
+        function updateProfileUI() {
+          const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+          if (loggedInUser && profilePic) {
+            profilePic.src = loggedInUser.profilePicUrl || 'default-profile.png';
+            profilePic.style.display = 'inline-block';
+            loginButton.style.display = 'none';
+            if (profileMenu) profileMenu.style.display = 'none';
+          } else {
+            if (profilePic) profilePic.style.display = 'none';
+            loginButton.style.display = 'inline-block';
+            if (profileMenu) profileMenu.style.display = 'none';
+          }
+        }
+        // Profile picture/menu logic
+        if (profilePic && profileMenu) {
+          profilePic.addEventListener('click', (e) => {
+            e.stopPropagation();
+            profileMenu.style.display = profileMenu.style.display === 'block' ? 'none' : 'block';
+          });
+          document.addEventListener('click', (e) => {
+            if (profileMenu.style.display === 'block' && !profileMenu.contains(e.target) && e.target !== profilePic) {
+              profileMenu.style.display = 'none';
+            }
+          });
+        }
+        // Restore session on load, but block instant re-login after logout
+        if (sessionStorage.getItem('justLoggedOut')) {
+          sessionStorage.removeItem('justLoggedOut');
+          if (window.firebase && firebase.auth) firebase.auth().signOut();
+          updateProfileUI();
+          return;
         }
         const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
         if (loggedInUser) {
-            setProfilePicture(loggedInUser.profilePicUrl, loggedInUser.displayName);
-            showUploadButtonIfAllowed(loggedInUser.email);
+          updateProfileUI();
+        } else {
+          // Try to restore from Firebase Auth if available
+          auth.onAuthStateChanged(function(user) {
+            if (user) {
+              localStorage.setItem('loggedInUser', JSON.stringify({
+                displayName: user.displayName || user.email,
+                profilePicUrl: user.photoURL,
+                email: user.email
+              }));
+              updateProfileUI();
+            } else {
+              updateProfileUI();
+            }
+          });
         }
-    }
-    runLoginModalLogic();
+      }
+      runLoginModalLogic();
     })();
     </script>
 </body>
