@@ -6,11 +6,92 @@
     <title>SERVER DOWN</title>
     <link rel="icon" type="image/png" href="ACPhoto logo.png">
     <style>
-        p {
+        body {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            animation: bgMove 10s ease-in-out infinite alternate;
+        }
+        @keyframes bgMove {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        .container {
+            background: rgba(255,255,255,0.85);
+            border-radius: 30px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            padding: 40px 60px;
             text-align: center;
-            font-size: 3em;
-            color: red;
-            font-family: Arial, sans-serif;
+            animation: popIn 1s cubic-bezier(.68,-0.55,.27,1.55);
+        }
+        @keyframes popIn {
+            0% { transform: scale(0.7) rotate(-10deg); opacity: 0; }
+            80% { transform: scale(1.05) rotate(2deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+        .sad-face {
+            font-size: 5em;
+            color: #ff4e50;
+            animation: shake 1.5s infinite alternate;
+            margin-bottom: 10px;
+        }
+        @keyframes shake {
+            0% { transform: translateX(-10px) rotate(-5deg); }
+            100% { transform: translateX(10px) rotate(5deg); }
+        }
+        .main-message {
+            font-size: 2.5em;
+            color: #ff4e50;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 8px #fff, 0 0 10px #ffb199;
+        }
+        .sub-message {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .logo {
+            display: block;
+            margin: 30px auto 0 auto;
+            width: 180px;
+            height: auto;
+            filter: drop-shadow(0 0 20px #ffb199);
+            animation: float 2.5s ease-in-out infinite alternate;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-20px); }
+        }
+        .game-btn {
+            background-color: #ff4e50;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s cubic-bezier(.68,-0.55,.27,1.55), box-shadow 0.2s;
+            margin-top: 20px;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 4px 20px 0 rgba(255, 78, 80, 0.2);
+            animation: bounce 1.2s infinite alternate;
+        }
+        .game-btn:hover {
+            background-color: #e04347;
+            transform: scale(1.08) rotate(-2deg);
+            box-shadow: 0 8px 32px 0 rgba(255, 78, 80, 0.35);
+        }
+        @keyframes bounce {
+            0% { transform: translateY(0) scale(1); }
+            60% { transform: translateY(-8px) scale(1.05); }
+            100% { transform: translateY(-16px) scale(1.1); }
         }
     </style>
     <script>
@@ -21,8 +102,12 @@
     </script>
 </head>
 <body>
-    <strong><p style="align-self: center;">It seems like the server is down, sorry for the inconvenience</p></strong>
-    <strong><p>Please wait an hour or two and try again</p></strong>
-    <img src="ACPhoto logo.png" alt="ERROR 404: IMAGE NOT FOUND" style="display: block; margin: 0 auto; width: 200px; height: auto;">
+    <div class="container">
+        <div class="sad-face">:(</div>
+        <div class="main-message">It seems like the site server is down</div>
+        <div class="sub-message">Sorry for the inconvenience.<br>Please wait an hour or two and try again.</div>
+        <img class="logo" src="ACPhoto logo.png" alt="ACPhoto Logo">
+        <a href="https://aquacheese.github.io/POTATO/" class="game-btn">Play a Game</a>
+    </div>
 </body>
 </html>
