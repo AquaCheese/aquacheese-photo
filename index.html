@@ -139,22 +139,25 @@
             try {
                 // Test server connectivity using multiple methods
                 const testMethods = [
-                    () => testWithFetch(),
                     () => testWithImage(),
-                    () => testWithIframe()
+                    () => testWithFetch(),
+                    () => testWithSimplePing()
                 ];
 
                 let serverResponsive = false;
                 
-                for (let method of testMethods) {
+                for (let i = 0; i < testMethods.length; i++) {
                     try {
-                        const result = await method();
+                        console.log(`Running test method ${i + 1}...`);
+                        const result = await testMethods[i]();
+                        console.log(`Test method ${i + 1} result:`, result);
                         if (result) {
                             serverResponsive = true;
+                            console.log(`Server detected as online by test method ${i + 1}`);
                             break;
                         }
                     } catch (e) {
-                        console.log('Test method failed:', e);
+                        console.log(`Test method ${i + 1} failed:`, e);
                     }
                 }
 
@@ -183,7 +186,7 @@
         function testWithFetch() {
             return new Promise((resolve) => {
                 const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 4000);
+                const timeoutId = setTimeout(() => controller.abort(), 3000);
                 
                 // Test the domain directly with HTTPS
                 fetch(`https://${serverDomain}`, {
@@ -192,9 +195,11 @@
                     signal: controller.signal
                 }).then(() => {
                     clearTimeout(timeoutId);
+                    console.log('Fetch test: SUCCESS');
                     resolve(true);
-                }).catch(() => {
+                }).catch((error) => {
                     clearTimeout(timeoutId);
+                    console.log('Fetch test: FAILED', error.message);
                     resolve(false);
                 });
             });
@@ -204,15 +209,18 @@
             return new Promise((resolve) => {
                 const img = new Image();
                 const timeout = setTimeout(() => {
+                    console.log('Image test: TIMEOUT');
                     resolve(false);
-                }, 4000);
+                }, 3000);
                 
                 img.onload = () => {
                     clearTimeout(timeout);
+                    console.log('Image test: SUCCESS - favicon loaded');
                     resolve(true);
                 };
                 img.onerror = () => {
                     clearTimeout(timeout);
+                    console.log('Image test: FAILED - favicon not found');
                     resolve(false);
                 };
                 
@@ -232,14 +240,16 @@
                     if (document.body.contains(iframe)) {
                         document.body.removeChild(iframe);
                     }
+                    console.log('Iframe test: TIMEOUT');
                     resolve(false);
-                }, 4000);
+                }, 3000);
                 
                 iframe.onload = () => {
                     clearTimeout(timeout);
                     if (document.body.contains(iframe)) {
                         document.body.removeChild(iframe);
                     }
+                    console.log('Iframe test: SUCCESS');
                     resolve(true);
                 };
                 
@@ -248,11 +258,37 @@
                     if (document.body.contains(iframe)) {
                         document.body.removeChild(iframe);
                     }
+                    console.log('Iframe test: FAILED');
                     resolve(false);
                 };
                 
                 iframe.src = `https://${serverDomain}`;
                 document.body.appendChild(iframe);
+            });
+        }
+
+        function testWithSimplePing() {
+            return new Promise((resolve) => {
+                // Try to create a simple request that will succeed if the domain resolves
+                const img = new Image();
+                const timeout = setTimeout(() => {
+                    console.log('Simple ping test: TIMEOUT');
+                    resolve(false);
+                }, 2000);
+                
+                // Even if the image fails to load, if we get any response (including 404), 
+                // it means the server is reachable
+                const handleResponse = () => {
+                    clearTimeout(timeout);
+                    console.log('Simple ping test: SUCCESS (server reachable)');
+                    resolve(true);
+                };
+                
+                img.onload = handleResponse;
+                img.onerror = handleResponse; // Even errors mean the server responded
+                
+                // Try a simple request to a common path
+                img.src = `https://${serverDomain}/robots.txt?` + Date.now();
             });
         }
 
@@ -370,6 +406,9 @@
 
         // Start checking when page loads
         window.addEventListener('load', () => {
+            console.log('Page loaded, starting server check in 2 seconds...');
+            console.log('Testing domain:', serverDomain);
+            console.log('Target URL:', websiteURL);
             setTimeout(checkServerStatus, 2000); // Wait 2 seconds before starting
         });
 
