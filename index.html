@@ -3,430 +3,166 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checking Server Availability</title>
+    <title>503 Service Unavailable - ACPhoto</title>
     <link rel="icon" type="image/png" href="ACPhoto logo.png">
+    <meta http-equiv="refresh" content="3600">
     <style>
         body {
-            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
             min-height: 100vh;
             margin: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            animation: bgMove 10s ease-in-out infinite alternate;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        @keyframes bgMove {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 100% 50%; }
-        }
+        
         .container {
             background: rgba(255,255,255,0.95);
-            border-radius: 30px;
+            border-radius: 20px;
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-            padding: 40px 60px;
+            padding: 50px;
             text-align: center;
-            animation: popIn 1s cubic-bezier(.68,-0.55,.27,1.55);
+            max-width: 600px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
-        @keyframes popIn {
-            0% { transform: scale(0.7) rotate(-10deg); opacity: 0; }
-            80% { transform: scale(1.05) rotate(2deg); opacity: 1; }
-            100% { transform: scale(1) rotate(0deg); }
-        }
-        .loading-spinner {
-            font-size: 3em;
-            color: #3498db;
-            animation: spin 2s linear infinite;
-            margin-bottom: 20px;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .sad-face {
-            font-size: 5em;
-            color: #e74c3c;
-            animation: shake 1.5s infinite alternate;
-            margin-bottom: 10px;
-            display: none;
-        }
-        @keyframes shake {
-            0% { transform: translateX(-10px) rotate(-5deg); }
-            100% { transform: translateX(10px) rotate(5deg); }
-        }
-        .main-message {
-            font-size: 2em;
-            color: #2c3e50;
-            font-family: 'Segoe UI', Arial, sans-serif;
+        
+        .status-code {
+            font-size: 4em;
             font-weight: bold;
+            color: #e74c3c;
             margin-bottom: 10px;
-            text-shadow: 1px 1px 4px rgba(0,0,0,0.1);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
+        
+        .main-message {
+            font-size: 2.2em;
+            color: #2c3e50;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
         .sub-message {
             font-size: 1.2em;
             color: #7f8c8d;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            line-height: 1.6;
         }
-        .status-message {
-            font-size: 1em;
-            color: #34495e;
-            margin-top: 15px;
-            font-style: italic;
+        
+        .info-box {
+            background: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 0 10px 10px 0;
+            text-align: left;
         }
+        
+        .info-box h4 {
+            margin: 0 0 10px 0;
+            color: #2c3e50;
+            font-size: 1.1em;
+        }
+        
+        .info-box p {
+            margin: 0;
+            color: #5a6c7d;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+        
         .logo {
-            display: block;
-            margin: 30px auto 0 auto;
-            width: 200px;
+            width: 150px;
             height: auto;
-            filter: drop-shadow(0 0 15px rgba(52, 73, 94, 0.3));
-            animation: float 2.5s ease-in-out infinite alternate;
-        }
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            100% { transform: translateY(-15px); }
-        }
-        .retry-btn {
-            background-color: #3498db;
-            color: white;
-            border: none;
-            border-radius: 20px;
-            padding: 12px 25px;
-            font-size: 1em;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            margin-top: 20px;
-            text-decoration: none;
-            display: none;
-        }
-        .retry-btn:hover {
-            background-color: #2980b9;
-            transform: scale(1.05);
+            margin: 30px auto 20px auto;
+            display: block;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
         }
         
-        /* Transition animations */
-        .fade-out {
-            opacity: 0;
-            transform: scale(0.9);
-            transition: opacity 0.5s ease, transform 0.5s ease;
+        .contact-info {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ecf0f1;
         }
         
-        .fade-in {
-            opacity: 1;
-            transform: scale(1);
-            transition: opacity 0.5s ease, transform 0.5s ease;
+        .contact-info h4 {
+            margin: 0 0 15px 0;
+            color: #2c3e50;
+            font-size: 1.1em;
         }
         
-        .slide-up {
-            transform: translateY(-20px);
-            transition: transform 0.3s ease;
+        .contact-info p {
+            margin: 5px 0;
+            color: #7f8c8d;
+            font-size: 0.95em;
         }
         
-        .error-state {
-            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
-            transition: background 1s ease;
+        .retry-hint {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 25px;
+            color: #856404;
+            font-size: 0.9em;
+        }
+        
+        .timestamp {
+            margin-top: 30px;
+            font-size: 0.85em;
+            color: #95a5a6;
+            font-style: italic;
         }
     </style>
     <script>
-        let checkAttempts = 0;
-        const maxAttempts = 3;
-        const websiteURL = 'https://aquacheesephoto.co.uk';
-        const serverDomain = 'aquacheesephoto.co.uk';
-
-        async function checkServerStatus() {
-            checkAttempts++;
-            updateStatus(`Checking server availability... (Attempt ${checkAttempts}/${maxAttempts})`);
-
-            try {
-                // Test server connectivity using multiple methods
-                const testMethods = [
-                    () => testWithImage(),
-                    () => testWithFetch(),
-                    () => testWithSimplePing()
-                ];
-
-                let serverResponsive = false;
-                
-                for (let i = 0; i < testMethods.length; i++) {
-                    try {
-                        console.log(`Running test method ${i + 1}...`);
-                        const result = await testMethods[i]();
-                        console.log(`Test method ${i + 1} result:`, result);
-                        if (result) {
-                            serverResponsive = true;
-                            console.log(`Server detected as online by test method ${i + 1}`);
-                            break;
-                        }
-                    } catch (e) {
-                        console.log(`Test method ${i + 1} failed:`, e);
-                    }
-                }
-
-                if (serverResponsive) {
-                    updateStatus('Server is online! Redirecting...');
-                    setTimeout(() => {
-                        // Redirect to the domain (which should point to your server)
-                        window.location.replace(websiteURL);
-                    }, 1500);
-                } else {
-                    throw new Error('All test methods failed');
-                }
-                
-            } catch (error) {
-                console.log('Server check failed:', error);
-                
-                if (checkAttempts < maxAttempts) {
-                    updateStatus(`Server not responding. Retrying in 3 seconds...`);
-                    setTimeout(checkServerStatus, 3000);
-                } else {
-                    showServerDownPage();
-                }
-            }
-        }
-
-        function testWithFetch() {
-            return new Promise((resolve) => {
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 3000);
-                
-                // Test the domain directly with HTTPS
-                fetch(`https://${serverDomain}`, {
-                    method: 'HEAD',
-                    mode: 'no-cors',
-                    signal: controller.signal
-                }).then(() => {
-                    clearTimeout(timeoutId);
-                    console.log('Fetch test: SUCCESS');
-                    resolve(true);
-                }).catch((error) => {
-                    clearTimeout(timeoutId);
-                    console.log('Fetch test: FAILED', error.message);
-                    resolve(false);
-                });
-            });
-        }
-
-        function testWithImage() {
-            return new Promise((resolve) => {
-                const img = new Image();
-                const timeout = setTimeout(() => {
-                    console.log('Image test: TIMEOUT');
-                    resolve(false);
-                }, 3000);
-                
-                img.onload = () => {
-                    clearTimeout(timeout);
-                    console.log('Image test: SUCCESS - favicon loaded');
-                    resolve(true);
-                };
-                img.onerror = () => {
-                    clearTimeout(timeout);
-                    console.log('Image test: FAILED - favicon not found');
-                    resolve(false);
-                };
-                
-                // Try to load a favicon or small image from your domain
-                img.src = `https://${serverDomain}/favicon.ico?` + Date.now();
-            });
-        }
-
-        function testWithIframe() {
-            return new Promise((resolve) => {
-                const iframe = document.createElement('iframe');
-                iframe.style.display = 'none';
-                iframe.style.width = '1px';
-                iframe.style.height = '1px';
-                
-                const timeout = setTimeout(() => {
-                    if (document.body.contains(iframe)) {
-                        document.body.removeChild(iframe);
-                    }
-                    console.log('Iframe test: TIMEOUT');
-                    resolve(false);
-                }, 3000);
-                
-                iframe.onload = () => {
-                    clearTimeout(timeout);
-                    if (document.body.contains(iframe)) {
-                        document.body.removeChild(iframe);
-                    }
-                    console.log('Iframe test: SUCCESS');
-                    resolve(true);
-                };
-                
-                iframe.onerror = () => {
-                    clearTimeout(timeout);
-                    if (document.body.contains(iframe)) {
-                        document.body.removeChild(iframe);
-                    }
-                    console.log('Iframe test: FAILED');
-                    resolve(false);
-                };
-                
-                iframe.src = `https://${serverDomain}`;
-                document.body.appendChild(iframe);
-            });
-        }
-
-        function testWithSimplePing() {
-            return new Promise((resolve) => {
-                // Try to create a simple request that will succeed if the domain resolves
-                const img = new Image();
-                const timeout = setTimeout(() => {
-                    console.log('Simple ping test: TIMEOUT');
-                    resolve(false);
-                }, 2000);
-                
-                // Even if the image fails to load, if we get any response (including 404), 
-                // it means the server is reachable
-                const handleResponse = () => {
-                    clearTimeout(timeout);
-                    console.log('Simple ping test: SUCCESS (server reachable)');
-                    resolve(true);
-                };
-                
-                img.onload = handleResponse;
-                img.onerror = handleResponse; // Even errors mean the server responded
-                
-                // Try a simple request to a common path
-                img.src = `https://${serverDomain}/robots.txt?` + Date.now();
-            });
-        }
-
-        function updateStatus(message) {
-            document.getElementById('status-message').textContent = message;
-        }
-
-        function showServerDownPage() {
-            // Start transition animation
-            const container = document.querySelector('.container');
-            const loadingSpinner = document.querySelector('.loading-spinner');
-            const sadFace = document.querySelector('.sad-face');
-            const mainMessage = document.querySelector('.main-message');
-            const subMessage = document.querySelector('.sub-message');
-            const statusMessage = document.querySelector('.status-message');
-            const retryBtn = document.querySelector('.retry-btn');
-            
-            // Phase 1: Fade out loading elements
-            loadingSpinner.classList.add('fade-out');
-            
-            setTimeout(() => {
-                // Phase 2: Hide loading spinner and show sad face
-                loadingSpinner.style.display = 'none';
-                loadingSpinner.classList.remove('fade-out');
-                
-                sadFace.style.display = 'block';
-                sadFace.style.opacity = '0';
-                sadFace.style.transform = 'scale(0.5)';
-                
-                // Animate sad face in
-                setTimeout(() => {
-                    sadFace.classList.add('fade-in');
-                }, 50);
-                
-                // Phase 3: Update text content with slide animation
-                setTimeout(() => {
-                    mainMessage.classList.add('slide-up');
-                    subMessage.classList.add('slide-up');
-                    
-                    setTimeout(() => {
-                        mainMessage.textContent = 'Server is currently down';
-                        subMessage.innerHTML = 'Sorry for the inconvenience.<br>Please try again later.';
-                        statusMessage.textContent = 'Unable to connect to server after multiple attempts.';
-                        
-                        mainMessage.classList.remove('slide-up');
-                        subMessage.classList.remove('slide-up');
-                    }, 300);
-                }, 400);
-                
-                // Phase 4: Show retry button and change background
-                setTimeout(() => {
-                    retryBtn.style.display = 'inline-block';
-                    retryBtn.style.opacity = '0';
-                    retryBtn.style.transform = 'translateY(20px)';
-                    
-                    setTimeout(() => {
-                        retryBtn.classList.add('fade-in');
-                        retryBtn.style.transform = 'translateY(0)';
-                    }, 100);
-                    
-                    // Change background color
-                    document.body.classList.add('error-state');
-                }, 700);
-                
-            }, 500);
-        }
-
-        function retryConnection() {
-            checkAttempts = 0;
-            
-            // Animate elements back to loading state
-            const container = document.querySelector('.container');
-            const loadingSpinner = document.querySelector('.loading-spinner');
-            const sadFace = document.querySelector('.sad-face');
-            const mainMessage = document.querySelector('.main-message');
-            const subMessage = document.querySelector('.sub-message');
-            const retryBtn = document.querySelector('.retry-btn');
-            
-            // Phase 1: Fade out error elements
-            sadFace.classList.remove('fade-in');
-            sadFace.classList.add('fade-out');
-            retryBtn.classList.remove('fade-in');
-            retryBtn.classList.add('fade-out');
-            
-            setTimeout(() => {
-                // Phase 2: Hide error elements and reset
-                sadFace.style.display = 'none';
-                sadFace.classList.remove('fade-out');
-                retryBtn.style.display = 'none';
-                retryBtn.classList.remove('fade-out');
-                
-                // Reset background
-                document.body.classList.remove('error-state');
-                
-                // Phase 3: Show and animate loading spinner
-                loadingSpinner.style.display = 'block';
-                loadingSpinner.style.opacity = '0';
-                loadingSpinner.style.transform = 'scale(0.5)';
-                
-                setTimeout(() => {
-                    loadingSpinner.classList.add('fade-in');
-                }, 50);
-                
-                // Phase 4: Update text content
-                setTimeout(() => {
-                    mainMessage.textContent = 'Checking Server Availability';
-                    subMessage.textContent = 'Please wait while we connect to the server...';
-                    
-                    // Start checking again
-                    setTimeout(checkServerStatus, 1000);
-                }, 300);
-                
-            }, 500);
-        }
-
-        // Start checking when page loads
-        window.addEventListener('load', () => {
-            console.log('Page loaded, starting server check in 2 seconds...');
-            console.log('Testing domain:', serverDomain);
-            console.log('Target URL:', websiteURL);
-            setTimeout(checkServerStatus, 2000); // Wait 2 seconds before starting
+        // Set the HTTP status code to 503 (this is mainly for documentation,
+        // the actual HTTP status should be set by the server)
+        console.log('Service Unavailable - 503');
+        
+        // Update timestamp on page load
+        window.addEventListener('load', function() {
+            const timestamp = document.getElementById('timestamp');
+            const now = new Date();
+            timestamp.textContent = 'Page generated: ' + now.toLocaleString();
         });
-
-        // Redirect to GitHub Pages if accessed via aquacheesephoto.co.uk
-        if (window.location.hostname === "aquacheesephoto.co.uk") {
-            window.location.replace("https://aquacheese.github.io/aquacheese-photo");
-        }
     </script>
 </head>
 <body>
     <div class="container">
-        <div class="loading-spinner">⟳</div>
-        <div class="sad-face">:(</div>
-        <div class="main-message">Checking Server Availability</div>
-        <div class="sub-message">Please wait while we connect to the server...</div>
-        <div class="status-message" id="status-message">Initializing connection check...</div>
+        <div class="status-code">503</div>
+        <div class="main-message">Service Unavailable</div>
+        <div class="sub-message">
+            We're temporarily unable to serve your request due to maintenance or capacity issues.
+        </div>
+        
         <img class="logo" src="ACPhoto logo.png" alt="ACPhoto Logo">
-        <button class="retry-btn" onclick="retryConnection()">Retry Connection</button>
+        
+        <div class="info-box">
+            <h4>What does this mean?</h4>
+            <p>The server is temporarily unable to handle your request due to maintenance, overloading, or other temporary conditions. This is typically a temporary state.</p>
+        </div>
+        
+        <div class="info-box">
+            <h4>What can you do?</h4>
+            <p>Please try refreshing the page in a few minutes. If the problem persists, you can contact us using the information below.</p>
+        </div>
+        
+        <div class="contact-info">
+            <h4>Need help?</h4>
+            <p>If you continue to experience issues, please contact our support team.</p>
+            <p>We apologize for any inconvenience this may cause.</p>
+        </div>
+        
+        <div class="retry-hint">
+            <strong>Tip:</strong> This page will automatically refresh every hour to check if the service is restored.
+        </div>
+        
+        <div class="timestamp" id="timestamp">
+            <!-- Timestamp will be inserted here by JavaScript -->
+        </div>
     </div>
 </body>
 </html>
