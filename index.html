@@ -116,6 +116,59 @@
             color: #95a5a6;
             font-style: italic;
         }
+        
+        /* Game Container Styles */
+        #gameContainer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(to bottom, #87CEEB 0%, #98E4FF 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.5s ease-in-out;
+            pointer-events: none;
+        }
+        
+        #gameContainer.active {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: all;
+        }
+        
+        #gameCanvas {
+            border: 3px solid #2c3e50;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            background: #87CEEB;
+        }
+        
+        #gameUI {
+            margin-top: 20px;
+            text-align: center;
+            color: #2c3e50;
+        }
+        
+        #gameScore {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+        }
+        
+        #gameInstructions {
+            font-size: 1.2em;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 20px;
+            border-radius: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
     </style>
     <script>
         // Set the HTTP status code to 503 (this is mainly for documentation,
@@ -127,6 +180,201 @@
             const timestamp = document.getElementById('timestamp');
             const now = new Date();
             timestamp.textContent = 'Page generated: ' + now.toLocaleString();
+        });
+
+        // Game variables
+        let gameStarted = false;
+        let gameRunning = false;
+        let player = { x: 50, y: 300, dy: 0, onGround: true };
+        let obstacles = [];
+        let score = 0;
+        let gameSpeed = 2;
+        let lastObstacle = 0;
+
+        // Game initialization
+        function initGame() {
+            if (gameStarted) return;
+            gameStarted = true;
+            
+            // Create game canvas
+            const gameContainer = document.createElement('div');
+            gameContainer.id = 'gameContainer';
+            gameContainer.innerHTML = `
+                <canvas id="gameCanvas" width="800" height="400"></canvas>
+                <div id="gameUI">
+                    <div id="gameScore">Score: 0</div>
+                    <div id="gameInstructions">Press SPACE to jump • Press ESC to return</div>
+                </div>
+            `;
+            document.body.appendChild(gameContainer);
+            
+            // Start game transition
+            setTimeout(() => {
+                gameContainer.classList.add('active');
+                startGame();
+            }, 100);
+        }
+
+        function startGame() {
+            gameRunning = true;
+            const canvas = document.getElementById('gameCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Reset game state
+            player = { x: 50, y: 300, dy: 0, onGround: true };
+            obstacles = [];
+            score = 0;
+            gameSpeed = 2;
+            lastObstacle = 0;
+            
+            gameLoop(ctx, canvas);
+        }
+
+        function gameLoop(ctx, canvas) {
+            if (!gameRunning) return;
+            
+            // Clear canvas
+            ctx.fillStyle = '#87CEEB';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw ground
+            ctx.fillStyle = '#8FBC8F';
+            ctx.fillRect(0, 350, canvas.width, 50);
+            
+            // Update player
+            updatePlayer();
+            
+            // Update obstacles
+            updateObstacles();
+            
+            // Draw player
+            drawPlayer(ctx);
+            
+            // Draw obstacles
+            drawObstacles(ctx);
+            
+            // Update score
+            score += 0.1;
+            document.getElementById('gameScore').textContent = `Score: ${Math.floor(score)}`;
+            
+            // Increase game speed
+            gameSpeed += 0.001;
+            
+            // Check collisions
+            if (checkCollisions()) {
+                gameOver();
+                return;
+            }
+            
+            requestAnimationFrame(() => gameLoop(ctx, canvas));
+        }
+
+        function updatePlayer() {
+            // Apply gravity
+            if (!player.onGround) {
+                player.dy += 0.8;
+            }
+            
+            player.y += player.dy;
+            
+            // Ground collision
+            if (player.y >= 300) {
+                player.y = 300;
+                player.dy = 0;
+                player.onGround = true;
+            }
+        }
+
+        function updateObstacles() {
+            // Spawn obstacles
+            if (Date.now() - lastObstacle > 2000 + Math.random() * 1000) {
+                obstacles.push({ x: 800, y: 320, width: 20, height: 30 });
+                lastObstacle = Date.now();
+            }
+            
+            // Move obstacles
+            for (let i = obstacles.length - 1; i >= 0; i--) {
+                obstacles[i].x -= gameSpeed;
+                if (obstacles[i].x < -obstacles[i].width) {
+                    obstacles.splice(i, 1);
+                }
+            }
+        }
+
+        function drawPlayer(ctx) {
+            ctx.fillStyle = '#FF6B6B';
+            ctx.fillRect(player.x, player.y, 30, 30);
+            
+            // Simple animation
+            ctx.fillStyle = '#FFF';
+            ctx.fillRect(player.x + 5, player.y + 5, 8, 8);
+            ctx.fillRect(player.x + 17, player.y + 5, 8, 8);
+        }
+
+        function drawObstacles(ctx) {
+            ctx.fillStyle = '#2C3E50';
+            obstacles.forEach(obstacle => {
+                ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
+            });
+        }
+
+        function checkCollisions() {
+            return obstacles.some(obstacle => 
+                player.x < obstacle.x + obstacle.width &&
+                player.x + 30 > obstacle.x &&
+                player.y < obstacle.y + obstacle.height &&
+                player.y + 30 > obstacle.y
+            );
+        }
+
+        function gameOver() {
+            gameRunning = false;
+            const ctx = document.getElementById('gameCanvas').getContext('2d');
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+            ctx.fillRect(0, 0, 800, 400);
+            
+            ctx.fillStyle = '#FFF';
+            ctx.font = '48px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('Game Over!', 400, 180);
+            
+            ctx.font = '24px Arial';
+            ctx.fillText(`Final Score: ${Math.floor(score)}`, 400, 220);
+            ctx.fillText('Press SPACE to restart', 400, 260);
+        }
+
+        function exitGame() {
+            gameRunning = false;
+            const gameContainer = document.getElementById('gameContainer');
+            if (gameContainer) {
+                gameContainer.classList.remove('active');
+                setTimeout(() => {
+                    gameContainer.remove();
+                    gameStarted = false;
+                }, 500);
+            }
+        }
+
+        // Event listeners
+        document.addEventListener('keydown', function(e) {
+            if (!gameStarted && (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'KeyW')) {
+                e.preventDefault();
+                initGame();
+            } else if (gameStarted) {
+                if (e.code === 'Space' && gameRunning) {
+                    e.preventDefault();
+                    if (player.onGround) {
+                        player.dy = -15;
+                        player.onGround = false;
+                    }
+                } else if (e.code === 'Space' && !gameRunning) {
+                    e.preventDefault();
+                    startGame();
+                } else if (e.code === 'Escape') {
+                    e.preventDefault();
+                    exitGame();
+                }
+            }
         });
     </script>
 </head>
